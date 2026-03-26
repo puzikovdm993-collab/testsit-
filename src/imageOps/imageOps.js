@@ -943,29 +943,53 @@ async function applyMedianFilter() {
     // Используем setTimeout чтобы дать UI обновиться перед тяжелой операцией
     setTimeout(async () => {
 
+        updateProgress(10, 'Инициализация...');
+        await new Promise(resolve => setTimeout(resolve, 50));
+
         updateProgress(20, 'Вычисление фильтра...');
 
         const aprture = parseInt(t, 10);
         const filtered123 = await _medianFilter(file.matrix, aprture); 
-        updateProgress(50, 'Создание матрицы...');
+        // После завершения фильтрации прогресс уже около 80%
+        
+        updateProgress(82, 'Поиск мин/макс значений...');
+        await new Promise(resolve => setTimeout(resolve, 10));
 
         // Находим минимальное и максимальное значения в матрице:
         let minVal1 = Infinity, maxVal1 = -Infinity;  // Инициализация
+        const totalPixelsMinMax = file.height * file.width;
+        let processedPixelsMinMax = 0;
+        const minMaxUpdateInterval = Math.max(1, Math.floor(totalPixelsMinMax / 20)); // Обновляем 20 раз
+        
         for (let y = 0; y < file.height; y++) {          // Проходим по строкам
             for (let x = 0; x < file.width; x++) {       // Проходим по столбцам
                 const val = filtered123[y][x];           // Текущее значение
                 if (val < minVal1) minVal1 = val;     // Обновляем минимум
                 if (val > maxVal1) maxVal1 = val;     // Обновляем максимум
+                
+                processedPixelsMinMax++;
+                if (processedPixelsMinMax % minMaxUpdateInterval === 0) {
+                    const progress = 82 + Math.round((processedPixelsMinMax / totalPixelsMinMax) * 8);
+                    updateProgress(progress, `Анализ данных: ${Math.round((processedPixelsMinMax / totalPixelsMinMax) * 100)}%`);
+                }
             }
         }
 
         file.minValue = minVal1;
         file.maxValue = maxVal1;
 
+        updateProgress(90, 'Применение цветовой карты...');
+        await new Promise(resolve => setTimeout(resolve, 10));
+
         const colormap = file.colormap;
         const colorMap = getColormap(colormap);
         const data = new Uint8ClampedArray(file.width * file.height * 4);
         let dataIndex = 0;
+        
+        const totalPixelsColor = file.width * file.height;
+        let processedPixelsColor = 0;
+        const colorUpdateInterval = Math.max(1, Math.floor(totalPixelsColor / 20)); // Обновляем 20 раз
+        
         for (let y = 0; y < file.height; y++) {
             for (let x = 0; x < file.width; x++) {
                 
@@ -976,8 +1000,15 @@ async function applyMedianFilter() {
                 data[dataIndex++] = color.g;
                 data[dataIndex++] = color.b;
                 data[dataIndex++] = 255;
+                
+                processedPixelsColor++;
+                if (processedPixelsColor % colorUpdateInterval === 0) {
+                    const progress = 90 + Math.round((processedPixelsColor / totalPixelsColor) * 8);
+                    updateProgress(progress, `Рендеринг: ${Math.round((processedPixelsColor / totalPixelsColor) * 100)}%`);
+                }
             }
         }
+        
         const imageData = new ImageData(data, file.width, file.height);
 
         // Создаем временный canvas для исходного ImageData
@@ -988,7 +1019,8 @@ async function applyMedianFilter() {
 
         tempCtx.putImageData(imageData, 0, 0); // Полное копирование ImageData
 
-        updateProgress(80, 'Применение изменений...');
+        updateProgress(98, 'Применение изменений...');
+        await new Promise(resolve => setTimeout(resolve, 10));
 
         file.matrix = filtered123;
 
@@ -1043,6 +1075,7 @@ function syncDelay(ms) {
     let processedPixels = 0;
     const updateInterval = Math.max(1, Math.floor(totalPixels / 100)); // Обновляем каждые 1%
 
+    // Основной цикл фильтрации с разбивкой на чанки для плавного обновления UI
     for (let i = 0; i < m; i++) {
         const row = [];
         for (let j = 0; j < n; j++) {
@@ -1056,8 +1089,12 @@ function syncDelay(ms) {
             
             // Обновляем прогресс каждые 1% или в конце
             if (processedPixels % updateInterval === 0 || processedPixels === totalPixels) {
-                const progress = Math.round(40 + (processedPixels / totalPixels) * 50);
-                updateProgress(progress, 'Фильтрация изображения...');
+                // Более точный расчет прогресса: 
+                // 30% уже пройдено (подготовка), осталось 50% на фильтрацию (с 30% до 80%)
+                const filterProgress = 30 + Math.round((processedPixels / totalPixels) * 50);
+                const rowsCompleted = i + 1;
+                const percentComplete = ((processedPixels / totalPixels) * 100).toFixed(1);
+                updateProgress(filterProgress, `Фильтрация: ${rowsCompleted} из ${m} строк (${percentComplete}%)`);
                 // Небольшая пауза для отрисовки прогресс-бара, но не слишком частая
                 if (processedPixels % (updateInterval * 5) === 0 || processedPixels === totalPixels) {
                     await new Promise(resolve => setTimeout(resolve, 10));
