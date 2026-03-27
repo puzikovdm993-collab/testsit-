@@ -467,14 +467,14 @@
 <script src="src/tabs/tabs.js"></script>
 <script src="src/models/models.js"></script>
 
-<!-- Подключение модальных окон из отдельного файла -->
-<script>
-    fetch('src/modals/modals.html')
-        .then(response => response.text())
-        .then(html => {
-            document.getElementById('modals-container').innerHTML = html;
-        })
-        .catch(error => console.error('Ошибка загрузки модальных окон:', error));
+<!-- Подключение модальных окон из JS модуля -->
+<script type="module">
+    import { renderModals } from './src/modals/modals.js';
+    
+    // Рендерим модальные окна после загрузки DOM
+    document.addEventListener('DOMContentLoaded', () => {
+        renderModals();
+    });
 </script>
 </body>
 </html>
