@@ -1,0 +1,1115 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WTIS - Cytoscape.js</title>
+    
+    <!-- Подключаем Cytoscape.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/cytoscape/3.28.1/cytoscape.min.js"></script>
+    
+    <link rel="stylesheet" href="styles/workflow.css">
+    
+    <style>
+        /* Дополнительные стили для Cytoscape */
+        #graph-container {
+            width: 100%;
+            height: calc(100vh - 120px);
+            background: #1e1e1e;
+            position: relative;
+        }
+        
+        #cy {
+            width: 100%;
+            height: 100%;
+        }
+        
+        /* Стили для узлов в Cytoscape */
+        .node-card {
+            cursor: grab;
+        }
+        
+        .node-card:active {
+            cursor: grabbing;
+        }
+        
+        /* Панель инструментов Cytoscape */
+        .cy-controls {
+            position: absolute;
+            bottom: 20px;
+            right: 20px;
+            display: flex;
+            gap: 8px;
+            z-index: 100;
+        }
+        
+        .cy-controls button {
+            padding: 8px 12px;
+            background: #333;
+            color: white;
+            border: 1px solid #555;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+        
+        .cy-controls button:hover {
+            background: #444;
+        }
+        
+        /* Тултип для превью */
+        .cy-tooltip {
+            position: absolute;
+            background: rgba(0, 0, 0, 0.9);
+            color: white;
+            padding: 10px;
+            border-radius: 6px;
+            font-size: 12px;
+            max-width: 300px;
+            pointer-events: none;
+            display: none;
+            z-index: 1000;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+        }
+        
+        /* Модальное окно */
+        #overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: 9999;
+        }
+        
+        #modal {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: #2a2a2a;
+            color: white;
+            padding: 20px;
+            border-radius: 8px;
+            min-width: 400px;
+            max-width: 600px;
+            z-index: 10000;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.4);
+        }
+        
+        #modal.active {
+            display: block;
+        }
+        
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #444;
+        }
+        
+        .modal-title {
+            font-size: 18px;
+            font-weight: bold;
+        }
+        
+        .close-btn {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 24px;
+            cursor: pointer;
+            padding: 0;
+            line-height: 1;
+        }
+        
+        .modal-content {
+            margin-bottom: 20px;
+        }
+        
+        .modal-content label {
+            display: block;
+            margin-bottom: 5px;
+            font-size: 14px;
+            color: #aaa;
+        }
+        
+        .modal-content input,
+        .modal-content select,
+        .modal-content textarea {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 15px;
+            background: #333;
+            border: 1px solid #555;
+            color: white;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+        
+        .modal-actions {
+            display: flex;
+            gap: 10px;
+            justify-content: flex-end;
+        }
+        
+        .btn-cancel,
+        .btn-save {
+            padding: 8px 20px;
+            border-radius: 4px;
+            font-size: 14px;
+            cursor: pointer;
+            border: none;
+        }
+        
+        .btn-cancel {
+            background: #555;
+            color: white;
+        }
+        
+        .btn-save {
+            background: #4CAF50;
+            color: white;
+        }
+        
+        .btn-save:hover {
+            background: #45a049;
+        }
+        
+        /* Стили для inspector */
+        .inspector {
+            width: 250px;
+            background: #252525;
+            border-left: 1px solid #333;
+            padding: 15px;
+            overflow-y: auto;
+        }
+        
+        .preview {
+            background: #1a1a1a;
+            border-radius: 4px;
+            padding: 10px;
+            min-height: 150px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #888;
+            font-size: 14px;
+        }
+        
+        /* Анимация для sidebar */
+        .sidebar.collapsed {
+            width: 60px;
+        }
+        
+        .sidebar.collapsed .user-info,
+        .sidebar.collapsed .search-container,
+        .sidebar.collapsed .node-group-header span,
+        .sidebar.collapsed .node-text-container {
+            display: none;
+        }
+        
+        .sidebar.collapsed .collapse-btn {
+            transform: rotate(180deg);
+        }
+    </style>
+</head>
+<body>
+    <main class="app">
+        <!-- Основная область -->
+        <div class="main-content" id="mainContent">
+            <!-- Боковая панель (сайдбар) -->
+            <aside class="sidebar" id="sidebar">
+                <!-- Кнопка сворачивания -->
+                <button class="collapse-btn" onclick="toggleSidebar()">
+                    <span id="collapseIcon">←</span>
+                </button>
+
+                <!-- Информация о пользователе -->
+                <div class="user-section">
+                    <div class="avatar">AI</div>
+                    <div class="user-info">
+                        <div class="user-name">TIS_user</div>
+                        <div class="user-role">Senior Developer</div>
+                    </div>
+                </div>
+
+                <!-- Поиск -->
+                <div class="search-container">
+                    <input type="text" id="searchInput" placeholder="Поиск узлов..." autocomplete="off">
+                    <svg class="search-icon" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg>
+                </div>
+
+                <div class="node-list">
+                    <!-- Группа: Ввод/Вывод -->
+                    <div class="node-group">
+                        <div class="node-group-header" onclick="toggleGroup(this)">Ввод/Вывод</div>
+                        <div class="node-group-content">
+                            <div class="node-card" draggable="true" data-node-type="LoadNode">
+                                <svg><use href="#icon-download"></use></svg>
+                                <div class="node-text-container">
+                                    <div>Загрузить</div>
+                                </div>
+                            </div>
+                            <div class="node-card" draggable="true" data-node-type="SaveNode">
+                                <svg><use href="#icon-upload"></use></svg>
+                                <div class="node-text-container">
+                                    <div>Сохранить</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Группа: Filters -->
+                    <div class="node-group">
+                        <div class="node-group-header" onclick="toggleGroup(this)">Фильтры</div>
+                        <div class="node-group-content">
+                            <div class="node-card" draggable="true" data-node-type="SobelFilter">
+                                <svg><use href="#lucide-eye"></use></svg>
+                                <div class="node-text-container">
+                                    <div>Фильтр собель</div>
+                                </div>
+                            </div>
+                            <div class="node-card" draggable="true" data-node-type="MedianFilter">
+                                <svg><use href="#lucide-invert"></use></svg>
+                                <div class="node-text-container">
+                                    <div>Медианный фильтр</div>
+                                </div>
+                            </div>
+                            <div class="node-card" draggable="true" data-node-type="NormalisationFilter">
+                                <svg><use href="#lucide-sliders-horizontal"></use></svg>
+                                <div class="node-text-container">
+                                    <div>Нормализация</div>
+                                </div>
+                            </div>
+                            <div class="node-card" draggable="true" data-node-type="BackgroundCorrectionPolynomialNode">
+                                <svg><use href="#lucide-sliders-horizontal"></use></svg>
+                                <div class="node-text-container">
+                                    <div>Апроксимация</div>
+                                </div>
+                            </div>
+                            <div class="node-card" draggable="true" data-node-type="LogarithmFilter">
+                                <svg><use href="#lucide-sliders-horizontal"></use></svg>
+                                <div class="node-text-container">
+                                    <div>Логарифмирование</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Группа: Transform -->
+                    <div class="node-group">
+                        <div class="node-group-header" onclick="toggleGroup(this)">Трансформ</div>
+                        <div class="node-group-content">
+                            <div class="node-card" draggable="true" data-node-type="ResizeTransform">
+                                <svg><use href="#lucide-eye"></use></svg>
+                                <div class="node-text-container">
+                                    <div>Размер</div>
+                                </div>
+                            </div>
+                            <div class="node-card" draggable="true" data-node-type="RotateTransform">
+                                <svg><use href="#lucide-download"></use></svg>
+                                <div class="node-text-container">
+                                    <div>Поворот</div>
+                                </div>
+                            </div>
+                            <div class="node-card" draggable="true" data-node-type="CropTransform">
+                                <svg><use href="#lucide-download"></use></svg>
+                                <div class="node-text-container">
+                                    <div>Обрезка</div>
+                                </div>
+                            </div>
+                            <div class="node-card" draggable="true" data-node-type="ThresholdTransform">
+                                <svg><use href="#lucide-download"></use></svg>
+                                <div class="node-text-container">
+                                    <div>Порог</div>
+                                </div>
+                            </div>
+                            <div class="node-card" draggable="true" data-node-type="CoordinateTransformNode">
+                                <svg><use href="#lucide-download"></use></svg>
+                                <div class="node-text-container">
+                                    <div>Полярные координаты</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Группа: Calculation -->
+                    <div class="node-group">
+                        <div class="node-group-header" onclick="toggleGroup(this)">Калькулятор</div>
+                        <div class="node-group-content">
+                            <div class="node-card" draggable="true" data-node-type="DifferenceCalculation">
+                                <svg><use href="#lucide-eye"></use></svg>
+                                <div class="node-text-container">
+                                    <div>Деление</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Группа: ROI -->
+                    <div class="node-group">
+                        <div class="node-group-header" onclick="toggleGroup(this)">Выделение</div>
+                        <div class="node-group-content">
+                            <div class="node-card" draggable="true" data-node-type="ROILassoNode">
+                                <svg><use href="#lucide-eye"></use></svg>
+                                <div class="node-text-container">
+                                    <div>Лассо</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </aside>
+
+            <!-- Панель инструментов -->
+            <header class="header">Workflow Редактирования Изображений (Cytoscape.js)</header>
+
+            <div class="toolbar" id="toolbar">
+                <button id="run">Запустить</button>
+                <button id="export-graph">Экспорт JSON</button>
+                <button id="import-graph">Импорт JSON</button>
+                <button id="clear-graph">Очистить</button>
+                <button class="clear-graph">
+                    <a href="index.html" class="btn-link">Paint</a>
+                </button>
+            </div>
+
+            <!-- Контейнер для Cytoscape -->
+            <div id="workflow-layout">
+                <div id="graph-container">
+                    <div id="cy"></div>
+                    <!-- Контролы зума -->
+                    <div class="cy-controls">
+                        <button onclick="zoomIn()">+</button>
+                        <button onclick="zoomOut()">−</button>
+                        <button onclick="fitGraph()">Fit</button>
+                    </div>
+                </div>
+            </div>
+
+            <aside class="inspector" id="inspector">
+                <div class="preview" id="inspector-preview">
+                    <div>Нет превью</div>
+                </div>
+                <div id="inspector-node-controls" style="margin-top:8px; display:flex; gap:8px; flex-wrap:wrap;"></div>
+            </aside>
+
+            <div class="cy-tooltip" id="cyTooltip"></div>
+        </div>
+    </main>
+
+    <!-- Модальное окно для редактирования узлов -->
+    <div id="overlay" onclick="hideModal()"></div>
+    <div id="modal">
+        <div class="modal-header">
+            <div class="modal-title" id="modal-title">Edit Node</div>
+            <button class="close-btn" onclick="hideModal()">&times;</button>
+        </div>
+        <div class="modal-content" id="modal-content">
+            <!-- Содержимое будет генерироваться динамически -->
+        </div>
+        <div class="modal-actions">
+            <button class="btn-cancel" onclick="hideModal()">Cancel</button>
+            <button class="btn-save" onclick="saveNodeProperties()">Save</button>
+        </div>
+    </div>
+
+    <!-- SVG-иконки -->
+    <svg xmlns="http://www.w3.org/2000/svg" style="display:none">
+        <symbol id="icon-upload" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" x2="12" y1="3" y2="15"/></symbol>
+        <symbol id="icon-invert" viewBox="0 0 24 24"><path d="M12 2v20"/><path d="M2 12h20"/><path d="m5 5 7 7m0 0 7-7m-7 7v10"/></symbol>
+        <symbol id="icon-grayscale" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 12h18"/><path d="M12 3v18"/></symbol>
+        <symbol id="icon-eye" viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></symbol>
+        <symbol id="icon-download" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" x2="12" y1="15" y2="3"/></symbol>
+        <symbol id="icon-brightness" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M8 12h8M12 8v8"/></symbol>
+        <symbol id="icon-contrast" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 2v2M12 20v-2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></symbol>
+        <symbol id="icon-sepia" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2" fill="none" stroke="currentColor"/><circle cx="12" cy="12" r="6" fill="none" stroke="currentColor"/></symbol>
+        <symbol id="icon-resize" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18"/><line x1="21" y1="3" x2="21" y2="21"/><line x1="3" y1="21" x2="21" y2="21"/></symbol>
+        <symbol id="icon-rotate" viewBox="0 0 24 24"><path d="M21.5 2v6h-6M2.5 22v-6h6" /><path d="M2 11.5a10 10 0 0 1 18.8-3H17a6 6 0 0 0-10.8 3H2z" /><path d="M22 12.5a10 10 0 0 1-18.8 3H7a6 6 0 0 0 10.8-3H22z" /></symbol>
+        <symbol id="icon-crop" viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20"/><path d="M16 2L2 16"/></symbol>
+        <symbol id="icon-blur" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="5" fill="currentColor"/></symbol>
+        <symbol id="icon-flip" viewBox="0 0 24 24"><path d="M12 3v18" /><path d="M16 7h3a1 1 0 0 1 1 1v8a1 1 0 0 1-1 1h-3" /><path d="M8 7H5a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h3" /></symbol>
+        <symbol id="icon-search" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></symbol>
+        <symbol id="lucide-image" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></symbol>
+        <symbol id="lucide-eye" viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></symbol>
+        <symbol id="lucide-download" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" x2="12" y1="15" y2="3"/></symbol>
+        <symbol id="lucide-sliders-horizontal" viewBox="0 0 24 24"><path d="M3 12h18"/><path d="M3 6h18"/><path d="M3 18h18"/><circle cx="6" cy="6" r="2"/><circle cx="12" cy="12" r="2"/><circle cx="18" cy="18" r="2"/></symbol>
+        <symbol id="lucide-droplet" viewBox="0 0 24 24"><path d="M12 22a7 7 0 0 0 7-7c0-2-2-3-2-3L12 2 7 12s-2 1-2 3a7 7 0 0 0 7 7z"/></symbol>
+        <symbol id="lucide-invert" viewBox="0 0 24 24"><path d="M12 2v20"/><path d="M2 12h20"/></symbol>
+    </svg>
+
+    <script>
+        // ========== ИНИЦИАЛИЗАЦИЯ ПРИ ЗАГРУЗКЕ ==========
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('🚀 WTIS Cytoscape.js загружается...');
+            
+            initTabs();
+            initCytoscape();
+            setupDragAndDrop();
+            setupEventListeners();
+            
+            console.log('✅ Все системы инициализированы!');
+        });
+
+        // Глобальные переменные
+        let cy; // экземпляр Cytoscape
+        let selectedNode = null;
+        let nodeIdCounter = 1;
+
+        // Типы узлов с их конфигурацией
+        const nodeTypes = {
+            'LoadNode': { label: 'Загрузить', color: '#66aaff', inputs: 0, outputs: 1 },
+            'SaveNode': { label: 'Сохранить', color: '#66ff66', inputs: 1, outputs: 0 },
+            'SobelFilter': { label: 'Фильтр Собель', color: '#ffaa66', inputs: 1, outputs: 1 },
+            'MedianFilter': { label: 'Медианный фильтр', color: '#ffaa66', inputs: 1, outputs: 1 },
+            'NormalisationFilter': { label: 'Нормализация', color: '#ffaa66', inputs: 1, outputs: 1 },
+            'BackgroundCorrectionPolynomialNode': { label: 'Апроксимация', color: '#ffaa66', inputs: 1, outputs: 1 },
+            'LogarithmFilter': { label: 'Логарифмирование', color: '#ffaa66', inputs: 1, outputs: 1 },
+            'ResizeTransform': { label: 'Размер', color: '#aa66ff', inputs: 1, outputs: 1 },
+            'RotateTransform': { label: 'Поворот', color: '#aa66ff', inputs: 1, outputs: 1 },
+            'CropTransform': { label: 'Обрезка', color: '#aa66ff', inputs: 1, outputs: 1 },
+            'ThresholdTransform': { label: 'Порог', color: '#aa66ff', inputs: 1, outputs: 1 },
+            'CoordinateTransformNode': { label: 'Полярные координаты', color: '#aa66ff', inputs: 1, outputs: 1 },
+            'DifferenceCalculation': { label: 'Деление', color: '#ff66aa', inputs: 2, outputs: 1 },
+            'ROILassoNode': { label: 'Лассо', color: '#ffff66', inputs: 1, outputs: 1 }
+        };
+
+        // Инициализация Cytoscape
+        function initCytoscape() {
+            cy = cytoscape({
+                container: document.getElementById('cy'),
+                
+                elements: [], // Начальные элементы (пусто)
+                
+                style: [
+                    // Стили для узлов
+                    {
+                        selector: 'node',
+                        style: {
+                            'label': 'data(label)',
+                            'background-color': 'data(color)',
+                            'width': 140,
+                            'height': 60,
+                            'color': '#fff',
+                            'text-valign': 'center',
+                            'text-halign': 'center',
+                            'font-size': '12px',
+                            'text-wrap': 'wrap',
+                            'border-width': 2,
+                            'border-color': '#888',
+                            'shape': 'round-rectangle'
+                        }
+                    },
+                    // Стили для рёбер
+                    {
+                        selector: 'edge',
+                        style: {
+                            'width': 3,
+                            'line-color': '#888',
+                            'target-arrow-color': '#888',
+                            'target-arrow-shape': 'triangle',
+                            'curve-style': 'bezier',
+                            'arrow-scale': 1.5
+                        }
+                    },
+                    // Выделенные узлы
+                    {
+                        selector: 'node:selected',
+                        style: {
+                            'border-width': 4,
+                            'border-color': '#4CAF50'
+                        }
+                    },
+                    // Выделенные рёбра
+                    {
+                        selector: 'edge:selected',
+                        style: {
+                            'width': 5,
+                            'line-color': '#4CAF50',
+                            'target-arrow-color': '#4CAF50'
+                        }
+                    },
+                    // Ховер эффект
+                    {
+                        selector: 'node:active',
+                        style: {
+                            'border-width': 3,
+                            'border-color': '#fff'
+                        }
+                    }
+                ],
+                
+                layout: {
+                    name: 'grid',
+                    rows: 1
+                },
+                
+                // Настройки взаимодействия
+                minZoom: 0.2,
+                maxZoom: 3,
+                
+                // Включение pan and zoom
+                panOnDrag: true,
+                zoomOnWheel: true,
+                boxSelectionEnabled: true
+            });
+
+            // Добавляем контролы зума (используем встроенные методы Cytoscape)
+            setupZoomControls();
+
+            // Обработчики событий
+            setupCytoscapeEvents();
+        }
+
+        // Настройка событий Cytoscape
+        function setupCytoscapeEvents() {
+            // Клик по узлу
+            cy.on('tap', 'node', function(evt) {
+                const node = evt.target;
+                selectedNode = node;
+                showNodeInspector(node);
+            });
+
+            // Клик по пустой области
+            cy.on('tap', function(evt) {
+                if (evt.target === cy) {
+                    selectedNode = null;
+                    hideNodeInspector();
+                }
+            });
+
+            // Двойной клик по узлу - редактирование
+            cy.on('dblclick', 'node', function(evt) {
+                const node = evt.target;
+                openNodeModal(node);
+            });
+
+            // Наведение на узел
+            cy.on('mouseover', 'node', function(evt) {
+                const node = evt.target;
+                showTooltip(evt, node);
+            });
+
+            cy.on('mouseout', 'node', function() {
+                hideTooltip();
+            });
+
+            // Перемещение тултипа
+            cy.on('mousemove', 'node', function(evt) {
+                const node = evt.target;
+                updateTooltipPosition(evt);
+            });
+
+            // Создание связи (drag and drop)
+            let sourceNode = null;
+            
+            cy.on('grab', 'node', function(evt) {
+                sourceNode = evt.target;
+            });
+
+            cy.on('free', 'node', function(evt) {
+                sourceNode = null;
+            });
+
+            // Удаление выделенных элементов (Delete или Backspace)
+            document.addEventListener('keydown', function(e) {
+                if ((e.key === 'Delete' || e.key === 'Backspace') && selectedNode) {
+                    cy.remove(selectedNode);
+                    selectedNode = null;
+                    hideNodeInspector();
+                }
+            });
+        }
+
+        // Drag and Drop из сайдбара
+        function setupDragAndDrop() {
+            const nodeCards = document.querySelectorAll('.node-card');
+            
+            nodeCards.forEach(card => {
+                card.addEventListener('dragstart', function(e) {
+                    e.dataTransfer.setData('nodeType', this.dataset.nodeType);
+                    e.dataTransfer.effectAllowed = 'copy';
+                });
+            });
+
+            const graphContainer = document.getElementById('graph-container');
+            
+            graphContainer.addEventListener('dragover', function(e) {
+                e.preventDefault();
+                e.dataTransfer.dropEffect = 'copy';
+            });
+
+            graphContainer.addEventListener('drop', function(e) {
+                e.preventDefault();
+                const nodeType = e.dataTransfer.getData('nodeType');
+                
+                if (nodeType && nodeTypes[nodeType]) {
+                    const rect = graphContainer.getBoundingClientRect();
+                    const x = e.clientX - rect.left;
+                    const y = e.clientY - rect.top;
+                    
+                    addNodeToGraph(nodeType, x, y);
+                }
+            });
+        }
+
+        // Добавление узла в граф
+        function addNodeToGraph(nodeType, x, y) {
+            const config = nodeTypes[nodeType];
+            const nodeId = `node_${nodeIdCounter++}`;
+            
+            // Преобразуем координаты экрана в координаты графа
+            const renderedPosition = { x: x, y: y };
+            const modelPosition = cy.renderer().containerPositionToModelPosition(renderedPosition);
+            
+            const newNode = cy.add({
+                group: 'nodes',
+                data: {
+                    id: nodeId,
+                    label: config.label,
+                    color: config.color,
+                    nodeType: nodeType,
+                    inputs: config.inputs,
+                    outputs: config.outputs,
+                    properties: getDefaultProperties(nodeType)
+                },
+                position: modelPosition
+            });
+
+            // Автоматически выделяем новый узел
+            cy.$id(nodeId).select();
+            selectedNode = newNode;
+            showNodeInspector(newNode);
+            
+            return newNode;
+        }
+
+        // Получение свойств по умолчанию для типа узла
+        function getDefaultProperties(nodeType) {
+            const defaults = {
+                'LoadNode': {
+                    width: 10,
+                    height: 10,
+                    data: '[[0, 0, 0], [0, 255, 0], [0, 0, 0]]',
+                    minValue: 0,
+                    maxValue: 255,
+                    format: 'tpt',
+                    filename: null,
+                    autoscale: true,
+                    colormap: 'gray'
+                },
+                'SaveNode': {
+                    filename: 'output.png',
+                    format: 'png'
+                },
+                'SobelFilter': {
+                    kernelSize: 3,
+                    direction: 'both'
+                },
+                'MedianFilter': {
+                    kernelSize: 3
+                },
+                'NormalisationFilter': {
+                    minOutput: 0,
+                    maxOutput: 255
+                },
+                'BackgroundCorrectionPolynomialNode': {
+                    degree: 2,
+                    method: 'polynomial'
+                },
+                'LogarithmFilter': {
+                    base: 10,
+                    scale: 1.0
+                },
+                'ResizeTransform': {
+                    width: 512,
+                    height: 512,
+                    method: 'bilinear'
+                },
+                'RotateTransform': {
+                    angle: 0,
+                    fill: 'black'
+                },
+                'CropTransform': {
+                    x: 0,
+                    y: 0,
+                    width: 100,
+                    height: 100
+                },
+                'ThresholdTransform': {
+                    threshold: 128,
+                    maxValue: 255
+                },
+                'CoordinateTransformNode': {
+                    mode: 'cartesian_to_polar',
+                    center_x: 0.5,
+                    center_y: 0.5
+                },
+                'DifferenceCalculation': {
+                    operation: 'divide',
+                    epsilon: 0.001
+                },
+                'ROILassoNode': {
+                    points: [],
+                    fillColor: 'rgba(255, 0, 0, 0.3)'
+                }
+            };
+            
+            return defaults[nodeType] || {};
+        }
+
+        // Показ тултипа
+        function showTooltip(evt, node) {
+            const tooltip = document.getElementById('cyTooltip');
+            const data = node.data();
+            
+            tooltip.innerHTML = `
+                <strong>${data.label}</strong><br>
+                Тип: ${data.nodeType}<br>
+                Входы: ${data.inputs}, Выходы: ${data.outputs}
+            `;
+            
+            tooltip.style.display = 'block';
+            updateTooltipPosition(evt);
+        }
+
+        function updateTooltipPosition(evt) {
+            const tooltip = document.getElementById('cyTooltip');
+            const containerRect = document.getElementById('graph-container').getBoundingClientRect();
+            
+            tooltip.style.left = (evt.originalEvent.clientX - containerRect.left + 15) + 'px';
+            tooltip.style.top = (evt.originalEvent.clientY - containerRect.top + 15) + 'px';
+        }
+
+        function hideTooltip() {
+            document.getElementById('cyTooltip').style.display = 'none';
+        }
+
+        // Контролы зума
+        function setupZoomControls() {
+            // Контролы уже добавлены в HTML
+        }
+
+        function zoomIn() {
+            cy.zoom({
+                level: cy.zoom() * 1.2,
+                renderedPosition: { x: cy.width() / 2, y: cy.height() / 2 }
+            });
+        }
+
+        function zoomOut() {
+            cy.zoom({
+                level: cy.zoom() * 0.8,
+                renderedPosition: { x: cy.width() / 2, y: cy.height() / 2 }
+            });
+        }
+
+        function fitGraph() {
+            if (cy.elements().length > 0) {
+                cy.fit(cy.elements(), 20);
+            } else {
+                cy.zoom(1);
+                cy.pan({ x: 0, y: 0 });
+            }
+        }
+
+        // Инспектор узлов
+        function showNodeInspector(node) {
+            const inspector = document.getElementById('inspector-node-controls');
+            const data = node.data();
+            
+            inspector.innerHTML = `
+                <div style="color: white; font-size: 14px;">
+                    <strong>${data.label}</strong><br>
+                    <span style="color: #888;">${data.nodeType}</span>
+                </div>
+                <div style="margin-top: 10px; display: flex; gap: 5px;">
+                    <button onclick="openNodeModal(cy.$id('${data.id}'))" 
+                            style="padding: 5px 10px; background: #444; color: white; border: none; border-radius: 3px; cursor: pointer;">
+                        Редактировать
+                    </button>
+                    <button onclick="removeSelectedNode()" 
+                            style="padding: 5px 10px; background: #d9534f; color: white; border: none; border-radius: 3px; cursor: pointer;">
+                        Удалить
+                    </button>
+                </div>
+            `;
+        }
+
+        function hideNodeInspector() {
+            document.getElementById('inspector-node-controls').innerHTML = '';
+        }
+
+        function removeSelectedNode() {
+            if (selectedNode) {
+                cy.remove(selectedNode);
+                selectedNode = null;
+                hideNodeInspector();
+            }
+        }
+
+        // Модальное окно редактирования
+        function openNodeModal(node) {
+            const data = node.data();
+            const modal = document.getElementById('modal');
+            const overlay = document.getElementById('overlay');
+            const title = document.getElementById('modal-title');
+            const content = document.getElementById('modal-content');
+            
+            title.textContent = `Редактировать: ${data.label}`;
+            
+            // Генерируем форму на основе свойств
+            let formHTML = '';
+            const properties = data.properties || {};
+            
+            for (const [key, value] of Object.entries(properties)) {
+                const label = key.replace(/([A-Z])/g, ' $1').trim();
+                
+                if (typeof value === 'boolean') {
+                    formHTML += `
+                        <div style="margin-bottom: 10px; display: flex; align-items: center; gap: 8px;">
+                            <input type="checkbox" id="prop_${key}" ${value ? 'checked' : ''} style="width: auto; margin: 0;">
+                            <label for="prop_${key}" style="margin: 0;">${label}</label>
+                        </div>
+                    `;
+                } else if (typeof value === 'number') {
+                    formHTML += `
+                        <div>
+                            <label for="prop_${key}">${label}</label>
+                            <input type="number" id="prop_${key}" value="${value}" step="any">
+                        </div>
+                    `;
+                } else if (Array.isArray(value)) {
+                    formHTML += `
+                        <div>
+                            <label for="prop_${key}">${label}</label>
+                            <textarea id="prop_${key}" rows="3">${JSON.stringify(value)}</textarea>
+                        </div>
+                    `;
+                } else {
+                    formHTML += `
+                        <div>
+                            <label for="prop_${key}">${label}</label>
+                            <input type="text" id="prop_${key}" value="${value}">
+                        </div>
+                    `;
+                }
+            }
+            
+            content.innerHTML = formHTML;
+            modal.classList.add('active');
+            overlay.style.display = 'block';
+        }
+
+        function hideModal() {
+            document.getElementById('modal').classList.remove('active');
+            document.getElementById('overlay').style.display = 'none';
+        }
+
+        function saveNodeProperties() {
+            if (!selectedNode) return;
+            
+            const content = document.getElementById('modal-content');
+            const inputs = content.querySelectorAll('input, textarea');
+            const newProperties = {};
+            
+            inputs.forEach(input => {
+                const key = input.id.replace('prop_', '');
+                let value;
+                
+                if (input.type === 'checkbox') {
+                    value = input.checked;
+                } else if (input.type === 'number') {
+                    value = parseFloat(input.value);
+                } else {
+                    try {
+                        value = JSON.parse(input.value);
+                    } catch (e) {
+                        value = input.value;
+                    }
+                }
+                
+                newProperties[key] = value;
+            });
+            
+            selectedNode.data('properties', newProperties);
+            hideModal();
+            
+            // Обновляем инспектор
+            showNodeInspector(selectedNode);
+        }
+
+        // Настройка кнопок панели инструментов
+        function setupEventListeners() {
+            // Запустить
+            document.getElementById('run').addEventListener('click', function() {
+                alert('Запуск обработки графа...\n(Требуется реализация бэкенда)');
+                // Здесь должна быть логика выполнения графа
+                executeGraph();
+            });
+
+            // Экспорт JSON
+            document.getElementById('export-graph').addEventListener('click', function() {
+                exportGraph();
+            });
+
+            // Импорт JSON
+            document.getElementById('import-graph').addEventListener('click', function() {
+                importGraph();
+            });
+
+            // Очистить
+            document.getElementById('clear-graph').addEventListener('click', function() {
+                if (confirm('Вы уверены, что хотите очистить граф?')) {
+                    cy.elements().remove();
+                    nodeIdCounter = 1;
+                    selectedNode = null;
+                    hideNodeInspector();
+                }
+            });
+
+            // Поиск узлов
+            document.getElementById('searchInput').addEventListener('input', function(e) {
+                const searchTerm = e.target.value.toLowerCase();
+                
+                cy.nodes().forEach(node => {
+                    const label = node.data('label').toLowerCase();
+                    const type = node.data('nodeType').toLowerCase();
+                    
+                    if (label.includes(searchTerm) || type.includes(searchTerm)) {
+                        node.style('opacity', 1);
+                    } else {
+                        node.style('opacity', 0.3);
+                    }
+                });
+            });
+        }
+
+        // Выполнение графа (заглушка)
+        function executeGraph() {
+            const nodes = cy.nodes();
+            const edges = cy.edges();
+            
+            console.log('Граф содержит:', nodes.length, 'узлов и', edges.length, 'связей');
+            
+            // Топологическая сортировка для выполнения
+            // Это упрощённая реализация
+            nodes.forEach(node => {
+                console.log('Узел:', node.data('label'), node.data('nodeType'));
+            });
+            
+            // Визуальная обратная связь
+            nodes.animate({
+                style: { 'background-color': '#4CAF50' }
+            }, {
+                duration: 300,
+                complete: function() {
+                    setTimeout(() => {
+                        nodes.animate({
+                            style: { 'background-color': 'data(color)' }
+                        }, { duration: 300 });
+                    }, 500);
+                }
+            });
+        }
+
+        // Экспорт графа в JSON
+        function exportGraph() {
+            const graphData = cy.json();
+            const jsonString = JSON.stringify(graphData, null, 2);
+            
+            const blob = new Blob([jsonString], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'workflow_graph.json';
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+            
+            console.log('Граф экспортирован');
+        }
+
+        // Импорт графа из JSON
+        function importGraph() {
+            const input = document.createElement('input');
+            input.type = 'file';
+            input.accept = '.json';
+            
+            input.onchange = function(e) {
+                const file = e.target.files[0];
+                if (!file) return;
+                
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    try {
+                        const graphData = JSON.parse(e.target.result);
+                        
+                        // Очищаем текущий граф
+                        cy.elements().remove();
+                        
+                        // Загружаем новый граф
+                        cy.add(graphData.elements || graphData);
+                        
+                        // Обновляем счётчик ID
+                        const maxId = cy.nodes().reduce((max, node) => {
+                            const match = node.id().match(/node_(\d+)/);
+                            if (match) {
+                                return Math.max(max, parseInt(match[1]));
+                            }
+                            return max;
+                        }, 0);
+                        nodeIdCounter = maxId + 1;
+                        
+                        console.log('Граф импортирован');
+                    } catch (error) {
+                        alert('Ошибка при импорте графа: ' + error.message);
+                    }
+                };
+                reader.readAsText(file);
+            };
+            
+            input.click();
+        }
+
+        // Вспомогательные функции UI
+        function toggleSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            sidebar.classList.toggle('collapsed');
+        }
+
+        function toggleGroup(header) {
+            const content = header.nextElementSibling;
+            const isVisible = content.style.display !== 'none';
+            content.style.display = isVisible ? 'none' : 'block';
+            header.style.opacity = isVisible ? '0.7' : '1';
+        }
+
+        function initTabs() {
+            // Инициализация табов (если есть)
+            console.log('Tabs initialized');
+        }
+
+        // Создаём начальный узел для демонстрации
+        window.addEventListener('load', function() {
+            setTimeout(() => {
+                // Добавляем демонстрационный узел
+                const demoNode = addNodeToGraph('LoadNode', 300, 200);
+                demoNode.data('properties', {
+                    filename: 'demo_image.tpt',
+                    format: 'tpt',
+                    autoscale: true
+                });
+            }, 500);
+        });
+    </script>
+</body>
+</html>
