@@ -13,6 +13,14 @@
     --preview-height: 360px;
     --preview-collapsed: 50px;
 }
+
+/* Темная тема для workflow - более темные тона */
+[data-theme="dark"] {
+    --gray-50: #0f172a;
+    --gray-100: #1e293b;
+    --gray-800: #020617;
+    --bg: #000000;
+}
 /* Сброс стандартных стилей */
 * {
     margin: 0;
