@@ -631,6 +631,7 @@
             // Mousedown на узле - проверяем, начало ли это соединения или перетаскивания
             let isDraggingNode = false;
             let dragOffset = { x: 0, y: 0 };
+            let tempTargetPos = null;
             
             cy.on('mousedown', 'node', function(evt) {
                 const node = evt.target;
@@ -651,24 +652,15 @@
                     
                     sourceNode = node;
                     isConnecting = true;
+                    tempTargetPos = { ...clickPos };
                     
-                    // Создаем временное ребро для визуализации
-                    tempEdge = cy.add({
-                        group: 'edges',
-                        data: {
-                            source: node.id(),
-                            target: node.id(),
-                            temp: true
-                        },
-                        classes: 'temp-edge'
-                    });
+                    // Не создаем временное ребро сразу, чтобы избежать ошибки о перекрытии
                 } else {
                     // Иначе начинаем перетаскивание узла
                     isDraggingNode = true;
                     dragOffset = {
-                        x: nodePos.x - cy.renderer().containerPositionToModelPosition ? 
-                            evt.renderedPosition.x : evt.renderedPosition.x,
-                        y: nodePos.y - evt.renderedPosition.y
+                        x: nodePos.x - clickPos.x,
+                        y: nodePos.y - clickPos.y
                     };
                 }
             });
@@ -677,9 +669,12 @@
             cy.on('mousemove', function(evt) {
                 const mousePos = evt.renderedPosition;
                 
-                if (isConnecting && tempEdge && sourceNode) {
-                    // Обновляем позицию целевой точки временного ребра
-                    tempEdge.data('tempTarget', mousePos);
+                if (isConnecting && sourceNode) {
+                    // Обновляем позицию целевой точки для временной линии
+                    tempTargetPos = { ...mousePos };
+                    
+                    // Рисуем временную линию через SVG overlay
+                    drawTempLine(sourceNode.position(), mousePos);
                 } else if (isDraggingNode && sourceNode) {
                     // Перетаскиваем узел
                     sourceNode.position({
@@ -711,26 +706,33 @@
                             const targetPortIndex = Math.min(Math.floor(relativeY / portHeight), inputs - 1);
                             
                             if (targetPortIndex >= 0) {
-                                // Создаем постоянное соединение
-                                cy.add({
-                                    group: 'edges',
-                                    data: {
-                                        source: sourceNode.id(),
-                                        target: targetNode.id(),
-                                        sourcePort: sourcePortIndex,
-                                        targetPort: targetPortIndex
-                                    }
+                                // Проверяем, не существует ли уже такое соединение
+                                const existingEdge = cy.edges().filter(function(edge) {
+                                    return edge.data('source') === sourceNode.id() && 
+                                           edge.data('target') === targetNode.id() &&
+                                           edge.data('sourcePort') === sourcePortIndex &&
+                                           edge.data('targetPort') === targetPortIndex;
                                 });
+                                
+                                if (existingEdge.length === 0) {
+                                    // Создаем постоянное соединение
+                                    cy.add({
+                                        group: 'edges',
+                                        data: {
+                                            source: sourceNode.id(),
+                                            target: targetNode.id(),
+                                            sourcePort: sourcePortIndex,
+                                            targetPort: targetPortIndex
+                                        }
+                                    });
+                                }
                             }
                         }
                     }
                 }
                 
-                // Очищаем временные данные
-                if (tempEdge) {
-                    cy.remove(tempEdge);
-                    tempEdge = null;
-                }
+                // Очищаем временную линию
+                removeTempLine();
                 isConnecting = false;
                 isDraggingNode = false;
                 sourceNode = null;
@@ -740,10 +742,7 @@
             // Mouseup на пустой области - отмена соединения или завершение перетаскивания
             cy.on('mouseup', function(evt) {
                 if (isConnecting) {
-                    if (tempEdge) {
-                        cy.remove(tempEdge);
-                        tempEdge = null;
-                    }
+                    removeTempLine();
                     isConnecting = false;
                 }
                 isDraggingNode = false;
@@ -764,6 +763,45 @@
         // Вспомогательная функция для получения высоты узла
         function nodeHeight() {
             return 60; // Значение из стиля height
+        }
+
+        // Функции для рисования временной линии соединения
+        let tempLineSvg = null;
+        
+        function drawTempLine(startPos, endPos) {
+            // Удаляем старую линию
+            removeTempLine();
+            
+            // Создаем SVG элемент для временной линии
+            const container = document.getElementById('cy');
+            tempLineSvg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+            tempLineSvg.style.position = 'absolute';
+            tempLineSvg.style.top = '0';
+            tempLineSvg.style.left = '0';
+            tempLineSvg.style.width = '100%';
+            tempLineSvg.style.height = '100%';
+            tempLineSvg.style.pointerEvents = 'none';
+            tempLineSvg.style.zIndex = '999';
+            
+            const line = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+            line.setAttribute('x1', startPos.x);
+            line.setAttribute('y1', startPos.y);
+            line.setAttribute('x2', endPos.x);
+            line.setAttribute('y2', endPos.y);
+            line.setAttribute('stroke', '#4CAF50');
+            line.setAttribute('stroke-width', '2');
+            line.setAttribute('stroke-dasharray', '5,5');
+            line.setAttribute('opacity', '0.7');
+            
+            tempLineSvg.appendChild(line);
+            container.appendChild(tempLineSvg);
+        }
+        
+        function removeTempLine() {
+            if (tempLineSvg) {
+                tempLineSvg.remove();
+                tempLineSvg = null;
+            }
         }
 
         // Drag and Drop из сайдбара
