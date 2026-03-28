@@ -664,9 +664,8 @@
             const config = nodeTypes[nodeType];
             const nodeId = `node_${nodeIdCounter++}`;
             
-            // Преобразуем координаты экрана в координаты графа
-            const renderedPosition = { x: x, y: y };
-            const modelPosition = cy.renderer().containerPositionToModelPosition(renderedPosition);
+            // Позиция в координатах контейнера уже подходит для Cytoscape
+            const position = { x: x, y: y };
             
             const newNode = cy.add({
                 group: 'nodes',
@@ -679,7 +678,7 @@
                     outputs: config.outputs,
                     properties: getDefaultProperties(nodeType)
                 },
-                position: modelPosition
+                position: position
             });
 
             // Автоматически выделяем новый узел
