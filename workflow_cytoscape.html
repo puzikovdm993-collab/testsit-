@@ -567,13 +567,13 @@
                 minZoom: 0.2,
                 maxZoom: 3,
                 
-                // Включение pan and zoom
-                panOnDrag: true,
+                // Включение pan and zoom - отключаем стандартное панорамирование для кастомной реализации
+                panOnDrag: false,
                 zoomOnWheel: true,
-                boxSelectionEnabled: true,
+                boxSelectionEnabled: false,
                 
                 // Отключаем стандартное перетаскивание для реализации соединения через порты
-                autoungrabify: false
+                autoungrabify: true
             });
 
             // Добавляем контролы зума (используем встроенные методы Cytoscape)
@@ -654,7 +654,8 @@
                     isConnecting = true;
                     tempTargetPos = { ...clickPos };
                     
-                    // Не создаем временное ребро сразу, чтобы избежать ошибки о перекрытии
+                    // Отключаем панорамирование на время соединения
+                    cy.autoungrabify(true);
                 } else {
                     // Иначе начинаем перетаскивание узла
                     isDraggingNode = true;
@@ -662,12 +663,22 @@
                         x: nodePos.x - clickPos.x,
                         y: nodePos.y - clickPos.y
                     };
+                    // Отключаем панорамирование на время перетаскивания узла
+                    cy.autoungrabify(true);
                 }
+                
+                // Останавливаем всплытие события чтобы холст не панорамировал
+                evt.stopPropagation();
             });
 
             // Mousemove - обработка перетаскивания и соединения
             cy.on('mousemove', function(evt) {
                 const mousePos = evt.renderedPosition;
+                
+                if (isPanning) {
+                    // Не обрабатываем другие действия при панорамировании
+                    return;
+                }
                 
                 if (isConnecting && sourceNode) {
                     // Обновляем позицию целевой точки для временной линии
@@ -731,6 +742,9 @@
                     }
                 }
                 
+                // Включаем обратно панорамирование
+                cy.autoungrabify(false);
+                
                 // Очищаем временную линию
                 removeTempLine();
                 isConnecting = false;
@@ -741,6 +755,9 @@
 
             // Mouseup на пустой области - отмена соединения или завершение перетаскивания
             cy.on('mouseup', function(evt) {
+                // Включаем обратно панорамирование
+                cy.autoungrabify(false);
+                
                 if (isConnecting) {
                     removeTempLine();
                     isConnecting = false;
@@ -748,6 +765,43 @@
                 isDraggingNode = false;
                 sourceNode = null;
                 sourcePortIndex = -1;
+            });
+
+            // Панорамирование холста перетаскиванием пустой области (правая кнопка мыши или Ctrl+левая)
+            let isPanning = false;
+            let panStart = { x: 0, y: 0 };
+            let panStartPos = { x: 0, y: 0 };
+            
+            cy.on('mousedown', function(evt) {
+                if (evt.target === cy && (evt.originalEvent.button === 2 || evt.originalEvent.ctrlKey)) {
+                    isPanning = true;
+                    panStart = { x: evt.renderedPosition.x, y: evt.renderedPosition.y };
+                    panStartPos = { ...cy.pan() };
+                    evt.stopPropagation();
+                }
+            });
+            
+            cy.on('mousemove', function(evt) {
+                if (isPanning) {
+                    const dx = evt.renderedPosition.x - panStart.x;
+                    const dy = evt.renderedPosition.y - panStart.y;
+                    cy.pan({
+                        x: panStartPos.x + dx,
+                        y: panStartPos.y + dy
+                    });
+                }
+            });
+            
+            cy.on('mouseup', function(evt) {
+                if (isPanning) {
+                    isPanning = false;
+                }
+            });
+            
+            // Отключаем контекстное меню при правой кнопке
+            cy.on('contextmenu', function(evt) {
+                evt.preventDefault();
+                return false;
             });
 
             // Удаление выделенных элементов (Delete или Backspace)
