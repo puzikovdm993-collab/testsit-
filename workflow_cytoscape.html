@@ -7,8 +7,6 @@
     
     <!-- Подключаем Cytoscape.js -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/cytoscape/3.28.1/cytoscape.min.js"></script>
-    <!-- Подключаем расширения для панорамирования и зума -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/cytoscape-panzoom/2.6.1/cytoscape-panzoom.min.js"></script>
     
     <link rel="stylesheet" href="styles/workflow.css">
     
@@ -386,6 +384,12 @@
             <div id="workflow-layout">
                 <div id="graph-container">
                     <div id="cy"></div>
+                    <!-- Контролы зума -->
+                    <div class="cy-controls">
+                        <button onclick="zoomIn()">+</button>
+                        <button onclick="zoomOut()">−</button>
+                        <button onclick="fitGraph()">Fit</button>
+                    </div>
                 </div>
             </div>
 
@@ -519,10 +523,7 @@
                         selector: 'node:selected',
                         style: {
                             'border-width': 4,
-                            'border-color': '#4CAF50',
-                            'shadow-blur': 10,
-                            'shadow-color': '#4CAF50',
-                            'shadow-opacity': 0.5
+                            'border-color': '#4CAF50'
                         }
                     },
                     // Выделенные рёбра
@@ -552,7 +553,6 @@
                 // Настройки взаимодействия
                 minZoom: 0.2,
                 maxZoom: 3,
-                wheelSensitivity: 0.3,
                 
                 // Включение pan and zoom
                 panOnDrag: true,
@@ -560,13 +560,8 @@
                 boxSelectionEnabled: true
             });
 
-            // Добавляем контролы зума
-            cy.panzoom({
-                zoomFactor: 0.05,
-                zoomDelay: 45,
-                fitAnimationDuration: 1000,
-                panSpeed: 10
-            });
+            // Добавляем контролы зума (используем встроенные методы Cytoscape)
+            setupZoomControls();
 
             // Обработчики событий
             setupCytoscapeEvents();
@@ -671,7 +666,7 @@
             
             // Преобразуем координаты экрана в координаты графа
             const renderedPosition = { x: x, y: y };
-            const modelPosition = cy.renderedPositionToModelPosition(renderedPosition);
+            const modelPosition = cy.renderer().containerPositionToModelPosition(renderedPosition);
             
             const newNode = cy.add({
                 group: 'nodes',
@@ -684,7 +679,7 @@
                     outputs: config.outputs,
                     properties: getDefaultProperties(nodeType)
                 },
-                renderedPosition: renderedPosition
+                position: modelPosition
             });
 
             // Автоматически выделяем новый узел
@@ -794,6 +789,34 @@
 
         function hideTooltip() {
             document.getElementById('cyTooltip').style.display = 'none';
+        }
+
+        // Контролы зума
+        function setupZoomControls() {
+            // Контролы уже добавлены в HTML
+        }
+
+        function zoomIn() {
+            cy.zoom({
+                level: cy.zoom() * 1.2,
+                renderedPosition: { x: cy.width() / 2, y: cy.height() / 2 }
+            });
+        }
+
+        function zoomOut() {
+            cy.zoom({
+                level: cy.zoom() * 0.8,
+                renderedPosition: { x: cy.width() / 2, y: cy.height() / 2 }
+            });
+        }
+
+        function fitGraph() {
+            if (cy.elements().length > 0) {
+                cy.fit(cy.elements(), 20);
+            } else {
+                cy.zoom(1);
+                cy.pan({ x: 0, y: 0 });
+            }
         }
 
         // Инспектор узлов
