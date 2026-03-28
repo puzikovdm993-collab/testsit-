@@ -60,6 +60,7 @@
     top: 100px;
     border-radius: var(--modal-radius);
     animation: modalFadeIn 0.2s ease-out;
+    pointer-events: auto;
 }
 
 @keyframes modalFadeIn {
@@ -75,7 +76,7 @@
 
 /* Заголовок — область перетаскивания */
 .modal-title {
-    background: linear-gradient(135deg, var(--modal-header-bg) 0%, #f4f4f5 100%);
+    background: linear-gradient(135deg, var(--modal-header-bg) 0%, var(--modal-bg) 100%);
     color: var(--modal-text);
     padding: 0 16px;
     display: flex;
@@ -88,6 +89,7 @@
     font-size: 13px;
     font-weight: 600;
     letter-spacing: -0.01em;
+    touch-action: none;
 }
 
 .modal-title:active {
@@ -138,7 +140,7 @@
     justify-content: flex-end;
     gap: 10px;
     border-top: 1px solid var(--modal-border);
-    background: linear-gradient(135deg, var(--modal-header-bg) 0%, #f4f4f5 100%);
+    background: linear-gradient(135deg, var(--modal-header-bg) 0%, var(--modal-bg) 100%);
 }
 
 .modal-btn {
