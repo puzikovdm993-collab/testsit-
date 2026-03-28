@@ -135,10 +135,17 @@
             isDragging = true;
             dragOffsetX = e.clientX - content.offsetLeft;
             dragOffsetY = e.clientY - content.offsetTop;
+            
+            // Поднимаем окно при начале перетаскивания
+            bringToFront(modal);
+            
+            // Добавляем обработчики на document чтобы ловить движения даже за пределами окна
+            document.addEventListener('mousemove', onMouseMove);
+            document.addEventListener('mouseup', onMouseUp);
             e.preventDefault();
         });
 
-        window.addEventListener('mousemove', (e) => {
+        function onMouseMove(e) {
             if (!isDragging) return;
 
             const newX = e.clientX - dragOffsetX;
@@ -151,14 +158,17 @@
 
             content.style.left = clampedX + 'px';
             content.style.top = clampedY + 'px';
-        });
+        }
 
-        window.addEventListener('mouseup', () => {
+        function onMouseUp() {
             if (isDragging) {
                 isDragging = false;
+                // Удаляем обработчики
+                document.removeEventListener('mousemove', onMouseMove);
+                document.removeEventListener('mouseup', onMouseUp);
                 saveModalState();
             }
-        });
+        }
 
         // ---- Изменение размера (если есть ручка) ----
         if (resizeHandle) {
@@ -171,16 +181,21 @@
                 startHeight = content.offsetHeight;
                 startX = e.clientX;
                 startY = e.clientY;
+                
+                // Поднимаем окно при начале изменения размера
+                bringToFront(modal);
+                
+                // Добавляем обработчики на document
+                document.addEventListener('mousemove', onResizeMove);
+                document.addEventListener('mouseup', onResizeUp);
                 e.preventDefault();
             });
 
-            window.addEventListener('mousemove', (e) => {
+            function onResizeMove(e) {
                 if (!isResizing) return;
 
                 const dx = e.clientX - startX;
                 const dy = e.clientY - startY;
-
-
 
                 // Получаем текущие startWidth/startHeight (из кода, который запускает resize)
                 const newWidth = Math.max(
@@ -192,26 +207,27 @@
                     startHeight + dy
                 );
 
-                // const newWidth = Math.max(MIN_WIDTH, startWidth + dx);
-                // const newHeight = Math.max(MIN_HEIGHT, startHeight + dy);
-
                 content.style.width = newWidth + 'px';
                 content.style.height = newHeight + 'px';
 
                 if (modal.id === 'graphModal') {
                     throttleResizePlotly();
                 }
-            });
+            }
 
-            window.addEventListener('mouseup', () => {
+            function onResizeUp() {
                 if (isResizing) {
                     isResizing = false;
+                    // Удаляем обработчики
+                    document.removeEventListener('mousemove', onResizeMove);
+                    document.removeEventListener('mouseup', onResizeUp);
+                    
                     if (modal.id === 'graphModal') {
                         resizePlotlyGraph();
                     }
                     saveModalState();
                 }
-            });
+            }
         }
     }
 
