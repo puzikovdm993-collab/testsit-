@@ -12,15 +12,15 @@
     --modal-overlay: rgba(0, 0, 0, 0.4);
 }
 
-/* Темная тема для модальных окон */
+/* Темная тема для модальных окон - более темные тона */
 [data-theme="dark"] {
-    --modal-bg: #1e293b;
-    --modal-border: #475569;
-    --modal-header-bg: #334155;
-    --modal-text: #f1f5f9;
-    --modal-text-muted: #94a3b8;
-    --modal-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
-    --modal-overlay: rgba(0, 0, 0, 0.6);
+    --modal-bg: #0f172a;
+    --modal-border: #334155;
+    --modal-header-bg: #1e293b;
+    --modal-text: #f8fafc;
+    --modal-text-muted: #cbd5e1;
+    --modal-shadow: 0 8px 32px rgba(0, 0, 0, 0.6);
+    --modal-overlay: rgba(0, 0, 0, 0.7);
 }
 
 /* Overlay for modals */
