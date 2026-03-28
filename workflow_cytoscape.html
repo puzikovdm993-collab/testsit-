@@ -518,6 +518,19 @@
                             'arrow-scale': 1.5
                         }
                     },
+                    // Временное ребро (при соединении)
+                    {
+                        selector: '.temp-edge',
+                        style: {
+                            'width': 2,
+                            'line-color': '#4CAF50',
+                            'target-arrow-color': '#4CAF50',
+                            'target-arrow-shape': 'triangle',
+                            'curve-style': 'bezier',
+                            'line-style': 'dashed',
+                            'opacity': 0.7
+                        }
+                    },
                     // Выделенные узлы
                     {
                         selector: 'node:selected',
@@ -554,10 +567,13 @@
                 minZoom: 0.2,
                 maxZoom: 3,
                 
-                // Включение pan and zoom
-                panOnDrag: true,
+                // Включение pan and zoom - отключаем стандартное панорамирование для кастомной реализации
+                panOnDrag: false,
                 zoomOnWheel: true,
-                boxSelectionEnabled: true
+                boxSelectionEnabled: false,
+                
+                // Отключаем стандартное перетаскивание для реализации соединения через порты
+                autoungrabify: true
             });
 
             // Добавляем контролы зума (используем встроенные методы Cytoscape)
@@ -569,6 +585,12 @@
 
         // Настройка событий Cytoscape
         function setupCytoscapeEvents() {
+            // Переменные для создания соединений
+            let sourceNode = null;
+            let sourcePortIndex = -1;
+            let isConnecting = false;
+            let tempEdge = null;
+
             // Клик по узлу
             cy.on('tap', 'node', function(evt) {
                 const node = evt.target;
@@ -606,15 +628,180 @@
                 updateTooltipPosition(evt);
             });
 
-            // Создание связи (drag and drop)
-            let sourceNode = null;
+            // Mousedown на узле - проверяем, начало ли это соединения или перетаскивания
+            let isDraggingNode = false;
+            let dragOffset = { x: 0, y: 0 };
+            let tempTargetPos = null;
             
-            cy.on('grab', 'node', function(evt) {
-                sourceNode = evt.target;
+            cy.on('mousedown', 'node', function(evt) {
+                const node = evt.target;
+                const outputs = node.data('outputs') || 0;
+                const inputs = node.data('inputs') || 0;
+                
+                // Проверяем, кликнули ли на правую половину узла (выходные порты)
+                const nodePos = node.position();
+                const clickPos = evt.renderedPosition;
+                
+                // Если клик справа от центра узла и есть выходы - это начало соединения
+                if (clickPos.x > nodePos.x && outputs > 0) {
+                    // Вычисляем индекс порта (разделяем правую сторону на количество выходов)
+                    const relativeY = clickPos.y - (nodePos.y - nodeHeight() / 2);
+                    const portHeight = nodeHeight() / Math.max(outputs, 1);
+                    sourcePortIndex = Math.min(Math.floor(relativeY / portHeight), outputs - 1);
+                    if (sourcePortIndex < 0) sourcePortIndex = 0;
+                    
+                    sourceNode = node;
+                    isConnecting = true;
+                    tempTargetPos = { ...clickPos };
+                    
+                    // Отключаем панорамирование на время соединения
+                    cy.autoungrabify(true);
+                } else {
+                    // Иначе начинаем перетаскивание узла
+                    isDraggingNode = true;
+                    dragOffset = {
+                        x: nodePos.x - clickPos.x,
+                        y: nodePos.y - clickPos.y
+                    };
+                    // Отключаем панорамирование на время перетаскивания узла
+                    cy.autoungrabify(true);
+                }
+                
+                // Останавливаем всплытие события чтобы холст не панорамировал
+                evt.stopPropagation();
             });
 
-            cy.on('free', 'node', function(evt) {
+            // Mousemove - обработка перетаскивания и соединения
+            cy.on('mousemove', function(evt) {
+                const mousePos = evt.renderedPosition;
+                
+                if (isPanning) {
+                    // Не обрабатываем другие действия при панорамировании
+                    return;
+                }
+                
+                if (isConnecting && sourceNode) {
+                    // Обновляем позицию целевой точки для временной линии
+                    tempTargetPos = { ...mousePos };
+                    
+                    // Рисуем временную линию через SVG overlay
+                    drawTempLine(sourceNode.position(), mousePos);
+                } else if (isDraggingNode && sourceNode) {
+                    // Перетаскиваем узел
+                    sourceNode.position({
+                        x: mousePos.x + dragOffset.x,
+                        y: mousePos.y + dragOffset.y
+                    });
+                }
+            });
+
+            // Mouseup - завершение действий
+            cy.on('mouseup', 'node', function(evt) {
+                if (isConnecting && sourceNode) {
+                    const targetNode = evt.target;
+                    
+                    // Не соединяем узел сам с собой
+                    if (targetNode.id() !== sourceNode.id()) {
+                        const inputs = targetNode.data('inputs') || 0;
+                        
+                        // Проверяем, кликнули ли на левую половину узла (входные порты)
+                        const nodePos = targetNode.position();
+                        const clickPos = evt.renderedPosition;
+                        
+                        // Если клик слева от центра узла - это входной порт
+                        if (clickPos.x < nodePos.x && inputs > 0) {
+                            // Вычисляем индекс входного порта
+                            const nodeH = targetNode.height();
+                            const relativeY = clickPos.y - (nodePos.y - nodeH / 2);
+                            const portHeight = nodeH / Math.max(inputs, 1);
+                            const targetPortIndex = Math.min(Math.floor(relativeY / portHeight), inputs - 1);
+                            
+                            if (targetPortIndex >= 0) {
+                                // Проверяем, не существует ли уже такое соединение
+                                const existingEdge = cy.edges().filter(function(edge) {
+                                    return edge.data('source') === sourceNode.id() && 
+                                           edge.data('target') === targetNode.id() &&
+                                           edge.data('sourcePort') === sourcePortIndex &&
+                                           edge.data('targetPort') === targetPortIndex;
+                                });
+                                
+                                if (existingEdge.length === 0) {
+                                    // Создаем постоянное соединение
+                                    cy.add({
+                                        group: 'edges',
+                                        data: {
+                                            source: sourceNode.id(),
+                                            target: targetNode.id(),
+                                            sourcePort: sourcePortIndex,
+                                            targetPort: targetPortIndex
+                                        }
+                                    });
+                                }
+                            }
+                        }
+                    }
+                }
+                
+                // Включаем обратно панорамирование
+                cy.autoungrabify(false);
+                
+                // Очищаем временную линию
+                removeTempLine();
+                isConnecting = false;
+                isDraggingNode = false;
                 sourceNode = null;
+                sourcePortIndex = -1;
+            });
+
+            // Mouseup на пустой области - отмена соединения или завершение перетаскивания
+            cy.on('mouseup', function(evt) {
+                // Включаем обратно панорамирование
+                cy.autoungrabify(false);
+                
+                if (isConnecting) {
+                    removeTempLine();
+                    isConnecting = false;
+                }
+                isDraggingNode = false;
+                sourceNode = null;
+                sourcePortIndex = -1;
+            });
+
+            // Панорамирование холста перетаскиванием пустой области (правая кнопка мыши или Ctrl+левая)
+            let isPanning = false;
+            let panStart = { x: 0, y: 0 };
+            let panStartPos = { x: 0, y: 0 };
+            
+            cy.on('mousedown', function(evt) {
+                if (evt.target === cy && (evt.originalEvent.button === 2 || evt.originalEvent.ctrlKey)) {
+                    isPanning = true;
+                    panStart = { x: evt.renderedPosition.x, y: evt.renderedPosition.y };
+                    panStartPos = { ...cy.pan() };
+                    evt.stopPropagation();
+                }
+            });
+            
+            cy.on('mousemove', function(evt) {
+                if (isPanning) {
+                    const dx = evt.renderedPosition.x - panStart.x;
+                    const dy = evt.renderedPosition.y - panStart.y;
+                    cy.pan({
+                        x: panStartPos.x + dx,
+                        y: panStartPos.y + dy
+                    });
+                }
+            });
+            
+            cy.on('mouseup', function(evt) {
+                if (isPanning) {
+                    isPanning = false;
+                }
+            });
+            
+            // Отключаем контекстное меню при правой кнопке
+            cy.on('contextmenu', function(evt) {
+                evt.preventDefault();
+                return false;
             });
 
             // Удаление выделенных элементов (Delete или Backspace)
@@ -625,6 +812,50 @@
                     hideNodeInspector();
                 }
             });
+        }
+        
+        // Вспомогательная функция для получения высоты узла
+        function nodeHeight() {
+            return 60; // Значение из стиля height
+        }
+
+        // Функции для рисования временной линии соединения
+        let tempLineSvg = null;
+        
+        function drawTempLine(startPos, endPos) {
+            // Удаляем старую линию
+            removeTempLine();
+            
+            // Создаем SVG элемент для временной линии
+            const container = document.getElementById('cy');
+            tempLineSvg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+            tempLineSvg.style.position = 'absolute';
+            tempLineSvg.style.top = '0';
+            tempLineSvg.style.left = '0';
+            tempLineSvg.style.width = '100%';
+            tempLineSvg.style.height = '100%';
+            tempLineSvg.style.pointerEvents = 'none';
+            tempLineSvg.style.zIndex = '999';
+            
+            const line = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+            line.setAttribute('x1', startPos.x);
+            line.setAttribute('y1', startPos.y);
+            line.setAttribute('x2', endPos.x);
+            line.setAttribute('y2', endPos.y);
+            line.setAttribute('stroke', '#4CAF50');
+            line.setAttribute('stroke-width', '2');
+            line.setAttribute('stroke-dasharray', '5,5');
+            line.setAttribute('opacity', '0.7');
+            
+            tempLineSvg.appendChild(line);
+            container.appendChild(tempLineSvg);
+        }
+        
+        function removeTempLine() {
+            if (tempLineSvg) {
+                tempLineSvg.remove();
+                tempLineSvg = null;
+            }
         }
 
         // Drag and Drop из сайдбара
@@ -664,9 +895,8 @@
             const config = nodeTypes[nodeType];
             const nodeId = `node_${nodeIdCounter++}`;
             
-            // Преобразуем координаты экрана в координаты графа
-            const renderedPosition = { x: x, y: y };
-            const modelPosition = cy.renderer().containerPositionToModelPosition(renderedPosition);
+            // Позиция в координатах контейнера уже подходит для Cytoscape
+            const position = { x: x, y: y };
             
             const newNode = cy.add({
                 group: 'nodes',
@@ -679,7 +909,7 @@
                     outputs: config.outputs,
                     properties: getDefaultProperties(nodeType)
                 },
-                position: modelPosition
+                position: position
             });
 
             // Автоматически выделяем новый узел
