@@ -354,7 +354,12 @@
             <!-- Контент вкладки "Настройки" -->
             <div class="tab-pane" id="tab-options">
                 <div class="tab-section">
+                    <h4>Тема оформления</h4>
                     <div class="tab-buttons">
+                        <button class="tab-action-btn" onclick="toggleTheme()" title="Переключить тему">
+                            <svg class="icon" viewBox="0 0 24 24"><path d="M12 3c-4.97 0-9 4.03-9 9s4.03 9 9 9 9-4.03 9-9c0-.46-.04-.92-.1-1.36a5.389 5.389 0 0 1-4.4 2.26 5.403 5.403 0 0 1-5.5-5.5c0-2.05 1.13-3.83 2.8-4.8A9.03 9.03 0 0 0 12 3z"/></svg>
+                            <span>Тема</span>
+                        </button>
                         <div class="tab-checkbox-container">
                             <input type="checkbox" id="colorbarViewToggle" class="tab-checkbox" checked>
                             <label for="colorbarViewToggle" class="tab-checkbox-label" >
@@ -1252,5 +1257,30 @@
 <script src="src/drawing/drawing.js"></script>
 <script src="src/tabs/tabs.js"></script>
 <script src="src/modals/models.js"></script>
+
+<script>
+// Функция переключения темы
+function toggleTheme() {
+    const html = document.documentElement;
+    const currentTheme = html.getAttribute('data-theme');
+    const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+    
+    if (newTheme === 'dark') {
+        html.setAttribute('data-theme', 'dark');
+        localStorage.setItem('theme', 'dark');
+    } else {
+        html.removeAttribute('data-theme');
+        localStorage.setItem('theme', 'light');
+    }
+}
+
+// Применение сохраненной темы при загрузке страницы
+(function applySavedTheme() {
+    const savedTheme = localStorage.getItem('theme');
+    if (savedTheme === 'dark') {
+        document.documentElement.setAttribute('data-theme', 'dark');
+    }
+})();
+</script>
 </body>
 </html> 
