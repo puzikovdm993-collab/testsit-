@@ -38,6 +38,11 @@ document.addEventListener('DOMContentLoaded', function() {
     updateToolInfo();
     // Инициализируем состояние кнопок при загрузке (когда файлов еще нет)
     updateButtonsState();
+    
+    // Запускаем автосохранение истории
+    if (typeof startHistoryAutoSave === 'function') {
+        startHistoryAutoSave();
+    }
 
     // ============ Инициализация графика Plotly ============
     const plotlyDiv = document.getElementById('graphCanvas');

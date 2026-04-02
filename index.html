@@ -1299,6 +1299,32 @@
     function hasActiveProject() {
         return localStorage.getItem('activeProjectId') !== null;
     }
+    
+    // ====================== СОХРАНЕНИЕ И ЗАГРУЗКА ИСТОРИИ ПРОЕКТА ======================
+    
+    // Сохранение истории при закрытии вкладки/окна
+    window.addEventListener('beforeunload', function() {
+        if (typeof saveHistoryToStorage === 'function') {
+            saveHistoryToStorage();
+        }
+    });
+    
+    // Автоматическая загрузка истории при загрузке страницы
+    window.addEventListener('DOMContentLoaded', function() {
+        // Загружаем историю после инициализации всех модулей
+        setTimeout(function() {
+            if (typeof loadHistoryFromStorage === 'function') {
+                const loaded = loadHistoryFromStorage();
+                if (loaded) {
+                    console.log('✅ История проекта загружена');
+                    // Обновляем окно истории, если оно открыто
+                    if (typeof updateHistoryModal === 'function' && document.getElementById('historyModal').classList.contains('active')) {
+                        updateHistoryModal();
+                    }
+                }
+            }
+        }, 500); // Небольшая задержка для уверенности что все файлы загружены
+    });
 </script>
 </body>
 </html> 

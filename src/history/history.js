@@ -103,3 +103,134 @@ function captureState(file) {
         action: action
     };
 }
+
+// ====================== СОХРАНЕНИЕ И ЗАГРУЗКА ИСТОРИИ ======================
+
+// Сохранение истории всех открытых файлов в localStorage
+function saveHistoryToStorage() {
+    const projectId = localStorage.getItem('activeProjectId');
+    if (!projectId) return;
+    
+    const historyData = {};
+    openFiles.forEach(file => {
+        // Сохраняем историю с конвертацией ImageData в массив для JSON
+        historyData[file.id] = {
+            historyIndex: file.historyIndex,
+            filename: file.filename,
+            canvasWidth: file.canvas?.width || 0,
+            canvasHeight: file.canvas?.height || 0,
+            history: file.history.map(state => ({
+                w: state.w,
+                h: state.h,
+                timestamp: state.timestamp,
+                action: state.action,
+                // Конвертируем ImageData.data в обычный массив для JSON
+                imageData: state.data ? Array.from(state.data.data) : null
+            }))
+        };
+    });
+    
+    try {
+        localStorage.setItem(`project_history_${projectId}`, JSON.stringify(historyData));
+        console.log('✅ История сохранена в localStorage');
+    } catch (e) {
+        console.warn('⚠️ Не удалось сохранить историю (возможно превышен лимит localStorage):', e);
+    }
+}
+
+// Загрузка истории из localStorage
+function loadHistoryFromStorage() {
+    const projectId = localStorage.getItem('activeProjectId');
+    if (!projectId) return false;
+    
+    const savedData = localStorage.getItem(`project_history_${projectId}`);
+    if (!savedData) return false;
+    
+    try {
+        const historyData = JSON.parse(savedData);
+        
+        // Для каждого сохраненного файла восстанавливаем историю
+        Object.keys(historyData).forEach(fileId => {
+            const file = openFiles.find(f => f.id === fileId);
+            if (!file) {
+                console.log(`⚠️ Файл ${fileId} не найден среди открытых, пропускаем историю`);
+                return;
+            }
+            
+            const savedFileHistory = historyData[fileId];
+            file.historyIndex = savedFileHistory.historyIndex || -1;
+            file.history = savedFileHistory.history.map(state => {
+                // Восстанавливаем ImageData из массива
+                let imageData = null;
+                if (state.imageData && Array.isArray(state.imageData)) {
+                    const arr = new Uint8ClampedArray(state.imageData);
+                    imageData = new ImageData(arr, state.w, state.h);
+                }
+                
+                return {
+                    w: state.w,
+                    h: state.h,
+                    timestamp: state.timestamp,
+                    action: state.action,
+                    data: imageData
+                };
+            });
+            
+            console.log(`✅ История загружена для файла ${file.filename}`);
+        });
+        
+        return true;
+    } catch (e) {
+        console.error('❌ Ошибка загрузки истории:', e);
+        return false;
+    }
+}
+
+// Экспорт истории в JSON файл (для скачивания)
+function exportHistoryToFile() {
+    const file = getActiveFile();
+    if (!file || file.history.length === 0) {
+        alert('История пуста');
+        return;
+    }
+    
+    const exportData = {
+        filename: file.filename,
+        historyLength: file.history.length,
+        currentIndex: file.historyIndex,
+        history: file.history.map((state, idx) => ({
+            index: idx,
+            action: state.action,
+            timestamp: state.timestamp,
+            dimensions: `${state.w}x${state.h}`
+        }))
+    };
+    
+    const blob = new Blob([JSON.stringify(exportData, null, 2)], {type: 'application/json'});
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `${file.filename}_history.json`;
+    a.click();
+    URL.revokeObjectURL(url);
+}
+
+// Автосохранение истории каждые 30 секунд
+let historyAutoSaveInterval = null;
+
+function startHistoryAutoSave() {
+    if (historyAutoSaveInterval) clearInterval(historyAutoSaveInterval);
+    historyAutoSaveInterval = setInterval(() => {
+        if (typeof saveHistoryToStorage === 'function') {
+            saveHistoryToStorage();
+        }
+    }, 30000); // 30 секунд
+    console.log('✅ Автосохранение истории запущено (каждые 30 сек)');
+}
+
+function stopHistoryAutoSave() {
+    if (historyAutoSaveInterval) {
+        clearInterval(historyAutoSaveInterval);
+        historyAutoSaveInterval = null;
+    }
+}
