@@ -4276,4 +4276,49 @@
 
     </script>
 
+    <!-- Общие функции для работы с настройками (доступны в index.html и workflow.html) -->
+    <script>
+        // Получение настроек проекта из localStorage
+        function getProjectSettings(projectId) {
+            const settingsKey = `project_settings_${projectId}`;
+            const saved = localStorage.getItem(settingsKey);
+            return saved ? JSON.parse(saved) : {};
+        }
+
+        // Сохранение настроек проекта в localStorage
+        function saveProjectSettings(projectId, settings) {
+            const settingsKey = `project_settings_${projectId}`;
+            localStorage.setItem(settingsKey, JSON.stringify(settings));
+        }
+
+        // Получение пользовательских настроек из localStorage
+        function getUserSettings() {
+            const saved = localStorage.getItem('user_settings');
+            return saved ? JSON.parse(saved) : {};
+        }
+
+        // Сохранение пользовательских настроек в localStorage
+        function saveUserSettings(settings) {
+            localStorage.setItem('user_settings', JSON.stringify(settings));
+        }
+
+        // Получение информации о текущем активном проекте
+        function getCurrentProject() {
+            const projectId = localStorage.getItem('activeProjectId');
+            if (!projectId) return null;
+            
+            return {
+                id: projectId,
+                name: localStorage.getItem('activeProjectName') || '',
+                type: localStorage.getItem('activeProjectType') || '',
+                settings: getProjectSettings(projectId)
+            };
+        }
+
+        // Проверка наличия активного проекта
+        function hasActiveProject() {
+            return localStorage.getItem('activeProjectId') !== null;
+        }
+    </script>
+
 </body>
