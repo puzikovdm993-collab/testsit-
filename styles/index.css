@@ -61,8 +61,9 @@
 
 .tabs-header {
     display: flex;
+    align-items: center;
     padding: 0 12px;
-    gap: 4px;
+    gap: 12px;
     border-bottom: 1px solid var(--border-color);
     background: var(--background-tertiary);
 }
@@ -80,6 +81,7 @@
     transition: all var(--transition-fast);
     position: relative;
     top: 1px;
+    flex-shrink: 0;
 }
 
 .tab-btn:hover {
@@ -1964,6 +1966,7 @@ input, textarea, select,
     font-weight: 500;
     transition: all 0.2s ease;
     box-shadow: 0 2px 8px rgba(59, 130, 246, 0.3);
+    flex-shrink: 0;
 }
 
 .back-to-projects-btn:hover {
