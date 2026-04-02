@@ -287,8 +287,9 @@
         /* карточная сетка проектов */
         .projects-header {
             display: flex;
-            justify-content: space-between;
-            align-items: baseline;
+            justify-content: flex-start;
+            align-items: center;
+            gap: 16px;
             margin-bottom: 1.2rem;
             flex-wrap: wrap;
         }
@@ -297,6 +298,7 @@
             font-size: 1.4rem;
             font-weight: 600;
             color: #f1f5f9;
+            margin: 0;
         }
 
         .result-count {
@@ -305,6 +307,163 @@
             border-radius: 30px;
             font-size: 0.75rem;
             color: #cbd5e1;
+        }
+
+        /* кнопка назад к проектам */
+        .back-to-projects-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: transparent;
+            border: 1px solid #334155;
+            color: #94a3b8;
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            cursor: pointer;
+            transition: 0.2s;
+            margin-right: 12px;
+        }
+
+        .back-to-projects-btn:hover {
+            background: #334155;
+            color: #f1f5f9;
+            border-color: #475569;
+        }
+
+        /* настройки пользователя - модальное окно */
+        .user-settings-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 2000;
+            backdrop-filter: blur(4px);
+        }
+
+        .user-settings-modal.show {
+            display: flex;
+        }
+
+        .user-settings-panel {
+            background: #1e293b;
+            border-radius: 28px;
+            padding: 2rem;
+            width: 100%;
+            max-width: 500px;
+            border: 1px solid #334155;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+        }
+
+        .settings-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid #334155;
+        }
+
+        .settings-header h3 {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #f1f5f9;
+        }
+
+        .close-settings-btn {
+            background: transparent;
+            border: none;
+            color: #94a3b8;
+            font-size: 1.5rem;
+            cursor: pointer;
+            transition: 0.2s;
+            padding: 4px 8px;
+            border-radius: 8px;
+        }
+
+        .close-settings-btn:hover {
+            background: #334155;
+            color: #f1f5f9;
+        }
+
+        .settings-form-group {
+            margin-bottom: 1.2rem;
+        }
+
+        .settings-form-group label {
+            font-size: 0.7rem;
+            font-weight: 500;
+            text-transform: uppercase;
+            color: #94a3b8;
+            display: block;
+            margin-bottom: 6px;
+        }
+
+        .settings-form-group input, .settings-form-group select {
+            width: 100%;
+            padding: 0.7rem 1rem;
+            border-radius: 16px;
+            border: 1px solid #334155;
+            background: #0f172a;
+            color: #e2e8f0;
+            font-size: 0.9rem;
+            transition: 0.2s;
+            font-family: inherit;
+        }
+
+        .settings-form-group input:focus, .settings-form-group select:focus {
+            outline: none;
+            border-color: #3b82f6;
+            box-shadow: 0 0 0 2px rgba(59,130,246,0.2);
+        }
+
+        .settings-actions {
+            display: flex;
+            gap: 10px;
+            margin-top: 1.5rem;
+        }
+
+        .btn-secondary {
+            background: #334155;
+            border: none;
+            padding: 0.7rem 1.6rem;
+            border-radius: 40px;
+            color: #e2e8f0;
+            font-weight: 600;
+            font-size: 0.8rem;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .btn-secondary:hover {
+            background: #475569;
+        }
+
+        /* кнопка настроек в профиле */
+        .settings-btn-profile {
+            background: transparent;
+            border: 1px solid #334155;
+            color: #94a3b8;
+            padding: 6px 12px;
+            border-radius: 16px;
+            font-size: 0.75rem;
+            cursor: pointer;
+            transition: 0.2s;
+            margin-top: 10px;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .settings-btn-profile:hover {
+            background: #334155;
+            color: #f1f5f9;
+            border-color: #475569;
         }
 
         .projects-grid-main {
@@ -403,6 +562,7 @@
                 <div class="stat-item"><span>⭐</span> 14 шаблонов</div>
                 <div class="stat-item"><span>🔄</span> 3 в работе</div>
             </div>
+            <button id="openSettingsBtn" class="settings-btn-profile">⚙️ Настройки профиля</button>
         </div>
 
         <div class="search-section">
@@ -462,6 +622,7 @@
 
         <!-- Секция проектов с поиском и результатами -->
         <div class="projects-header">
+            <button id="backToProjectsBtn" class="back-to-projects-btn">← Назад к проектам</button>
             <h2>📌 Все проекты</h2>
             <div class="result-count" id="projectsCountDisplay">0 проектов</div>
         </div>
@@ -474,6 +635,44 @@
 </div>
 
 <div id="toastMsg" class="toast-msg">✨ Уведомление</div>
+
+<!-- Модальное окно настроек пользователя -->
+<div id="userSettingsModal" class="user-settings-modal">
+    <div class="user-settings-panel">
+        <div class="settings-header">
+            <h3>⚙️ Настройки профиля</h3>
+            <button id="closeSettingsBtn" class="close-settings-btn">×</button>
+        </div>
+        <div class="settings-form-group">
+            <label>Ваше имя</label>
+            <input type="text" id="settingsUserName" value="Алина Дизайнер">
+        </div>
+        <div class="settings-form-group">
+            <label>Роль / Должность</label>
+            <input type="text" id="settingsUserRole" value="Продукт-дизайнер · Penpot PRO">
+        </div>
+        <div class="settings-form-group">
+            <label>Тема оформления</label>
+            <select id="settingsTheme">
+                <option value="dark" selected>🌙 Тёмная</option>
+                <option value="light">☀️ Светлая</option>
+                <option value="auto">🔄 Авто</option>
+            </select>
+        </div>
+        <div class="settings-form-group">
+            <label>Уведомления</label>
+            <select id="settingsNotifications">
+                <option value="all" selected>✅ Все уведомления</option>
+                <option value="important">⚠️ Только важные</option>
+                <option value="none">🔕 Отключить</option>
+            </select>
+        </div>
+        <div class="settings-actions">
+            <button id="saveSettingsBtn" class="btn-primary">💾 Сохранить</button>
+            <button id="cancelSettingsBtn" class="btn-secondary">Отмена</button>
+        </div>
+    </div>
+</div>
 
 <script>
     // ---------- ХРАНИЛИЩЕ ДАННЫХ ----------
@@ -499,6 +698,18 @@
     const projectType = document.getElementById('projectType');
     const projectDeadline = document.getElementById('projectDeadline');
     const toastMsg = document.getElementById('toastMsg');
+    
+    // Элементы настроек пользователя
+    const userSettingsModal = document.getElementById('userSettingsModal');
+    const openSettingsBtn = document.getElementById('openSettingsBtn');
+    const closeSettingsBtn = document.getElementById('closeSettingsBtn');
+    const saveSettingsBtn = document.getElementById('saveSettingsBtn');
+    const cancelSettingsBtn = document.getElementById('cancelSettingsBtn');
+    const backToProjectsBtn = document.getElementById('backToProjectsBtn');
+    const settingsUserName = document.getElementById('settingsUserName');
+    const settingsUserRole = document.getElementById('settingsUserRole');
+    const settingsTheme = document.getElementById('settingsTheme');
+    const settingsNotifications = document.getElementById('settingsNotifications');
 
     // Функция уведомлений
     function showToast(message, isError = false) {
@@ -740,6 +951,47 @@
         // поддержка enter в поле названия
         newProjectName.addEventListener('keypress', (e) => {
             if (e.key === 'Enter') createNewProject();
+        });
+        
+        // Обработчики настроек пользователя
+        openSettingsBtn.addEventListener('click', () => {
+            userSettingsModal.classList.add('show');
+        });
+        
+        closeSettingsBtn.addEventListener('click', () => {
+            userSettingsModal.classList.remove('show');
+        });
+        
+        cancelSettingsBtn.addEventListener('click', () => {
+            userSettingsModal.classList.remove('show');
+        });
+        
+        saveSettingsBtn.addEventListener('click', () => {
+            const newName = settingsUserName.value.trim();
+            const newRole = settingsUserRole.value.trim();
+            
+            if (newName) {
+                document.querySelector('.user-name').textContent = newName;
+            }
+            if (newRole) {
+                document.querySelector('.user-role').textContent = newRole;
+            }
+            
+            userSettingsModal.classList.remove('show');
+            showToast('✅ Настройки сохранены', false);
+        });
+        
+        // Закрытие модального окна по клику вне его
+        userSettingsModal.addEventListener('click', (e) => {
+            if (e.target === userSettingsModal) {
+                userSettingsModal.classList.remove('show');
+            }
+        });
+        
+        // Кнопка "Назад к проектам" - скролл вверх и фокус на сетке проектов
+        backToProjectsBtn.addEventListener('click', () => {
+            document.querySelector('.main-content').scrollTo({ top: 0, behavior: 'smooth' });
+            showToast('📌 Все проекты', false);
         });
     }
 
