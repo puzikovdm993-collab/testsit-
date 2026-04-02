@@ -750,6 +750,184 @@
 </div>
 
 <script>
+    // ---------- INDEXED DB МОДУЛЬ ----------
+    const DB_NAME = 'PenpotProjectsDB';
+    const DB_VERSION = 1;
+    const PROJECTS_STORE = 'projects';
+    const SETTINGS_STORE = 'settings';
+    
+    let db = null;
+    
+    // Инициализация IndexedDB
+    function initDB() {
+        return new Promise((resolve, reject) => {
+            const request = indexedDB.open(DB_NAME, DB_VERSION);
+            
+            request.onerror = () => {
+                console.error('Ошибка открытия IndexedDB:', request.error);
+                reject(request.error);
+            };
+            
+            request.onsuccess = () => {
+                db = request.result;
+                console.log('IndexedDB успешно открыта');
+                resolve(db);
+            };
+            
+            request.onupgradeneeded = (event) => {
+                const database = event.target.result;
+                
+                // Создаем хранилище для проектов
+                if (!database.objectStoreNames.contains(PROJECTS_STORE)) {
+                    const projectStore = database.createObjectStore(PROJECTS_STORE, { keyPath: 'id' });
+                    projectStore.createIndex('name', 'name', { unique: false });
+                    projectStore.createIndex('createdAt', 'createdAt', { unique: false });
+                }
+                
+                // Создаем хранилище для настроек
+                if (!database.objectStoreNames.contains(SETTINGS_STORE)) {
+                    database.createObjectStore(SETTINGS_STORE, { keyPath: 'key' });
+                }
+            };
+        });
+    }
+    
+    // Сохранить все проекты
+    function saveProjectsToDB(projectsArray) {
+        return new Promise((resolve, reject) => {
+            if (!db) {
+                reject(new Error('DB не инициализирована'));
+                return;
+            }
+            
+            const transaction = db.transaction([PROJECTS_STORE], 'readwrite');
+            const store = transaction.objectStore(PROJECTS_STORE);
+            
+            // Очищаем хранилище
+            const clearRequest = store.clear();
+            
+            clearRequest.onsuccess = () => {
+                // Добавляем все проекты
+                projectsArray.forEach(project => {
+                    store.put(project);
+                });
+            };
+            
+            transaction.oncomplete = () => {
+                console.log('Проекты сохранены в IndexedDB');
+                resolve();
+            };
+            
+            transaction.onerror = () => {
+                console.error('Ошибка сохранения проектов:', transaction.error);
+                reject(transaction.error);
+            };
+        });
+    }
+    
+    // Загрузить все проекты
+    function loadProjectsFromDB() {
+        return new Promise((resolve, reject) => {
+            if (!db) {
+                reject(new Error('DB не инициализирована'));
+                return;
+            }
+            
+            const transaction = db.transaction([PROJECTS_STORE], 'readonly');
+            const store = transaction.objectStore(PROJECTS_STORE);
+            const request = store.getAll();
+            
+            request.onsuccess = () => {
+                console.log('Проекты загружены из IndexedDB:', request.result.length);
+                resolve(request.result);
+            };
+            
+            request.onerror = () => {
+                console.error('Ошибка загрузки проектов:', request.error);
+                reject(request.error);
+            };
+        });
+    }
+    
+    // Сохранить настройку
+    function saveSettingToDB(key, value) {
+        return new Promise((resolve, reject) => {
+            if (!db) {
+                reject(new Error('DB не инициализирована'));
+                return;
+            }
+            
+            const transaction = db.transaction([SETTINGS_STORE], 'readwrite');
+            const store = transaction.objectStore(SETTINGS_STORE);
+            store.put({ key, value });
+            
+            transaction.oncomplete = () => {
+                console.log(`Настройка '${key}' сохранена в IndexedDB`);
+                resolve();
+            };
+            
+            transaction.onerror = () => {
+                console.error('Ошибка сохранения настройки:', transaction.error);
+                reject(transaction.error);
+            };
+        });
+    }
+    
+    // Загрузить настройку
+    function loadSettingFromDB(key) {
+        return new Promise((resolve, reject) => {
+            if (!db) {
+                reject(new Error('DB не инициализирована'));
+                return;
+            }
+            
+            const transaction = db.transaction([SETTINGS_STORE], 'readonly');
+            const store = transaction.objectStore(SETTINGS_STORE);
+            const request = store.get(key);
+            
+            request.onsuccess = () => {
+                if (request.result) {
+                    resolve(request.result.value);
+                } else {
+                    resolve(null);
+                }
+            };
+            
+            request.onerror = () => {
+                console.error('Ошибка загрузки настройки:', request.error);
+                reject(request.error);
+            };
+        });
+    }
+    
+    // Загрузить все настройки
+    function loadAllSettingsFromDB() {
+        return new Promise((resolve, reject) => {
+            if (!db) {
+                reject(new Error('DB не инициализирована'));
+                return;
+            }
+            
+            const transaction = db.transaction([SETTINGS_STORE], 'readonly');
+            const store = transaction.objectStore(SETTINGS_STORE);
+            const request = store.getAll();
+            
+            request.onsuccess = () => {
+                const settings = {};
+                request.result.forEach(item => {
+                    settings[item.key] = item.value;
+                });
+                console.log('Все настройки загружены из IndexedDB:', settings);
+                resolve(settings);
+            };
+            
+            request.onerror = () => {
+                console.error('Ошибка загрузки настроек:', request.error);
+                reject(request.error);
+            };
+        });
+    }
+    
     // ---------- ХРАНИЛИЩЕ ДАННЫХ ----------
     // Каждый проект имеет: id, name, category, type, deadline, createdAt, owner (привязка к пользователю)
     let projects = [
@@ -1014,6 +1192,8 @@
             owner: "Алина Дизайнер"   // стройки для этого пользователя (явно)
         };
         projects.push(newProject);
+        // Сохраняем в IndexedDB
+        saveProjectsToDB(projects).catch(err => console.error('Ошибка сохранения проекта:', err));
         // Очистка формы
         newProjectName.value = '';
         projectDeadline.value = '';
@@ -1183,6 +1363,8 @@
         };
         
         projects.push(newProject);
+        // Сохраняем в IndexedDB
+        saveProjectsToDB(projects).catch(err => console.error('Ошибка сохранения дубликата:', err));
         
         // Копируем настройки проекта
         const oldSettingsKey = `project_settings_${projectId}`;
@@ -1206,6 +1388,8 @@
         if (!confirm(`Удалить проект "${project.name}"?`)) return;
         
         projects = projects.filter(p => p.id !== projectId);
+        // Сохраняем в IndexedDB
+        saveProjectsToDB(projects).catch(err => console.error('Ошибка сохранения после удаления:', err));
         
         // Удаляем настройки проекта из localStorage
         const settingsKey = `project_settings_${projectId}`;
@@ -1237,6 +1421,8 @@
     // Сохранение пользовательских настроек
     function saveUserSettings(settings) {
         localStorage.setItem('user_settings', JSON.stringify(settings));
+        // Сохраняем также в IndexedDB для надежности
+        saveSettingToDB('user_settings', settings).catch(err => console.error('Ошибка сохранения настроек:', err));
     }
 
     // Получение пользовательских настроек
@@ -1253,13 +1439,37 @@
     }
 
     // инициализация
-    function init() {
+    async function init() {
+        try {
+            // Инициализируем IndexedDB
+            await initDB();
+            
+            // Пытаемся загрузить проекты из IndexedDB
+            const loadedProjects = await loadProjectsFromDB();
+            if (loadedProjects && loadedProjects.length > 0) {
+                projects = loadedProjects;
+                console.log('Проекты загружены из IndexedDB при старте');
+            }
+            
+            // Загружаем настройки пользователя из IndexedDB
+            const loadedSettings = await loadAllSettingsFromDB();
+            if (loadedSettings && loadedSettings.user_settings) {
+                // Применяем загруженные настройки
+                console.log('Настройки загружены из IndexedDB:', loadedSettings.user_settings);
+            }
+        } catch (err) {
+            console.error('Ошибка при загрузке данных из IndexedDB:', err);
+            // Если ошибка, используем дефолтные данные
+        }
+        
         fixProjectOwners();
         // если проектов нет, добавлять не нужно, у нас уже есть демо проекты
         if (projects.length === 0) {
             projects = [
                 { id: "demo1", name: "Дизайн-система", category: "UI Kit", type: "classic", deadline: "2025-06-10", createdAt: "2025-03-01", owner: "Алина Дизайнер" }
             ];
+            // Сохраняем демо проект в IndexedDB
+            saveProjectsToDB(projects).catch(err => console.error('Ошибка сохранения демо проекта:', err));
         }
         // Устанавливаем активный проект по умолчанию (первый)
         if (projects.length > 0 && !activeProjectId) activeProjectId = projects[0].id;
