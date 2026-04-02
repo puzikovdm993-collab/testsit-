@@ -38,6 +38,19 @@ document.addEventListener('DOMContentLoaded', function() {
     updateToolInfo();
     // Инициализируем состояние кнопок при загрузке (когда файлов еще нет)
     updateButtonsState();
+    
+    // Запускаем автосохранение истории
+    if (typeof startHistoryAutoSave === 'function') {
+        startHistoryAutoSave();
+    }
+    
+    // Загружаем сохраненную историю из localStorage
+    if (typeof loadHistoryFromStorage === 'function') {
+        const loaded = loadHistoryFromStorage();
+        if (loaded) {
+            console.log('✅ История загружена при старте');
+        }
+    }
 
     // ============ Инициализация графика Plotly ============
     const plotlyDiv = document.getElementById('graphCanvas');
