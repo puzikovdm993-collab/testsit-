@@ -1084,6 +1084,11 @@
         console.log(`Переход в проект "${project.name}" (${typeName}) -> ${targetUrl}`);
         showToast(`🚀 Переход в ${typeName}...`, false);
         
+        // Сохраняем активный проект в localStorage для доступа из других страниц
+        localStorage.setItem('activeProjectId', project.id);
+        localStorage.setItem('activeProjectName', project.name);
+        localStorage.setItem('activeProjectType', project.type);
+        
         // Выполняем реальный переход через небольшую задержку для показа уведомления
         setTimeout(() => {
             window.location.href = targetUrl;

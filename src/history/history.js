@@ -22,6 +22,11 @@ function pushState(file) {
     if (typeof isHistoryModalOpen === 'function' && isHistoryModalOpen()) {
         updateHistoryModal();
     }
+    
+    // Сохраняем историю в IndexedDB после каждого изменения
+    if (typeof saveHistoryToDB === 'function') {
+        saveHistoryToDB();
+    }
 }
 
 // Восстановление состояния canvas из снимка
@@ -67,6 +72,11 @@ function undo() {
     if (file.historyIndex > 0) {
         file.historyIndex--;
         restoreState(file, file.history[file.historyIndex]);
+        
+        // Сохраняем историю в IndexedDB после изменения
+        if (typeof saveHistoryToDB === 'function') {
+            saveHistoryToDB();
+        }
     }
 }
 
@@ -77,6 +87,11 @@ function redo() {
     if (file.historyIndex < file.history.length - 1) {
         file.historyIndex++;
         restoreState(file, file.history[file.historyIndex]);
+        
+        // Сохраняем историю в IndexedDB после изменения
+        if (typeof saveHistoryToDB === 'function') {
+            saveHistoryToDB();
+        }
     }
 }
 
@@ -105,6 +120,191 @@ function captureState(file) {
 }
 
 // ====================== СОХРАНЕНИЕ И ЗАГРУЗКА ИСТОРИИ ======================
+
+// IndexedDB для истории
+let historyDB = null;
+const HISTORY_DB_NAME = 'WTIS_HistoryDB';
+const HISTORY_DB_VERSION = 1;
+
+// Инициализация IndexedDB для истории
+function initHistoryDB() {
+    return new Promise((resolve, reject) => {
+        const request = indexedDB.open(HISTORY_DB_NAME, HISTORY_DB_VERSION);
+        
+        request.onerror = () => {
+            console.error('❌ Ошибка открытия IndexedDB для истории:', request.error);
+            reject(request.error);
+        };
+        
+        request.onsuccess = () => {
+            historyDB = request.result;
+            console.log('✅ IndexedDB для истории открыта:', HISTORY_DB_NAME);
+            resolve(historyDB);
+        };
+        
+        request.onupgradeneeded = (event) => {
+            const db = event.target.result;
+            
+            // Создаем хранилище для истории проектов
+            if (!db.objectStoreNames.contains('history')) {
+                const historyStore = db.createObjectStore('history', { keyPath: 'projectId' });
+                historyStore.createIndex('projectId', 'projectId', { unique: true });
+                console.log('✅ Хранилище history создано');
+            }
+        };
+    });
+}
+
+// Сохранение истории всех открытых файлов в IndexedDB
+async function saveHistoryToDB() {
+    const projectId = localStorage.getItem('activeProjectId');
+    if (!projectId) return;
+    
+    if (!historyDB) {
+        try {
+            await initHistoryDB();
+        } catch (e) {
+            console.error('❌ Не удалось инициализировать IndexedDB для истории:', e);
+            return;
+        }
+    }
+    
+    const historyData = {};
+    openFiles.forEach(file => {
+        // Сохраняем историю с конвертацией ImageData в массив для JSON
+        historyData[file.id] = {
+            historyIndex: file.historyIndex,
+            filename: file.filename,
+            canvasWidth: file.canvas?.width || 0,
+            canvasHeight: file.canvas?.height || 0,
+            history: file.history.map(state => ({
+                w: state.w,
+                h: state.h,
+                timestamp: state.timestamp,
+                action: state.action,
+                // Конвертируем ImageData.data в обычный массив для JSON
+                imageData: state.data ? Array.from(state.data.data) : null
+            }))
+        };
+    });
+    
+    try {
+        const transaction = historyDB.transaction(['history'], 'readwrite');
+        const store = transaction.objectStore('history');
+        
+        const record = {
+            projectId: projectId,
+            timestamp: Date.now(),
+            files: historyData
+        };
+        
+        const request = store.put(record);
+        
+        request.onsuccess = () => {
+            console.log('✅ История сохранена в IndexedDB');
+        };
+        
+        request.onerror = () => {
+            console.error('❌ Ошибка сохранения истории в IndexedDB:', request.error);
+        };
+    } catch (e) {
+        console.error('❌ Ошибка сохранения истории в IndexedDB:', e);
+    }
+}
+
+// Загрузка истории из IndexedDB
+async function loadHistoryFromDB() {
+    const projectId = localStorage.getItem('activeProjectId');
+    if (!projectId) return false;
+    
+    if (!historyDB) {
+        try {
+            await initHistoryDB();
+        } catch (e) {
+            console.error('❌ Не удалось инициализировать IndexedDB для истории:', e);
+            return false;
+        }
+    }
+    
+    try {
+        const transaction = historyDB.transaction(['history'], 'readonly');
+        const store = transaction.objectStore('history');
+        const request = store.get(projectId);
+        
+        return new Promise((resolve) => {
+            request.onsuccess = () => {
+                const savedData = request.result;
+                if (!savedData) {
+                    console.log('ℹ️ История не найдена в IndexedDB');
+                    resolve(false);
+                    return;
+                }
+                
+                const historyData = savedData.files;
+                
+                // Для каждого сохраненного файла восстанавливаем историю
+                Object.keys(historyData).forEach(fileId => {
+                    const file = openFiles.find(f => f.id === fileId);
+                    if (!file) {
+                        console.log(`⚠️ Файл ${fileId} не найден среди открытых, пропускаем историю`);
+                        return;
+                    }
+                    
+                    const savedFileHistory = historyData[fileId];
+                    file.historyIndex = savedFileHistory.historyIndex || -1;
+                    file.history = savedFileHistory.history.map(state => {
+                        // Восстанавливаем ImageData из массива
+                        let imageData = null;
+                        if (state.imageData && Array.isArray(state.imageData)) {
+                            const arr = new Uint8ClampedArray(state.imageData);
+                            imageData = new ImageData(arr, state.w, state.h);
+                        }
+                        
+                        return {
+                            w: state.w,
+                            h: state.h,
+                            timestamp: state.timestamp,
+                            action: state.action,
+                            data: imageData
+                        };
+                    });
+                    
+                    console.log(`✅ История загружена для файла ${file.filename}`);
+                    
+                    // Восстанавливаем последнее состояние изображения на canvas
+                    if (file.history.length > 0 && file.historyIndex >= 0) {
+                        const lastState = file.history[file.historyIndex];
+                        if (lastState.data) {
+                            file.canvas.width = lastState.w;
+                            file.canvas.height = lastState.h;
+                            file.ctx = file.canvas.getContext('2d', { willReadFrequently: true });
+                            file.ctx.putImageData(lastState.data, 0, 0);
+                            
+                            // Если это активный файл, обновляем глобальные переменные
+                            if (file.id === activeFileId) {
+                                canvas = file.canvas;
+                                ctx = file.ctx;
+                                applyZoom();
+                                updateCanvasSize();
+                            }
+                            console.log(`✅ Изображение восстановлено для файла ${file.filename}`);
+                        }
+                    }
+                });
+                
+                resolve(true);
+            };
+            
+            request.onerror = () => {
+                console.error('❌ Ошибка загрузки истории из IndexedDB:', request.error);
+                resolve(false);
+            };
+        });
+    } catch (e) {
+        console.error('❌ Ошибка загрузки истории из IndexedDB:', e);
+        return false;
+    }
+}
 
 // Сохранение истории всех открытых файлов в localStorage
 function saveHistoryToStorage() {
@@ -240,7 +440,12 @@ let historyAutoSaveInterval = null;
 
 function startHistoryAutoSave() {
     if (historyAutoSaveInterval) clearInterval(historyAutoSaveInterval);
-    historyAutoSaveInterval = setInterval(() => {
+    historyAutoSaveInterval = setInterval(async () => {
+        // Сохраняем в IndexedDB (основное хранилище)
+        if (typeof saveHistoryToDB === 'function') {
+            await saveHistoryToDB();
+        }
+        // Дополнительно сохраняем в localStorage для совместимости
         if (typeof saveHistoryToStorage === 'function') {
             saveHistoryToStorage();
         }
