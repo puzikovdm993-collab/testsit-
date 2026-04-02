@@ -177,6 +177,26 @@ function loadHistoryFromStorage() {
             });
             
             console.log(`✅ История загружена для файла ${file.filename}`);
+            
+            // Восстанавливаем последнее состояние изображения на canvas
+            if (file.history.length > 0 && file.historyIndex >= 0) {
+                const lastState = file.history[file.historyIndex];
+                if (lastState.data) {
+                    file.canvas.width = lastState.w;
+                    file.canvas.height = lastState.h;
+                    file.ctx = file.canvas.getContext('2d', { willReadFrequently: true });
+                    file.ctx.putImageData(lastState.data, 0, 0);
+                    
+                    // Если это активный файл, обновляем глобальные переменные
+                    if (file.id === activeFileId) {
+                        canvas = file.canvas;
+                        ctx = file.ctx;
+                        applyZoom();
+                        updateCanvasSize();
+                    }
+                    console.log(`✅ Изображение восстановлено для файла ${file.filename}`);
+                }
+            }
         });
         
         return true;
