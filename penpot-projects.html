@@ -481,6 +481,7 @@
             cursor: pointer;
             box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
             color: #e2e8f0;
+            position: relative;
         }
 
         .project-card-main:hover {
@@ -508,6 +509,72 @@
             display: flex;
             gap: 12px;
             margin-top: 10px;
+        }
+
+        /* Кнопка настроек проекта (три точки) */
+        .project-settings-btn {
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            background: transparent;
+            border: none;
+            color: #64748b;
+            font-size: 1.2rem;
+            cursor: pointer;
+            padding: 4px 8px;
+            border-radius: 8px;
+            transition: 0.2s;
+            z-index: 10;
+        }
+
+        .project-settings-btn:hover {
+            background: #334155;
+            color: #f1f5f9;
+        }
+
+        /* Выпадающее меню настроек проекта */
+        .project-settings-menu {
+            position: absolute;
+            top: 40px;
+            right: 12px;
+            background: #1e293b;
+            border: 1px solid #334155;
+            border-radius: 12px;
+            padding: 8px 0;
+            min-width: 180px;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+            z-index: 100;
+            display: none;
+        }
+
+        .project-settings-menu.show {
+            display: block;
+        }
+
+        .project-settings-menu-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px 16px;
+            color: #cbd5e1;
+            font-size: 0.85rem;
+            cursor: pointer;
+            transition: 0.15s;
+            border: none;
+            background: transparent;
+            width: 100%;
+            text-align: left;
+        }
+
+        .project-settings-menu-item:hover {
+            background: #334155;
+            color: #f1f5f9;
+        }
+
+        .project-settings-menu-divider {
+            height: 1px;
+            background: #334155;
+            margin: 6px 0;
         }
 
         .empty-projects {
@@ -848,6 +915,7 @@
             const typeIcon = getIconByType(project.type);
             const typeName = project.type === 'classic' ? 'Classic' : (project.type === 'tis' ? 'TIS' : 'Workflow');
             card.innerHTML = `
+                <button class="project-settings-btn" data-project-id="${project.id}" title="Настройки проекта">⋮</button>
                 <div class="card-header-icon">${typeIcon}</div>
                 <div class="card-title">${escapeHtml(project.name)}</div>
                 <div class="card-meta">
@@ -861,10 +929,34 @@
                 <div class="card-meta">
                     <span>👤 ${escapeHtml(project.owner)}</span>
                 </div>
+                <div class="project-settings-menu" id="settingsMenu-${project.id}">
+                    <button class="project-settings-menu-item" onclick="openProjectSettings('${project.id}')">
+                        ⚙️ Настройки проекта
+                    </button>
+                    <div class="project-settings-menu-divider"></div>
+                    <button class="project-settings-menu-item" onclick="duplicateProject('${project.id}')">
+                        📋 Дублировать
+                    </button>
+                    <button class="project-settings-menu-item" onclick="deleteProject('${project.id}')" style="color: #ef4444;">
+                        🗑️ Удалить
+                    </button>
+                </div>
             `;
-            card.addEventListener('click', () => {
+            card.addEventListener('click', (e) => {
+                // Игнорируем клик по кнопке настроек и меню
+                if (e.target.closest('.project-settings-btn') || e.target.closest('.project-settings-menu')) {
+                    return;
+                }
                 selectProject(project.id);
             });
+            
+            // Обработчик кнопки настроек (три точки)
+            const settingsBtn = card.querySelector('.project-settings-btn');
+            settingsBtn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                toggleProjectSettingsMenu(project.id);
+            });
+            
             projectsGridMain.appendChild(card);
         });
     }
@@ -993,6 +1085,126 @@
             document.querySelector('.main-content').scrollTo({ top: 0, behavior: 'smooth' });
             showToast('📌 Все проекты', false);
         });
+        
+        // Закрытие всех меню настроек проекта при клике вне
+        document.addEventListener('click', (e) => {
+            if (!e.target.closest('.project-settings-btn') && !e.target.closest('.project-settings-menu')) {
+                closeAllProjectSettingsMenus();
+            }
+        });
+    }
+
+    // Управление меню настроек проекта
+    function toggleProjectSettingsMenu(projectId) {
+        closeAllProjectSettingsMenus();
+        const menu = document.getElementById(`settingsMenu-${projectId}`);
+        if (menu) {
+            menu.classList.toggle('show');
+        }
+    }
+
+    function closeAllProjectSettingsMenus() {
+        document.querySelectorAll('.project-settings-menu').forEach(menu => {
+            menu.classList.remove('show');
+        });
+    }
+
+    // Открытие настроек проекта (сохранение в localStorage)
+    function openProjectSettings(projectId) {
+        const project = projects.find(p => p.id === projectId);
+        if (!project) return;
+        
+        // Получаем текущие настройки проекта из localStorage
+        const projectSettingsKey = `project_settings_${projectId}`;
+        const savedSettings = localStorage.getItem(projectSettingsKey);
+        const settings = savedSettings ? JSON.parse(savedSettings) : {};
+        
+        // Показываем уведомление с информацией о настройках
+        showToast(`⚙️ Настройки проекта "${project.name}"`, false);
+        console.log(`Настройки проекта ${projectId}:`, settings);
+        
+        // Сохраняем активный проект в localStorage для доступа из других страниц
+        localStorage.setItem('activeProjectId', projectId);
+        localStorage.setItem('activeProjectName', project.name);
+        localStorage.setItem('activeProjectType', project.type);
+        
+        closeAllProjectSettingsMenus();
+    }
+
+    // Дублирование проекта
+    function duplicateProject(projectId) {
+        const project = projects.find(p => p.id === projectId);
+        if (!project) return;
+        
+        const newId = 'proj_' + Date.now() + '_' + Math.floor(Math.random() * 10000);
+        const newProject = {
+            ...project,
+            id: newId,
+            name: `${project.name} (копия)`,
+            createdAt: new Date().toISOString().slice(0, 10)
+        };
+        
+        projects.push(newProject);
+        
+        // Копируем настройки проекта
+        const oldSettingsKey = `project_settings_${projectId}`;
+        const newSettingsKey = `project_settings_${newId}`;
+        const oldSettings = localStorage.getItem(oldSettingsKey);
+        if (oldSettings) {
+            localStorage.setItem(newSettingsKey, oldSettings);
+        }
+        
+        renderAll();
+        updateUserStats();
+        showToast(`✅ Проект "${newProject.name}" создан`, false);
+        closeAllProjectSettingsMenus();
+    }
+
+    // Удаление проекта
+    function deleteProject(projectId) {
+        const project = projects.find(p => p.id === projectId);
+        if (!project) return;
+        
+        if (!confirm(`Удалить проект "${project.name}"?`)) return;
+        
+        projects = projects.filter(p => p.id !== projectId);
+        
+        // Удаляем настройки проекта из localStorage
+        const settingsKey = `project_settings_${projectId}`;
+        localStorage.removeItem(settingsKey);
+        
+        if (activeProjectId === projectId) {
+            activeProjectId = null;
+        }
+        
+        renderAll();
+        updateUserStats();
+        showToast(`🗑️ Проект "${project.name}" удален`, false);
+        closeAllProjectSettingsMenus();
+    }
+
+    // Сохранение настроек проекта
+    function saveProjectSettings(projectId, settings) {
+        const settingsKey = `project_settings_${projectId}`;
+        localStorage.setItem(settingsKey, JSON.stringify(settings));
+    }
+
+    // Получение настроек проекта
+    function getProjectSettings(projectId) {
+        const settingsKey = `project_settings_${projectId}`;
+        const saved = localStorage.getItem(settingsKey);
+        return saved ? JSON.parse(saved) : {};
+    }
+
+    // Сохранение пользовательских настроек
+    function saveUserSettings(settings) {
+        localStorage.setItem('user_settings', JSON.stringify(settings));
+    }
+
+    // Получение пользовательских настроек
+    function getUserSettings() {
+        const saved = localStorage.getItem('user_settings');
+        return saved ? JSON.parse(saved) : {};
     }
 
     // Отметить, что все проекты принадлежат пользователю "Алина Дизайнер" (в демо все его стройки)
