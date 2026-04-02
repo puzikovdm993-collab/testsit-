@@ -1949,3 +1949,29 @@ input, textarea, select,
     transform: rotate(180deg); /* Оставляем MIN перевернутым (если нужно) */
 }
 
+
+/* Кнопка возврата к проектам */
+.back-to-projects-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 16px;
+    background: #3b82f6;
+    color: white;
+    text-decoration: none;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    font-weight: 500;
+    transition: all 0.2s ease;
+    box-shadow: 0 2px 8px rgba(59, 130, 246, 0.3);
+}
+
+.back-to-projects-btn:hover {
+    background: #2563eb;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(59, 130, 246, 0.4);
+}
+
+.back-to-projects-btn:active {
+    transform: translateY(0);
+}
