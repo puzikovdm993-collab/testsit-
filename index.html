@@ -1303,24 +1303,52 @@
     // ====================== СОХРАНЕНИЕ И ЗАГРУЗКА ИСТОРИИ ПРОЕКТА ======================
     
     // Сохранение истории при закрытии вкладки/окна
-    window.addEventListener('beforeunload', function() {
+    window.addEventListener('beforeunload', async function() {
+        // Сохраняем в IndexedDB (основное хранилище)
+        if (typeof saveHistoryToDB === 'function') {
+            try {
+                await saveHistoryToDB();
+                console.log('✅ История сохранена в IndexedDB при закрытии');
+            } catch (e) {
+                console.warn('⚠️ Ошибка сохранения в IndexedDB:', e);
+            }
+        }
+        // Дополнительно сохраняем в localStorage для совместимости
         if (typeof saveHistoryToStorage === 'function') {
             saveHistoryToStorage();
         }
     });
     
     // Автоматическая загрузка истории при загрузке страницы
-    window.addEventListener('DOMContentLoaded', function() {
+    window.addEventListener('DOMContentLoaded', async function() {
         // Загружаем историю после инициализации всех модулей
-        setTimeout(function() {
-            if (typeof loadHistoryFromStorage === 'function') {
-                const loaded = loadHistoryFromStorage();
-                if (loaded) {
-                    console.log('✅ История проекта загружена');
-                    // Обновляем окно истории, если оно открыто
-                    if (typeof updateHistoryModal === 'function' && document.getElementById('historyModal').classList.contains('active')) {
-                        updateHistoryModal();
+        setTimeout(async function() {
+            let loaded = false;
+            
+            // Сначала пробуем загрузить из IndexedDB (основное хранилище)
+            if (typeof loadHistoryFromDB === 'function') {
+                try {
+                    loaded = await loadHistoryFromDB();
+                    if (loaded) {
+                        console.log('✅ История проекта загружена из IndexedDB');
                     }
+                } catch (e) {
+                    console.warn('⚠️ Ошибка загрузки из IndexedDB, пробуем localStorage:', e);
+                }
+            }
+            
+            // Если не удалось загрузить из IndexedDB, пробуем localStorage (для совместимости)
+            if (!loaded && typeof loadHistoryFromStorage === 'function') {
+                loaded = loadHistoryFromStorage();
+                if (loaded) {
+                    console.log('✅ История проекта загружена из localStorage');
+                }
+            }
+            
+            if (loaded) {
+                // Обновляем окно истории, если оно открыто
+                if (typeof updateHistoryModal === 'function' && document.getElementById('historyModal').classList.contains('active')) {
+                    updateHistoryModal();
                 }
             }
         }, 500); // Небольшая задержка для уверенности что все файлы загружены
