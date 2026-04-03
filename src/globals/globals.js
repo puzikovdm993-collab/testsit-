@@ -37,7 +37,7 @@ let dom = {};
 
 // Константы
 const maxHistory = 50;  // Максимальное количество шагов в истории (undo/redo)
-const RECENT_FILES_KEY = 'paint_recent_files';// Ключ для хранения в localStorage списка недавних файлов
+const RECENT_FILES_KEY = 'paint_recent_files';// Ключ для хранения недавних файлов (теперь используется MinIO)
 const MAX_RECENT_FILES = 20;// Максимальное количество файлов в списке "Недавно открытые"
 
 // Геттер активного файла

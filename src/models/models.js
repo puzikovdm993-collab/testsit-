@@ -1,261 +1,281 @@
 
-// modals.js – окончательная версия с поддержкой поднятия окон
-(function() {
-    'use strict';
+// Работа с модальными окнами через MinIO для хранения состояния
+// Все данные хранятся только на сервере в MinIO
 
-    // const MIN_WIDTH = 300;
-    // const MIN_HEIGHT = 200;
+let modalStateCache = {}; // Кэш состояния модальных окон в памяти
 
-    const MODAL_MIN_SIZES = {
-        graphModal: { width: 400, height: 300 },  // Минимальные размеры для graphModal
-        default: { width: 300, height: 200 }      // Общие значения по умолчанию
-    };
-    const STORAGE_PREFIX = 'modal_';
+const MODAL_MIN_SIZES = {
+    graphModal: { width: 400, height: 300 },  // Минимальные размеры для graphModal
+    default: { width: 300, height: 200 }      // Общие значения по умолчанию
+};
+const STORAGE_PREFIX = 'modal_';
 
-    // Функция поднятия окна на передний план
-    function bringToFront(modal) {
-        const activeModals = Array.from(document.querySelectorAll('.modal.active'));
-        const maxZ = activeModals.reduce((max, m) => {
-            const z = parseInt(window.getComputedStyle(m).zIndex) || 0;
-            return Math.max(max, z);
-        }, 0);
-        modal.style.zIndex = maxZ + 1;
+// Загрузка состояния модальных окон из MinIO
+async function loadModalStatesFromMinIO() {
+    try {
+        const response = await fetch('/api/modal_states');
+        if (response.ok) {
+            const result = await response.json();
+            modalStateCache = result.states || {};
+        }
+    } catch (e) {
+        console.error('Ошибка загрузки состояния модальных окон из MinIO', e);
+        modalStateCache = {};
+    }
+}
+
+// Сохранение состояния модальных окон в MinIO
+async function saveModalStatesToMinIO() {
+    try {
+        await fetch('/api/modal_states', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ states: modalStateCache })
+        });
+    } catch (e) {
+        console.error('Ошибка сохранения состояния модальных окон в MinIO', e);
+    }
+}
+
+// Функция поднятия окна на передний план
+function bringToFront(modal) {
+    const activeModals = Array.from(document.querySelectorAll('.modal.active'));
+    const maxZ = activeModals.reduce((max, m) => {
+        const z = parseInt(window.getComputedStyle(m).zIndex) || 0;
+        return Math.max(max, z);
+    }, 0);
+    modal.style.zIndex = maxZ + 1;
+}
+
+function initModal(modal) {
+    const content = modal.querySelector('.modal-content');
+    const title = modal.querySelector('.modal-title');
+    const resizeHandle = modal.querySelector('.modal-resize-handle');
+    const closeBtn = modal.querySelector('.modal-title button');
+
+    if (!content || !title) return;
+
+    // ---- Сохранение состояния в кэш и MinIO ----
+    function saveModalState() {
+        if (!modal.id) return;
+        const left = content.style.left ? parseInt(content.style.left) : null;
+        const top = content.style.top ? parseInt(content.style.top) : null;
+        const width = content.style.width ? parseInt(content.style.width) : null;
+        const height = content.style.height ? parseInt(content.style.height) : null;
+        if (left !== null && top !== null && width !== null && height !== null) {
+            const state = { left, top, width, height };
+            modalStateCache[modal.id] = state;
+            // Сохраняем в MinIO асинхронно
+            saveModalStatesToMinIO();
+        }
     }
 
-    function initModal(modal) {
-        const content = modal.querySelector('.modal-content');
-        const title = modal.querySelector('.modal-title');
-        const resizeHandle = modal.querySelector('.modal-resize-handle');
-        const closeBtn = modal.querySelector('.modal-title button');
+    // ---- Восстановление состояния из кэша ----
+    function restoreModalState() {
+        if (!modal.id) return;
+        const state = modalStateCache[modal.id];
+        if (!state) return;
+        try {
+            // Применяем размеры
 
-        if (!content || !title) return;
-
-        // ---- Сохранение состояния ----
-        function saveModalState() {
-            if (!modal.id) return;
-            const left = content.style.left ? parseInt(content.style.left) : null;
-            const top = content.style.top ? parseInt(content.style.top) : null;
-            const width = content.style.width ? parseInt(content.style.width) : null;
-            const height = content.style.height ? parseInt(content.style.height) : null;
-            if (left !== null && top !== null && width !== null && height !== null) {
-                const state = { left, top, width, height };
-                localStorage.setItem(STORAGE_PREFIX + modal.id, JSON.stringify(state));
+            if (state.width){ 
+                content.style.width = Math.max(
+                    MODAL_MIN_SIZES[modal.id]?.width || MODAL_MIN_SIZES.default.width,
+                    content.offsetWidth 
+                );
             }
-        }
-
-        // ---- Восстановление состояния (синхронно) ----
-        function restoreModalState() {
-            if (!modal.id) return;
-            const saved = localStorage.getItem(STORAGE_PREFIX + modal.id);
-            if (!saved) return;
-            try {
-                const state = JSON.parse(saved);
-
-                // Применяем размеры
-
-                if (state.width){ 
-                    content.style.width = Math.max(
-                        MODAL_MIN_SIZES[modal.id]?.width || MODAL_MIN_SIZES.default.width,
-                        content.offsetWidth 
-                    );
-                }
-                if (state.height) {
-                    content.style.height = Math.max(
-                        MODAL_MIN_SIZES[modal.id]?.height || MODAL_MIN_SIZES.default.height,
-                        content.offsetHeight 
-                    );
-                }
-
-                // Принудительный reflow, чтобы браузер сразу пересчитал размеры
-                content.offsetHeight;
-
-                const currentWidth = content.offsetWidth;
-                const currentHeight = content.offsetHeight;
-                const maxX = window.innerWidth - currentWidth;
-                const maxY = window.innerHeight - currentHeight;
-
-                let newLeft = state.left;
-                let newTop = state.top;
-                if (newLeft !== undefined) newLeft = Math.max(0, Math.min(newLeft, maxX));
-                if (newTop !== undefined) newTop = Math.max(0, Math.min(newTop, maxY));
-
-                content.style.left = newLeft + 'px';
-                content.style.top = newTop + 'px';
-
-                // Для окна с графиком обновляем Plotly
-                if (modal.id === 'graphModal') {
-                    resizePlotlyGraph();
-                }
-            } catch (e) {
-                console.warn('Ошибка восстановления модального окна', e);
+            if (state.height) {
+                content.style.height = Math.max(
+                    MODAL_MIN_SIZES[modal.id]?.height || MODAL_MIN_SIZES.default.height,
+                    content.offsetHeight 
+                );
             }
-        }
 
-        // Наблюдатель за появлением класса active
-        const observer = new MutationObserver((mutations) => {
-            mutations.forEach((mutation) => {
-                if (mutation.attributeName === 'class') {
-                    if (modal.classList.contains('active')) {
-                        restoreModalState();
-                        // Поднимаем окно при активации
-                        bringToFront(modal);
-                    }
+            // Принудительный reflow, чтобы браузер сразу пересчитал размеры
+            content.offsetHeight;
+
+            const currentWidth = content.offsetWidth;
+            const currentHeight = content.offsetHeight;
+            const maxX = window.innerWidth - currentWidth;
+            const maxY = window.innerHeight - currentHeight;
+
+            let newLeft = state.left;
+            let newTop = state.top;
+            if (newLeft !== undefined) newLeft = Math.max(0, Math.min(newLeft, maxX));
+            if (newTop !== undefined) newTop = Math.max(0, Math.min(newTop, maxY));
+
+            content.style.left = newLeft + 'px';
+            content.style.top = newTop + 'px';
+
+            // Для окна с графиком обновляем Plotly
+            if (modal.id === 'graphModal') {
+                resizePlotlyGraph();
+            }
+        } catch (e) {
+            console.warn('Ошибка восстановления модального окна', e);
+        }
+    }
+
+    // Наблюдатель за появлением класса active
+    const observer = new MutationObserver((mutations) => {
+        mutations.forEach((mutation) => {
+            if (mutation.attributeName === 'class') {
+                if (modal.classList.contains('active')) {
+                    restoreModalState();
+                    // Поднимаем окно при активации
+                    bringToFront(modal);
                 }
-            });
+            }
         });
-        observer.observe(modal, { attributes: true });
+    });
+    observer.observe(modal, { attributes: true });
 
-        // Если окно уже активно при загрузке (маловероятно)
+    // Если окно уже активно при загрузке (маловероятно)
+    if (modal.classList.contains('active')) {
+        restoreModalState();
+        bringToFront(modal);
+    }
+
+    // Закрытие по крестику
+    if (closeBtn) {
+        closeBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            modal.classList.remove('active');
+        });
+    }
+
+    // Поднятие окна при клике на него (если активно)
+    modal.addEventListener('mousedown', () => {
         if (modal.classList.contains('active')) {
-            restoreModalState();
             bringToFront(modal);
         }
+    });
 
-        // Закрытие по крестику
-        if (closeBtn) {
-            closeBtn.addEventListener('click', (e) => {
-                e.stopPropagation();
-                modal.classList.remove('active');
-            });
+    // ---- Перетаскивание ----
+    let isDragging = false;
+    let dragOffsetX, dragOffsetY;
+
+    title.addEventListener('mousedown', (e) => {
+        if (e.target.closest('button')) return;
+        isDragging = true;
+        dragOffsetX = e.clientX - content.offsetLeft;
+        dragOffsetY = e.clientY - content.offsetTop;
+        e.preventDefault();
+    });
+
+    window.addEventListener('mousemove', (e) => {
+        if (!isDragging) return;
+
+        const newX = e.clientX - dragOffsetX;
+        const newY = e.clientY - dragOffsetY;
+
+        const maxX = window.innerWidth - content.offsetWidth;
+        const maxY = window.innerHeight - content.offsetHeight;
+        const clampedX = Math.max(0, Math.min(newX, maxX));
+        const clampedY = Math.max(0, Math.min(newY, maxY));
+
+        content.style.left = clampedX + 'px';
+        content.style.top = clampedY + 'px';
+    });
+
+    window.addEventListener('mouseup', () => {
+        if (isDragging) {
+            isDragging = false;
+            saveModalState();
         }
+    });
 
-        // Поднятие окна при клике на него (если активно)
-        modal.addEventListener('mousedown', () => {
-            if (modal.classList.contains('active')) {
-                bringToFront(modal);
-            }
-        });
+    // ---- Изменение размера (если есть ручка) ----
+    if (resizeHandle) {
+        let isResizing = false;
+        let startWidth, startHeight, startX, startY;
 
-        // ---- Перетаскивание ----
-        let isDragging = false;
-        let dragOffsetX, dragOffsetY;
-
-        title.addEventListener('mousedown', (e) => {
-            if (e.target.closest('button')) return;
-            isDragging = true;
-            dragOffsetX = e.clientX - content.offsetLeft;
-            dragOffsetY = e.clientY - content.offsetTop;
+        resizeHandle.addEventListener('mousedown', (e) => {
+            isResizing = true;
+            startWidth = content.offsetWidth;
+            startHeight = content.offsetHeight;
+            startX = e.clientX;
+            startY = e.clientY;
             e.preventDefault();
         });
 
         window.addEventListener('mousemove', (e) => {
-            if (!isDragging) return;
+            if (!isResizing) return;
 
-            const newX = e.clientX - dragOffsetX;
-            const newY = e.clientY - dragOffsetY;
+            const dx = e.clientX - startX;
+            const dy = e.clientY - startY;
 
-            const maxX = window.innerWidth - content.offsetWidth;
-            const maxY = window.innerHeight - content.offsetHeight;
-            const clampedX = Math.max(0, Math.min(newX, maxX));
-            const clampedY = Math.max(0, Math.min(newY, maxY));
+            // Получаем текущие startWidth/startHeight (из кода, который запускает resize)
+            const newWidth = Math.max(
+                MODAL_MIN_SIZES[modal.id]?.width || MODAL_MIN_SIZES.default.width,
+                startWidth + dx
+            );
+            const newHeight = Math.max(
+                MODAL_MIN_SIZES[modal.id]?.height || MODAL_MIN_SIZES.default.height,
+                startHeight + dy
+            );
 
-            content.style.left = clampedX + 'px';
-            content.style.top = clampedY + 'px';
-        });
+            content.style.width = newWidth + 'px';
+            content.style.height = newHeight + 'px';
 
-        window.addEventListener('mouseup', () => {
-            if (isDragging) {
-                isDragging = false;
-                saveModalState();
+            if (modal.id === 'graphModal') {
+                throttleResizePlotly();
             }
         });
 
-        // ---- Изменение размера (если есть ручка) ----
-        if (resizeHandle) {
-            let isResizing = false;
-            let startWidth, startHeight, startX, startY;
-
-            resizeHandle.addEventListener('mousedown', (e) => {
-                isResizing = true;
-                startWidth = content.offsetWidth;
-                startHeight = content.offsetHeight;
-                startX = e.clientX;
-                startY = e.clientY;
-                e.preventDefault();
-            });
-
-            window.addEventListener('mousemove', (e) => {
-                if (!isResizing) return;
-
-                const dx = e.clientX - startX;
-                const dy = e.clientY - startY;
-
-
-
-                // Получаем текущие startWidth/startHeight (из кода, который запускает resize)
-                const newWidth = Math.max(
-                    MODAL_MIN_SIZES[modal.id]?.width || MODAL_MIN_SIZES.default.width,
-                    startWidth + dx
-                );
-                const newHeight = Math.max(
-                    MODAL_MIN_SIZES[modal.id]?.height || MODAL_MIN_SIZES.default.height,
-                    startHeight + dy
-                );
-
-                // const newWidth = Math.max(MIN_WIDTH, startWidth + dx);
-                // const newHeight = Math.max(MIN_HEIGHT, startHeight + dy);
-
-                content.style.width = newWidth + 'px';
-                content.style.height = newHeight + 'px';
-
+        window.addEventListener('mouseup', () => {
+            if (isResizing) {
+                isResizing = false;
                 if (modal.id === 'graphModal') {
-                    throttleResizePlotly();
+                    resizePlotlyGraph();
                 }
-            });
-
-            window.addEventListener('mouseup', () => {
-                if (isResizing) {
-                    isResizing = false;
-                    if (modal.id === 'graphModal') {
-                        resizePlotlyGraph();
-                    }
-                    saveModalState();
-                }
-            });
-        }
+                saveModalState();
+            }
+        });
     }
+}
 
-    // Инициализация всех модальных окон
-    document.querySelectorAll('.modal').forEach(initModal);
+// Инициализация всех модальных окон
+document.querySelectorAll('.modal').forEach(initModal);
 
-    // ---- Логика для графика Plotly ----
-    const graphContainer = document.querySelector('#graphCanvas')?.parentNode;
+// ---- Логика для графика Plotly ----
+const graphContainer = document.querySelector('#graphCanvas')?.parentNode;
 
-    function resizePlotlyGraph() {
-        if (!graphContainer || typeof Plotly === 'undefined') return;
-        const rect = graphContainer.getBoundingClientRect();
-        const style = window.getComputedStyle(graphContainer);
-        const padX = parseFloat(style.paddingLeft) + parseFloat(style.paddingRight);
-        const padY = parseFloat(style.paddingTop) + parseFloat(style.paddingBottom);
-        const borderX = parseFloat(style.borderLeftWidth) + parseFloat(style.borderRightWidth);
-        const borderY = parseFloat(style.borderTopWidth) + parseFloat(style.borderBottomWidth);
+function resizePlotlyGraph() {
+    if (!graphContainer || typeof Plotly === 'undefined') return;
+    const rect = graphContainer.getBoundingClientRect();
+    const style = window.getComputedStyle(graphContainer);
+    const padX = parseFloat(style.paddingLeft) + parseFloat(style.paddingRight);
+    const padY = parseFloat(style.paddingTop) + parseFloat(style.paddingBottom);
+    const borderX = parseFloat(style.borderLeftWidth) + parseFloat(style.borderRightWidth);
+    const borderY = parseFloat(style.borderTopWidth) + parseFloat(style.borderBottomWidth);
 
-        const width = Math.max(100, rect.width - padX - borderX);
-        const height = Math.max(100, rect.height - padY - borderY);
+    const width = Math.max(100, rect.width - padX - borderX);
+    const height = Math.max(100, rect.height - padY - borderY);
 
-        Plotly.relayout('graphCanvas', { width, height });
-    }
+    Plotly.relayout('graphCanvas', { width, height });
+}
 
-    let throttleTimer = null;
-    function throttleResizePlotly() {
-        if (throttleTimer) return;
-        throttleTimer = setTimeout(() => {
-            resizePlotlyGraph();
-            throttleTimer = null;
-        }, 100);
-    }
+let throttleTimer = null;
+function throttleResizePlotly() {
+    if (throttleTimer) return;
+    throttleTimer = setTimeout(() => {
+        resizePlotlyGraph();
+        throttleTimer = null;
+    }, 100);
+}
 
-    // Наблюдатель за изменениями размеров контейнера графика
-    if (graphContainer && window.ResizeObserver) {
-        const observer = new ResizeObserver(() => resizePlotlyGraph());
-        observer.observe(graphContainer);
-    }
+// Наблюдатель за изменениями размеров контейнера графика
+if (graphContainer && window.ResizeObserver) {
+    const observer = new ResizeObserver(() => resizePlotlyGraph());
+    observer.observe(graphContainer);
+}
 
-    window.addEventListener('load', () => {
-        if (graphContainer) resizePlotlyGraph();
-    });
+window.addEventListener('load', () => {
+    if (graphContainer) resizePlotlyGraph();
+});
 
-    console.log('✅ modals.js загружен (финальная версия с поднятием окон)');
+console.log('✅ modals.js загружен (финальная версия с поднятием окон)');
 
     // ====================== ИСТОРИЯ ИЗМЕНЕНИЙ (глобальные функции) ======================
 
