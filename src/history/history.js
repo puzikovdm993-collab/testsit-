@@ -95,7 +95,7 @@ function redo() {
     }
 }
 
-// Улучшенный захват состояния — автоматически определяет название действия
+// Улучшенный захват состояния — автоматически определяет название действия и сохраняет матрицу
 function captureState(file) {
     let action = 'Изменение';
 
@@ -110,10 +110,32 @@ function captureState(file) {
         if (toolNames[currentTool]) action = toolNames[currentTool];
     }
 
+    const imageData = file.ctx.getImageData(0, 0, file.canvas.width, file.canvas.height);
+    const width = file.canvas.width;
+    const height = file.canvas.height;
+    
+    // Создаем матрицу (двумерный массив) из данных изображения
+    const matrix = [];
+    for (let y = 0; y < height; y++) {
+        const row = [];
+        for (let x = 0; x < width; x++) {
+            const idx = (y * width + x) * 4;
+            // Сохраняем RGBA значения для каждого пикселя
+            row.push([
+                imageData.data[idx],     // R
+                imageData.data[idx + 1], // G
+                imageData.data[idx + 2], // B
+                imageData.data[idx + 3]  // A
+            ]);
+        }
+        matrix.push(row);
+    }
+
     return {
-        w: file.canvas.width,
-        h: file.canvas.height,
-        data: file.ctx.getImageData(0, 0, file.canvas.width, file.canvas.height),
+        w: width,
+        h: height,
+        data: imageData,
+        matrix: matrix,  // Сохраняем матрицу отдельно для быстрого доступа
         timestamp: Date.now(),
         action: action
     };
@@ -171,7 +193,7 @@ async function saveHistoryToDB() {
     
     const historyData = {};
     openFiles.forEach(file => {
-        // Сохраняем историю с конвертацией ImageData в массив для JSON
+        // Сохраняем историю с конвертацией ImageData и матрицы в массив для JSON
         historyData[file.id] = {
             historyIndex: file.historyIndex,
             filename: file.filename,
@@ -183,7 +205,9 @@ async function saveHistoryToDB() {
                 timestamp: state.timestamp,
                 action: state.action,
                 // Конвертируем ImageData.data в обычный массив для JSON
-                imageData: state.data ? Array.from(state.data.data) : null
+                imageData: state.data ? Array.from(state.data.data) : null,
+                // Сохраняем матрицу (двумерный массив RGBA значений)
+                matrix: state.matrix || null
             }))
         };
     });
@@ -260,12 +284,19 @@ async function loadHistoryFromDB() {
                             imageData = new ImageData(arr, state.w, state.h);
                         }
                         
+                        // Восстанавливаем матрицу из сохраненных данных
+                        let matrix = null;
+                        if (state.matrix && Array.isArray(state.matrix)) {
+                            matrix = state.matrix;
+                        }
+                        
                         return {
                             w: state.w,
                             h: state.h,
                             timestamp: state.timestamp,
                             action: state.action,
-                            data: imageData
+                            data: imageData,
+                            matrix: matrix  // Восстанавливаем матрицу
                         };
                     });
                     
@@ -313,7 +344,7 @@ function saveHistoryToStorage() {
     
     const historyData = {};
     openFiles.forEach(file => {
-        // Сохраняем историю с конвертацией ImageData в массив для JSON
+        // Сохраняем историю с конвертацией ImageData и матрицы в массив для JSON
         historyData[file.id] = {
             historyIndex: file.historyIndex,
             filename: file.filename,
@@ -325,7 +356,9 @@ function saveHistoryToStorage() {
                 timestamp: state.timestamp,
                 action: state.action,
                 // Конвертируем ImageData.data в обычный массив для JSON
-                imageData: state.data ? Array.from(state.data.data) : null
+                imageData: state.data ? Array.from(state.data.data) : null,
+                // Сохраняем матрицу (двумерный массив RGBA значений)
+                matrix: state.matrix || null
             }))
         };
     });
@@ -367,12 +400,19 @@ function loadHistoryFromStorage() {
                     imageData = new ImageData(arr, state.w, state.h);
                 }
                 
+                // Восстанавливаем матрицу из сохраненных данных
+                let matrix = null;
+                if (state.matrix && Array.isArray(state.matrix)) {
+                    matrix = state.matrix;
+                }
+                
                 return {
                     w: state.w,
                     h: state.h,
                     timestamp: state.timestamp,
                     action: state.action,
-                    data: imageData
+                    data: imageData,
+                    matrix: matrix  // Восстанавливаем матрицу
                 };
             });
             
