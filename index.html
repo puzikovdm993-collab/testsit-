@@ -1251,6 +1251,7 @@
 <script src="src/events/events.js"></script>
 
 <!-- <script src="src/menuStubs/menuStubs.js"></script> -->
+<script src="src/projectManager/projectManager.js"></script>
 <script src="src/main/main.js"></script>
 <script src="src/drawing/drawing.js"></script>
 <script src="src/tabs/tabs.js"></script>
@@ -1258,46 +1259,51 @@
 
 <!-- Общие функции для работы с настройками (доступны в index.html и workflow.html) -->
 <script>
-    // Получение настроек проекта из localStorage
+    // Получение настроек проекта из MinIO
     function getProjectSettings(projectId) {
-        const settingsKey = `project_settings_${projectId}`;
-        const saved = localStorage.getItem(settingsKey);
-        return saved ? JSON.parse(saved) : {};
+        // Настройки теперь хранятся в проекте в MinIO
+        const project = getCurrentProject();
+        if (project && project.project.settings) {
+            return project.project.settings;
+        }
+        return {};
     }
 
-    // Сохранение настроек проекта в localStorage
-    function saveProjectSettings(projectId, settings) {
-        const settingsKey = `project_settings_${projectId}`;
-        localStorage.setItem(settingsKey, JSON.stringify(settings));
+    // Сохранение настроек проекта в MinIO
+    async function saveProjectSettings(projectId, settings) {
+        const project = getCurrentProject();
+        if (project) {
+            project.project.settings = { ...project.project.settings, ...settings };
+            await saveCurrentProject();
+        }
     }
 
-    // Получение пользовательских настроек из localStorage
+    // Получение пользовательских настроек из MinIO
     function getUserSettings() {
-        const saved = localStorage.getItem('user_settings');
-        return saved ? JSON.parse(saved) : {};
+        const project = getCurrentProject();
+        if (project && project.userSettings) {
+            return project.userSettings;
+        }
+        return {};
     }
 
-    // Сохранение пользовательских настроек в localStorage
-    function saveUserSettings(settings) {
-        localStorage.setItem('user_settings', JSON.stringify(settings));
+    // Сохранение пользовательских настроек в MinIO
+    async function saveUserSettings(settings) {
+        const project = getCurrentProject();
+        if (project) {
+            project.userSettings = { ...project.userSettings, ...settings };
+            await saveCurrentProject();
+        }
     }
 
     // Получение информации о текущем активном проекте
-    function getCurrentProject() {
-        const projectId = localStorage.getItem('activeProjectId');
-        if (!projectId) return null;
-        
-        return {
-            id: projectId,
-            name: localStorage.getItem('activeProjectName') || '',
-            type: localStorage.getItem('activeProjectType') || '',
-            settings: getProjectSettings(projectId)
-        };
+    function getCurrentProjectInfo() {
+        return getCurrentProject();
     }
 
     // Проверка наличия активного проекта
     function hasActiveProject() {
-        return localStorage.getItem('activeProjectId') !== null;
+        return getCurrentProject() !== null;
     }
 </script>
 </body>

@@ -1,11 +1,41 @@
 
-// Работа с недавними файлами (localStorage)
+// Работа с недавними файлами через MinIO
+// Все данные хранятся только на сервере в MinIO
 
+let recentFilesCache = []; // Кэш недавних файлов в памяти
 
 // Инициализация недавних файлов (вызывается при загрузке)
-function initRecentFiles() {
+async function initRecentFiles() {
+    await loadRecentFilesFromMinIO();
     updateRecentFilesMenu();
     updateRecentFilesModal();
+}
+
+// Загрузка недавних файлов из MinIO
+async function loadRecentFilesFromMinIO() {
+    try {
+        const response = await fetch('/api/recent_files');
+        if (response.ok) {
+            const result = await response.json();
+            recentFilesCache = result.files || [];
+        }
+    } catch (e) {
+        console.error('Ошибка загрузки недавних файлов из MinIO', e);
+        recentFilesCache = [];
+    }
+}
+
+// Сохранение недавних файлов в MinIO
+async function saveRecentFilesToMinIO() {
+    try {
+        await fetch('/api/recent_files', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ files: recentFilesCache })
+        });
+    } catch (e) {
+        console.error('Ошибка сохранения недавних файлов в MinIO', e);
+    }
 }
 
 // Обновление меню в шапке
@@ -78,19 +108,13 @@ function updateRecentFilesModal() {
 }
 
 
-// Получить список
+// Получить список из кэша
 function getRecentFiles() {
-    try {
-        const data = localStorage.getItem(RECENT_FILES_KEY);
-        return data ? JSON.parse(data) : [];
-    } catch (e) {
-        console.error('Ошибка чтения недавних файлов', e);
-        return [];
-    }
+    return recentFilesCache;
 }
 
-// Добавление файла в недавние (с защитой от больших файлов)
-function addToRecentFiles(fileInfo) {
+// Добавление файла в недавние (сохранение в MinIO)
+async function addToRecentFiles(fileInfo) {
     try {
         let recent = getRecentFiles();
 
@@ -115,12 +139,14 @@ function addToRecentFiles(fileInfo) {
 
         if (recent.length > MAX_RECENT_FILES) recent.pop();
 
-        localStorage.setItem(RECENT_FILES_KEY, JSON.stringify(recent));
+        recentFilesCache = recent;
+        
+        // Сохраняем в MinIO асинхронно
+        await saveRecentFilesToMinIO();
+        
         updateRecentFilesMenu();
     } catch (err) {
-        console.warn('Не удалось сохранить недавний файл (localStorage полный?)', err);
-        // Очищаем старые записи и пробуем снова
-        localStorage.setItem(RECENT_FILES_KEY, JSON.stringify([]));
+        console.error('Не удалось сохранить недавний файл в MinIO', err);
     }
 }
 

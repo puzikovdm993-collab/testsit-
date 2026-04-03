@@ -112,7 +112,14 @@ app_logger.info("Инициализировано Flask-приложение")
 
 minio_client = None  # Глобальная переменная (изначально None)
 
+# Глобальные переменные для MinIO (будут загружены из .env при инициализации)
+MINIO_ENDPOINT = None
+MINIO_ACCESS_KEY = None
+MINIO_SECRET_KEY = None
+MINIO_REGION = None
+MINIO_SECURE = None
 MINIO_BUCKET = 'wtis'
+MINIO_PROJECTS_PREFIX = 'projects/'  # Префикс для хранения проектов
 
 def get_minio_client():
     global minio_client
@@ -138,7 +145,7 @@ def set_minio_client():
         ValueError: если не найдены обязательные параметры
         ConnectionError: если подключение к MinIO не удалось
     """
-    global minio_client
+    global minio_client, MINIO_ENDPOINT, MINIO_ACCESS_KEY, MINIO_SECRET_KEY, MINIO_REGION, MINIO_SECURE
     
     # Загружаем переменные окружения из .env (если он есть)
     load_dotenv()
@@ -147,7 +154,7 @@ def set_minio_client():
     endpoint = os.getenv("MINIO_ENDPOINT", "localhost:9000")
     access_key = os.getenv("MINIO_ACCESS_KEY", "test")
     secret_key = os.getenv("MINIO_SECRET_KEY", "test")
-    backet = os.getenv("MINIO_BACKET", "test1")
+    bucket = os.getenv("MINIO_BUCKET", "wtis")
     region = os.getenv("MINIO_REGION", "us-east-1")
     secure = os.getenv("MINIO_SECURE", "False").lower() == "true"
     
@@ -157,6 +164,14 @@ def set_minio_client():
             "Необходимые параметры MinIO не найдены в окружении! "
             "Проверьте файл .env (MINIO_ENDPOINT, MINIO_ACCESS_KEY, MINIO_SECRET_KEY)."
         )
+    
+    # Сохраняем в глобальные переменные
+    MINIO_ENDPOINT = endpoint
+    MINIO_ACCESS_KEY = access_key
+    MINIO_SECRET_KEY = secret_key
+    MINIO_REGION = region
+    MINIO_SECURE = secure
+    MINIO_BUCKET = bucket
     
     # Создаём новый клиент
     minio_client = Minio(
@@ -270,12 +285,27 @@ def get_image_info(filename):
 @app.route('/')
 def index():
     app_logger.info("Доступ к главной странице")
-    headers = dict(request.headers)  # Все заголовки в виде словаря
-    aut = base64.b64decode(headers.get('Authorization').split()[1]).decode('utf-8')
-    login = aut.split(":")[0]
-    password = aut.split(":")[1]
-    app_logger.debug(f"login: {login}")
-    app_logger.debug(f"password: {password}")
+    headers = dict(request.headers)
+    
+    # Проверка наличия заголовка Authorization
+    auth_header = headers.get('Authorization')
+    if not auth_header:
+        # Если заголовка нет, просто отдаем страницу (авторизация будет проверяться при действиях)
+        if not os.path.exists('index.html'):
+            app_logger.error("Файл index.html не найден")
+            abort(404)
+        return send_from_directory('.', 'index.html')
+    
+    try:
+        aut = base64.b64decode(auth_header.split()[1]).decode('utf-8')
+        login = aut.split(":")[0]
+        password = aut.split(":")[1]
+        app_logger.debug(f"login: {login}")
+        app_logger.debug(f"password: {password}")
+    except Exception as e:
+        app_logger.error(f"Ошибка декодирования авторизации: {e}")
+        # Продолжаем без авторизации или можно вернуть 401
+        # abort(401)
 
     if not os.path.exists('index.html'):
         app_logger.error("Файл index.html не найден")
@@ -990,6 +1020,310 @@ def endpointtest():
         print(f"Ошибка: {e}")
 
     return "Тестовый ответ", 200  # или просто return "OK"
+
+
+# ==================== Project Management Endpoints ====================
+
+@app.route('/save_project', methods=['POST'])
+@handle_minio_errors
+def save_project():
+    """
+    Сохраняет проект в MinIO в формате JSON.
+    Ожидает JSON с структурой проекта.
+    """
+    app_logger.info("Запрос на сохранение проекта в MinIO")
+    
+    # Получаем данные проекта из запроса
+    data = request.get_json()
+    if not data:
+        return jsonify({'error': 'No JSON data provided'}), 400
+    
+    # Проверяем наличие обязательных полей
+    if 'project' not in data:
+        return jsonify({'error': 'Missing "project" field'}), 400
+    
+    project_id = data['project'].get('id')
+    if not project_id:
+        return jsonify({'error': 'Missing project id'}), 400
+    
+    # Формируем имя объекта в MinIO
+    object_name = f"{MINIO_PROJECTS_PREFIX}{project_id}.json"
+    
+    # Преобразуем данные в JSON
+    try:
+        json_str = json.dumps(data, ensure_ascii=False, indent=2)
+        json_bytes = json_str.encode('utf-8')
+        app_logger.debug(f"Проект {project_id} сериализован в JSON (размер={len(json_bytes)} байт)")
+    except Exception as e:
+        app_logger.error(f"Ошибка сериализации проекта: {e}", exc_info=True)
+        return jsonify({'error': 'Failed to serialize project data'}), 500
+    
+    # Гарантируем существование бакета
+    try:
+        ensure_bucket(minio_client, MINIO_BUCKET)
+    except Exception as e:
+        app_logger.error(f"Ошибка создания бакета: {e}", exc_info=True)
+        return jsonify({'error': 'Failed to ensure bucket exists'}), 500
+    
+    # Загружаем в MinIO
+    try:
+        minio_client.put_object(
+            bucket_name=MINIO_BUCKET,
+            object_name=object_name,
+            data=io.BytesIO(json_bytes),
+            length=len(json_bytes),
+            content_type='application/json'
+        )
+        app_logger.info(f"Проект {project_id} успешно сохранён в MinIO: {object_name}")
+        
+        return jsonify({
+            'success': True,
+            'project_id': project_id,
+            'object_name': object_name,
+            'message': f'Project saved successfully'
+        }), 201
+    except S3Error as e:
+        app_logger.error(f"Ошибка сохранения проекта в MinIO: {e}", exc_info=True)
+        return jsonify({'error': str(e)}), 500
+
+
+@app.route('/load_project/<project_id>', methods=['GET'])
+@handle_minio_errors
+def load_project(project_id):
+    """
+    Загружает проект из MinIO по его ID.
+    Возвращает JSON с данными проекта.
+    """
+    app_logger.info(f"Запрос на загрузку проекта {project_id} из MinIO")
+    
+    # Формируем имя объекта в MinIO
+    object_name = f"{MINIO_PROJECTS_PREFIX}{project_id}.json"
+    
+    try:
+        # Получаем объект из MinIO
+        response = minio_client.get_object(MINIO_BUCKET, object_name)
+        
+        # Читаем данные
+        json_str = response.read().decode('utf-8')
+        response.close()
+        response.release_conn()
+        
+        # Парсим JSON
+        project_data = json.loads(json_str)
+        
+        app_logger.info(f"Проект {project_id} успешно загружен из MinIO")
+        
+        return jsonify({
+            'success': True,
+            'data': project_data
+        }), 200
+    except S3Error as e:
+        if e.code == 'NoSuchKey':
+            app_logger.warning(f"Проект {project_id} не найден в MinIO")
+            return jsonify({'error': f'Project {project_id} not found'}), 404
+        app_logger.error(f"Ошибка загрузки проекта из MinIO: {e}", exc_info=True)
+        return jsonify({'error': str(e)}), 500
+
+
+@app.route('/list_projects', methods=['GET'])
+@handle_minio_errors
+def list_projects():
+    """
+    Возвращает список всех проектов в MinIO.
+    """
+    app_logger.info("Запрос списка проектов из MinIO")
+    
+    try:
+        # Получаем список объектов с префиксом проектов
+        objects = minio_client.list_objects(MINIO_BUCKET, prefix=MINIO_PROJECTS_PREFIX, recursive=True)
+        
+        projects = []
+        for obj in objects:
+            # Пропускаем объекты-папки (заканчиваются на /)
+            if obj.object_name.endswith('/'):
+                continue
+            
+            # Извлекаем ID проекта из имени файла
+            filename = obj.object_name.split('/')[-1]
+            if filename.endswith('.json'):
+                project_id = filename[:-5]  # Убираем .json
+                
+                projects.append({
+                    'id': project_id,
+                    'object_name': obj.object_name,
+                    'size': obj.size,
+                    'last_modified': obj.last_modified.strftime('%Y-%m-%d %H:%M:%S'),
+                    'etag': obj.etag
+                })
+        
+        app_logger.info(f"Найдено {len(projects)} проектов в MinIO")
+        
+        return jsonify({
+            'success': True,
+            'projects': projects,
+            'count': len(projects)
+        }), 200
+    except S3Error as e:
+        app_logger.error(f"Ошибка получения списка проектов: {e}", exc_info=True)
+        return jsonify({'error': str(e)}), 500
+
+
+@app.route('/delete_project/<project_id>', methods=['DELETE'])
+@handle_minio_errors
+def delete_project(project_id):
+    """
+    Удаляет проект из MinIO по его ID.
+    """
+    app_logger.info(f"Запрос на удаление проекта {project_id} из MinIO")
+    
+    # Формируем имя объекта в MinIO
+    object_name = f"{MINIO_PROJECTS_PREFIX}{project_id}.json"
+    
+    try:
+        minio_client.remove_object(MINIO_BUCKET, object_name)
+        app_logger.info(f"Проект {project_id} успешно удалён из MinIO")
+        
+        return jsonify({
+            'success': True,
+            'project_id': project_id,
+            'message': f'Project deleted successfully'
+        }), 200
+    except S3Error as e:
+        if e.code == 'NoSuchKey':
+            app_logger.warning(f"Проект {project_id} не найден в MinIO для удаления")
+            return jsonify({'error': f'Project {project_id} not found'}), 404
+        app_logger.error(f"Ошибка удаления проекта из MinIO: {e}", exc_info=True)
+        return jsonify({'error': str(e)}), 500
+
+
+# ==================== Recent Files & Modal States Endpoints (MinIO Storage) ====================
+
+@app.route('/api/recent_files', methods=['GET'])
+@handle_minio_errors
+def get_recent_files():
+    """
+    Получает список недавних файлов из MinIO.
+    """
+    app_logger.info("Запрос списка недавних файлов из MinIO")
+    
+    object_name = "ui_state/recent_files.json"
+    
+    try:
+        response = minio_client.get_object(MINIO_BUCKET, object_name)
+        json_str = response.read().decode('utf-8')
+        response.close()
+        response.release_conn()
+        
+        data = json.loads(json_str)
+        app_logger.debug(f"Загружено {len(data.get('files', []))} недавних файлов")
+        
+        return jsonify({
+            'success': True,
+            'files': data.get('files', [])
+        }), 200
+    except S3Error as e:
+        if e.code == 'NoSuchKey':
+            app_logger.debug("Список недавних файлов ещё не создан")
+            return jsonify({'success': True, 'files': []}), 200
+        app_logger.error(f"Ошибка загрузки недавних файлов: {e}", exc_info=True)
+        return jsonify({'error': str(e)}), 500
+
+
+@app.route('/api/recent_files', methods=['POST'])
+@handle_minio_errors
+def save_recent_files():
+    """
+    Сохраняет список недавних файлов в MinIO.
+    """
+    app_logger.info("Сохранение списка недавних файлов в MinIO")
+    
+    data = request.get_json()
+    if not data or 'files' not in data:
+        return jsonify({'error': 'Missing "files" field'}), 400
+    
+    object_name = "ui_state/recent_files.json"
+    
+    try:
+        json_str = json.dumps(data, ensure_ascii=False, indent=2)
+        json_bytes = json_str.encode('utf-8')
+        
+        minio_client.put_object(
+            bucket_name=MINIO_BUCKET,
+            object_name=object_name,
+            data=io.BytesIO(json_bytes),
+            length=len(json_bytes),
+            content_type='application/json'
+        )
+        app_logger.debug(f"Сохранено {len(data['files'])} недавних файлов")
+        
+        return jsonify({'success': True}), 200
+    except Exception as e:
+        app_logger.error(f"Ошибка сохранения недавних файлов: {e}", exc_info=True)
+        return jsonify({'error': str(e)}), 500
+
+
+@app.route('/api/modal_states', methods=['GET'])
+@handle_minio_errors
+def get_modal_states():
+    """
+    Получает состояние модальных окон из MinIO.
+    """
+    app_logger.info("Запрос состояния модальных окон из MinIO")
+    
+    object_name = "ui_state/modal_states.json"
+    
+    try:
+        response = minio_client.get_object(MINIO_BUCKET, object_name)
+        json_str = response.read().decode('utf-8')
+        response.close()
+        response.release_conn()
+        
+        data = json.loads(json_str)
+        app_logger.debug(f"Загружено состояний модальных окон: {len(data.get('states', {}))}")
+        
+        return jsonify({
+            'success': True,
+            'states': data.get('states', {})
+        }), 200
+    except S3Error as e:
+        if e.code == 'NoSuchKey':
+            app_logger.debug("Состояние модальных окон ещё не создано")
+            return jsonify({'success': True, 'states': {}}), 200
+        app_logger.error(f"Ошибка загрузки состояния модальных окон: {e}", exc_info=True)
+        return jsonify({'error': str(e)}), 500
+
+
+@app.route('/api/modal_states', methods=['POST'])
+@handle_minio_errors
+def save_modal_states():
+    """
+    Сохраняет состояние модальных окон в MinIO.
+    """
+    app_logger.info("Сохранение состояния модальных окон в MinIO")
+    
+    data = request.get_json()
+    if not data or 'states' not in data:
+        return jsonify({'error': 'Missing "states" field'}), 400
+    
+    object_name = "ui_state/modal_states.json"
+    
+    try:
+        json_str = json.dumps(data, ensure_ascii=False, indent=2)
+        json_bytes = json_str.encode('utf-8')
+        
+        minio_client.put_object(
+            bucket_name=MINIO_BUCKET,
+            object_name=object_name,
+            data=io.BytesIO(json_bytes),
+            length=len(json_bytes),
+            content_type='application/json'
+        )
+        app_logger.debug(f"Сохранено состояний модальных окон: {len(data['states'])}")
+        
+        return jsonify({'success': True}), 200
+    except Exception as e:
+        app_logger.error(f"Ошибка сохранения состояния модальных окон: {e}", exc_info=True)
+        return jsonify({'error': str(e)}), 500
 
 
 if __name__ == '__main__':
