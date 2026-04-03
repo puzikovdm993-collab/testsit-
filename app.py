@@ -285,12 +285,27 @@ def get_image_info(filename):
 @app.route('/')
 def index():
     app_logger.info("Доступ к главной странице")
-    headers = dict(request.headers)  # Все заголовки в виде словаря
-    aut = base64.b64decode(headers.get('Authorization').split()[1]).decode('utf-8')
-    login = aut.split(":")[0]
-    password = aut.split(":")[1]
-    app_logger.debug(f"login: {login}")
-    app_logger.debug(f"password: {password}")
+    headers = dict(request.headers)
+    
+    # Проверка наличия заголовка Authorization
+    auth_header = headers.get('Authorization')
+    if not auth_header:
+        # Если заголовка нет, просто отдаем страницу (авторизация будет проверяться при действиях)
+        if not os.path.exists('index.html'):
+            app_logger.error("Файл index.html не найден")
+            abort(404)
+        return send_from_directory('.', 'index.html')
+    
+    try:
+        aut = base64.b64decode(auth_header.split()[1]).decode('utf-8')
+        login = aut.split(":")[0]
+        password = aut.split(":")[1]
+        app_logger.debug(f"login: {login}")
+        app_logger.debug(f"password: {password}")
+    except Exception as e:
+        app_logger.error(f"Ошибка декодирования авторизации: {e}")
+        # Продолжаем без авторизации или можно вернуть 401
+        # abort(401)
 
     if not os.path.exists('index.html'):
         app_logger.error("Файл index.html не найден")
