@@ -39,18 +39,39 @@ document.addEventListener('DOMContentLoaded', function() {
     // Инициализируем состояние кнопок при загрузке (когда файлов еще нет)
     updateButtonsState();
     
+    // Инициализация IndexedDB для истории
+    if (typeof initHistoryDB === 'function') {
+        initHistoryDB().then(() => {
+            console.log('✅ IndexedDB для истории инициализирована');
+        }).catch(err => {
+            console.error('❌ Ошибка инициализации IndexedDB для истории:', err);
+        });
+    }
+    
     // Запускаем автосохранение истории
     if (typeof startHistoryAutoSave === 'function') {
         startHistoryAutoSave();
     }
     
-    // Загружаем сохраненную историю из localStorage
-    if (typeof loadHistoryFromStorage === 'function') {
-        const loaded = loadHistoryFromStorage();
-        if (loaded) {
-            console.log('✅ История загружена при старте');
+    // Загружаем сохраненную историю из IndexedDB (приоритет) или localStorage
+    async function loadHistoryOnInit() {
+        if (typeof loadHistoryFromDB === 'function') {
+            const loaded = await loadHistoryFromDB();
+            if (loaded) {
+                console.log('✅ История загружена из IndexedDB при старте');
+                return;
+            }
+        }
+        // Если не загрузилось из IndexedDB, пробуем localStorage
+        if (typeof loadHistoryFromStorage === 'function') {
+            const loaded = loadHistoryFromStorage();
+            if (loaded) {
+                console.log('✅ История загружена из localStorage при старте');
+            }
         }
     }
+    
+    loadHistoryOnInit();
 
     // ============ Инициализация графика Plotly ============
     const plotlyDiv = document.getElementById('graphCanvas');
