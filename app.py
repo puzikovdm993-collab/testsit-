@@ -1058,6 +1058,13 @@ def save_project():
         app_logger.error(f"Ошибка сериализации проекта: {e}", exc_info=True)
         return jsonify({'error': 'Failed to serialize project data'}), 500
     
+    # Гарантируем существование бакета
+    try:
+        ensure_bucket(minio_client, MINIO_BUCKET)
+    except Exception as e:
+        app_logger.error(f"Ошибка создания бакета: {e}", exc_info=True)
+        return jsonify({'error': 'Failed to ensure bucket exists'}), 500
+    
     # Загружаем в MinIO
     try:
         minio_client.put_object(
