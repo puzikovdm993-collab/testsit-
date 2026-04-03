@@ -750,6 +750,11 @@
 </div>
 
 <script>
+    // Подключаем модуль истории из внешнего файла
+    const historyScript = document.createElement('script');
+    historyScript.src = 'src/history/history.js';
+    document.head.appendChild(historyScript);
+    
     // ---------- INDEXED DB МОДУЛЬ ----------
     const DB_NAME = 'PenpotProjectsDB';
     const DB_VERSION = 1;
@@ -1204,6 +1209,16 @@
         projectDeadline.value = '';
         // автоматически делаем новый проект активным
         activeProjectId = newId;
+        // Сохраняем активный проект в localStorage для доступа из других страниц
+        localStorage.setItem('activeProjectId', newId);
+        localStorage.setItem('activeProjectName', name);
+        localStorage.setItem('activeProjectType', type);
+        
+        // Если это проект типа tis, создаем пустую историю
+        if (type === 'tis') {
+            clearHistoryForNewProject(newId);
+        }
+        
         // сбросим поиск, чтобы пользователь увидел проект
         sidebarSearchInput.value = '';
         renderAll();

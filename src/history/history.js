@@ -268,10 +268,42 @@ async function loadHistoryFromDB() {
                 
                 // Для каждого сохраненного файла восстанавливаем историю
                 Object.keys(historyData).forEach(fileId => {
-                    const file = openFiles.find(f => f.id === fileId);
+                    let file = openFiles.find(f => f.id === fileId);
+                    
+                    // Если файл не найден среди открытых, создаем его из сохраненных данных
                     if (!file) {
-                        console.log(`⚠️ Файл ${fileId} не найден среди открытых, пропускаем историю`);
-                        return;
+                        const savedFileHistory = historyData[fileId];
+                        const firstState = savedFileHistory.history && savedFileHistory.history.length > 0 
+                            ? savedFileHistory.history[0] 
+                            : null;
+                        
+                        if (firstState) {
+                            // Создаем новый файл с canvas
+                            const newCanvas = document.createElement('canvas');
+                            newCanvas.width = firstState.w;
+                            newCanvas.height = firstState.h;
+                            newCanvas.style.display = 'none';
+                            document.getElementById('canvasContainer')?.appendChild(newCanvas);
+                            
+                            const newCtx = newCanvas.getContext('2d', { willReadFrequently: true });
+                            
+                            file = {
+                                id: fileId,
+                                filename: savedFileHistory.filename || 'Безымянный',
+                                canvas: newCanvas,
+                                ctx: newCtx,
+                                history: [],
+                                historyIndex: -1,
+                                minValue: 0,
+                                maxValue: 1
+                            };
+                            
+                            openFiles.push(file);
+                            console.log(`✅ Файл ${file.filename} создан из истории`);
+                        } else {
+                            console.log(`⚠️ Нет данных для создания файла ${fileId}`);
+                            return;
+                        }
                     }
                     
                     const savedFileHistory = historyData[fileId];
@@ -322,6 +354,12 @@ async function loadHistoryFromDB() {
                         }
                     }
                 });
+                
+                // Если файлы были созданы из истории и есть хотя бы один файл,
+                // переключаемся на первый файл
+                if (openFiles.length > 0 && !activeFileId) {
+                    switchToFile(openFiles[0].id);
+                }
                 
                 resolve(true);
             };
@@ -497,5 +535,48 @@ function stopHistoryAutoSave() {
     if (historyAutoSaveInterval) {
         clearInterval(historyAutoSaveInterval);
         historyAutoSaveInterval = null;
+    }
+}
+
+// Очистка/создание пустой истории для нового проекта TIS
+async function clearHistoryForNewProject(projectId) {
+    if (!historyDB) {
+        try {
+            await initHistoryDB();
+        } catch (e) {
+            console.error('❌ Не удалось инициализировать IndexedDB для истории:', e);
+            return;
+        }
+    }
+    
+    try {
+        const transaction = historyDB.transaction(['history'], 'readwrite');
+        const store = transaction.objectStore('history');
+        
+        // Создаем пустую запись истории для нового проекта
+        const emptyRecord = {
+            projectId: projectId,
+            timestamp: Date.now(),
+            files: {}
+        };
+        
+        const request = store.put(emptyRecord);
+        
+        request.onsuccess = () => {
+            console.log(`✅ Пустая история создана для проекта ${projectId}`);
+        };
+        
+        request.onerror = () => {
+            console.error('❌ Ошибка создания пустой истории:', request.error);
+        };
+    } catch (e) {
+        console.error('❌ Ошибка создания пустой истории:', e);
+    }
+    
+    // Также очищаем localStorage на всякий случай
+    try {
+        localStorage.removeItem(`project_history_${projectId}`);
+    } catch (e) {
+        console.warn('⚠️ Не удалось очистить localStorage:', e);
     }
 }
