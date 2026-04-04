@@ -752,12 +752,73 @@
 <script>
     // ---------- ХРАНИЛИЩЕ ДАННЫХ ----------
     // Каждый проект имеет: id, name, category, type, deadline, createdAt, owner (привязка к пользователю)
-    let projects = [
-        { id: "proj_1", name: "Черновики: идеи", category: "Веб-дизайн", type: "classic", deadline: "2025-05-10", createdAt: "2025-03-20", owner: "Алина Дизайнер" },
-        { id: "proj_2", name: "Мобильный банкинг", category: "Мобильное приложение", type: "tis", deadline: "2025-06-01", createdAt: "2025-03-18", owner: "Алина Дизайнер" },
-        { id: "proj_3", name: "Корпоративный UI Kit", category: "UI Kit", type: "workflow", deadline: "2025-05-25", createdAt: "2025-03-15", owner: "Алина Дизайнер" },
-        { id: "proj_4", name: "Лендинг конференции", category: "Прототип", type: "classic", deadline: "2025-04-30", createdAt: "2025-03-10", owner: "Алина Дизайнер" }
-    ];
+    let projects = [];
+    
+    // URL API для работы с MinIO
+    const API_BASE_URL = window.location.origin;
+
+    // Загрузка проектов из MinIO при старте
+    async function loadProjectsFromMinIO() {
+        try {
+            const response = await fetch(`${API_BASE_URL}/list_projects`);
+            if (!response.ok) throw new Error('Ошибка загрузки проектов');
+            const data = await response.json();
+            if (data.success && Array.isArray(data.projects)) {
+                projects = data.projects;
+                console.log(`✅ Загружено ${projects.length} проектов из MinIO`);
+                return true;
+            } else {
+                console.error('❌ Неверный формат ответа от сервера');
+                return false;
+            }
+        } catch (error) {
+            console.error('❌ Ошибка загрузки проектов из MinIO:', error);
+            showToast('⚠️ Ошибка загрузки проектов', true);
+            return false;
+        }
+    }
+
+    // Сохранение проекта в MinIO
+    async function saveProjectToMinIO(project) {
+        try {
+            const response = await fetch(`${API_BASE_URL}/save_project`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ project: project })
+            });
+            const data = await response.json();
+            if (data.success) {
+                console.log(`✅ Проект "${project.name}" сохранён в MinIO`);
+                return true;
+            } else {
+                console.error('❌ Ошибка сохранения проекта:', data.message);
+                return false;
+            }
+        } catch (error) {
+            console.error('❌ Ошибка сохранения проекта в MinIO:', error);
+            return false;
+        }
+    }
+
+    // Удаление проекта из MinIO
+    async function deleteProjectFromMinIO(projectId) {
+        try {
+            const response = await fetch(`${API_BASE_URL}/delete_project/${projectId}`, {
+                method: 'DELETE'
+            });
+            const data = await response.json();
+            if (data.success) {
+                console.log(`✅ Проект ${projectId} удалён из MinIO`);
+                return true;
+            } else {
+                console.error('❌ Ошибка удаления проекта:', data.message);
+                return false;
+            }
+        } catch (error) {
+            console.error('❌ Ошибка удаления проекта из MinIO:', error);
+            return false;
+        }
+    }
 
     // Текущий активный проект (выделение в боковой панели)
     let activeProjectId = null;
@@ -987,7 +1048,7 @@
     }
 
     // Создание нового проекта с привязкой к текущему пользователю
-    function createNewProject() {
+    async function createNewProject() {
         const name = newProjectName.value.trim();
         if (name === "") {
             showToast("Укажите название проекта", true);
@@ -1013,6 +1074,15 @@
             createdAt: today,
             owner: "Алина Дизайнер"   // стройки для этого пользователя (явно)
         };
+        
+        // Сохраняем проект в MinIO
+        const saved = await saveProjectToMinIO(newProject);
+        if (!saved) {
+            showToast("❌ Ошибка сохранения проекта в MinIO", true);
+            return;
+        }
+        
+        // Добавляем проект в локальный массив только после успешного сохранения
         projects.push(newProject);
         // Очистка формы
         newProjectName.value = '';
@@ -1022,7 +1092,7 @@
         // сбросим поиск, чтобы пользователь увидел проект
         sidebarSearchInput.value = '';
         renderAll();
-        showToast(`✅ Проект "${name}" создан! Теперь в ваших стройках.`, false);
+        showToast(`✅ Проект "${name}" создан и сохранён в MinIO!`, false);
         // обновляем статистику пользователя (опционально)
         updateUserStats();
         // Закрываем модальное окно
@@ -1170,7 +1240,7 @@
     }
 
     // Дублирование проекта
-    function duplicateProject(projectId) {
+    async function duplicateProject(projectId) {
         const project = projects.find(p => p.id === projectId);
         if (!project) return;
         
@@ -1181,6 +1251,13 @@
             name: `${project.name} (копия)`,
             createdAt: new Date().toISOString().slice(0, 10)
         };
+        
+        // Сохраняем дубликат в MinIO
+        const saved = await saveProjectToMinIO(newProject);
+        if (!saved) {
+            showToast("❌ Ошибка сохранения дубликата проекта в MinIO", true);
+            return;
+        }
         
         projects.push(newProject);
         
@@ -1194,17 +1271,25 @@
         
         renderAll();
         updateUserStats();
-        showToast(`✅ Проект "${newProject.name}" создан`, false);
+        showToast(`✅ Проект "${newProject.name}" создан и сохранён в MinIO`, false);
         closeAllProjectSettingsMenus();
     }
 
     // Удаление проекта
-    function deleteProject(projectId) {
+    async function deleteProject(projectId) {
         const project = projects.find(p => p.id === projectId);
         if (!project) return;
         
         if (!confirm(`Удалить проект "${project.name}"?`)) return;
         
+        // Сначала удаляем из MinIO
+        const deleted = await deleteProjectFromMinIO(projectId);
+        if (!deleted) {
+            showToast("❌ Ошибка удаления проекта из MinIO", true);
+            return;
+        }
+        
+        // Удаляем из локального массива только после успешного удаления из MinIO
         projects = projects.filter(p => p.id !== projectId);
         
         // Удаляем настройки проекта из localStorage
@@ -1217,7 +1302,7 @@
         
         renderAll();
         updateUserStats();
-        showToast(`🗑️ Проект "${project.name}" удален`, false);
+        showToast(`🗑️ Проект "${project.name}" удален из MinIO`, false);
         closeAllProjectSettingsMenus();
     }
 
@@ -1245,22 +1330,16 @@
         return saved ? JSON.parse(saved) : {};
     }
 
-    // Отметить, что все проекты принадлежат пользователю "Алина Дизайнер" (в демо все его стройки)
-    // + небольшая инициализация дедлайнов
-    function fixProjectOwners() {
-        projects = projects.map(p => ({ ...p, owner: "Алина Дизайнер" }));
-        updateUserStats();
-    }
-
-    // инициализация
-    function init() {
-        fixProjectOwners();
-        // если проектов нет, добавлять не нужно, у нас уже есть демо проекты
-        if (projects.length === 0) {
-            projects = [
-                { id: "demo1", name: "Дизайн-система", category: "UI Kit", type: "classic", deadline: "2025-06-10", createdAt: "2025-03-01", owner: "Алина Дизайнер" }
-            ];
+    // инициализация - асинхронная функция для загрузки проектов из MinIO
+    async function init() {
+        // Загружаем проекты из MinIO при старте
+        const loaded = await loadProjectsFromMinIO();
+        
+        if (!loaded || projects.length === 0) {
+            console.log('ℹ️ Проекты не найдены в MinIO или ошибка загрузки');
+            showToast('📭 Нет проектов в MinIO. Создайте новый проект!', false);
         }
+        
         // Устанавливаем активный проект по умолчанию (первый)
         if (projects.length > 0 && !activeProjectId) activeProjectId = projects[0].id;
         renderAll();
