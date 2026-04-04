@@ -3,25 +3,88 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-    <title>Penpot Fusion | Управление проектами</title>
+    <title>Penpot Fusion | Двойной интерфейс</title>
     <style>
+        /* ---------- БАЗОВЫЕ ПЕРЕМЕННЫЕ ---------- */
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
 
+        /* ----- СТИЛЬ: МИНИМАЛИСТИЧНЫЙ (по умолчанию) ----- */
         body {
-            background: #f5f5f5;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            color: #333;
-            height: 100vh;
-            overflow: hidden;
-            font-size: 14px;
-            line-height: 1.5;
+            --bg: #ffffff;
+            --surface: #ffffff;
+            --border: #e5e5e5;
+            --text: #171717;
+            --text-secondary: #737373;
+            --accent: #000000;
+            --accent-soft: #f5f5f5;
+            --danger: #dc2626;
+            --radius: 0px;
+            --shadow: none;
+            --font: -apple-system, 'Inter', 'Segoe UI', monospace;
+            --card-padding: 12px;
+            --card-gap: 16px;
+            --avatar-bg: transparent;
+            --avatar-icon: '◉';
+            --show-extra-meta: none;
+            --show-avatar-icon: inline-block;
+            --stat-display: none;
+            --card-icon-display: none;
         }
 
-        /* ГЛАВНЫЙ LAYOUT: боковая панель + основной контент */
+        body.classic {
+            --bg: #f0f2f8;
+            --surface: #ffffff;
+            --border: #e2e8f0;
+            --text: #1e293b;
+            --text-secondary: #475569;
+            --accent: #6366f1;
+            --accent-soft: #e0e7ff;
+            --danger: #ef4444;
+            --radius: 12px;
+            --shadow: 0 1px 3px rgba(0,0,0,0.05), 0 1px 2px rgba(0,0,0,0.1);
+            --font: 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
+            --card-padding: 18px;
+            --card-gap: 20px;
+            --show-extra-meta: flex;
+            --show-avatar-icon: none;
+            --stat-display: flex;
+            --card-icon-display: block;
+        }
+
+        body.dark {
+            --bg: #000000;
+            --surface: #000000;
+            --border: #262626;
+            --text: #ededed;
+            --text-secondary: #a3a3a3;
+            --accent: #ffffff;
+            --accent-soft: #1a1a1a;
+        }
+        body.classic.dark {
+            --bg: #0f172a;
+            --surface: #1e293b;
+            --border: #334155;
+            --text: #f1f5f9;
+            --text-secondary: #cbd5e1;
+            --accent: #818cf8;
+            --accent-soft: #2d3a5e;
+        }
+
+        body {
+            background: var(--bg);
+            font-family: var(--font);
+            color: var(--text);
+            height: 100vh;
+            overflow: hidden;
+            font-size: 13px;
+            line-height: 1.4;
+            transition: background 0.2s, color 0.2s;
+        }
+
         .app-layout {
             display: flex;
             height: 100vh;
@@ -29,298 +92,349 @@
             overflow: hidden;
         }
 
-        /* ========== БОКОВАЯ ПАНЕЛЬ (SIDEBAR) ========== */
+        /* ----- SIDEBAR ----- */
         .sidebar {
             width: 280px;
-            background: #fff;
-            border-right: 1px solid #ddd;
+            background: var(--surface);
+            border-right: 1px solid var(--border);
             display: flex;
             flex-direction: column;
-            z-index: 10;
             overflow-y: auto;
             flex-shrink: 0;
         }
 
-        /* профиль пользователя */
         .user-profile {
-            padding: 16px;
-            border-bottom: 1px solid #ddd;
-            background: #fff;
+            padding: 20px 16px;
+            border-bottom: 1px solid var(--border);
         }
 
         .avatar-large {
-            width: 48px;
-            height: 48px;
-            background: #4a90d9;
-            border-radius: 4px;
+            font-size: 1.5rem;
+            margin-bottom: 12px;
+            color: var(--text-secondary);
             display: flex;
             align-items: center;
+            gap: 8px;
+            cursor: pointer;
+            transition: opacity 0.1s;
+        }
+        .avatar-large:hover {
+            opacity: 0.8;
+        }
+        body.classic .avatar-large {
+            width: 48px;
+            height: 48px;
+            background: linear-gradient(135deg, var(--accent), #a855f7);
+            border-radius: var(--radius);
             justify-content: center;
+            font-size: 1.4rem;
             color: white;
-            font-size: 1.2rem;
-            margin-bottom: 12px;
+        }
+        .avatar-large span {
+            display: var(--show-avatar-icon);
         }
 
         .user-name {
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: var(--text);
+        }
+        body.classic .user-name {
+            font-weight: 700;
             font-size: 1rem;
-            font-weight: 600;
-            color: #333;
         }
 
         .user-role {
-            font-size: 0.75rem;
-            font-weight: 500;
-            text-transform: uppercase;
-            color: #666;
+            font-size: 0.7rem;
+            color: var(--text-secondary);
             margin-top: 4px;
-            letter-spacing: 0.5px;
+        }
+        body.classic .user-role {
+            background: var(--accent-soft);
+            display: inline-block;
+            padding: 2px 10px;
+            border-radius: 30px;
         }
 
         .user-stats {
-            display: flex;
+            display: var(--stat-display);
             gap: 12px;
-            margin-top: 12px;
-            background: #f9f9f9;
-            padding: 8px 12px;
-            border-radius: 4px;
-            font-size: 0.75rem;
-            font-weight: 500;
-            color: #666;
-            border: 1px solid #eee;
+            margin-top: 16px;
+            background: var(--accent-soft);
+            padding: 10px 12px;
+            border-radius: var(--radius);
+            font-size: 0.7rem;
+            color: var(--text-secondary);
+            border: 1px solid var(--border);
         }
-
         .stat-item {
             display: flex;
             align-items: center;
             gap: 6px;
         }
 
-        /* поиск */
         .search-section {
-            padding: 12px 16px;
-            border-bottom: 1px solid #ddd;
+            padding: 16px;
+            border-bottom: 1px solid var(--border);
         }
-
         .search-label {
-            font-size: 0.7rem;
-            text-transform: uppercase;
+            font-size: 0.65rem;
             font-weight: 600;
-            color: #666;
+            text-transform: uppercase;
+            color: var(--text-secondary);
             margin-bottom: 8px;
-            display: block;
-            letter-spacing: 0.5px;
         }
-
         .search-box {
             display: flex;
             align-items: center;
-            background: #fff;
-            border-radius: 4px;
-            border: 1px solid #ddd;
-            padding: 8px 12px;
-            transition: 0.2s;
+            border: 1px solid var(--border);
+            padding: 6px 10px;
+            border-radius: var(--radius);
+            background: var(--surface);
         }
-
-        .search-box:focus-within {
-            border-color: #4a90d9;
-            background: #fff;
+        .search-box input {
+            background: transparent;
+            border: none;
+            width: 100%;
+            font-size: 0.8rem;
+            outline: none;
+            color: var(--text);
+            font-family: var(--font);
         }
-
         .search-box span {
-            color: #999;
+            color: var(--text-secondary);
             margin-right: 8px;
         }
 
-        .search-box input {
-            border: none;
-            background: transparent;
-            width: 100%;
-            font-size: 0.85rem;
-            outline: none;
-            font-family: inherit;
-            color: #333;
-        }
-        
-        .search-box input::placeholder {
-            color: #999;
-        }
-
-        /* список проектов в сайдбаре */
         .projects-list-sidebar {
             flex: 1;
-            padding: 8px 0;
-            overflow-y: auto;
+            padding: 12px 0;
         }
-
         .sidebar-title {
-            font-size: 0.7rem;
+            font-size: 0.65rem;
             font-weight: 600;
             text-transform: uppercase;
-            color: #666;
+            color: var(--text-secondary);
             padding: 8px 16px;
-            letter-spacing: 0.5px;
         }
-
         .project-side-item {
             padding: 8px 16px;
-            margin: 2px 0;
             cursor: pointer;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            transition: 0.1s;
-            font-size: 0.85rem;
-            color: #333;
-            border-left: 3px solid transparent;
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            border-left: 2px solid transparent;
+            transition: 0.05s;
         }
-
+        body.classic .project-side-item {
+            margin: 2px 12px;
+            border-radius: var(--radius-sm);
+            border-left: none;
+        }
         .project-side-item:hover {
-            background: #f5f5f5;
+            background: var(--accent-soft);
+            color: var(--text);
         }
-
         .project-side-item.active-side {
-            background: #e8f0fe;
-            border-left-color: #4a90d9;
+            background: var(--accent-soft);
+            border-left-color: var(--accent);
+            color: var(--accent);
             font-weight: 500;
-            color: #4a90d9;
+        }
+        body.classic .project-side-item.active-side {
+            border-left: 3px solid var(--accent);
+            background: var(--accent-soft);
         }
 
-        .project-icon {
-            font-size: 1rem;
-        }
-
-        /* ========== ОСНОВНАЯ ОБЛАСТЬ ========== */
+        /* ----- MAIN ----- */
         .main-content {
             flex: 1;
             display: flex;
             flex-direction: column;
             overflow-y: auto;
-            padding: 24px;
-            background: #f5f5f5;
+            padding: 24px 28px;
         }
 
-        .panel-title {
-            font-size: 0.9rem;
-            font-weight: 600;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            margin-bottom: 16px;
-            color: #333;
-        }
-
-        .form-row-flex {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 12px;
-            align-items: flex-end;
-        }
-
-        .form-group {
-            flex: 2;
-            min-width: 200px;
-        }
-
-        .form-group label {
-            font-size: 0.7rem;
-            font-weight: 600;
-            text-transform: uppercase;
-            color: #666;
-            display: block;
-            margin-bottom: 6px;
-            letter-spacing: 0.5px;
-        }
-
-        .form-group input, .form-group select {
-            width: 100%;
-            padding: 8px 12px;
-            border-radius: 4px;
-            border: 1px solid #ddd;
-            background: #fff;
-            color: #333;
-            font-size: 0.85rem;
-            transition: 0.2s;
-            font-family: inherit;
-        }
-        
-        .form-group select option {
-            background: #fff;
-            color: #333;
-        }
-
-        .form-group input:focus, .form-group select:focus {
-            outline: none;
-            border-color: #4a90d9;
-        }
-
-        .btn-primary {
-            background: #4a90d9;
-            border: none;
-            padding: 8px 16px;
-            border-radius: 4px;
-            color: white;
-            font-weight: 600;
-            font-size: 0.8rem;
-            cursor: pointer;
-            transition: 0.2s;
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .btn-primary:hover {
-            background: #3a7bc8;
-        }
-
-        /* карточная сетка проектов */
         .projects-header {
             display: flex;
-            justify-content: flex-start;
             align-items: center;
             gap: 16px;
-            margin-bottom: 16px;
             flex-wrap: wrap;
+            margin-bottom: 24px;
         }
-
-        .projects-header h2 {
-            font-size: 1.2rem;
-            font-weight: 600;
-            color: #333;
-            margin: 0;
-        }
-
-        .result-count {
-            background: #f0f0f0;
-            padding: 4px 12px;
-            border-radius: 4px;
-            font-size: 0.75rem;
-            color: #666;
-            border: 1px solid #ddd;
-        }
-
-        /* кнопка назад к проектам */
         .back-to-projects-btn {
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-            background: #fff;
-            border: 1px solid #ddd;
-            color: #666;
-            padding: 6px 14px;
-            border-radius: 4px;
-            font-size: 0.8rem;
+            background: none;
+            border: 1px solid var(--border);
+            padding: 5px 12px;
+            font-size: 0.7rem;
             cursor: pointer;
-            transition: 0.2s;
-            margin-right: 12px;
+            color: var(--text-secondary);
+            border-radius: var(--radius);
         }
-
         .back-to-projects-btn:hover {
-            background: #f5f5f5;
-            color: #333;
-            border-color: #ccc;
+            border-color: var(--accent);
+            color: var(--accent);
+        }
+        .projects-header h2 {
+            font-size: 1rem;
+            font-weight: 500;
+            color: var(--text);
+        }
+        body.classic .projects-header h2 {
+            font-size: 1.3rem;
+            font-weight: 700;
+        }
+        .result-count {
+            font-size: 0.7rem;
+            color: var(--text-secondary);
+        }
+        .btn-primary {
+            background: var(--accent);
+            border: none;
+            padding: 6px 14px;
+            font-size: 0.7rem;
+            font-weight: 500;
+            cursor: pointer;
+            color: var(--bg);
+            transition: 0.1s;
+            border-radius: var(--radius);
+        }
+        .btn-primary:hover {
+            opacity: 0.85;
         }
 
-        /* настройки пользователя - модальное окно */
+        /* карточки */
+        .projects-grid-main {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+            gap: var(--card-gap);
+        }
+
+        .project-card-main {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            padding: var(--card-padding);
+            transition: 0.1s linear;
+            cursor: default;
+            position: relative;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+        }
+        .project-card-main.drag-over {
+            border-color: var(--accent);
+            background: var(--accent-soft);
+        }
+        .project-card-main:hover {
+            border-color: var(--accent);
+        }
+        .drag-handle {
+            position: absolute;
+            top: 8px;
+            left: 8px;
+            font-size: 1rem;
+            cursor: grab;
+            color: var(--text-secondary);
+            padding: 4px 6px;
+            border-radius: var(--radius);
+            user-select: none;
+            z-index: 5;
+        }
+        .drag-handle:active {
+            cursor: grabbing;
+        }
+        .drag-handle:hover {
+            background: var(--accent-soft);
+            color: var(--accent);
+        }
+        .project-settings-btn {
+            position: absolute;
+            top: 8px;
+            right: 8px;
+            background: none;
+            border: none;
+            color: var(--text-secondary);
+            font-size: 1rem;
+            cursor: pointer;
+            padding: 4px 6px;
+            border-radius: var(--radius);
+            z-index: 5;
+        }
+        .project-settings-btn:hover {
+            background: var(--accent-soft);
+            color: var(--accent);
+        }
+        .card-header-icon {
+            display: var(--card-icon-display);
+            font-size: 1.5rem;
+            margin-bottom: 12px;
+            margin-top: 8px;
+        }
+        .card-title {
+            font-weight: 500;
+            font-size: 0.85rem;
+            margin-bottom: 6px;
+            color: var(--text);
+            padding-right: 24px;
+            padding-left: 20px;
+        }
+        body.classic .card-title {
+            font-weight: 600;
+            font-size: 0.95rem;
+        }
+        .card-meta {
+            font-size: 0.7rem;
+            color: var(--text-secondary);
+            display: flex;
+            gap: 12px;
+            font-family: monospace;
+            margin-top: 6px;
+        }
+        .card-meta.extra-meta {
+            display: var(--show-extra-meta);
+        }
+        .project-settings-menu {
+            position: absolute;
+            top: 32px;
+            right: 8px;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            padding: 6px 0;
+            min-width: 150px;
+            z-index: 100;
+            display: none;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+        }
+        .project-settings-menu.show {
+            display: block;
+        }
+        .project-settings-menu-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 8px 16px;
+            width: 100%;
+            background: none;
+            border: none;
+            font-size: 0.75rem;
+            cursor: pointer;
+            color: var(--text-secondary);
+            text-align: left;
+        }
+        .project-settings-menu-item:hover {
+            background: var(--accent-soft);
+            color: var(--accent);
+        }
+        .empty-projects {
+            text-align: center;
+            padding: 48px;
+            color: var(--text-secondary);
+            border: 1px solid var(--border);
+            grid-column: 1 / -1;
+            font-size: 0.8rem;
+            border-radius: var(--radius);
+        }
+
+        /* модалки */
         .user-settings-modal {
             position: fixed;
             top: 0;
@@ -333,494 +447,227 @@
             align-items: center;
             z-index: 2000;
         }
-
         .user-settings-modal.show {
             display: flex;
         }
-
         .user-settings-panel {
-            background: #fff;
-            border-radius: 4px;
+            background: var(--surface);
+            border: 1px solid var(--border);
             padding: 24px;
-            width: 100%;
-            max-width: 500px;
-            border: 1px solid #ddd;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            width: 90%;
+            max-width: 440px;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
         }
-
         .settings-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 16px;
-            padding-bottom: 16px;
-            border-bottom: 1px solid #ddd;
+            margin-bottom: 20px;
+            padding-bottom: 12px;
+            border-bottom: 1px solid var(--border);
         }
-
         .settings-header h3 {
-            font-size: 1.1rem;
+            font-size: 1rem;
             font-weight: 600;
-            color: #333;
         }
-
         .close-settings-btn {
-            background: transparent;
+            background: none;
             border: none;
-            color: #666;
-            font-size: 1.5rem;
+            font-size: 1.2rem;
             cursor: pointer;
-            transition: 0.2s;
-            padding: 4px 8px;
-            border-radius: 4px;
+            color: var(--text-secondary);
         }
-
-        .close-settings-btn:hover {
-            background: #f5f5f5;
-            color: #333;
-        }
-
         .settings-form-group {
-            margin-bottom: 16px;
+            margin-bottom: 18px;
         }
-
         .settings-form-group label {
             font-size: 0.7rem;
             font-weight: 600;
             text-transform: uppercase;
-            color: #666;
+            color: var(--text-secondary);
             display: block;
             margin-bottom: 6px;
-            letter-spacing: 0.5px;
         }
-
         .settings-form-group input, .settings-form-group select {
             width: 100%;
             padding: 8px 12px;
-            border-radius: 4px;
-            border: 1px solid #ddd;
-            background: #fff;
-            color: #333;
-            font-size: 0.9rem;
-            transition: 0.2s;
-            font-family: inherit;
+            background: var(--bg);
+            border: 1px solid var(--border);
+            color: var(--text);
+            font-size: 0.8rem;
+            font-family: var(--font);
+            border-radius: var(--radius);
         }
-
         .settings-form-group input:focus, .settings-form-group select:focus {
             outline: none;
-            border-color: #4a90d9;
+            border-color: var(--accent);
         }
-
         .settings-actions {
             display: flex;
-            gap: 10px;
-            margin-top: 16px;
-        }
-
-        .btn-secondary {
-            background: #f5f5f5;
-            border: 1px solid #ddd;
-            padding: 8px 16px;
-            border-radius: 4px;
-            color: #333;
-            font-weight: 600;
-            font-size: 0.8rem;
-            cursor: pointer;
-            transition: 0.2s;
-        }
-
-        .btn-secondary:hover {
-            background: #eee;
-        }
-
-        /* кнопка настроек в профиле */
-        .settings-btn-profile {
-            background: transparent;
-            border: 1px solid #ddd;
-            color: #666;
-            padding: 6px 12px;
-            border-radius: 4px;
-            font-size: 0.75rem;
-            cursor: pointer;
-            transition: 0.2s;
-            margin-top: 10px;
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-        }
-
-        .settings-btn-profile:hover {
-            background: #f5f5f5;
-            color: #333;
-            border-color: #ccc;
-        }
-
-        .projects-grid-main {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-            gap: 16px;
-        }
-
-        .project-card-main {
-            background: #fff;
-            border-radius: 4px;
-            padding: 16px;
-            border: 1px solid #ddd;
-            transition: 0.2s;
-            cursor: pointer;
-            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-            color: #333;
-            position: relative;
-        }
-
-        .project-card-main:hover {
-            border-color: #bbb;
-            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
-            background: #fafafa;
-        }
-
-        .card-header-icon {
-            font-size: 1.5rem;
-            margin-bottom: 12px;
-        }
-
-        .card-title {
-            font-weight: 600;
-            font-size: 0.95rem;
-            margin-bottom: 4px;
-            color: #333;
-        }
-
-        .card-meta {
-            font-size: 0.75rem;
-            color: #666;
-            display: flex;
             gap: 12px;
-            margin-top: 10px;
+            margin-top: 24px;
         }
-
-        /* Кнопка настроек проекта (три точки) */
-        .project-settings-btn {
-            position: absolute;
-            top: 12px;
-            right: 12px;
-            background: transparent;
-            border: none;
-            color: #999;
-            font-size: 1.2rem;
+        .btn-secondary {
+            background: none;
+            border: 1px solid var(--border);
+            padding: 6px 14px;
+            font-size: 0.7rem;
             cursor: pointer;
-            padding: 4px 8px;
-            border-radius: 4px;
-            transition: 0.2s;
-            z-index: 10;
+            color: var(--text-secondary);
+            border-radius: var(--radius);
         }
-
-        .project-settings-btn:hover {
-            background: #f5f5f5;
-            color: #333;
-        }
-
-        /* Выпадающее меню настроек проекта */
-        .project-settings-menu {
-            position: absolute;
-            top: 40px;
-            right: 12px;
-            background: #fff;
-            border: 1px solid #ddd;
-            border-radius: 4px;
-            padding: 8px 0;
-            min-width: 180px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-            z-index: 100;
-            display: none;
-        }
-
-        .project-settings-menu.show {
-            display: block;
-        }
-
-        .project-settings-menu-item {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            padding: 10px 16px;
-            color: #333;
-            font-size: 0.85rem;
-            cursor: pointer;
-            transition: 0.15s;
-            border: none;
-            background: transparent;
-            width: 100%;
-            text-align: left;
-        }
-
-        .project-settings-menu-item:hover {
-            background: #f5f5f5;
-        }
-
-        .project-settings-menu-divider {
-            height: 1px;
-            background: #ddd;
-            margin: 6px 0;
-        }
-
-        .empty-projects {
-            text-align: center;
-            padding: 32px;
-            background: #fff;
-            border-radius: 4px;
-            color: #666;
-            border: 1px dashed #ddd;
-        }
-
-        /* сообщения */
         .toast-msg {
             position: fixed;
-            bottom: 25px;
-            right: 25px;
-            background: #4a90d9;
-            color: white;
-            padding: 10px 18px;
-            border-radius: 4px;
-            font-size: 0.8rem;
-            z-index: 1200;
+            bottom: 20px;
+            right: 20px;
+            background: var(--accent);
+            color: var(--bg);
+            padding: 6px 14px;
+            font-size: 0.7rem;
+            font-family: monospace;
+            z-index: 1300;
             opacity: 0;
-            transition: 0.2s;
+            transition: opacity 0.15s;
             pointer-events: none;
-            box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+            border-radius: var(--radius);
         }
-
         .toast-msg.show {
             opacity: 1;
         }
-
         @media (max-width: 768px) {
             .app-layout {
                 flex-direction: column;
             }
-
             .sidebar {
                 width: 100%;
-                height: auto;
                 max-height: 40vh;
-                border-right: none;
-                border-bottom: 1px solid #ddd;
             }
-
             .main-content {
                 padding: 16px;
-            }
-
-            .projects-grid-main {
-                grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
             }
         }
     </style>
 </head>
 <body>
+<div class="app-layout">
+    <div class="sidebar">
         <div class="user-profile">
-            <div class="avatar-large">
-                <span>👩‍🎨</span>
+            <div class="avatar-large"><span>◉</span></div>
+            <div class="user-name" id="displayUserName">Алина</div>
+            <div class="user-role" id="displayUserRole">дизайнер</div>
+            <div class="user-stats" id="userStatsPanel">
+                <div class="stat-item"><span>📁</span> <span id="statProjects">0</span> проектов</div>
+                <div class="stat-item"><span>⚡</span> <span id="statInProgress">0</span> активных</div>
             </div>
-            <div class="user-name">Алина Дизайнер</div>
-            <div class="user-role">Продукт-дизайнер · Penpot PRO</div>
-            <div class="user-stats">
-                <div class="stat-item"><span>📁</span> 8 проектов</div>
-                <div class="stat-item"><span>⭐</span> 14 шаблонов</div>
-                <div class="stat-item"><span>🔄</span> 3 в работе</div>
-            </div>
-            <button id="openSettingsBtn" class="settings-btn-profile">⚙️ Настройки профиля</button>
         </div>
-
         <div class="search-section">
-            <div class="search-label">🔍 Поиск</div>
+            <div class="search-label">поиск</div>
             <div class="search-box">
-                <span>🔎</span>
-                <input type="text" id="sidebarSearchInput" placeholder="Название проекта...">
+                <span>⌕</span>
+                <input type="text" id="sidebarSearchInput" placeholder="проект...">
             </div>
         </div>
-
         <div class="projects-list-sidebar">
-            <div class="sidebar-title">ВАШИ ПРОЕКТЫ</div>
-            <div id="sidebarProjectsList">
-                <!-- динамический список проектов -->
-            </div>
+            <div class="sidebar-title">проекты</div>
+            <div id="sidebarProjectsList"></div>
         </div>
     </div>
 
-    <!-- ОСНОВНАЯ ОБЛАСТЬ -->
     <div class="main-content">
-        <!-- Кнопка создания проекта -->
-        <div class="projects-header" style="margin-bottom: 1.5rem;">
-            <button id="openCreateProjectModalBtn" class="btn-primary">➕ Создать проект</button>
+        <div class="projects-header" style="margin-bottom: 1rem;">
+            <button id="openCreateProjectModalBtn" class="btn-primary">+ создать</button>
         </div>
-
-        <!-- Секция проектов с поиском и результатами -->
         <div class="projects-header">
-            <button id="backToProjectsBtn" class="back-to-projects-btn">← Назад к проектам</button>
-            <h2>📌 Все проекты</h2>
-            <div class="result-count" id="projectsCountDisplay">0 проектов</div>
+            <button id="backToProjectsBtn" class="back-to-projects-btn">← все</button>
+            <h2>проекты</h2>
+            <div class="result-count" id="projectsCountDisplay">0</div>
         </div>
-
         <div id="projectsGridMain" class="projects-grid-main">
-            <!-- динамические карточки проектов -->
-            <div class="empty-projects">Загрузка проектов или создайте первый проект 👆</div>
+            <div class="empty-projects">[ пусто ]</div>
         </div>
     </div>
 </div>
 
-<div id="toastMsg" class="toast-msg">✨ Уведомление</div>
+<div id="toastMsg" class="toast-msg"></div>
 
-<!-- Модальное окно настроек пользователя -->
+<!-- модалка настроек -->
 <div id="userSettingsModal" class="user-settings-modal">
     <div class="user-settings-panel">
         <div class="settings-header">
-            <h3>⚙️ Настройки профиля</h3>
-            <button id="closeSettingsBtn" class="close-settings-btn">×</button>
+            <h3>настройки</h3>
+            <button id="closeSettingsBtn" class="close-settings-btn">✕</button>
         </div>
         <div class="settings-form-group">
-            <label>Ваше имя</label>
-            <input type="text" id="settingsUserName" value="Алина Дизайнер">
+            <label>имя</label>
+            <input type="text" id="settingsUserName" value="Алина">
         </div>
         <div class="settings-form-group">
-            <label>Роль / Должность</label>
-            <input type="text" id="settingsUserRole" value="Продукт-дизайнер · Penpot PRO">
+            <label>роль</label>
+            <input type="text" id="settingsUserRole" value="дизайнер">
         </div>
         <div class="settings-form-group">
-            <label>Тема оформления</label>
+            <label>тема оформления</label>
             <select id="settingsTheme">
-                <option value="dark" selected>🌙 Тёмная</option>
-                <option value="light">☀️ Светлая</option>
-                <option value="auto">🔄 Авто</option>
+                <option value="dark">🌙 тёмная</option>
+                <option value="light">☀️ светлая</option>
             </select>
         </div>
         <div class="settings-form-group">
-            <label>Уведомления</label>
-            <select id="settingsNotifications">
-                <option value="all" selected>✅ Все уведомления</option>
-                <option value="important">⚠️ Только важные</option>
-                <option value="none">🔕 Отключить</option>
+            <label>стиль интерфейса</label>
+            <select id="settingsUiStyle">
+                <option value="minimal">минималистичный</option>
+                <option value="classic">классический (светлая тема)</option>
             </select>
         </div>
         <div class="settings-actions">
-            <button id="saveSettingsBtn" class="btn-primary">💾 Сохранить</button>
-            <button id="cancelSettingsBtn" class="btn-secondary">Отмена</button>
+            <button id="saveSettingsBtn" class="btn-primary">сохранить</button>
+            <button id="cancelSettingsBtn" class="btn-secondary">отмена</button>
         </div>
     </div>
 </div>
 
-<!-- Модальное окно создания проекта -->
+<!-- модалка создания проекта -->
 <div id="createProjectModal" class="user-settings-modal">
     <div class="user-settings-panel">
         <div class="settings-header">
-            <h3>✨ Создать новый проект</h3>
-            <button id="closeCreateProjectModalBtn" class="close-settings-btn">×</button>
+            <h3>новый проект</h3>
+            <button id="closeCreateProjectModalBtn" class="close-settings-btn">✕</button>
         </div>
         <div class="settings-form-group">
-            <label>Название проекта *</label>
-            <input type="text" id="newProjectName" placeholder="Например: Айдентика бренда, Лендинг 2026">
+            <label>название</label>
+            <input type="text" id="newProjectName" placeholder="имя">
         </div>
         <div class="settings-form-group">
-            <label>Категория / стек</label>
+            <label>категория</label>
             <select id="projectCategory">
-                <option value="Веб-дизайн">🌐 Веб-дизайн</option>
-                <option value="Мобильное приложение">📱 Мобильное приложение</option>
-                <option value="UI Kit">🧩 UI Kit</option>
-                <option value="Прототип">⚡ Прототип</option>
-                <option value="Другое">✨ Другое</option>
+                <option>веб</option>
+                <option>мобильное</option>
+                <option>ui kit</option>
+                <option>прототип</option>
             </select>
         </div>
         <div class="settings-form-group">
-            <label>Тип проекта</label>
+            <label>тип</label>
             <select id="projectType">
-                <option value="classic">🎨 Classic (Design)</option>
-                <option value="tis">🔧 TIS (Technical)</option>
-                <option value="workflow">⚙️ Workflow (Process)</option>
+                <option value="classic">classic</option>
+                <option value="tis">tis</option>
+                <option value="workflow">workflow</option>
             </select>
-        </div>
-        <div class="settings-form-group">
-            <label>Дедлайн (опционально)</label>
-            <input type="date" id="projectDeadline">
         </div>
         <div class="settings-actions">
-            <button id="createProjectModalBtn" class="btn-primary">➕ Создать проект</button>
-            <button id="cancelCreateProjectModalBtn" class="btn-secondary">Отмена</button>
+            <button id="createProjectModalBtn" class="btn-primary">создать</button>
+            <button id="cancelCreateProjectModalBtn" class="btn-secondary">отмена</button>
         </div>
     </div>
 </div>
 
 <script>
-    // ---------- ХРАНИЛИЩЕ ДАННЫХ ----------
-    // Каждый проект имеет: id, name, category, type, deadline, createdAt, owner (привязка к пользователю)
+    // ---------- ПОЛНАЯ ЛОГИКА С ПОДДЕРЖКОЙ ДВУХ СТИЛЕЙ И DRAG-AND-DROP ----------
     let projects = [];
-    
-    // URL API для работы с MinIO
     const API_BASE_URL = window.location.origin;
-
-    // Загрузка проектов из MinIO при старте
-    async function loadProjectsFromMinIO() {
-        try {
-            const response = await fetch(`${API_BASE_URL}/list_projects`);
-            if (!response.ok) throw new Error('Ошибка загрузки проектов');
-            const data = await response.json();
-            if (data.success && Array.isArray(data.projects)) {
-                projects = data.projects;
-                console.log(`✅ Загружено ${projects.length} проектов из MinIO`);
-                return true;
-            } else {
-                console.error('❌ Неверный формат ответа от сервера');
-                return false;
-            }
-        } catch (error) {
-            console.error('❌ Ошибка загрузки проектов из MinIO:', error);
-            showToast('⚠️ Ошибка загрузки проектов', true);
-            return false;
-        }
-    }
-
-    // Сохранение проекта в MinIO
-    async function saveProjectToMinIO(project) {
-        try {
-            const response = await fetch(`${API_BASE_URL}/save_project`, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ project: project })
-            });
-            const data = await response.json();
-            if (data.success) {
-                console.log(`✅ Проект "${project.name}" сохранён в MinIO`);
-                return true;
-            } else {
-                console.error('❌ Ошибка сохранения проекта:', data.message);
-                return false;
-            }
-        } catch (error) {
-            console.error('❌ Ошибка сохранения проекта в MinIO:', error);
-            return false;
-        }
-    }
-
-    // Удаление проекта из MinIO
-    async function deleteProjectFromMinIO(projectId) {
-        try {
-            const response = await fetch(`${API_BASE_URL}/delete_project/${projectId}`, {
-                method: 'DELETE'
-            });
-            const data = await response.json();
-            if (data.success) {
-                console.log(`✅ Проект ${projectId} удалён из MinIO`);
-                return true;
-            } else {
-                console.error('❌ Ошибка удаления проекта:', data.message);
-                return false;
-            }
-        } catch (error) {
-            console.error('❌ Ошибка удаления проекта из MinIO:', error);
-            return false;
-        }
-    }
-
-    // Текущий активный проект (выделение в боковой панели)
     let activeProjectId = null;
+    let draggedProjectId = null;
 
     // DOM элементы
     const sidebarListEl = document.getElementById('sidebarProjectsList');
@@ -830,12 +677,8 @@
     const newProjectName = document.getElementById('newProjectName');
     const projectCategory = document.getElementById('projectCategory');
     const projectType = document.getElementById('projectType');
-    const projectDeadline = document.getElementById('projectDeadline');
     const toastMsg = document.getElementById('toastMsg');
-    
-    // Элементы настроек пользователя
     const userSettingsModal = document.getElementById('userSettingsModal');
-    const openSettingsBtn = document.getElementById('openSettingsBtn');
     const closeSettingsBtn = document.getElementById('closeSettingsBtn');
     const saveSettingsBtn = document.getElementById('saveSettingsBtn');
     const cancelSettingsBtn = document.getElementById('cancelSettingsBtn');
@@ -843,519 +686,394 @@
     const settingsUserName = document.getElementById('settingsUserName');
     const settingsUserRole = document.getElementById('settingsUserRole');
     const settingsTheme = document.getElementById('settingsTheme');
-    const settingsNotifications = document.getElementById('settingsNotifications');
-    
-    // Элементы модального окна создания проекта
+    const settingsUiStyle = document.getElementById('settingsUiStyle');
     const createProjectModal = document.getElementById('createProjectModal');
     const openCreateProjectModalBtn = document.getElementById('openCreateProjectModalBtn');
     const closeCreateProjectModalBtn = document.getElementById('closeCreateProjectModalBtn');
     const createProjectModalBtn = document.getElementById('createProjectModalBtn');
     const cancelCreateProjectModalBtn = document.getElementById('cancelCreateProjectModalBtn');
+    const displayUserNameSpan = document.getElementById('displayUserName');
+    const displayUserRoleSpan = document.getElementById('displayUserRole');
+    const statProjectsSpan = document.getElementById('statProjects');
+    const statInProgressSpan = document.getElementById('statInProgress');
+    const userStatsPanel = document.getElementById('userStatsPanel');
+    const avatarLarge = document.querySelector('.avatar-large');
 
-    // Функция уведомлений
-    function showToast(message, isError = false) {
-        toastMsg.textContent = message;
+    function showToast(msg, isError = false) {
+        toastMsg.textContent = msg;
         toastMsg.classList.add('show');
-        if (isError) toastMsg.style.background = "#b13e3e";
-        else toastMsg.style.background = "#1e2b3c";
-        setTimeout(() => {
-            toastMsg.classList.remove('show');
-            if (!isError) toastMsg.style.background = "#1e2b3c";
-        }, 2500);
+        setTimeout(() => toastMsg.classList.remove('show'), 1800);
     }
 
-    // Обновить счётчик и рендер (основная сетка + сайдбар)
-    function renderAll() {
-        renderSidebarList();
-        renderMainGrid();
-        updateProjectsCount();
+    async function loadProjectsFromMinIO() {
+        try {
+            const res = await fetch(`${API_BASE_URL}/list_projects`);
+            if (!res.ok) throw new Error();
+            const data = await res.json();
+            if (data.success && Array.isArray(data.projects)) {
+                projects = data.projects;
+                // Присвоить order, если отсутствует
+                let maxOrder = 0;
+                for (let i = 0; i < projects.length; i++) {
+                    if (projects[i].order === undefined || projects[i].order === null) {
+                        projects[i].order = i;
+                    }
+                    if (projects[i].order > maxOrder) maxOrder = projects[i].order;
+                }
+                // Сортировка по order
+                projects.sort((a,b) => (a.order || 0) - (b.order || 0));
+                return true;
+            }
+            return false;
+        } catch(e) { return false; }
+    }
+    async function saveProjectToMinIO(project) {
+        try {
+            const res = await fetch(`${API_BASE_URL}/save_project`, { method: 'POST', headers: {'Content-Type':'application/json'}, body: JSON.stringify({ project }) });
+            const data = await res.json();
+            return data.success;
+        } catch(e) { return false; }
+    }
+    async function deleteProjectFromMinIO(projectId) {
+        try {
+            const res = await fetch(`${API_BASE_URL}/delete_project/${projectId}`, { method: 'DELETE' });
+            const data = await res.json();
+            return data.success;
+        } catch(e) { return false; }
     }
 
-    // Фильтрация проектов по поисковому запросу (боковая панель и основной вид используют общий поиск)
     function getFilteredProjects() {
-        const searchTerm = sidebarSearchInput.value.trim().toLowerCase();
-        if (searchTerm === "") return [...projects];
-        return projects.filter(p => p.name.toLowerCase().includes(searchTerm));
+        const term = sidebarSearchInput.value.trim().toLowerCase();
+        if (!term) return [...projects];
+        return projects.filter(p => p.name.toLowerCase().includes(term));
     }
 
-    // Отрисовка списка проектов в боковой панели (с поиском)
+    function getIconByType(type) { return type === "classic" ? "◧" : (type === "tis" ? "◨" : "◩"); }
+    function escapeHtml(str) { return str.replace(/[&<>]/g, function(m){ return m === '&' ? '&amp;' : (m === '<' ? '&lt;' : '&gt;'); }); }
+
+    function updateUserStatsUI() {
+        statProjectsSpan.innerText = projects.length;
+        const inProgress = projects.filter(p => p.deadline && p.deadline >= new Date().toISOString().slice(0,10)).length;
+        statInProgressSpan.innerText = inProgress;
+    }
+
     function renderSidebarList() {
         const filtered = getFilteredProjects();
-        if (!sidebarListEl) return;
         sidebarListEl.innerHTML = '';
         if (filtered.length === 0) {
-            const emptyDiv = document.createElement('div');
-            emptyDiv.style.padding = '1rem 1.5rem';
-            emptyDiv.style.fontSize = '0.8rem';
-            emptyDiv.style.color = '#8aa4c2';
-            emptyDiv.innerText = '❌ Нет проектов по запросу';
-            sidebarListEl.appendChild(emptyDiv);
+            sidebarListEl.innerHTML = '<div style="padding: 8px 16px; color: var(--text-secondary);">—</div>';
             return;
         }
-        filtered.forEach(project => {
-            const item = document.createElement('div');
-            item.className = 'project-side-item';
-            if (activeProjectId === project.id) item.classList.add('active-side');
-            item.innerHTML = `
-                <span class="project-icon">${getIconByType(project.type)}</span>
-                <span style="flex:1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">${escapeHtml(project.name)}</span>
-            `;
-            item.addEventListener('click', (e) => {
-                e.stopPropagation();
-                selectProject(project.id);
-            });
-            sidebarListEl.appendChild(item);
+        filtered.forEach(p => {
+            const div = document.createElement('div');
+            div.className = 'project-side-item';
+            if (activeProjectId === p.id) div.classList.add('active-side');
+            div.textContent = p.name;
+            div.addEventListener('click', () => selectProject(p.id));
+            sidebarListEl.appendChild(div);
         });
     }
 
-    // Вспомогательная иконка по типу проекта
-    function getIconByType(type) {
-        if (type === "classic") return "🎨";
-        if (type === "tis") return "🔧";
-        if (type === "workflow") return "⚙️";
-        return "📄";
-    }
-
-    // Вспомогательная иконка по категории
-    function getIconByCategory(cat) {
-        if (cat.includes("Веб")) return "🌐";
-        if (cat.includes("Мобильное")) return "📱";
-        if (cat.includes("UI Kit")) return "🧩";
-        if (cat.includes("Прототип")) return "⚡";
-        return "📄";
-    }
-
-    // Выбор проекта с переходом
-    function selectProject(projectId) {
-        const project = projects.find(p => p.id === projectId);
-        if (!project) return;
-        
-        activeProjectId = projectId;
-        renderAll();
-        showToast(`✅ Выбран проект: ${project.name}`, false);
-        
-        // Переход на страницу проекта в зависимости от типа
-        setTimeout(() => {
-            performProjectTransition(project);
-        }, 500);
-    }
-
-    // Выполнение перехода в зависимости от типа проекта
-    function performProjectTransition(project) {
-        let targetUrl = '';
-        let typeName = '';
-        
-        switch(project.type) {
-            case 'classic':
-                targetUrl = 'penpot-fusion.html';
-                typeName = 'Classic (Design)';
-                break;
-            case 'tis':
-                targetUrl = 'index.html';
-                typeName = 'TIS (Technical)';
-                break;
-            case 'workflow':
-                targetUrl = 'workflow.html';
-                typeName = 'Workflow (Process)';
-                break;
-            default:
-                targetUrl = 'penpot-fusion.html';
-                typeName = 'Classic (Design)';
+    // ---------- DRAG & DROP ----------
+    async function updateOrderOnServer(updatedProjects) {
+        // Сохраняем каждый изменённый проект (те, у которых order отличается от предыдущего)
+        // Для простоты сохраняем все проекты, у которых order был изменён. Но можно и все.
+        // projects уже содержит новые order, сохраняем каждый проект.
+        for (let p of updatedProjects) {
+            await saveProjectToMinIO(p);
         }
-        
-        console.log(`Переход в проект "${project.name}" (${typeName}) -> ${targetUrl}`);
-        showToast(`🚀 Переход в ${typeName}...`, false);
-        
-        // Выполняем реальный переход через небольшую задержку для показа уведомления
-        setTimeout(() => {
-            window.location.href = targetUrl;
-        }, 600);
     }
 
-    // Рендер основной сетки проектов (с учётом поиска)
+    function handleDragStart(e, projectId) {
+        const searchActive = sidebarSearchInput.value.trim() !== '';
+        if (searchActive) {
+            e.preventDefault();
+            showToast('✖ Снимите поиск для изменения порядка', true);
+            return false;
+        }
+        draggedProjectId = projectId;
+        e.dataTransfer.setData('text/plain', projectId);
+        e.dataTransfer.effectAllowed = 'move';
+        // Стиль при перетаскивании
+        e.target.closest('.project-card-main')?.classList.add('dragging');
+    }
+
+    function handleDragEnd(e) {
+        document.querySelectorAll('.project-card-main').forEach(card => {
+            card.classList.remove('dragging', 'drag-over');
+        });
+        draggedProjectId = null;
+    }
+
+    function handleDragOver(e) {
+        e.preventDefault();
+        e.dataTransfer.dropEffect = 'move';
+        const card = e.target.closest('.project-card-main');
+        if (card && draggedProjectId) {
+            card.classList.add('drag-over');
+        }
+    }
+
+    function handleDragLeave(e) {
+        const card = e.target.closest('.project-card-main');
+        if (card) card.classList.remove('drag-over');
+    }
+
+    async function handleDrop(e, targetProjectId) {
+        e.preventDefault();
+        const sourceId = draggedProjectId;
+        if (!sourceId || sourceId === targetProjectId) return;
+        
+        const searchActive = sidebarSearchInput.value.trim() !== '';
+        if (searchActive) {
+            showToast('✖ Снимите поиск для изменения порядка', true);
+            return;
+        }
+
+        // Найти индексы в основном массиве projects (не в отфильтрованном)
+        const sourceIndex = projects.findIndex(p => p.id === sourceId);
+        const targetIndex = projects.findIndex(p => p.id === targetProjectId);
+        if (sourceIndex === -1 || targetIndex === -1) return;
+
+        // Перемещение элемента
+        const [movedProject] = projects.splice(sourceIndex, 1);
+        projects.splice(targetIndex, 0, movedProject);
+
+        // Обновить order для всех проектов в соответствии с новой позицией
+        for (let i = 0; i < projects.length; i++) {
+            projects[i].order = i;
+        }
+
+        // Сохранить изменения на сервере
+        await updateOrderOnServer(projects);
+        
+        // Перерисовать интерфейс
+        renderAll();
+        showToast('Порядок сохранён');
+    }
+
+    // ---------- ОСТАЛЬНАЯ ЛОГИКА ----------
+    function selectProject(projectId) {
+        const p = projects.find(p => p.id === projectId);
+        if(!p) return;
+        activeProjectId = projectId;
+        renderSidebarList(); renderMainGrid();
+        showToast(p.name);
+        setTimeout(() => {
+            let url = 'penpot-fusion.html';
+            if(p.type === 'tis') url = 'index.html';
+            else if(p.type === 'workflow') url = 'workflow.html';
+            window.location.href = url;
+        }, 400);
+    }
+
+    async function createNewProject() {
+        const name = newProjectName.value.trim();
+        if(!name) { showToast("укажите название", true); return; }
+        if(projects.some(p => p.name.toLowerCase() === name.toLowerCase())) { showToast("проект существует", true); return; }
+        const newId = 'proj_' + Date.now() + '_' + Math.random().toString(36).substr(2,6);
+        const maxOrder = projects.length > 0 ? Math.max(...projects.map(p => p.order || 0)) : -1;
+        const newProj = {
+            id: newId, name, category: projectCategory.value, type: projectType.value,
+            deadline: "", createdAt: new Date().toISOString().slice(0,10),
+            owner: displayUserNameSpan.innerText,
+            order: maxOrder + 1
+        };
+        const saved = await saveProjectToMinIO(newProj);
+        if(!saved) { showToast("ошибка", true); return; }
+        projects.push(newProj);
+        newProjectName.value = '';
+        activeProjectId = newId;
+        sidebarSearchInput.value = '';
+        renderAll();
+        showToast(`✓ ${name}`);
+        createProjectModal.classList.remove('show');
+    }
+
+    async function duplicateProject(projectId) {
+        const original = projects.find(p => p.id === projectId);
+        if(!original) return;
+        const newId = 'proj_' + Date.now() + '_' + Math.random().toString(36).substr(2,6);
+        const maxOrder = Math.max(...projects.map(p => p.order || 0));
+        const copy = { 
+            ...original, 
+            id: newId, 
+            name: `${original.name} (копия)`, 
+            createdAt: new Date().toISOString().slice(0,10),
+            order: maxOrder + 1
+        };
+        const saved = await saveProjectToMinIO(copy);
+        if(saved) { 
+            projects.push(copy); 
+            renderAll(); 
+            showToast(`✓ дубль`);
+        } else showToast("ошибка", true);
+        closeAllMenus();
+    }
+
+    async function deleteProject(projectId) {
+        const p = projects.find(p => p.id === projectId);
+        if(!p || !confirm(`Удалить "${p.name}"?`)) return;
+        const deleted = await deleteProjectFromMinIO(projectId);
+        if(!deleted) { showToast("ошибка", true); return; }
+        projects = projects.filter(pr => pr.id !== projectId);
+        // Перенумеровать order
+        for (let i = 0; i < projects.length; i++) {
+            projects[i].order = i;
+        }
+        await updateOrderOnServer(projects);
+        if(activeProjectId === projectId) activeProjectId = null;
+        renderAll();
+        showToast(`🗑 удалён`);
+        closeAllMenus();
+    }
+
+    function openProjectSettings(projectId) {
+        const p = projects.find(p => p.id === projectId);
+        if(p) showToast(`⚙️ ${p.name}`);
+        localStorage.setItem('activeProjectId', projectId);
+        closeAllMenus();
+    }
+
     function renderMainGrid() {
         const filtered = getFilteredProjects();
-        if (!projectsGridMain) return;
         projectsGridMain.innerHTML = '';
         if (filtered.length === 0) {
-            projectsGridMain.innerHTML = '<div class="empty-projects">🔍 Нет проектов, соответствующих поиску. Создайте новый проект!</div>';
+            projectsGridMain.innerHTML = '<div class="empty-projects">∅</div>';
+            projectsCountDisplay.innerText = '0';
             return;
         }
         filtered.forEach(project => {
             const card = document.createElement('div');
             card.className = 'project-card-main';
-            // отображаем красивую информацию
-            const deadlineText = project.deadline ? `⏱️ Дедлайн: ${project.deadline}` : '⏱️ Без дедлайна';
-            const typeIcon = getIconByType(project.type);
-            const typeName = project.type === 'classic' ? 'Classic' : (project.type === 'tis' ? 'TIS' : 'Workflow');
+            card.setAttribute('data-id', project.id);
+            const typeLabel = project.type === 'classic' ? 'cls' : (project.type === 'tis' ? 'tis' : 'wf');
+            const deadlineText = project.deadline ? `⏱ ${project.deadline}` : '—';
+            const isClassic = document.body.classList.contains('classic');
+            
+            // Кнопка-ручка для перетаскивания
+            const dragHandle = `<div class="drag-handle" draggable="true" data-id="${project.id}">⠿</div>`;
+            
             card.innerHTML = `
-                <button class="project-settings-btn" data-project-id="${project.id}" title="Настройки проекта">⋮</button>
-                <div class="card-header-icon">${typeIcon}</div>
+                ${dragHandle}
+                <button class="project-settings-btn" data-id="${project.id}">⋮</button>
+                ${isClassic ? `<div class="card-header-icon">${getIconByType(project.type)}</div>` : ''}
                 <div class="card-title">${escapeHtml(project.name)}</div>
-                <div class="card-meta">
-                    <span>📂 ${project.category}</span>
-                    <span>🏷️ ${typeName}</span>
-                </div>
-                <div class="card-meta">
-                    <span>${deadlineText}</span>
-                    <span>📅 ${project.createdAt || 'недавно'}</span>
-                </div>
-                <div class="card-meta">
-                    <span>👤 ${escapeHtml(project.owner)}</span>
-                </div>
-                <div class="project-settings-menu" id="settingsMenu-${project.id}">
-                    <button class="project-settings-menu-item" onclick="openProjectSettings('${project.id}')">
-                        ⚙️ Настройки проекта
-                    </button>
-                    <div class="project-settings-menu-divider"></div>
-                    <button class="project-settings-menu-item" onclick="duplicateProject('${project.id}')">
-                        📋 Дублировать
-                    </button>
-                    <button class="project-settings-menu-item" onclick="deleteProject('${project.id}')" style="color: #ef4444;">
-                        🗑️ Удалить
-                    </button>
+                <div class="card-meta"><span>${project.category}</span><span>${typeLabel}</span></div>
+                ${isClassic ? `<div class="card-meta extra-meta"><span>${deadlineText}</span><span>📅 ${project.createdAt || '—'}</span></div>
+                <div class="card-meta extra-meta"><span>👤 ${escapeHtml(project.owner)}</span></div>` : ''}
+                <div class="project-settings-menu" id="menu-${project.id}">
+                    <button class="project-settings-menu-item" onclick="openProjectSettings('${project.id}')">настройки</button>
+                    <button class="project-settings-menu-item" onclick="duplicateProject('${project.id}')">дублировать</button>
+                    <button class="project-settings-menu-item" onclick="deleteProject('${project.id}')" style="color: var(--danger);">удалить</button>
                 </div>
             `;
+            
+            // Обработчик клика по карточке (кроме кнопок)
             card.addEventListener('click', (e) => {
-                // Игнорируем клик по кнопке настроек и меню
-                if (e.target.closest('.project-settings-btn') || e.target.closest('.project-settings-menu')) {
-                    return;
-                }
-                selectProject(project.id);
+                if(!e.target.closest('.project-settings-btn') && !e.target.closest('.drag-handle') && !e.target.closest('.project-settings-menu')) 
+                    selectProject(project.id);
             });
             
-            // Обработчик кнопки настроек (три точки)
-            const settingsBtn = card.querySelector('.project-settings-btn');
-            settingsBtn.addEventListener('click', (e) => {
-                e.stopPropagation();
-                toggleProjectSettingsMenu(project.id);
-            });
+            // Кнопка меню (три точки)
+            const btn = card.querySelector('.project-settings-btn');
+            btn.addEventListener('click', (e) => { e.stopPropagation(); toggleMenu(project.id); });
+            
+            // Drag-and-drop на карточке (для drop)
+            card.addEventListener('dragover', handleDragOver);
+            card.addEventListener('dragleave', handleDragLeave);
+            card.addEventListener('drop', (e) => { handleDrop(e, project.id); });
             
             projectsGridMain.appendChild(card);
         });
-    }
-
-    function updateProjectsCount() {
-        const filtered = getFilteredProjects();
-        projectsCountDisplay.innerText = `${filtered.length} ${getProjectWord(filtered.length)}`;
-    }
-
-    function getProjectWord(n) {
-        if (n % 10 === 1 && n % 100 !== 11) return "проект";
-        if ([2,3,4].includes(n % 10) && ![12,13,14].includes(n % 100)) return "проекта";
-        return "проектов";
-    }
-
-    // Создание нового проекта с привязкой к текущему пользователю
-    async function createNewProject() {
-        const name = newProjectName.value.trim();
-        if (name === "") {
-            showToast("Укажите название проекта", true);
-            return;
-        }
-        // Проверка дубликата (не строгая, но полезно)
-        const exists = projects.some(p => p.name.toLowerCase() === name.toLowerCase());
-        if (exists) {
-            showToast(`Проект "${name}" уже существует`, true);
-            return;
-        }
-        const category = projectCategory.value;
-        const type = projectType.value;
-        const deadline = projectDeadline.value;
-        const today = new Date().toISOString().slice(0,10);
-        const newId = 'proj_' + Date.now() + '_' + Math.floor(Math.random() * 10000);
-        const newProject = {
-            id: newId,
-            name: name,
-            category: category,
-            type: type,
-            deadline: deadline || "",
-            createdAt: today,
-            owner: "Алина Дизайнер"   // стройки для этого пользователя (явно)
-        };
         
-        // Сохраняем проект в MinIO
-        const saved = await saveProjectToMinIO(newProject);
-        if (!saved) {
-            showToast("❌ Ошибка сохранения проекта в MinIO", true);
-            return;
-        }
+        // Назначить обработчики для всех ручек после добавления в DOM
+        document.querySelectorAll('.drag-handle').forEach(handle => {
+            handle.setAttribute('draggable', 'true');
+            handle.addEventListener('dragstart', (e) => {
+                const projectId = handle.getAttribute('data-id');
+                handleDragStart(e, projectId);
+            });
+            handle.addEventListener('dragend', handleDragEnd);
+        });
         
-        // Добавляем проект в локальный массив только после успешного сохранения
-        projects.push(newProject);
-        // Очистка формы
-        newProjectName.value = '';
-        projectDeadline.value = '';
-        // автоматически делаем новый проект активным
-        activeProjectId = newId;
-        // сбросим поиск, чтобы пользователь увидел проект
-        sidebarSearchInput.value = '';
+        projectsCountDisplay.innerText = filtered.length;
+    }
+
+    function toggleMenu(id) { closeAllMenus(); const m = document.getElementById(`menu-${id}`); if(m) m.classList.toggle('show'); }
+    function closeAllMenus() { document.querySelectorAll('.project-settings-menu').forEach(m => m.classList.remove('show')); }
+
+    function renderAll() { renderSidebarList(); renderMainGrid(); updateUserStatsUI(); }
+
+    // --- Управление стилями и темой ---
+    function applyUiStyle(style) {
+        if(style === 'classic') {
+            document.body.classList.add('classic');
+        } else {
+            document.body.classList.remove('classic');
+        }
+        localStorage.setItem('ui_style', style);
         renderAll();
-        showToast(`✅ Проект "${name}" создан и сохранён в MinIO!`, false);
-        // обновляем статистику пользователя (опционально)
-        updateUserStats();
-        // Закрываем модальное окно
-        createProjectModal.classList.remove('show');
     }
 
-    // Обновить цифры в боковой панели (статистика)
-    function updateUserStats() {
-        const statsDiv = document.querySelector('.user-stats');
-        if (statsDiv) {
-            const totalProjects = projects.length;
-            const inProgress = projects.filter(p => p.deadline && p.deadline >= new Date().toISOString().slice(0,10)).length;
-            statsDiv.innerHTML = `
-                <div class="stat-item"><span>📁</span> ${totalProjects} проектов</div>
-                <div class="stat-item"><span>⭐</span> 14 шаблонов</div>
-                <div class="stat-item"><span>🔄</span> ${inProgress} в работе</div>
-            `;
-        }
+    function applyTheme(theme) {
+        if(theme === 'dark') document.body.classList.add('dark');
+        else document.body.classList.remove('dark');
+        localStorage.setItem('user_theme', theme);
     }
 
-    // Поиск в реальном времени
-    function handleSearch() {
-        renderAll();
-        const filteredCount = getFilteredProjects().length;
-        if (sidebarSearchInput.value.trim() !== "") {
-            showToast(`Найдено ${filteredCount} проектов`, false);
-        }
+    function loadUserSettings() {
+        const savedName = localStorage.getItem('user_name');
+        const savedRole = localStorage.getItem('user_role');
+        if(savedName) { displayUserNameSpan.innerText = savedName; settingsUserName.value = savedName; }
+        if(savedRole) { displayUserRoleSpan.innerText = savedRole; settingsUserRole.value = savedRole; }
+        const theme = localStorage.getItem('user_theme') || 'light';
+        settingsTheme.value = theme;
+        applyTheme(theme);
+        const uiStyle = localStorage.getItem('ui_style') || 'minimal';
+        settingsUiStyle.value = uiStyle;
+        applyUiStyle(uiStyle);
     }
 
-    // Дополнительная функция для обработки клавиши Enter на форме
-    function initEventListeners() {
-        // Обработчики модального окна создания проекта
-        openCreateProjectModalBtn.addEventListener('click', () => {
-            createProjectModal.classList.add('show');
-        });
-        
-        closeCreateProjectModalBtn.addEventListener('click', () => {
-            createProjectModal.classList.remove('show');
-        });
-        
-        cancelCreateProjectModalBtn.addEventListener('click', () => {
-            createProjectModal.classList.remove('show');
-        });
-        
-        createProjectModalBtn.addEventListener('click', createNewProject);
-        
-        // поддержка enter в поле названия
-        newProjectName.addEventListener('keypress', (e) => {
-            if (e.key === 'Enter') createNewProject();
-        });
-        
-        sidebarSearchInput.addEventListener('input', handleSearch);
-        
-        // Обработчики настроек пользователя
-        openSettingsBtn.addEventListener('click', () => {
-            userSettingsModal.classList.add('show');
-        });
-        
-        closeSettingsBtn.addEventListener('click', () => {
-            userSettingsModal.classList.remove('show');
-        });
-        
-        cancelSettingsBtn.addEventListener('click', () => {
-            userSettingsModal.classList.remove('show');
-        });
-        
-        saveSettingsBtn.addEventListener('click', () => {
-            const newName = settingsUserName.value.trim();
-            const newRole = settingsUserRole.value.trim();
-            
-            if (newName) {
-                document.querySelector('.user-name').textContent = newName;
-            }
-            if (newRole) {
-                document.querySelector('.user-role').textContent = newRole;
-            }
-            
-            userSettingsModal.classList.remove('show');
-            showToast('✅ Настройки сохранены', false);
-        });
-        
-        // Закрытие модального окна по клику вне его
-        userSettingsModal.addEventListener('click', (e) => {
-            if (e.target === userSettingsModal) {
-                userSettingsModal.classList.remove('show');
-            }
-        });
-        
-        // Закрытие модального окна создания проекта по клику вне его
-        createProjectModal.addEventListener('click', (e) => {
-            if (e.target === createProjectModal) {
-                createProjectModal.classList.remove('show');
-            }
-        });
-        
-        // Кнопка "Назад к проектам" - скролл вверх и фокус на сетке проектов
-        backToProjectsBtn.addEventListener('click', () => {
-            document.querySelector('.main-content').scrollTo({ top: 0, behavior: 'smooth' });
-            showToast('📌 Все проекты', false);
-        });
-        
-        // Закрытие всех меню настроек проекта при клике вне
-        document.addEventListener('click', (e) => {
-            if (!e.target.closest('.project-settings-btn') && !e.target.closest('.project-settings-menu')) {
-                closeAllProjectSettingsMenus();
-            }
-        });
+    function saveUserSettingsFromModal() {
+        const newName = settingsUserName.value.trim();
+        const newRole = settingsUserRole.value.trim();
+        if(newName) { displayUserNameSpan.innerText = newName; localStorage.setItem('user_name', newName); }
+        if(newRole) { displayUserRoleSpan.innerText = newRole; localStorage.setItem('user_role', newRole); }
+        applyTheme(settingsTheme.value);
+        applyUiStyle(settingsUiStyle.value);
+        showToast("сохранено");
+        userSettingsModal.classList.remove('show');
     }
 
-    // Управление меню настроек проекта
-    function toggleProjectSettingsMenu(projectId) {
-        closeAllProjectSettingsMenus();
-        const menu = document.getElementById(`settingsMenu-${projectId}`);
-        if (menu) {
-            menu.classList.toggle('show');
-        }
+    function initEvents() {
+        openCreateProjectModalBtn.onclick = () => createProjectModal.classList.add('show');
+        closeCreateProjectModalBtn.onclick = () => createProjectModal.classList.remove('show');
+        cancelCreateProjectModalBtn.onclick = () => createProjectModal.classList.remove('show');
+        createProjectModalBtn.onclick = createNewProject;
+        sidebarSearchInput.addEventListener('input', () => renderAll());
+        avatarLarge.addEventListener('click', () => userSettingsModal.classList.add('show'));
+        closeSettingsBtn.onclick = () => userSettingsModal.classList.remove('show');
+        cancelSettingsBtn.onclick = () => userSettingsModal.classList.remove('show');
+        saveSettingsBtn.onclick = saveUserSettingsFromModal;
+        backToProjectsBtn.onclick = () => document.querySelector('.main-content').scrollTo({top:0, behavior:'smooth'});
+        document.addEventListener('click', (e) => { if(!e.target.closest('.project-settings-btn') && !e.target.closest('.project-settings-menu')) closeAllMenus(); });
+        createProjectModal.addEventListener('click', (e) => { if(e.target === createProjectModal) createProjectModal.classList.remove('show'); });
+        userSettingsModal.addEventListener('click', (e) => { if(e.target === userSettingsModal) userSettingsModal.classList.remove('show'); });
     }
 
-    function closeAllProjectSettingsMenus() {
-        document.querySelectorAll('.project-settings-menu').forEach(menu => {
-            menu.classList.remove('show');
-        });
-    }
-
-    // Открытие настроек проекта (сохранение в localStorage)
-    function openProjectSettings(projectId) {
-        const project = projects.find(p => p.id === projectId);
-        if (!project) return;
-        
-        // Получаем текущие настройки проекта из localStorage
-        const projectSettingsKey = `project_settings_${projectId}`;
-        const savedSettings = localStorage.getItem(projectSettingsKey);
-        const settings = savedSettings ? JSON.parse(savedSettings) : {};
-        
-        // Показываем уведомление с информацией о настройках
-        showToast(`⚙️ Настройки проекта "${project.name}"`, false);
-        console.log(`Настройки проекта ${projectId}:`, settings);
-        
-        // Сохраняем активный проект в localStorage для доступа из других страниц
-        localStorage.setItem('activeProjectId', projectId);
-        localStorage.setItem('activeProjectName', project.name);
-        localStorage.setItem('activeProjectType', project.type);
-        
-        closeAllProjectSettingsMenus();
-    }
-
-    // Дублирование проекта
-    async function duplicateProject(projectId) {
-        const project = projects.find(p => p.id === projectId);
-        if (!project) return;
-        
-        const newId = 'proj_' + Date.now() + '_' + Math.floor(Math.random() * 10000);
-        const newProject = {
-            ...project,
-            id: newId,
-            name: `${project.name} (копия)`,
-            createdAt: new Date().toISOString().slice(0, 10)
-        };
-        
-        // Сохраняем дубликат в MinIO
-        const saved = await saveProjectToMinIO(newProject);
-        if (!saved) {
-            showToast("❌ Ошибка сохранения дубликата проекта в MinIO", true);
-            return;
-        }
-        
-        projects.push(newProject);
-        
-        // Копируем настройки проекта
-        const oldSettingsKey = `project_settings_${projectId}`;
-        const newSettingsKey = `project_settings_${newId}`;
-        const oldSettings = localStorage.getItem(oldSettingsKey);
-        if (oldSettings) {
-            localStorage.setItem(newSettingsKey, oldSettings);
-        }
-        
-        renderAll();
-        updateUserStats();
-        showToast(`✅ Проект "${newProject.name}" создан и сохранён в MinIO`, false);
-        closeAllProjectSettingsMenus();
-    }
-
-    // Удаление проекта
-    async function deleteProject(projectId) {
-        const project = projects.find(p => p.id === projectId);
-        if (!project) return;
-        
-        if (!confirm(`Удалить проект "${project.name}"?`)) return;
-        
-        // Сначала удаляем из MinIO
-        const deleted = await deleteProjectFromMinIO(projectId);
-        if (!deleted) {
-            showToast("❌ Ошибка удаления проекта из MinIO", true);
-            return;
-        }
-        
-        // Удаляем из локального массива только после успешного удаления из MinIO
-        projects = projects.filter(p => p.id !== projectId);
-        
-        // Удаляем настройки проекта из localStorage
-        const settingsKey = `project_settings_${projectId}`;
-        localStorage.removeItem(settingsKey);
-        
-        if (activeProjectId === projectId) {
-            activeProjectId = null;
-        }
-        
-        renderAll();
-        updateUserStats();
-        showToast(`🗑️ Проект "${project.name}" удален из MinIO`, false);
-        closeAllProjectSettingsMenus();
-    }
-
-    // Сохранение настроек проекта
-    function saveProjectSettings(projectId, settings) {
-        const settingsKey = `project_settings_${projectId}`;
-        localStorage.setItem(settingsKey, JSON.stringify(settings));
-    }
-
-    // Получение настроек проекта
-    function getProjectSettings(projectId) {
-        const settingsKey = `project_settings_${projectId}`;
-        const saved = localStorage.getItem(settingsKey);
-        return saved ? JSON.parse(saved) : {};
-    }
-
-    // Сохранение пользовательских настроек
-    function saveUserSettings(settings) {
-        localStorage.setItem('user_settings', JSON.stringify(settings));
-    }
-
-    // Получение пользовательских настроек
-    function getUserSettings() {
-        const saved = localStorage.getItem('user_settings');
-        return saved ? JSON.parse(saved) : {};
-    }
-
-    // инициализация - асинхронная функция для загрузки проектов из MinIO
     async function init() {
-        // Загружаем проекты из MinIO при старте
-        const loaded = await loadProjectsFromMinIO();
-        
-        if (!loaded || projects.length === 0) {
-            console.log('ℹ️ Проекты не найдены в MinIO или ошибка загрузки');
-            showToast('📭 Нет проектов в MinIO. Создайте новый проект!', false);
-        }
-        
-        // Устанавливаем активный проект по умолчанию (первый)
-        if (projects.length > 0 && !activeProjectId) activeProjectId = projects[0].id;
+        await loadProjectsFromMinIO();
+        loadUserSettings();
+        if(projects.length > 0 && !activeProjectId) activeProjectId = projects[0].id;
         renderAll();
-        initEventListeners();
+        initEvents();
     }
-
-    // вспомогательный esc
-    function escapeHtml(str) {
-        return str.replace(/[&<>]/g, function(m) {
-            if (m === '&') return '&amp;';
-            if (m === '<') return '&lt;';
-            if (m === '>') return '&gt;';
-            return m;
-        });
-    }
-
     init();
+
+    window.openProjectSettings = openProjectSettings;
+    window.duplicateProject = duplicateProject;
+    window.deleteProject = deleteProject;
 </script>
 </body>
 </html>

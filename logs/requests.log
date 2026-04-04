@@ -679,3 +679,1629 @@
 [04.04.2026 08:10:49] [REQUEST] DEBUG : Ответ: 404 NOT FOUND для /.well-known/appspecific/com.chrome.devtools.json - app:log_response:98
 [04.04.2026 08:10:49] [REQUEST] INFO : Запрос: GET /list_projects от 127.0.0.1 - app:log_request:94
 [04.04.2026 08:10:49] [REQUEST] DEBUG : Ответ: 200 OK для /list_projects - app:log_response:98
+[04.04.2026 08:50:21] [REQUEST] INFO : Запрос: GET /penpot-projects.html от 127.0.0.1 - app:log_request:94
+[04.04.2026 08:50:21] [REQUEST] DEBUG : Ответ: 200 OK для /penpot-projects.html - app:log_response:98
+[04.04.2026 08:50:21] [REQUEST] INFO : Запрос: GET /.well-known/appspecific/com.chrome.devtools.json от 127.0.0.1 - app:log_request:94
+[04.04.2026 08:50:21] [REQUEST] DEBUG : Ответ: 404 NOT FOUND для /.well-known/appspecific/com.chrome.devtools.json - app:log_response:98
+[04.04.2026 08:50:21] [REQUEST] INFO : Запрос: GET /list_projects от 127.0.0.1 - app:log_request:94
+[04.04.2026 08:50:21] [REQUEST] DEBUG : Ответ: 200 OK для /list_projects - app:log_response:98
+[04.04.2026 08:50:34] [REQUEST] INFO : Запрос: GET /index.html от 127.0.0.1 - app:log_request:94
+[04.04.2026 08:50:34] [REQUEST] DEBUG : Ответ: 304 NOT MODIFIED для /index.html - app:log_response:98
+[04.04.2026 08:50:34] [REQUEST] INFO : Запрос: GET /static/css/browser@4 от 127.0.0.1 - app:log_request:94
+[04.04.2026 08:50:34] [REQUEST] DEBUG : Ответ: 304 NOT MODIFIED для /static/css/browser@4 - app:log_response:98
+[04.04.2026 08:50:34] [REQUEST] INFO : Запрос: GET /static/js/plotly-2.27.1.min.js от 127.0.0.1 - app:log_request:94
+[04.04.2026 08:50:34] [REQUEST] INFO : Запрос: GET /styles/index.css от 127.0.0.1 - app:log_request:94
+[04.04.2026 08:50:34] [REQUEST] DEBUG : Ответ: 304 NOT MODIFIED для /static/js/plotly-2.27.1.min.js - app:log_response:98
+[04.04.2026 08:50:34] [REQUEST] INFO : Запрос: GET /styles/modals.css от 127.0.0.1 - app:log_request:94
+[04.04.2026 08:50:34] [REQUEST] DEBUG : Ответ: 304 NOT MODIFIED для /styles/index.css - app:log_response:98
+[04.04.2026 08:50:34] [REQUEST] DEBUG : Ответ: 304 NOT MODIFIED для /styles/modals.css - app:log_response:98
+[04.04.2026 08:50:34] [REQUEST] INFO : Запрос: GET /icons/free-icon-folder-8316612.png от 127.0.0.1 - app:log_request:94
+[04.04.2026 08:50:34] [REQUEST] DEBUG : Ответ: 404 NOT FOUND для /icons/free-icon-folder-8316612.png - app:log_response:98
+[04.04.2026 08:50:34] [REQUEST] INFO : Запрос: GET /icons/free-icon-data-storage-8322520.png от 127.0.0.1 - app:log_request:94
+[04.04.2026 08:50:34] [REQUEST] DEBUG : Ответ: 404 NOT FOUND для /icons/free-icon-data-storage-8322520.png - app:log_response:98
+[04.04.2026 08:50:34] [REQUEST] INFO : Запрос: GET /.well-known/appspecific/com.chrome.devtools.json от 127.0.0.1 - app:log_request:94
+[04.04.2026 08:50:34] [REQUEST] DEBUG : Ответ: 404 NOT FOUND для /.well-known/appspecific/com.chrome.devtools.json - app:log_response:98
+[04.04.2026 08:50:34] [REQUEST] INFO : Запрос: GET /icons/free-icon-undo.png от 127.0.0.1 - app:log_request:94
+[04.04.2026 08:50:34] [REQUEST] DEBUG : Ответ: 404 NOT FOUND для /icons/free-icon-undo.png - app:log_response:98
+[04.04.2026 08:50:34] [REQUEST] INFO : Запрос: GET /icons/free-icon-redo.png от 127.0.0.1 - app:log_request:94
+[04.04.2026 08:50:34] [REQUEST] DEBUG : Ответ: 404 NOT FOUND для /icons/free-icon-redo.png - app:log_response:98
+[04.04.2026 08:50:34] [REQUEST] INFO : Запрос: GET /icons/free-icon-history.png от 127.0.0.1 - app:log_request:94
+[04.04.2026 08:50:34] [REQUEST] DEBUG : Ответ: 404 NOT FOUND для /icons/free-icon-history.png - app:log_response:98
+[04.04.2026 08:50:34] [REQUEST] INFO : Запрос: GET /src/globals/globals.js от 127.0.0.1 - app:log_request:94
+[04.04.2026 08:50:34] [REQUEST] INFO : Запрос: GET /sm/7341ede9bd212679a9112e4ec665dc9ef909eb1fd663069797e072e9077e0844.map от 127.0.0.1 - app:log_request:94
+[04.04.2026 08:50:34] [REQUEST] DEBUG : Ответ: 304 NOT MODIFIED для /src/globals/globals.js - app:log_response:98
+[04.04.2026 08:50:34] [REQUEST] DEBUG : Ответ: 404 NOT FOUND для /sm/7341ede9bd212679a9112e4ec665dc9ef909eb1fd663069797e072e9077e0844.map - app:log_response:98
+[04.04.2026 08:50:34] [REQUEST] INFO : Запрос: GET /src/tools/tools.js от 127.0.0.1 - app:log_request:94
+[04.04.2026 08:50:34] [REQUEST] DEBUG : Ответ: 304 NOT MODIFIED для /src/tools/tools.js - app:log_response:98
+[04.04.2026 08:50:34] [REQUEST] INFO : Запрос: GET /src/fileManager/fileManager.js от 127.0.0.1 - app:log_request:94
+[04.04.2026 08:50:34] [REQUEST] DEBUG : Ответ: 304 NOT MODIFIED для /src/fileManager/fileManager.js - app:log_response:98
+[04.04.2026 08:50:34] [REQUEST] INFO : Запрос: GET /src/history/history.js от 127.0.0.1 - app:log_request:94
+[04.04.2026 08:50:34] [REQUEST] INFO : Запрос: GET /src/imageOps/imageOps.js от 127.0.0.1 - app:log_request:94
+[04.04.2026 08:50:34] [REQUEST] DEBUG : Ответ: 304 NOT MODIFIED для /src/history/history.js - app:log_response:98
+[04.04.2026 08:50:34] [REQUEST] DEBUG : Ответ: 304 NOT MODIFIED для /src/imageOps/imageOps.js - app:log_response:98
+[04.04.2026 08:50:34] [REQUEST] INFO : Запрос: GET /src/recentFiles/recentFiles.js от 127.0.0.1 - app:log_request:94
+[04.04.2026 08:50:34] [REQUEST] INFO : Запрос: GET /src/server/server.js от 127.0.0.1 - app:log_request:94
+[04.04.2026 08:50:34] [REQUEST] DEBUG : Ответ: 304 NOT MODIFIED для /src/recentFiles/recentFiles.js - app:log_response:98
+[04.04.2026 08:50:34] [REQUEST] DEBUG : Ответ: 304 NOT MODIFIED для /src/server/server.js - app:log_response:98
+[04.04.2026 08:50:34] [REQUEST] INFO : Запрос: GET /src/ui/ui.js от 127.0.0.1 - app:log_request:94
+[04.04.2026 08:50:34] [REQUEST] DEBUG : Ответ: 304 NOT MODIFIED для /src/ui/ui.js - app:log_response:98
+[04.04.2026 08:50:34] [REQUEST] INFO : Запрос: GET /src/events/events.js от 127.0.0.1 - app:log_request:94
+[04.04.2026 08:50:34] [REQUEST] DEBUG : Ответ: 304 NOT MODIFIED для /src/events/events.js - app:log_response:98
+[04.04.2026 08:50:34] [REQUEST] INFO : Запрос: GET /src/projectManager/projectManager.js от 127.0.0.1 - app:log_request:94
+[04.04.2026 08:50:34] [REQUEST] INFO : Запрос: GET /src/main/main.js от 127.0.0.1 - app:log_request:94
+[04.04.2026 08:50:34] [REQUEST] DEBUG : Ответ: 304 NOT MODIFIED для /src/projectManager/projectManager.js - app:log_response:98
+[04.04.2026 08:50:34] [REQUEST] DEBUG : Ответ: 304 NOT MODIFIED для /src/main/main.js - app:log_response:98
+[04.04.2026 08:50:34] [REQUEST] INFO : Запрос: GET /src/drawing/drawing.js от 127.0.0.1 - app:log_request:94
+[04.04.2026 08:50:34] [REQUEST] INFO : Запрос: GET /src/tabs/tabs.js от 127.0.0.1 - app:log_request:94
+[04.04.2026 08:50:34] [REQUEST] DEBUG : Ответ: 304 NOT MODIFIED для /src/drawing/drawing.js - app:log_response:98
+[04.04.2026 08:50:34] [REQUEST] DEBUG : Ответ: 304 NOT MODIFIED для /src/tabs/tabs.js - app:log_response:98
+[04.04.2026 08:50:34] [REQUEST] INFO : Запрос: GET /src/modals/models.js от 127.0.0.1 - app:log_request:94
+[04.04.2026 08:50:34] [REQUEST] DEBUG : Ответ: 404 NOT FOUND для /src/modals/models.js - app:log_response:98
+[04.04.2026 08:50:34] [REQUEST] INFO : Запрос: GET /images/notimages.png от 127.0.0.1 - app:log_request:94
+[04.04.2026 08:50:34] [REQUEST] DEBUG : Ответ: 404 NOT FOUND для /images/notimages.png - app:log_response:98
+[04.04.2026 08:50:34] [REQUEST] INFO : Запрос: GET /icons/free-icon-rotate1.png от 127.0.0.1 - app:log_request:94
+[04.04.2026 08:50:34] [REQUEST] DEBUG : Ответ: 404 NOT FOUND для /icons/free-icon-rotate1.png - app:log_response:98
+[04.04.2026 08:50:34] [REQUEST] INFO : Запрос: GET /icons/free-icon-rotate.png от 127.0.0.1 - app:log_request:94
+[04.04.2026 08:50:34] [REQUEST] DEBUG : Ответ: 404 NOT FOUND для /icons/free-icon-rotate.png - app:log_response:98
+[04.04.2026 08:50:34] [REQUEST] INFO : Запрос: GET /icons/free-icon-refresh.png от 127.0.0.1 - app:log_request:94
+[04.04.2026 08:50:34] [REQUEST] DEBUG : Ответ: 404 NOT FOUND для /icons/free-icon-refresh.png - app:log_response:98
+[04.04.2026 08:50:34] [REQUEST] INFO : Запрос: GET /icons/free-icon-fold-horizontal.png от 127.0.0.1 - app:log_request:94
+[04.04.2026 08:50:34] [REQUEST] DEBUG : Ответ: 404 NOT FOUND для /icons/free-icon-fold-horizontal.png - app:log_response:98
+[04.04.2026 08:50:34] [REQUEST] INFO : Запрос: GET /icons/free-icon-fold-vertical.png от 127.0.0.1 - app:log_request:94
+[04.04.2026 08:50:34] [REQUEST] DEBUG : Ответ: 404 NOT FOUND для /icons/free-icon-fold-vertical.png - app:log_response:98
+[04.04.2026 08:50:34] [REQUEST] INFO : Запрос: GET /images/SobelEffectPluginIcon.png от 127.0.0.1 - app:log_request:94
+[04.04.2026 08:50:34] [REQUEST] DEBUG : Ответ: 404 NOT FOUND для /images/SobelEffectPluginIcon.png - app:log_response:98
+[04.04.2026 08:50:34] [REQUEST] INFO : Запрос: GET /images/EffectPluginIcon.png от 127.0.0.1 - app:log_request:94
+[04.04.2026 08:50:34] [REQUEST] DEBUG : Ответ: 404 NOT FOUND для /images/EffectPluginIcon.png - app:log_response:98
+[04.04.2026 08:50:34] [REQUEST] INFO : Запрос: GET /images/ApproximationEffectPluginIcon.png от 127.0.0.1 - app:log_request:94
+[04.04.2026 08:50:34] [REQUEST] DEBUG : Ответ: 404 NOT FOUND для /images/ApproximationEffectPluginIcon.png - app:log_response:98
+[04.04.2026 08:50:34] [REQUEST] INFO : Запрос: GET /images/PrelimProcess.png от 127.0.0.1 - app:log_request:94
+[04.04.2026 08:50:34] [REQUEST] INFO : Запрос: GET /images/MedianEffectPluginIcon.png от 127.0.0.1 - app:log_request:94
+[04.04.2026 08:50:34] [REQUEST] DEBUG : Ответ: 404 NOT FOUND для /images/PrelimProcess.png - app:log_response:98
+[04.04.2026 08:50:34] [REQUEST] DEBUG : Ответ: 404 NOT FOUND для /images/MedianEffectPluginIcon.png - app:log_response:98
+[04.04.2026 08:50:34] [REQUEST] INFO : Запрос: GET /images/NormalizEffectPluginIcon.png от 127.0.0.1 - app:log_request:94
+[04.04.2026 08:50:34] [REQUEST] DEBUG : Ответ: 404 NOT FOUND для /images/NormalizEffectPluginIcon.png - app:log_response:98
+[04.04.2026 08:50:34] [REQUEST] INFO : Запрос: GET /icons/free-icon-workflow.png от 127.0.0.1 - app:log_request:94
+[04.04.2026 08:50:34] [REQUEST] DEBUG : Ответ: 404 NOT FOUND для /icons/free-icon-workflow.png - app:log_response:98
+[04.04.2026 08:50:34] [REQUEST] INFO : Запрос: GET /icons/free-icon-CurvesEffect.png от 127.0.0.1 - app:log_request:94
+[04.04.2026 08:50:34] [REQUEST] DEBUG : Ответ: 404 NOT FOUND для /icons/free-icon-CurvesEffect.png - app:log_response:98
+[04.04.2026 08:50:34] [REQUEST] INFO : Запрос: GET /images/notimages.png от 127.0.0.1 - app:log_request:94
+[04.04.2026 08:50:34] [REQUEST] DEBUG : Ответ: 404 NOT FOUND для /images/notimages.png - app:log_response:98
+[04.04.2026 08:50:34] [REQUEST] INFO : Запрос: GET /api/recent_files от 127.0.0.1 - app:log_request:94
+[04.04.2026 08:50:34] [REQUEST] INFO : Запрос: GET /list_projects от 127.0.0.1 - app:log_request:94
+[04.04.2026 08:50:34] [REQUEST] DEBUG : Ответ: 200 OK для /api/recent_files - app:log_response:98
+[04.04.2026 08:50:34] [REQUEST] DEBUG : Ответ: 200 OK для /list_projects - app:log_response:98
+[04.04.2026 08:50:34] [REQUEST] INFO : Запрос: GET /load_project/proj_1775270968460_2764 от 127.0.0.1 - app:log_request:94
+[04.04.2026 08:50:34] [REQUEST] DEBUG : Ответ: 200 OK для /load_project/proj_1775270968460_2764 - app:log_response:98
+[04.04.2026 08:50:36] [REQUEST] INFO : Запрос: GET /penpot-projects.html от 127.0.0.1 - app:log_request:94
+[04.04.2026 08:50:36] [REQUEST] DEBUG : Ответ: 304 NOT MODIFIED для /penpot-projects.html - app:log_response:98
+[04.04.2026 08:50:36] [REQUEST] INFO : Запрос: GET /.well-known/appspecific/com.chrome.devtools.json от 127.0.0.1 - app:log_request:94
+[04.04.2026 08:50:36] [REQUEST] DEBUG : Ответ: 404 NOT FOUND для /.well-known/appspecific/com.chrome.devtools.json - app:log_response:98
+[04.04.2026 08:50:36] [REQUEST] INFO : Запрос: GET /list_projects от 127.0.0.1 - app:log_request:94
+[04.04.2026 08:50:36] [REQUEST] DEBUG : Ответ: 200 OK для /list_projects - app:log_response:98
+[04.04.2026 08:50:37] [REQUEST] INFO : Запрос: GET /penpot-fusion.html от 127.0.0.1 - app:log_request:94
+[04.04.2026 08:50:37] [REQUEST] DEBUG : Ответ: 200 OK для /penpot-fusion.html - app:log_response:98
+[04.04.2026 08:50:37] [REQUEST] INFO : Запрос: GET /.well-known/appspecific/com.chrome.devtools.json от 127.0.0.1 - app:log_request:94
+[04.04.2026 08:50:37] [REQUEST] DEBUG : Ответ: 404 NOT FOUND для /.well-known/appspecific/com.chrome.devtools.json - app:log_response:98
+[04.04.2026 08:50:39] [REQUEST] INFO : Запрос: GET /.well-known/appspecific/com.chrome.devtools.json от 127.0.0.1 - app:log_request:94
+[04.04.2026 08:50:39] [REQUEST] DEBUG : Ответ: 404 NOT FOUND для /.well-known/appspecific/com.chrome.devtools.json - app:log_response:98
+[04.04.2026 08:50:39] [REQUEST] INFO : Запрос: GET /.well-known/appspecific/com.chrome.devtools.json от 127.0.0.1 - app:log_request:94
+[04.04.2026 08:50:39] [REQUEST] DEBUG : Ответ: 404 NOT FOUND для /.well-known/appspecific/com.chrome.devtools.json - app:log_response:98
+[04.04.2026 08:58:45] [REQUEST] INFO : Запрос: GET /penpot-projects.html от 127.0.0.1 - app:log_request:94
+[04.04.2026 08:58:45] [REQUEST] DEBUG : Ответ: 200 OK для /penpot-projects.html - app:log_response:98
+[04.04.2026 08:58:45] [REQUEST] INFO : Запрос: GET /.well-known/appspecific/com.chrome.devtools.json от 127.0.0.1 - app:log_request:94
+[04.04.2026 08:58:45] [REQUEST] DEBUG : Ответ: 404 NOT FOUND для /.well-known/appspecific/com.chrome.devtools.json - app:log_response:98
+[04.04.2026 08:58:45] [REQUEST] INFO : Запрос: GET /list_projects от 127.0.0.1 - app:log_request:94
+[04.04.2026 08:58:45] [REQUEST] DEBUG : Ответ: 200 OK для /list_projects - app:log_response:98
+[04.04.2026 09:02:31] [REQUEST] INFO : Запрос: GET /penpot-projects.html от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:02:31] [REQUEST] DEBUG : Ответ: 200 OK для /penpot-projects.html - app:log_response:98
+[04.04.2026 09:02:31] [REQUEST] INFO : Запрос: GET /.well-known/appspecific/com.chrome.devtools.json от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:02:31] [REQUEST] DEBUG : Ответ: 404 NOT FOUND для /.well-known/appspecific/com.chrome.devtools.json - app:log_response:98
+[04.04.2026 09:02:31] [REQUEST] INFO : Запрос: GET /list_projects от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:02:31] [REQUEST] DEBUG : Ответ: 200 OK для /list_projects - app:log_response:98
+[04.04.2026 09:02:51] [REQUEST] INFO : Запрос: GET /index.html от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:02:51] [REQUEST] DEBUG : Ответ: 304 NOT MODIFIED для /index.html - app:log_response:98
+[04.04.2026 09:02:51] [REQUEST] INFO : Запрос: GET /static/css/browser@4 от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:02:51] [REQUEST] DEBUG : Ответ: 304 NOT MODIFIED для /static/css/browser@4 - app:log_response:98
+[04.04.2026 09:02:51] [REQUEST] INFO : Запрос: GET /styles/index.css от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:02:51] [REQUEST] INFO : Запрос: GET /static/js/plotly-2.27.1.min.js от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:02:51] [REQUEST] DEBUG : Ответ: 304 NOT MODIFIED для /styles/index.css - app:log_response:98
+[04.04.2026 09:02:51] [REQUEST] INFO : Запрос: GET /styles/modals.css от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:02:51] [REQUEST] INFO : Запрос: GET /icons/free-icon-folder-8316612.png от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:02:51] [REQUEST] DEBUG : Ответ: 304 NOT MODIFIED для /static/js/plotly-2.27.1.min.js - app:log_response:98
+[04.04.2026 09:02:51] [REQUEST] DEBUG : Ответ: 304 NOT MODIFIED для /styles/modals.css - app:log_response:98
+[04.04.2026 09:02:51] [REQUEST] DEBUG : Ответ: 404 NOT FOUND для /icons/free-icon-folder-8316612.png - app:log_response:98
+[04.04.2026 09:02:51] [REQUEST] INFO : Запрос: GET /icons/free-icon-data-storage-8322520.png от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:02:51] [REQUEST] DEBUG : Ответ: 404 NOT FOUND для /icons/free-icon-data-storage-8322520.png - app:log_response:98
+[04.04.2026 09:02:51] [REQUEST] INFO : Запрос: GET /.well-known/appspecific/com.chrome.devtools.json от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:02:51] [REQUEST] DEBUG : Ответ: 404 NOT FOUND для /.well-known/appspecific/com.chrome.devtools.json - app:log_response:98
+[04.04.2026 09:02:51] [REQUEST] INFO : Запрос: GET /icons/free-icon-undo.png от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:02:51] [REQUEST] INFO : Запрос: GET /icons/free-icon-redo.png от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:02:51] [REQUEST] DEBUG : Ответ: 404 NOT FOUND для /icons/free-icon-undo.png - app:log_response:98
+[04.04.2026 09:02:51] [REQUEST] DEBUG : Ответ: 404 NOT FOUND для /icons/free-icon-redo.png - app:log_response:98
+[04.04.2026 09:02:51] [REQUEST] INFO : Запрос: GET /icons/free-icon-history.png от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:02:51] [REQUEST] DEBUG : Ответ: 404 NOT FOUND для /icons/free-icon-history.png - app:log_response:98
+[04.04.2026 09:02:51] [REQUEST] INFO : Запрос: GET /src/globals/globals.js от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:02:51] [REQUEST] INFO : Запрос: GET /sm/7341ede9bd212679a9112e4ec665dc9ef909eb1fd663069797e072e9077e0844.map от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:02:51] [REQUEST] DEBUG : Ответ: 304 NOT MODIFIED для /src/globals/globals.js - app:log_response:98
+[04.04.2026 09:02:51] [REQUEST] DEBUG : Ответ: 404 NOT FOUND для /sm/7341ede9bd212679a9112e4ec665dc9ef909eb1fd663069797e072e9077e0844.map - app:log_response:98
+[04.04.2026 09:02:51] [REQUEST] INFO : Запрос: GET /src/tools/tools.js от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:02:51] [REQUEST] DEBUG : Ответ: 304 NOT MODIFIED для /src/tools/tools.js - app:log_response:98
+[04.04.2026 09:02:51] [REQUEST] INFO : Запрос: GET /src/fileManager/fileManager.js от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:02:51] [REQUEST] DEBUG : Ответ: 304 NOT MODIFIED для /src/fileManager/fileManager.js - app:log_response:98
+[04.04.2026 09:02:51] [REQUEST] INFO : Запрос: GET /src/history/history.js от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:02:51] [REQUEST] DEBUG : Ответ: 304 NOT MODIFIED для /src/history/history.js - app:log_response:98
+[04.04.2026 09:02:51] [REQUEST] INFO : Запрос: GET /src/imageOps/imageOps.js от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:02:51] [REQUEST] DEBUG : Ответ: 304 NOT MODIFIED для /src/imageOps/imageOps.js - app:log_response:98
+[04.04.2026 09:02:51] [REQUEST] INFO : Запрос: GET /src/recentFiles/recentFiles.js от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:02:51] [REQUEST] DEBUG : Ответ: 304 NOT MODIFIED для /src/recentFiles/recentFiles.js - app:log_response:98
+[04.04.2026 09:02:51] [REQUEST] INFO : Запрос: GET /src/server/server.js от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:02:51] [REQUEST] DEBUG : Ответ: 304 NOT MODIFIED для /src/server/server.js - app:log_response:98
+[04.04.2026 09:02:51] [REQUEST] INFO : Запрос: GET /src/ui/ui.js от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:02:51] [REQUEST] DEBUG : Ответ: 304 NOT MODIFIED для /src/ui/ui.js - app:log_response:98
+[04.04.2026 09:02:51] [REQUEST] INFO : Запрос: GET /src/events/events.js от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:02:51] [REQUEST] DEBUG : Ответ: 304 NOT MODIFIED для /src/events/events.js - app:log_response:98
+[04.04.2026 09:02:51] [REQUEST] INFO : Запрос: GET /src/projectManager/projectManager.js от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:02:51] [REQUEST] DEBUG : Ответ: 304 NOT MODIFIED для /src/projectManager/projectManager.js - app:log_response:98
+[04.04.2026 09:02:51] [REQUEST] INFO : Запрос: GET /src/main/main.js от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:02:51] [REQUEST] INFO : Запрос: GET /src/drawing/drawing.js от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:02:51] [REQUEST] DEBUG : Ответ: 304 NOT MODIFIED для /src/main/main.js - app:log_response:98
+[04.04.2026 09:02:51] [REQUEST] DEBUG : Ответ: 304 NOT MODIFIED для /src/drawing/drawing.js - app:log_response:98
+[04.04.2026 09:02:51] [REQUEST] INFO : Запрос: GET /src/tabs/tabs.js от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:02:51] [REQUEST] INFO : Запрос: GET /src/modals/models.js от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:02:51] [REQUEST] DEBUG : Ответ: 404 NOT FOUND для /src/modals/models.js - app:log_response:98
+[04.04.2026 09:02:51] [REQUEST] DEBUG : Ответ: 304 NOT MODIFIED для /src/tabs/tabs.js - app:log_response:98
+[04.04.2026 09:02:51] [REQUEST] INFO : Запрос: GET /images/notimages.png от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:02:51] [REQUEST] DEBUG : Ответ: 404 NOT FOUND для /images/notimages.png - app:log_response:98
+[04.04.2026 09:02:51] [REQUEST] INFO : Запрос: GET /icons/free-icon-rotate1.png от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:02:51] [REQUEST] DEBUG : Ответ: 404 NOT FOUND для /icons/free-icon-rotate1.png - app:log_response:98
+[04.04.2026 09:02:51] [REQUEST] INFO : Запрос: GET /icons/free-icon-rotate.png от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:02:51] [REQUEST] DEBUG : Ответ: 404 NOT FOUND для /icons/free-icon-rotate.png - app:log_response:98
+[04.04.2026 09:02:51] [REQUEST] INFO : Запрос: GET /icons/free-icon-refresh.png от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:02:51] [REQUEST] INFO : Запрос: GET /icons/free-icon-fold-horizontal.png от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:02:51] [REQUEST] DEBUG : Ответ: 404 NOT FOUND для /icons/free-icon-refresh.png - app:log_response:98
+[04.04.2026 09:02:51] [REQUEST] DEBUG : Ответ: 404 NOT FOUND для /icons/free-icon-fold-horizontal.png - app:log_response:98
+[04.04.2026 09:02:51] [REQUEST] INFO : Запрос: GET /icons/free-icon-fold-vertical.png от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:02:51] [REQUEST] INFO : Запрос: GET /images/SobelEffectPluginIcon.png от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:02:51] [REQUEST] DEBUG : Ответ: 404 NOT FOUND для /icons/free-icon-fold-vertical.png - app:log_response:98
+[04.04.2026 09:02:51] [REQUEST] DEBUG : Ответ: 404 NOT FOUND для /images/SobelEffectPluginIcon.png - app:log_response:98
+[04.04.2026 09:02:51] [REQUEST] INFO : Запрос: GET /images/EffectPluginIcon.png от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:02:51] [REQUEST] INFO : Запрос: GET /images/ApproximationEffectPluginIcon.png от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:02:51] [REQUEST] DEBUG : Ответ: 404 NOT FOUND для /images/EffectPluginIcon.png - app:log_response:98
+[04.04.2026 09:02:51] [REQUEST] INFO : Запрос: GET /images/PrelimProcess.png от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:02:51] [REQUEST] DEBUG : Ответ: 404 NOT FOUND для /images/ApproximationEffectPluginIcon.png - app:log_response:98
+[04.04.2026 09:02:51] [REQUEST] INFO : Запрос: GET /images/MedianEffectPluginIcon.png от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:02:51] [REQUEST] DEBUG : Ответ: 404 NOT FOUND для /images/MedianEffectPluginIcon.png - app:log_response:98
+[04.04.2026 09:02:51] [REQUEST] DEBUG : Ответ: 404 NOT FOUND для /images/PrelimProcess.png - app:log_response:98
+[04.04.2026 09:02:51] [REQUEST] INFO : Запрос: GET /images/NormalizEffectPluginIcon.png от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:02:51] [REQUEST] DEBUG : Ответ: 404 NOT FOUND для /images/NormalizEffectPluginIcon.png - app:log_response:98
+[04.04.2026 09:02:51] [REQUEST] INFO : Запрос: GET /icons/free-icon-workflow.png от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:02:51] [REQUEST] DEBUG : Ответ: 404 NOT FOUND для /icons/free-icon-workflow.png - app:log_response:98
+[04.04.2026 09:02:51] [REQUEST] INFO : Запрос: GET /icons/free-icon-CurvesEffect.png от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:02:51] [REQUEST] INFO : Запрос: GET /images/notimages.png от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:02:51] [REQUEST] DEBUG : Ответ: 404 NOT FOUND для /icons/free-icon-CurvesEffect.png - app:log_response:98
+[04.04.2026 09:02:51] [REQUEST] DEBUG : Ответ: 404 NOT FOUND для /images/notimages.png - app:log_response:98
+[04.04.2026 09:02:51] [REQUEST] INFO : Запрос: GET /api/recent_files от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:02:51] [REQUEST] INFO : Запрос: GET /list_projects от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:02:51] [REQUEST] DEBUG : Ответ: 200 OK для /api/recent_files - app:log_response:98
+[04.04.2026 09:02:51] [REQUEST] DEBUG : Ответ: 200 OK для /list_projects - app:log_response:98
+[04.04.2026 09:02:51] [REQUEST] INFO : Запрос: GET /load_project/proj_1775270968460_2764 от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:02:51] [REQUEST] DEBUG : Ответ: 200 OK для /load_project/proj_1775270968460_2764 - app:log_response:98
+[04.04.2026 09:02:52] [REQUEST] INFO : Запрос: GET /penpot-projects.html от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:02:52] [REQUEST] DEBUG : Ответ: 304 NOT MODIFIED для /penpot-projects.html - app:log_response:98
+[04.04.2026 09:02:52] [REQUEST] INFO : Запрос: GET /.well-known/appspecific/com.chrome.devtools.json от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:02:52] [REQUEST] DEBUG : Ответ: 404 NOT FOUND для /.well-known/appspecific/com.chrome.devtools.json - app:log_response:98
+[04.04.2026 09:02:52] [REQUEST] INFO : Запрос: GET /list_projects от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:02:52] [REQUEST] DEBUG : Ответ: 200 OK для /list_projects - app:log_response:98
+[04.04.2026 09:02:55] [REQUEST] INFO : Запрос: GET /index.html от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:02:55] [REQUEST] DEBUG : Ответ: 304 NOT MODIFIED для /index.html - app:log_response:98
+[04.04.2026 09:02:55] [REQUEST] INFO : Запрос: GET /static/css/browser@4 от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:02:55] [REQUEST] DEBUG : Ответ: 304 NOT MODIFIED для /static/css/browser@4 - app:log_response:98
+[04.04.2026 09:02:55] [REQUEST] INFO : Запрос: GET /styles/index.css от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:02:55] [REQUEST] INFO : Запрос: GET /static/js/plotly-2.27.1.min.js от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:02:55] [REQUEST] DEBUG : Ответ: 304 NOT MODIFIED для /styles/index.css - app:log_response:98
+[04.04.2026 09:02:55] [REQUEST] INFO : Запрос: GET /styles/modals.css от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:02:55] [REQUEST] DEBUG : Ответ: 304 NOT MODIFIED для /static/js/plotly-2.27.1.min.js - app:log_response:98
+[04.04.2026 09:02:55] [REQUEST] INFO : Запрос: GET /icons/free-icon-folder-8316612.png от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:02:55] [REQUEST] DEBUG : Ответ: 404 NOT FOUND для /icons/free-icon-folder-8316612.png - app:log_response:98
+[04.04.2026 09:02:55] [REQUEST] DEBUG : Ответ: 304 NOT MODIFIED для /styles/modals.css - app:log_response:98
+[04.04.2026 09:02:55] [REQUEST] INFO : Запрос: GET /icons/free-icon-data-storage-8322520.png от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:02:55] [REQUEST] DEBUG : Ответ: 404 NOT FOUND для /icons/free-icon-data-storage-8322520.png - app:log_response:98
+[04.04.2026 09:02:55] [REQUEST] INFO : Запрос: GET /.well-known/appspecific/com.chrome.devtools.json от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:02:55] [REQUEST] DEBUG : Ответ: 404 NOT FOUND для /.well-known/appspecific/com.chrome.devtools.json - app:log_response:98
+[04.04.2026 09:02:55] [REQUEST] INFO : Запрос: GET /icons/free-icon-undo.png от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:02:55] [REQUEST] DEBUG : Ответ: 404 NOT FOUND для /icons/free-icon-undo.png - app:log_response:98
+[04.04.2026 09:02:55] [REQUEST] INFO : Запрос: GET /icons/free-icon-redo.png от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:02:55] [REQUEST] DEBUG : Ответ: 404 NOT FOUND для /icons/free-icon-redo.png - app:log_response:98
+[04.04.2026 09:02:55] [REQUEST] INFO : Запрос: GET /icons/free-icon-history.png от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:02:55] [REQUEST] DEBUG : Ответ: 404 NOT FOUND для /icons/free-icon-history.png - app:log_response:98
+[04.04.2026 09:02:55] [REQUEST] INFO : Запрос: GET /src/globals/globals.js от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:02:55] [REQUEST] INFO : Запрос: GET /sm/7341ede9bd212679a9112e4ec665dc9ef909eb1fd663069797e072e9077e0844.map от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:02:55] [REQUEST] DEBUG : Ответ: 304 NOT MODIFIED для /src/globals/globals.js - app:log_response:98
+[04.04.2026 09:02:55] [REQUEST] DEBUG : Ответ: 404 NOT FOUND для /sm/7341ede9bd212679a9112e4ec665dc9ef909eb1fd663069797e072e9077e0844.map - app:log_response:98
+[04.04.2026 09:02:55] [REQUEST] INFO : Запрос: GET /src/tools/tools.js от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:02:55] [REQUEST] INFO : Запрос: GET /src/fileManager/fileManager.js от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:02:55] [REQUEST] DEBUG : Ответ: 304 NOT MODIFIED для /src/tools/tools.js - app:log_response:98
+[04.04.2026 09:02:55] [REQUEST] INFO : Запрос: GET /src/history/history.js от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:02:55] [REQUEST] DEBUG : Ответ: 304 NOT MODIFIED для /src/fileManager/fileManager.js - app:log_response:98
+[04.04.2026 09:02:55] [REQUEST] INFO : Запрос: GET /src/imageOps/imageOps.js от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:02:55] [REQUEST] DEBUG : Ответ: 304 NOT MODIFIED для /src/history/history.js - app:log_response:98
+[04.04.2026 09:02:55] [REQUEST] INFO : Запрос: GET /src/recentFiles/recentFiles.js от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:02:55] [REQUEST] DEBUG : Ответ: 304 NOT MODIFIED для /src/imageOps/imageOps.js - app:log_response:98
+[04.04.2026 09:02:55] [REQUEST] DEBUG : Ответ: 304 NOT MODIFIED для /src/recentFiles/recentFiles.js - app:log_response:98
+[04.04.2026 09:02:55] [REQUEST] INFO : Запрос: GET /src/server/server.js от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:02:55] [REQUEST] DEBUG : Ответ: 304 NOT MODIFIED для /src/server/server.js - app:log_response:98
+[04.04.2026 09:02:55] [REQUEST] INFO : Запрос: GET /src/ui/ui.js от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:02:55] [REQUEST] INFO : Запрос: GET /src/events/events.js от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:02:55] [REQUEST] INFO : Запрос: GET /src/projectManager/projectManager.js от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:02:55] [REQUEST] DEBUG : Ответ: 304 NOT MODIFIED для /src/ui/ui.js - app:log_response:98
+[04.04.2026 09:02:55] [REQUEST] DEBUG : Ответ: 304 NOT MODIFIED для /src/events/events.js - app:log_response:98
+[04.04.2026 09:02:55] [REQUEST] INFO : Запрос: GET /src/main/main.js от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:02:55] [REQUEST] DEBUG : Ответ: 304 NOT MODIFIED для /src/projectManager/projectManager.js - app:log_response:98
+[04.04.2026 09:02:55] [REQUEST] INFO : Запрос: GET /src/drawing/drawing.js от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:02:55] [REQUEST] DEBUG : Ответ: 304 NOT MODIFIED для /src/main/main.js - app:log_response:98
+[04.04.2026 09:02:55] [REQUEST] DEBUG : Ответ: 304 NOT MODIFIED для /src/drawing/drawing.js - app:log_response:98
+[04.04.2026 09:02:55] [REQUEST] INFO : Запрос: GET /src/tabs/tabs.js от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:02:55] [REQUEST] INFO : Запрос: GET /src/modals/models.js от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:02:55] [REQUEST] DEBUG : Ответ: 404 NOT FOUND для /src/modals/models.js - app:log_response:98
+[04.04.2026 09:02:55] [REQUEST] INFO : Запрос: GET /images/notimages.png от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:02:55] [REQUEST] DEBUG : Ответ: 304 NOT MODIFIED для /src/tabs/tabs.js - app:log_response:98
+[04.04.2026 09:02:55] [REQUEST] INFO : Запрос: GET /icons/free-icon-rotate1.png от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:02:55] [REQUEST] DEBUG : Ответ: 404 NOT FOUND для /images/notimages.png - app:log_response:98
+[04.04.2026 09:02:55] [REQUEST] DEBUG : Ответ: 404 NOT FOUND для /icons/free-icon-rotate1.png - app:log_response:98
+[04.04.2026 09:02:55] [REQUEST] INFO : Запрос: GET /icons/free-icon-rotate.png от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:02:55] [REQUEST] DEBUG : Ответ: 404 NOT FOUND для /icons/free-icon-rotate.png - app:log_response:98
+[04.04.2026 09:02:55] [REQUEST] INFO : Запрос: GET /icons/free-icon-refresh.png от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:02:55] [REQUEST] INFO : Запрос: GET /icons/free-icon-CurvesEffect.png от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:02:55] [REQUEST] DEBUG : Ответ: 404 NOT FOUND для /icons/free-icon-refresh.png - app:log_response:98
+[04.04.2026 09:02:55] [REQUEST] INFO : Запрос: GET /icons/free-icon-fold-horizontal.png от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:02:55] [REQUEST] DEBUG : Ответ: 404 NOT FOUND для /icons/free-icon-CurvesEffect.png - app:log_response:98
+[04.04.2026 09:02:55] [REQUEST] INFO : Запрос: GET /api/recent_files от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:02:55] [REQUEST] DEBUG : Ответ: 404 NOT FOUND для /icons/free-icon-fold-horizontal.png - app:log_response:98
+[04.04.2026 09:02:55] [REQUEST] INFO : Запрос: GET /list_projects от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:02:55] [REQUEST] INFO : Запрос: GET /icons/free-icon-fold-vertical.png от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:02:55] [REQUEST] DEBUG : Ответ: 404 NOT FOUND для /icons/free-icon-fold-vertical.png - app:log_response:98
+[04.04.2026 09:02:55] [REQUEST] DEBUG : Ответ: 200 OK для /api/recent_files - app:log_response:98
+[04.04.2026 09:02:55] [REQUEST] INFO : Запрос: GET /images/SobelEffectPluginIcon.png от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:02:55] [REQUEST] DEBUG : Ответ: 404 NOT FOUND для /images/SobelEffectPluginIcon.png - app:log_response:98
+[04.04.2026 09:02:55] [REQUEST] INFO : Запрос: GET /images/EffectPluginIcon.png от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:02:55] [REQUEST] INFO : Запрос: GET /images/ApproximationEffectPluginIcon.png от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:02:55] [REQUEST] DEBUG : Ответ: 404 NOT FOUND для /images/EffectPluginIcon.png - app:log_response:98
+[04.04.2026 09:02:55] [REQUEST] DEBUG : Ответ: 404 NOT FOUND для /images/ApproximationEffectPluginIcon.png - app:log_response:98
+[04.04.2026 09:02:55] [REQUEST] INFO : Запрос: GET /images/PrelimProcess.png от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:02:55] [REQUEST] DEBUG : Ответ: 200 OK для /list_projects - app:log_response:98
+[04.04.2026 09:02:55] [REQUEST] INFO : Запрос: GET /images/MedianEffectPluginIcon.png от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:02:55] [REQUEST] DEBUG : Ответ: 404 NOT FOUND для /images/PrelimProcess.png - app:log_response:98
+[04.04.2026 09:02:55] [REQUEST] DEBUG : Ответ: 404 NOT FOUND для /images/MedianEffectPluginIcon.png - app:log_response:98
+[04.04.2026 09:02:55] [REQUEST] INFO : Запрос: GET /images/NormalizEffectPluginIcon.png от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:02:55] [REQUEST] INFO : Запрос: GET /icons/free-icon-workflow.png от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:02:55] [REQUEST] DEBUG : Ответ: 404 NOT FOUND для /images/NormalizEffectPluginIcon.png - app:log_response:98
+[04.04.2026 09:02:55] [REQUEST] DEBUG : Ответ: 404 NOT FOUND для /icons/free-icon-workflow.png - app:log_response:98
+[04.04.2026 09:02:55] [REQUEST] INFO : Запрос: GET /load_project/proj_1775270968460_2764 от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:02:55] [REQUEST] DEBUG : Ответ: 200 OK для /load_project/proj_1775270968460_2764 - app:log_response:98
+[04.04.2026 09:02:57] [REQUEST] INFO : Запрос: GET /penpot-projects.html от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:02:57] [REQUEST] DEBUG : Ответ: 304 NOT MODIFIED для /penpot-projects.html - app:log_response:98
+[04.04.2026 09:02:57] [REQUEST] INFO : Запрос: GET /.well-known/appspecific/com.chrome.devtools.json от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:02:57] [REQUEST] DEBUG : Ответ: 404 NOT FOUND для /.well-known/appspecific/com.chrome.devtools.json - app:log_response:98
+[04.04.2026 09:02:57] [REQUEST] INFO : Запрос: GET /list_projects от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:02:57] [REQUEST] DEBUG : Ответ: 200 OK для /list_projects - app:log_response:98
+[04.04.2026 09:07:41] [REQUEST] INFO : Запрос: GET /penpot-projects.html от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:07:41] [REQUEST] DEBUG : Ответ: 200 OK для /penpot-projects.html - app:log_response:98
+[04.04.2026 09:07:42] [REQUEST] INFO : Запрос: GET /.well-known/appspecific/com.chrome.devtools.json от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:07:42] [REQUEST] DEBUG : Ответ: 404 NOT FOUND для /.well-known/appspecific/com.chrome.devtools.json - app:log_response:98
+[04.04.2026 09:07:42] [REQUEST] INFO : Запрос: GET /list_projects от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:07:42] [REQUEST] DEBUG : Ответ: 200 OK для /list_projects - app:log_response:98
+[04.04.2026 09:08:15] [REQUEST] INFO : Запрос: GET /penpot-projects.html от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:08:15] [REQUEST] DEBUG : Ответ: 304 NOT MODIFIED для /penpot-projects.html - app:log_response:98
+[04.04.2026 09:08:15] [REQUEST] INFO : Запрос: GET /.well-known/appspecific/com.chrome.devtools.json от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:08:15] [REQUEST] DEBUG : Ответ: 404 NOT FOUND для /.well-known/appspecific/com.chrome.devtools.json - app:log_response:98
+[04.04.2026 09:08:15] [REQUEST] INFO : Запрос: GET /list_projects от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:08:15] [REQUEST] DEBUG : Ответ: 200 OK для /list_projects - app:log_response:98
+[04.04.2026 09:08:17] [REQUEST] INFO : Запрос: GET /penpot-projects.html от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:08:17] [REQUEST] DEBUG : Ответ: 304 NOT MODIFIED для /penpot-projects.html - app:log_response:98
+[04.04.2026 09:08:17] [REQUEST] INFO : Запрос: GET /.well-known/appspecific/com.chrome.devtools.json от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:08:17] [REQUEST] DEBUG : Ответ: 404 NOT FOUND для /.well-known/appspecific/com.chrome.devtools.json - app:log_response:98
+[04.04.2026 09:08:17] [REQUEST] INFO : Запрос: GET /list_projects от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:08:17] [REQUEST] DEBUG : Ответ: 200 OK для /list_projects - app:log_response:98
+[04.04.2026 09:12:55] [REQUEST] INFO : Запрос: GET /penpot-projects.html от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:12:55] [REQUEST] DEBUG : Ответ: 200 OK для /penpot-projects.html - app:log_response:98
+[04.04.2026 09:12:55] [REQUEST] INFO : Запрос: GET /.well-known/appspecific/com.chrome.devtools.json от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:12:55] [REQUEST] DEBUG : Ответ: 404 NOT FOUND для /.well-known/appspecific/com.chrome.devtools.json - app:log_response:98
+[04.04.2026 09:12:55] [REQUEST] INFO : Запрос: GET /list_projects от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:12:55] [REQUEST] DEBUG : Ответ: 200 OK для /list_projects - app:log_response:98
+[04.04.2026 09:13:20] [REQUEST] INFO : Запрос: GET /penpot-projects.html от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:13:20] [REQUEST] DEBUG : Ответ: 200 OK для /penpot-projects.html - app:log_response:98
+[04.04.2026 09:13:20] [REQUEST] INFO : Запрос: GET /.well-known/appspecific/com.chrome.devtools.json от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:13:20] [REQUEST] DEBUG : Ответ: 404 NOT FOUND для /.well-known/appspecific/com.chrome.devtools.json - app:log_response:98
+[04.04.2026 09:13:20] [REQUEST] INFO : Запрос: GET /list_projects от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:13:20] [REQUEST] DEBUG : Ответ: 200 OK для /list_projects - app:log_response:98
+[04.04.2026 09:13:21] [REQUEST] INFO : Запрос: GET /penpot-projects.html от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:13:21] [REQUEST] DEBUG : Ответ: 304 NOT MODIFIED для /penpot-projects.html - app:log_response:98
+[04.04.2026 09:13:21] [REQUEST] INFO : Запрос: GET /.well-known/appspecific/com.chrome.devtools.json от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:13:21] [REQUEST] DEBUG : Ответ: 404 NOT FOUND для /.well-known/appspecific/com.chrome.devtools.json - app:log_response:98
+[04.04.2026 09:13:21] [REQUEST] INFO : Запрос: GET /list_projects от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:13:21] [REQUEST] DEBUG : Ответ: 200 OK для /list_projects - app:log_response:98
+[04.04.2026 09:13:21] [REQUEST] INFO : Запрос: GET /penpot-projects.html от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:13:21] [REQUEST] DEBUG : Ответ: 304 NOT MODIFIED для /penpot-projects.html - app:log_response:98
+[04.04.2026 09:13:21] [REQUEST] INFO : Запрос: GET /.well-known/appspecific/com.chrome.devtools.json от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:13:21] [REQUEST] DEBUG : Ответ: 404 NOT FOUND для /.well-known/appspecific/com.chrome.devtools.json - app:log_response:98
+[04.04.2026 09:13:21] [REQUEST] INFO : Запрос: GET /list_projects от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:13:21] [REQUEST] DEBUG : Ответ: 200 OK для /list_projects - app:log_response:98
+[04.04.2026 09:13:23] [REQUEST] INFO : Запрос: GET /penpot-projects.html от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:13:23] [REQUEST] DEBUG : Ответ: 304 NOT MODIFIED для /penpot-projects.html - app:log_response:98
+[04.04.2026 09:13:23] [REQUEST] INFO : Запрос: GET /.well-known/appspecific/com.chrome.devtools.json от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:13:23] [REQUEST] DEBUG : Ответ: 404 NOT FOUND для /.well-known/appspecific/com.chrome.devtools.json - app:log_response:98
+[04.04.2026 09:13:23] [REQUEST] INFO : Запрос: GET /list_projects от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:13:23] [REQUEST] DEBUG : Ответ: 200 OK для /list_projects - app:log_response:98
+[04.04.2026 09:13:23] [REQUEST] INFO : Запрос: GET /penpot-projects.html от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:13:23] [REQUEST] DEBUG : Ответ: 304 NOT MODIFIED для /penpot-projects.html - app:log_response:98
+[04.04.2026 09:13:23] [REQUEST] INFO : Запрос: GET /.well-known/appspecific/com.chrome.devtools.json от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:13:23] [REQUEST] DEBUG : Ответ: 404 NOT FOUND для /.well-known/appspecific/com.chrome.devtools.json - app:log_response:98
+[04.04.2026 09:13:23] [REQUEST] INFO : Запрос: GET /list_projects от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:13:23] [REQUEST] DEBUG : Ответ: 200 OK для /list_projects - app:log_response:98
+[04.04.2026 09:13:24] [REQUEST] INFO : Запрос: GET /penpot-projects.html от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:13:24] [REQUEST] DEBUG : Ответ: 304 NOT MODIFIED для /penpot-projects.html - app:log_response:98
+[04.04.2026 09:13:24] [REQUEST] INFO : Запрос: GET /.well-known/appspecific/com.chrome.devtools.json от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:13:24] [REQUEST] DEBUG : Ответ: 404 NOT FOUND для /.well-known/appspecific/com.chrome.devtools.json - app:log_response:98
+[04.04.2026 09:13:24] [REQUEST] INFO : Запрос: GET /list_projects от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:13:24] [REQUEST] DEBUG : Ответ: 200 OK для /list_projects - app:log_response:98
+[04.04.2026 09:13:24] [REQUEST] INFO : Запрос: GET /penpot-projects.html от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:13:24] [REQUEST] DEBUG : Ответ: 304 NOT MODIFIED для /penpot-projects.html - app:log_response:98
+[04.04.2026 09:13:24] [REQUEST] INFO : Запрос: GET /.well-known/appspecific/com.chrome.devtools.json от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:13:24] [REQUEST] DEBUG : Ответ: 404 NOT FOUND для /.well-known/appspecific/com.chrome.devtools.json - app:log_response:98
+[04.04.2026 09:13:25] [REQUEST] INFO : Запрос: GET /list_projects от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:13:25] [REQUEST] DEBUG : Ответ: 200 OK для /list_projects - app:log_response:98
+[04.04.2026 09:13:25] [REQUEST] INFO : Запрос: GET /penpot-projects.html от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:13:25] [REQUEST] DEBUG : Ответ: 304 NOT MODIFIED для /penpot-projects.html - app:log_response:98
+[04.04.2026 09:13:25] [REQUEST] INFO : Запрос: GET /.well-known/appspecific/com.chrome.devtools.json от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:13:25] [REQUEST] DEBUG : Ответ: 404 NOT FOUND для /.well-known/appspecific/com.chrome.devtools.json - app:log_response:98
+[04.04.2026 09:13:25] [REQUEST] INFO : Запрос: GET /list_projects от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:13:25] [REQUEST] DEBUG : Ответ: 200 OK для /list_projects - app:log_response:98
+[04.04.2026 09:13:25] [REQUEST] INFO : Запрос: GET /penpot-projects.html от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:13:25] [REQUEST] DEBUG : Ответ: 304 NOT MODIFIED для /penpot-projects.html - app:log_response:98
+[04.04.2026 09:13:25] [REQUEST] INFO : Запрос: GET /.well-known/appspecific/com.chrome.devtools.json от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:13:25] [REQUEST] DEBUG : Ответ: 404 NOT FOUND для /.well-known/appspecific/com.chrome.devtools.json - app:log_response:98
+[04.04.2026 09:13:25] [REQUEST] INFO : Запрос: GET /list_projects от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:13:25] [REQUEST] DEBUG : Ответ: 200 OK для /list_projects - app:log_response:98
+[04.04.2026 09:13:25] [REQUEST] INFO : Запрос: GET /penpot-projects.html от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:13:25] [REQUEST] DEBUG : Ответ: 304 NOT MODIFIED для /penpot-projects.html - app:log_response:98
+[04.04.2026 09:13:25] [REQUEST] INFO : Запрос: GET /.well-known/appspecific/com.chrome.devtools.json от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:13:25] [REQUEST] DEBUG : Ответ: 404 NOT FOUND для /.well-known/appspecific/com.chrome.devtools.json - app:log_response:98
+[04.04.2026 09:13:25] [REQUEST] INFO : Запрос: GET /list_projects от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:13:25] [REQUEST] DEBUG : Ответ: 200 OK для /list_projects - app:log_response:98
+[04.04.2026 09:13:26] [REQUEST] INFO : Запрос: GET /penpot-projects.html от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:13:26] [REQUEST] DEBUG : Ответ: 304 NOT MODIFIED для /penpot-projects.html - app:log_response:98
+[04.04.2026 09:13:26] [REQUEST] INFO : Запрос: GET /.well-known/appspecific/com.chrome.devtools.json от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:13:26] [REQUEST] DEBUG : Ответ: 404 NOT FOUND для /.well-known/appspecific/com.chrome.devtools.json - app:log_response:98
+[04.04.2026 09:13:26] [REQUEST] INFO : Запрос: GET /list_projects от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:13:26] [REQUEST] DEBUG : Ответ: 200 OK для /list_projects - app:log_response:98
+[04.04.2026 09:13:26] [REQUEST] INFO : Запрос: GET /penpot-projects.html от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:13:26] [REQUEST] DEBUG : Ответ: 304 NOT MODIFIED для /penpot-projects.html - app:log_response:98
+[04.04.2026 09:13:26] [REQUEST] INFO : Запрос: GET /.well-known/appspecific/com.chrome.devtools.json от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:13:26] [REQUEST] DEBUG : Ответ: 404 NOT FOUND для /.well-known/appspecific/com.chrome.devtools.json - app:log_response:98
+[04.04.2026 09:13:26] [REQUEST] INFO : Запрос: GET /list_projects от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:13:26] [REQUEST] DEBUG : Ответ: 200 OK для /list_projects - app:log_response:98
+[04.04.2026 09:13:26] [REQUEST] INFO : Запрос: GET /penpot-projects.html от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:13:26] [REQUEST] DEBUG : Ответ: 304 NOT MODIFIED для /penpot-projects.html - app:log_response:98
+[04.04.2026 09:13:26] [REQUEST] INFO : Запрос: GET /.well-known/appspecific/com.chrome.devtools.json от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:13:26] [REQUEST] DEBUG : Ответ: 404 NOT FOUND для /.well-known/appspecific/com.chrome.devtools.json - app:log_response:98
+[04.04.2026 09:13:26] [REQUEST] INFO : Запрос: GET /list_projects от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:13:26] [REQUEST] DEBUG : Ответ: 200 OK для /list_projects - app:log_response:98
+[04.04.2026 09:13:26] [REQUEST] INFO : Запрос: GET /penpot-projects.html от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:13:26] [REQUEST] DEBUG : Ответ: 304 NOT MODIFIED для /penpot-projects.html - app:log_response:98
+[04.04.2026 09:13:26] [REQUEST] INFO : Запрос: GET /.well-known/appspecific/com.chrome.devtools.json от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:13:26] [REQUEST] DEBUG : Ответ: 404 NOT FOUND для /.well-known/appspecific/com.chrome.devtools.json - app:log_response:98
+[04.04.2026 09:13:26] [REQUEST] INFO : Запрос: GET /list_projects от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:13:26] [REQUEST] DEBUG : Ответ: 200 OK для /list_projects - app:log_response:98
+[04.04.2026 09:13:26] [REQUEST] INFO : Запрос: GET /penpot-projects.html от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:13:26] [REQUEST] DEBUG : Ответ: 304 NOT MODIFIED для /penpot-projects.html - app:log_response:98
+[04.04.2026 09:13:26] [REQUEST] INFO : Запрос: GET /.well-known/appspecific/com.chrome.devtools.json от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:13:26] [REQUEST] DEBUG : Ответ: 404 NOT FOUND для /.well-known/appspecific/com.chrome.devtools.json - app:log_response:98
+[04.04.2026 09:13:26] [REQUEST] INFO : Запрос: GET /list_projects от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:13:27] [REQUEST] DEBUG : Ответ: 200 OK для /list_projects - app:log_response:98
+[04.04.2026 09:14:06] [REQUEST] INFO : Запрос: GET /.well-known/appspecific/com.chrome.devtools.json от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:14:06] [REQUEST] DEBUG : Ответ: 404 NOT FOUND для /.well-known/appspecific/com.chrome.devtools.json - app:log_response:98
+[04.04.2026 09:21:39] [REQUEST] INFO : Запрос: GET /penpot-projects.html от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:21:39] [REQUEST] DEBUG : Ответ: 200 OK для /penpot-projects.html - app:log_response:98
+[04.04.2026 09:21:39] [REQUEST] INFO : Запрос: GET /list_projects от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:21:39] [REQUEST] INFO : Запрос: GET /.well-known/appspecific/com.chrome.devtools.json от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:21:39] [REQUEST] DEBUG : Ответ: 404 NOT FOUND для /.well-known/appspecific/com.chrome.devtools.json - app:log_response:98
+[04.04.2026 09:21:39] [REQUEST] DEBUG : Ответ: 200 OK для /list_projects - app:log_response:98
+[04.04.2026 09:27:48] [REQUEST] INFO : Запрос: GET /penpot-projects.html от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:27:48] [REQUEST] DEBUG : Ответ: 200 OK для /penpot-projects.html - app:log_response:98
+[04.04.2026 09:27:48] [REQUEST] INFO : Запрос: GET /.well-known/appspecific/com.chrome.devtools.json от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:27:48] [REQUEST] INFO : Запрос: GET /list_projects от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:27:48] [REQUEST] DEBUG : Ответ: 404 NOT FOUND для /.well-known/appspecific/com.chrome.devtools.json - app:log_response:98
+[04.04.2026 09:27:48] [REQUEST] DEBUG : Ответ: 200 OK для /list_projects - app:log_response:98
+[04.04.2026 09:27:53] [REQUEST] INFO : Запрос: POST /save_project от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:27:53] [REQUEST] DEBUG : Ответ: 201 CREATED для /save_project - app:log_response:98
+[04.04.2026 09:27:53] [REQUEST] INFO : Запрос: POST /save_project от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:27:53] [REQUEST] DEBUG : Ответ: 201 CREATED для /save_project - app:log_response:98
+[04.04.2026 09:28:01] [REQUEST] INFO : Запрос: POST /save_project от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:28:01] [REQUEST] DEBUG : Ответ: 201 CREATED для /save_project - app:log_response:98
+[04.04.2026 09:28:01] [REQUEST] INFO : Запрос: POST /save_project от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:28:01] [REQUEST] DEBUG : Ответ: 201 CREATED для /save_project - app:log_response:98
+[04.04.2026 09:28:40] [REQUEST] INFO : Запрос: GET /.well-known/appspecific/com.chrome.devtools.json от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:28:40] [REQUEST] DEBUG : Ответ: 404 NOT FOUND для /.well-known/appspecific/com.chrome.devtools.json - app:log_response:98
+[04.04.2026 09:28:57] [REQUEST] INFO : Запрос: POST /save_project от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:28:57] [REQUEST] DEBUG : Ответ: 201 CREATED для /save_project - app:log_response:98
+[04.04.2026 09:28:57] [REQUEST] INFO : Запрос: POST /save_project от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:28:57] [REQUEST] DEBUG : Ответ: 201 CREATED для /save_project - app:log_response:98
+[04.04.2026 09:29:05] [REQUEST] INFO : Запрос: GET /index.html от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:29:05] [REQUEST] DEBUG : Ответ: 304 NOT MODIFIED для /index.html - app:log_response:98
+[04.04.2026 09:29:05] [REQUEST] INFO : Запрос: GET /static/css/browser@4 от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:29:05] [REQUEST] INFO : Запрос: GET /static/js/plotly-2.27.1.min.js от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:29:05] [REQUEST] DEBUG : Ответ: 304 NOT MODIFIED для /static/css/browser@4 - app:log_response:98
+[04.04.2026 09:29:05] [REQUEST] DEBUG : Ответ: 304 NOT MODIFIED для /static/js/plotly-2.27.1.min.js - app:log_response:98
+[04.04.2026 09:29:05] [REQUEST] INFO : Запрос: GET /styles/index.css от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:29:05] [REQUEST] DEBUG : Ответ: 304 NOT MODIFIED для /styles/index.css - app:log_response:98
+[04.04.2026 09:29:05] [REQUEST] INFO : Запрос: GET /styles/modals.css от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:29:05] [REQUEST] INFO : Запрос: GET /icons/free-icon-folder-8316612.png от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:29:05] [REQUEST] DEBUG : Ответ: 304 NOT MODIFIED для /styles/modals.css - app:log_response:98
+[04.04.2026 09:29:05] [REQUEST] INFO : Запрос: GET /icons/free-icon-data-storage-8322520.png от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:29:05] [REQUEST] DEBUG : Ответ: 404 NOT FOUND для /icons/free-icon-folder-8316612.png - app:log_response:98
+[04.04.2026 09:29:05] [REQUEST] DEBUG : Ответ: 404 NOT FOUND для /icons/free-icon-data-storage-8322520.png - app:log_response:98
+[04.04.2026 09:29:05] [REQUEST] INFO : Запрос: GET /.well-known/appspecific/com.chrome.devtools.json от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:29:05] [REQUEST] DEBUG : Ответ: 404 NOT FOUND для /.well-known/appspecific/com.chrome.devtools.json - app:log_response:98
+[04.04.2026 09:29:05] [REQUEST] INFO : Запрос: GET /icons/free-icon-undo.png от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:29:05] [REQUEST] DEBUG : Ответ: 404 NOT FOUND для /icons/free-icon-undo.png - app:log_response:98
+[04.04.2026 09:29:05] [REQUEST] INFO : Запрос: GET /icons/free-icon-redo.png от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:29:05] [REQUEST] DEBUG : Ответ: 404 NOT FOUND для /icons/free-icon-redo.png - app:log_response:98
+[04.04.2026 09:29:05] [REQUEST] INFO : Запрос: GET /icons/free-icon-history.png от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:29:05] [REQUEST] DEBUG : Ответ: 404 NOT FOUND для /icons/free-icon-history.png - app:log_response:98
+[04.04.2026 09:29:05] [REQUEST] INFO : Запрос: GET /src/globals/globals.js от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:29:05] [REQUEST] INFO : Запрос: GET /sm/7341ede9bd212679a9112e4ec665dc9ef909eb1fd663069797e072e9077e0844.map от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:29:05] [REQUEST] DEBUG : Ответ: 304 NOT MODIFIED для /src/globals/globals.js - app:log_response:98
+[04.04.2026 09:29:05] [REQUEST] DEBUG : Ответ: 404 NOT FOUND для /sm/7341ede9bd212679a9112e4ec665dc9ef909eb1fd663069797e072e9077e0844.map - app:log_response:98
+[04.04.2026 09:29:05] [REQUEST] INFO : Запрос: GET /src/tools/tools.js от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:29:05] [REQUEST] DEBUG : Ответ: 304 NOT MODIFIED для /src/tools/tools.js - app:log_response:98
+[04.04.2026 09:29:05] [REQUEST] INFO : Запрос: GET /src/fileManager/fileManager.js от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:29:05] [REQUEST] DEBUG : Ответ: 304 NOT MODIFIED для /src/fileManager/fileManager.js - app:log_response:98
+[04.04.2026 09:29:05] [REQUEST] INFO : Запрос: GET /src/history/history.js от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:29:05] [REQUEST] DEBUG : Ответ: 304 NOT MODIFIED для /src/history/history.js - app:log_response:98
+[04.04.2026 09:29:05] [REQUEST] INFO : Запрос: GET /src/imageOps/imageOps.js от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:29:05] [REQUEST] DEBUG : Ответ: 304 NOT MODIFIED для /src/imageOps/imageOps.js - app:log_response:98
+[04.04.2026 09:29:05] [REQUEST] INFO : Запрос: GET /src/recentFiles/recentFiles.js от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:29:05] [REQUEST] DEBUG : Ответ: 304 NOT MODIFIED для /src/recentFiles/recentFiles.js - app:log_response:98
+[04.04.2026 09:29:05] [REQUEST] INFO : Запрос: GET /src/server/server.js от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:29:05] [REQUEST] DEBUG : Ответ: 304 NOT MODIFIED для /src/server/server.js - app:log_response:98
+[04.04.2026 09:29:05] [REQUEST] INFO : Запрос: GET /src/ui/ui.js от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:29:05] [REQUEST] DEBUG : Ответ: 304 NOT MODIFIED для /src/ui/ui.js - app:log_response:98
+[04.04.2026 09:29:05] [REQUEST] INFO : Запрос: GET /src/events/events.js от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:29:05] [REQUEST] DEBUG : Ответ: 304 NOT MODIFIED для /src/events/events.js - app:log_response:98
+[04.04.2026 09:29:05] [REQUEST] INFO : Запрос: GET /src/projectManager/projectManager.js от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:29:05] [REQUEST] INFO : Запрос: GET /src/main/main.js от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:29:05] [REQUEST] DEBUG : Ответ: 304 NOT MODIFIED для /src/projectManager/projectManager.js - app:log_response:98
+[04.04.2026 09:29:05] [REQUEST] DEBUG : Ответ: 304 NOT MODIFIED для /src/main/main.js - app:log_response:98
+[04.04.2026 09:29:05] [REQUEST] INFO : Запрос: GET /src/drawing/drawing.js от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:29:05] [REQUEST] DEBUG : Ответ: 304 NOT MODIFIED для /src/drawing/drawing.js - app:log_response:98
+[04.04.2026 09:29:05] [REQUEST] INFO : Запрос: GET /src/tabs/tabs.js от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:29:05] [REQUEST] DEBUG : Ответ: 304 NOT MODIFIED для /src/tabs/tabs.js - app:log_response:98
+[04.04.2026 09:29:05] [REQUEST] INFO : Запрос: GET /src/modals/models.js от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:29:05] [REQUEST] DEBUG : Ответ: 404 NOT FOUND для /src/modals/models.js - app:log_response:98
+[04.04.2026 09:29:06] [REQUEST] INFO : Запрос: GET /images/notimages.png от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:29:06] [REQUEST] DEBUG : Ответ: 404 NOT FOUND для /images/notimages.png - app:log_response:98
+[04.04.2026 09:29:06] [REQUEST] INFO : Запрос: GET /icons/free-icon-rotate1.png от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:29:06] [REQUEST] DEBUG : Ответ: 404 NOT FOUND для /icons/free-icon-rotate1.png - app:log_response:98
+[04.04.2026 09:29:06] [REQUEST] INFO : Запрос: GET /icons/free-icon-rotate.png от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:29:06] [REQUEST] DEBUG : Ответ: 404 NOT FOUND для /icons/free-icon-rotate.png - app:log_response:98
+[04.04.2026 09:29:06] [REQUEST] INFO : Запрос: GET /icons/free-icon-refresh.png от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:29:06] [REQUEST] DEBUG : Ответ: 404 NOT FOUND для /icons/free-icon-refresh.png - app:log_response:98
+[04.04.2026 09:29:06] [REQUEST] INFO : Запрос: GET /icons/free-icon-fold-horizontal.png от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:29:06] [REQUEST] DEBUG : Ответ: 404 NOT FOUND для /icons/free-icon-fold-horizontal.png - app:log_response:98
+[04.04.2026 09:29:06] [REQUEST] INFO : Запрос: GET /icons/free-icon-fold-vertical.png от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:29:06] [REQUEST] INFO : Запрос: GET /images/SobelEffectPluginIcon.png от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:29:06] [REQUEST] DEBUG : Ответ: 404 NOT FOUND для /icons/free-icon-fold-vertical.png - app:log_response:98
+[04.04.2026 09:29:06] [REQUEST] DEBUG : Ответ: 404 NOT FOUND для /images/SobelEffectPluginIcon.png - app:log_response:98
+[04.04.2026 09:29:06] [REQUEST] INFO : Запрос: GET /images/EffectPluginIcon.png от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:29:06] [REQUEST] DEBUG : Ответ: 404 NOT FOUND для /images/EffectPluginIcon.png - app:log_response:98
+[04.04.2026 09:29:06] [REQUEST] INFO : Запрос: GET /images/ApproximationEffectPluginIcon.png от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:29:06] [REQUEST] INFO : Запрос: GET /images/PrelimProcess.png от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:29:06] [REQUEST] DEBUG : Ответ: 404 NOT FOUND для /images/ApproximationEffectPluginIcon.png - app:log_response:98
+[04.04.2026 09:29:06] [REQUEST] DEBUG : Ответ: 404 NOT FOUND для /images/PrelimProcess.png - app:log_response:98
+[04.04.2026 09:29:06] [REQUEST] INFO : Запрос: GET /images/MedianEffectPluginIcon.png от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:29:06] [REQUEST] DEBUG : Ответ: 404 NOT FOUND для /images/MedianEffectPluginIcon.png - app:log_response:98
+[04.04.2026 09:29:06] [REQUEST] INFO : Запрос: GET /images/NormalizEffectPluginIcon.png от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:29:06] [REQUEST] DEBUG : Ответ: 404 NOT FOUND для /images/NormalizEffectPluginIcon.png - app:log_response:98
+[04.04.2026 09:29:06] [REQUEST] INFO : Запрос: GET /icons/free-icon-workflow.png от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:29:06] [REQUEST] DEBUG : Ответ: 404 NOT FOUND для /icons/free-icon-workflow.png - app:log_response:98
+[04.04.2026 09:29:06] [REQUEST] INFO : Запрос: GET /icons/free-icon-CurvesEffect.png от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:29:06] [REQUEST] DEBUG : Ответ: 404 NOT FOUND для /icons/free-icon-CurvesEffect.png - app:log_response:98
+[04.04.2026 09:29:06] [REQUEST] INFO : Запрос: GET /images/notimages.png от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:29:06] [REQUEST] DEBUG : Ответ: 404 NOT FOUND для /images/notimages.png - app:log_response:98
+[04.04.2026 09:29:06] [REQUEST] INFO : Запрос: GET /api/recent_files от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:29:06] [REQUEST] INFO : Запрос: GET /list_projects от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:29:06] [REQUEST] DEBUG : Ответ: 200 OK для /api/recent_files - app:log_response:98
+[04.04.2026 09:29:06] [REQUEST] DEBUG : Ответ: 200 OK для /list_projects - app:log_response:98
+[04.04.2026 09:29:06] [REQUEST] INFO : Запрос: GET /load_project/proj_1775270968460_2764 от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:29:06] [REQUEST] DEBUG : Ответ: 200 OK для /load_project/proj_1775270968460_2764 - app:log_response:98
+[04.04.2026 09:29:14] [REQUEST] INFO : Запрос: POST /api/recent_files от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:29:14] [REQUEST] DEBUG : Ответ: 200 OK для /api/recent_files - app:log_response:98
+[04.04.2026 09:43:12] [REQUEST] INFO : Запрос: GET /penpot-projects.html от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:43:12] [REQUEST] DEBUG : Ответ: 304 NOT MODIFIED для /penpot-projects.html - app:log_response:98
+[04.04.2026 09:43:12] [REQUEST] INFO : Запрос: GET /list_projects от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:43:12] [REQUEST] DEBUG : Ответ: 200 OK для /list_projects - app:log_response:98
+[04.04.2026 09:43:12] [REQUEST] INFO : Запрос: GET /.well-known/appspecific/com.chrome.devtools.json от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:43:12] [REQUEST] DEBUG : Ответ: 404 NOT FOUND для /.well-known/appspecific/com.chrome.devtools.json - app:log_response:98
+[04.04.2026 09:43:55] [REQUEST] INFO : Запрос: POST /save_project от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:43:55] [REQUEST] DEBUG : Ответ: 201 CREATED для /save_project - app:log_response:98
+[04.04.2026 09:43:55] [REQUEST] INFO : Запрос: POST /save_project от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:43:55] [REQUEST] DEBUG : Ответ: 201 CREATED для /save_project - app:log_response:98
+[04.04.2026 09:44:06] [REQUEST] INFO : Запрос: GET /index.html от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:44:06] [REQUEST] DEBUG : Ответ: 304 NOT MODIFIED для /index.html - app:log_response:98
+[04.04.2026 09:44:06] [REQUEST] INFO : Запрос: GET /static/css/browser@4 от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:44:06] [REQUEST] DEBUG : Ответ: 304 NOT MODIFIED для /static/css/browser@4 - app:log_response:98
+[04.04.2026 09:44:06] [REQUEST] INFO : Запрос: GET /static/js/plotly-2.27.1.min.js от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:44:06] [REQUEST] INFO : Запрос: GET /styles/index.css от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:44:06] [REQUEST] INFO : Запрос: GET /styles/modals.css от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:44:06] [REQUEST] DEBUG : Ответ: 304 NOT MODIFIED для /static/js/plotly-2.27.1.min.js - app:log_response:98
+[04.04.2026 09:44:06] [REQUEST] DEBUG : Ответ: 304 NOT MODIFIED для /styles/index.css - app:log_response:98
+[04.04.2026 09:44:06] [REQUEST] INFO : Запрос: GET /icons/free-icon-folder-8316612.png от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:44:06] [REQUEST] DEBUG : Ответ: 304 NOT MODIFIED для /styles/modals.css - app:log_response:98
+[04.04.2026 09:44:06] [REQUEST] DEBUG : Ответ: 404 NOT FOUND для /icons/free-icon-folder-8316612.png - app:log_response:98
+[04.04.2026 09:44:06] [REQUEST] INFO : Запрос: GET /icons/free-icon-data-storage-8322520.png от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:44:06] [REQUEST] DEBUG : Ответ: 404 NOT FOUND для /icons/free-icon-data-storage-8322520.png - app:log_response:98
+[04.04.2026 09:44:06] [REQUEST] INFO : Запрос: GET /icons/free-icon-undo.png от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:44:06] [REQUEST] DEBUG : Ответ: 404 NOT FOUND для /icons/free-icon-undo.png - app:log_response:98
+[04.04.2026 09:44:06] [REQUEST] INFO : Запрос: GET /icons/free-icon-redo.png от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:44:06] [REQUEST] DEBUG : Ответ: 404 NOT FOUND для /icons/free-icon-redo.png - app:log_response:98
+[04.04.2026 09:44:06] [REQUEST] INFO : Запрос: GET /icons/free-icon-history.png от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:44:06] [REQUEST] DEBUG : Ответ: 404 NOT FOUND для /icons/free-icon-history.png - app:log_response:98
+[04.04.2026 09:44:06] [REQUEST] INFO : Запрос: GET /src/globals/globals.js от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:44:06] [REQUEST] DEBUG : Ответ: 304 NOT MODIFIED для /src/globals/globals.js - app:log_response:98
+[04.04.2026 09:44:06] [REQUEST] INFO : Запрос: GET /src/tools/tools.js от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:44:06] [REQUEST] DEBUG : Ответ: 304 NOT MODIFIED для /src/tools/tools.js - app:log_response:98
+[04.04.2026 09:44:06] [REQUEST] INFO : Запрос: GET /src/fileManager/fileManager.js от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:44:06] [REQUEST] DEBUG : Ответ: 304 NOT MODIFIED для /src/fileManager/fileManager.js - app:log_response:98
+[04.04.2026 09:44:06] [REQUEST] INFO : Запрос: GET /src/history/history.js от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:44:06] [REQUEST] INFO : Запрос: GET /src/imageOps/imageOps.js от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:44:06] [REQUEST] DEBUG : Ответ: 304 NOT MODIFIED для /src/history/history.js - app:log_response:98
+[04.04.2026 09:44:06] [REQUEST] DEBUG : Ответ: 304 NOT MODIFIED для /src/imageOps/imageOps.js - app:log_response:98
+[04.04.2026 09:44:06] [REQUEST] INFO : Запрос: GET /src/recentFiles/recentFiles.js от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:44:06] [REQUEST] INFO : Запрос: GET /src/server/server.js от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:44:06] [REQUEST] DEBUG : Ответ: 304 NOT MODIFIED для /src/recentFiles/recentFiles.js - app:log_response:98
+[04.04.2026 09:44:06] [REQUEST] DEBUG : Ответ: 304 NOT MODIFIED для /src/server/server.js - app:log_response:98
+[04.04.2026 09:44:06] [REQUEST] INFO : Запрос: GET /src/ui/ui.js от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:44:06] [REQUEST] INFO : Запрос: GET /src/events/events.js от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:44:06] [REQUEST] DEBUG : Ответ: 304 NOT MODIFIED для /src/ui/ui.js - app:log_response:98
+[04.04.2026 09:44:06] [REQUEST] DEBUG : Ответ: 304 NOT MODIFIED для /src/events/events.js - app:log_response:98
+[04.04.2026 09:44:06] [REQUEST] INFO : Запрос: GET /src/projectManager/projectManager.js от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:44:06] [REQUEST] INFO : Запрос: GET /src/main/main.js от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:44:06] [REQUEST] DEBUG : Ответ: 304 NOT MODIFIED для /src/projectManager/projectManager.js - app:log_response:98
+[04.04.2026 09:44:06] [REQUEST] DEBUG : Ответ: 304 NOT MODIFIED для /src/main/main.js - app:log_response:98
+[04.04.2026 09:44:06] [REQUEST] INFO : Запрос: GET /src/drawing/drawing.js от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:44:06] [REQUEST] INFO : Запрос: GET /src/tabs/tabs.js от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:44:06] [REQUEST] DEBUG : Ответ: 304 NOT MODIFIED для /src/drawing/drawing.js - app:log_response:98
+[04.04.2026 09:44:06] [REQUEST] DEBUG : Ответ: 304 NOT MODIFIED для /src/tabs/tabs.js - app:log_response:98
+[04.04.2026 09:44:06] [REQUEST] INFO : Запрос: GET /src/modals/models.js от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:44:06] [REQUEST] DEBUG : Ответ: 404 NOT FOUND для /src/modals/models.js - app:log_response:98
+[04.04.2026 09:44:06] [REQUEST] INFO : Запрос: GET /images/notimages.png от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:44:06] [REQUEST] DEBUG : Ответ: 404 NOT FOUND для /images/notimages.png - app:log_response:98
+[04.04.2026 09:44:06] [REQUEST] INFO : Запрос: GET /icons/free-icon-rotate1.png от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:44:06] [REQUEST] DEBUG : Ответ: 404 NOT FOUND для /icons/free-icon-rotate1.png - app:log_response:98
+[04.04.2026 09:44:06] [REQUEST] INFO : Запрос: GET /icons/free-icon-rotate.png от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:44:06] [REQUEST] DEBUG : Ответ: 404 NOT FOUND для /icons/free-icon-rotate.png - app:log_response:98
+[04.04.2026 09:44:06] [REQUEST] INFO : Запрос: GET /icons/free-icon-refresh.png от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:44:06] [REQUEST] DEBUG : Ответ: 404 NOT FOUND для /icons/free-icon-refresh.png - app:log_response:98
+[04.04.2026 09:44:06] [REQUEST] INFO : Запрос: GET /icons/free-icon-fold-horizontal.png от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:44:06] [REQUEST] DEBUG : Ответ: 404 NOT FOUND для /icons/free-icon-fold-horizontal.png - app:log_response:98
+[04.04.2026 09:44:06] [REQUEST] INFO : Запрос: GET /icons/free-icon-fold-vertical.png от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:44:06] [REQUEST] INFO : Запрос: GET /images/SobelEffectPluginIcon.png от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:44:06] [REQUEST] DEBUG : Ответ: 404 NOT FOUND для /icons/free-icon-fold-vertical.png - app:log_response:98
+[04.04.2026 09:44:06] [REQUEST] DEBUG : Ответ: 404 NOT FOUND для /images/SobelEffectPluginIcon.png - app:log_response:98
+[04.04.2026 09:44:06] [REQUEST] INFO : Запрос: GET /images/EffectPluginIcon.png от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:44:06] [REQUEST] DEBUG : Ответ: 404 NOT FOUND для /images/EffectPluginIcon.png - app:log_response:98
+[04.04.2026 09:44:06] [REQUEST] INFO : Запрос: GET /images/ApproximationEffectPluginIcon.png от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:44:06] [REQUEST] INFO : Запрос: GET /images/PrelimProcess.png от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:44:06] [REQUEST] DEBUG : Ответ: 404 NOT FOUND для /images/ApproximationEffectPluginIcon.png - app:log_response:98
+[04.04.2026 09:44:06] [REQUEST] DEBUG : Ответ: 404 NOT FOUND для /images/PrelimProcess.png - app:log_response:98
+[04.04.2026 09:44:06] [REQUEST] INFO : Запрос: GET /images/MedianEffectPluginIcon.png от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:44:06] [REQUEST] DEBUG : Ответ: 404 NOT FOUND для /images/MedianEffectPluginIcon.png - app:log_response:98
+[04.04.2026 09:44:06] [REQUEST] INFO : Запрос: GET /icons/free-icon-workflow.png от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:44:06] [REQUEST] DEBUG : Ответ: 404 NOT FOUND для /icons/free-icon-workflow.png - app:log_response:98
+[04.04.2026 09:44:06] [REQUEST] INFO : Запрос: GET /images/NormalizEffectPluginIcon.png от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:44:06] [REQUEST] INFO : Запрос: GET /icons/free-icon-CurvesEffect.png от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:44:06] [REQUEST] DEBUG : Ответ: 404 NOT FOUND для /images/NormalizEffectPluginIcon.png - app:log_response:98
+[04.04.2026 09:44:06] [REQUEST] DEBUG : Ответ: 404 NOT FOUND для /icons/free-icon-CurvesEffect.png - app:log_response:98
+[04.04.2026 09:44:06] [REQUEST] INFO : Запрос: GET /images/notimages.png от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:44:06] [REQUEST] DEBUG : Ответ: 404 NOT FOUND для /images/notimages.png - app:log_response:98
+[04.04.2026 09:44:06] [REQUEST] INFO : Запрос: GET /api/recent_files от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:44:06] [REQUEST] INFO : Запрос: GET /list_projects от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:44:06] [REQUEST] DEBUG : Ответ: 200 OK для /api/recent_files - app:log_response:98
+[04.04.2026 09:44:06] [REQUEST] DEBUG : Ответ: 200 OK для /list_projects - app:log_response:98
+[04.04.2026 09:44:07] [REQUEST] INFO : Запрос: GET /load_project/proj_1775270968460_2764 от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:44:07] [REQUEST] DEBUG : Ответ: 200 OK для /load_project/proj_1775270968460_2764 - app:log_response:98
+[04.04.2026 09:44:08] [REQUEST] INFO : Запрос: GET /penpot-projects.html от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:44:08] [REQUEST] DEBUG : Ответ: 304 NOT MODIFIED для /penpot-projects.html - app:log_response:98
+[04.04.2026 09:44:08] [REQUEST] INFO : Запрос: GET /list_projects от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:44:08] [REQUEST] DEBUG : Ответ: 200 OK для /list_projects - app:log_response:98
+[04.04.2026 09:44:11] [REQUEST] INFO : Запрос: POST /save_project от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:44:11] [REQUEST] DEBUG : Ответ: 201 CREATED для /save_project - app:log_response:98
+[04.04.2026 09:44:11] [REQUEST] INFO : Запрос: POST /save_project от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:44:11] [REQUEST] DEBUG : Ответ: 201 CREATED для /save_project - app:log_response:98
+[04.04.2026 09:44:19] [REQUEST] INFO : Запрос: POST /save_project от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:44:19] [REQUEST] DEBUG : Ответ: 201 CREATED для /save_project - app:log_response:98
+[04.04.2026 09:44:21] [REQUEST] INFO : Запрос: GET /index.html от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:44:21] [REQUEST] DEBUG : Ответ: 304 NOT MODIFIED для /index.html - app:log_response:98
+[04.04.2026 09:44:21] [REQUEST] INFO : Запрос: GET /static/css/browser@4 от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:44:21] [REQUEST] DEBUG : Ответ: 304 NOT MODIFIED для /static/css/browser@4 - app:log_response:98
+[04.04.2026 09:44:21] [REQUEST] INFO : Запрос: GET /styles/index.css от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:44:21] [REQUEST] INFO : Запрос: GET /static/js/plotly-2.27.1.min.js от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:44:21] [REQUEST] INFO : Запрос: GET /icons/free-icon-data-storage-8322520.png от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:44:21] [REQUEST] DEBUG : Ответ: 304 NOT MODIFIED для /styles/index.css - app:log_response:98
+[04.04.2026 09:44:21] [REQUEST] INFO : Запрос: GET /icons/free-icon-folder-8316612.png от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:44:21] [REQUEST] DEBUG : Ответ: 304 NOT MODIFIED для /static/js/plotly-2.27.1.min.js - app:log_response:98
+[04.04.2026 09:44:21] [REQUEST] INFO : Запрос: GET /styles/modals.css от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:44:21] [REQUEST] DEBUG : Ответ: 404 NOT FOUND для /icons/free-icon-data-storage-8322520.png - app:log_response:98
+[04.04.2026 09:44:21] [REQUEST] DEBUG : Ответ: 404 NOT FOUND для /icons/free-icon-folder-8316612.png - app:log_response:98
+[04.04.2026 09:44:21] [REQUEST] DEBUG : Ответ: 304 NOT MODIFIED для /styles/modals.css - app:log_response:98
+[04.04.2026 09:44:21] [REQUEST] INFO : Запрос: GET /icons/free-icon-undo.png от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:44:21] [REQUEST] INFO : Запрос: GET /icons/free-icon-redo.png от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:44:21] [REQUEST] DEBUG : Ответ: 404 NOT FOUND для /icons/free-icon-undo.png - app:log_response:98
+[04.04.2026 09:44:21] [REQUEST] DEBUG : Ответ: 404 NOT FOUND для /icons/free-icon-redo.png - app:log_response:98
+[04.04.2026 09:44:21] [REQUEST] INFO : Запрос: GET /icons/free-icon-history.png от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:44:21] [REQUEST] DEBUG : Ответ: 404 NOT FOUND для /icons/free-icon-history.png - app:log_response:98
+[04.04.2026 09:44:21] [REQUEST] INFO : Запрос: GET /src/globals/globals.js от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:44:21] [REQUEST] DEBUG : Ответ: 304 NOT MODIFIED для /src/globals/globals.js - app:log_response:98
+[04.04.2026 09:44:21] [REQUEST] INFO : Запрос: GET /src/tools/tools.js от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:44:21] [REQUEST] DEBUG : Ответ: 304 NOT MODIFIED для /src/tools/tools.js - app:log_response:98
+[04.04.2026 09:44:21] [REQUEST] INFO : Запрос: GET /src/fileManager/fileManager.js от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:44:21] [REQUEST] INFO : Запрос: GET /src/history/history.js от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:44:21] [REQUEST] DEBUG : Ответ: 304 NOT MODIFIED для /src/history/history.js - app:log_response:98
+[04.04.2026 09:44:21] [REQUEST] INFO : Запрос: GET /src/imageOps/imageOps.js от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:44:21] [REQUEST] DEBUG : Ответ: 304 NOT MODIFIED для /src/fileManager/fileManager.js - app:log_response:98
+[04.04.2026 09:44:21] [REQUEST] INFO : Запрос: GET /src/recentFiles/recentFiles.js от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:44:21] [REQUEST] DEBUG : Ответ: 304 NOT MODIFIED для /src/imageOps/imageOps.js - app:log_response:98
+[04.04.2026 09:44:21] [REQUEST] INFO : Запрос: GET /src/server/server.js от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:44:21] [REQUEST] DEBUG : Ответ: 304 NOT MODIFIED для /src/recentFiles/recentFiles.js - app:log_response:98
+[04.04.2026 09:44:21] [REQUEST] DEBUG : Ответ: 304 NOT MODIFIED для /src/server/server.js - app:log_response:98
+[04.04.2026 09:44:21] [REQUEST] INFO : Запрос: GET /src/ui/ui.js от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:44:21] [REQUEST] INFO : Запрос: GET /src/events/events.js от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:44:21] [REQUEST] DEBUG : Ответ: 304 NOT MODIFIED для /src/ui/ui.js - app:log_response:98
+[04.04.2026 09:44:21] [REQUEST] DEBUG : Ответ: 304 NOT MODIFIED для /src/events/events.js - app:log_response:98
+[04.04.2026 09:44:21] [REQUEST] INFO : Запрос: GET /src/projectManager/projectManager.js от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:44:21] [REQUEST] INFO : Запрос: GET /src/main/main.js от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:44:21] [REQUEST] INFO : Запрос: GET /src/drawing/drawing.js от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:44:21] [REQUEST] DEBUG : Ответ: 304 NOT MODIFIED для /src/projectManager/projectManager.js - app:log_response:98
+[04.04.2026 09:44:21] [REQUEST] INFO : Запрос: GET /src/tabs/tabs.js от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:44:21] [REQUEST] DEBUG : Ответ: 304 NOT MODIFIED для /src/main/main.js - app:log_response:98
+[04.04.2026 09:44:21] [REQUEST] DEBUG : Ответ: 304 NOT MODIFIED для /src/drawing/drawing.js - app:log_response:98
+[04.04.2026 09:44:21] [REQUEST] INFO : Запрос: GET /icons/free-icon-CurvesEffect.png от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:44:21] [REQUEST] DEBUG : Ответ: 304 NOT MODIFIED для /src/tabs/tabs.js - app:log_response:98
+[04.04.2026 09:44:21] [REQUEST] DEBUG : Ответ: 404 NOT FOUND для /icons/free-icon-CurvesEffect.png - app:log_response:98
+[04.04.2026 09:44:21] [REQUEST] INFO : Запрос: GET /src/modals/models.js от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:44:21] [REQUEST] DEBUG : Ответ: 404 NOT FOUND для /src/modals/models.js - app:log_response:98
+[04.04.2026 09:44:21] [REQUEST] INFO : Запрос: GET /images/notimages.png от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:44:21] [REQUEST] DEBUG : Ответ: 404 NOT FOUND для /images/notimages.png - app:log_response:98
+[04.04.2026 09:44:21] [REQUEST] INFO : Запрос: GET /icons/free-icon-rotate1.png от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:44:21] [REQUEST] DEBUG : Ответ: 404 NOT FOUND для /icons/free-icon-rotate1.png - app:log_response:98
+[04.04.2026 09:44:21] [REQUEST] INFO : Запрос: GET /icons/free-icon-rotate.png от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:44:21] [REQUEST] DEBUG : Ответ: 404 NOT FOUND для /icons/free-icon-rotate.png - app:log_response:98
+[04.04.2026 09:44:21] [REQUEST] INFO : Запрос: GET /icons/free-icon-refresh.png от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:44:21] [REQUEST] INFO : Запрос: GET /icons/free-icon-fold-horizontal.png от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:44:21] [REQUEST] DEBUG : Ответ: 404 NOT FOUND для /icons/free-icon-refresh.png - app:log_response:98
+[04.04.2026 09:44:21] [REQUEST] DEBUG : Ответ: 404 NOT FOUND для /icons/free-icon-fold-horizontal.png - app:log_response:98
+[04.04.2026 09:44:21] [REQUEST] INFO : Запрос: GET /icons/free-icon-fold-vertical.png от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:44:21] [REQUEST] DEBUG : Ответ: 404 NOT FOUND для /icons/free-icon-fold-vertical.png - app:log_response:98
+[04.04.2026 09:44:21] [REQUEST] INFO : Запрос: GET /images/SobelEffectPluginIcon.png от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:44:21] [REQUEST] INFO : Запрос: GET /api/recent_files от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:44:21] [REQUEST] DEBUG : Ответ: 404 NOT FOUND для /images/SobelEffectPluginIcon.png - app:log_response:98
+[04.04.2026 09:44:21] [REQUEST] INFO : Запрос: GET /list_projects от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:44:21] [REQUEST] DEBUG : Ответ: 200 OK для /api/recent_files - app:log_response:98
+[04.04.2026 09:44:21] [REQUEST] INFO : Запрос: GET /images/EffectPluginIcon.png от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:44:21] [REQUEST] INFO : Запрос: GET /images/ApproximationEffectPluginIcon.png от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:44:21] [REQUEST] DEBUG : Ответ: 404 NOT FOUND для /images/EffectPluginIcon.png - app:log_response:98
+[04.04.2026 09:44:21] [REQUEST] DEBUG : Ответ: 404 NOT FOUND для /images/ApproximationEffectPluginIcon.png - app:log_response:98
+[04.04.2026 09:44:21] [REQUEST] INFO : Запрос: GET /images/PrelimProcess.png от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:44:21] [REQUEST] INFO : Запрос: GET /images/MedianEffectPluginIcon.png от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:44:21] [REQUEST] DEBUG : Ответ: 404 NOT FOUND для /images/PrelimProcess.png - app:log_response:98
+[04.04.2026 09:44:21] [REQUEST] DEBUG : Ответ: 404 NOT FOUND для /images/MedianEffectPluginIcon.png - app:log_response:98
+[04.04.2026 09:44:21] [REQUEST] INFO : Запрос: GET /images/NormalizEffectPluginIcon.png от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:44:21] [REQUEST] INFO : Запрос: GET /icons/free-icon-workflow.png от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:44:21] [REQUEST] DEBUG : Ответ: 404 NOT FOUND для /images/NormalizEffectPluginIcon.png - app:log_response:98
+[04.04.2026 09:44:21] [REQUEST] DEBUG : Ответ: 200 OK для /list_projects - app:log_response:98
+[04.04.2026 09:44:21] [REQUEST] DEBUG : Ответ: 404 NOT FOUND для /icons/free-icon-workflow.png - app:log_response:98
+[04.04.2026 09:44:21] [REQUEST] INFO : Запрос: GET /load_project/proj_1775270968460_2764 от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:44:21] [REQUEST] DEBUG : Ответ: 200 OK для /load_project/proj_1775270968460_2764 - app:log_response:98
+[04.04.2026 09:44:24] [REQUEST] INFO : Запрос: GET /penpot-projects.html от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:44:24] [REQUEST] DEBUG : Ответ: 304 NOT MODIFIED для /penpot-projects.html - app:log_response:98
+[04.04.2026 09:44:24] [REQUEST] INFO : Запрос: GET /list_projects от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:44:24] [REQUEST] DEBUG : Ответ: 200 OK для /list_projects - app:log_response:98
+[04.04.2026 09:44:27] [REQUEST] INFO : Запрос: GET /index.html от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:44:27] [REQUEST] DEBUG : Ответ: 304 NOT MODIFIED для /index.html - app:log_response:98
+[04.04.2026 09:44:27] [REQUEST] INFO : Запрос: GET /static/css/browser@4 от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:44:27] [REQUEST] INFO : Запрос: GET /static/js/plotly-2.27.1.min.js от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:44:27] [REQUEST] DEBUG : Ответ: 304 NOT MODIFIED для /static/css/browser@4 - app:log_response:98
+[04.04.2026 09:44:27] [REQUEST] INFO : Запрос: GET /styles/index.css от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:44:27] [REQUEST] DEBUG : Ответ: 304 NOT MODIFIED для /static/js/plotly-2.27.1.min.js - app:log_response:98
+[04.04.2026 09:44:27] [REQUEST] INFO : Запрос: GET /styles/modals.css от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:44:27] [REQUEST] DEBUG : Ответ: 304 NOT MODIFIED для /styles/index.css - app:log_response:98
+[04.04.2026 09:44:27] [REQUEST] INFO : Запрос: GET /icons/free-icon-folder-8316612.png от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:44:27] [REQUEST] DEBUG : Ответ: 404 NOT FOUND для /icons/free-icon-folder-8316612.png - app:log_response:98
+[04.04.2026 09:44:27] [REQUEST] DEBUG : Ответ: 304 NOT MODIFIED для /styles/modals.css - app:log_response:98
+[04.04.2026 09:44:27] [REQUEST] INFO : Запрос: GET /icons/free-icon-data-storage-8322520.png от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:44:27] [REQUEST] DEBUG : Ответ: 404 NOT FOUND для /icons/free-icon-data-storage-8322520.png - app:log_response:98
+[04.04.2026 09:44:27] [REQUEST] INFO : Запрос: GET /icons/free-icon-undo.png от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:44:27] [REQUEST] DEBUG : Ответ: 404 NOT FOUND для /icons/free-icon-undo.png - app:log_response:98
+[04.04.2026 09:44:27] [REQUEST] INFO : Запрос: GET /icons/free-icon-redo.png от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:44:27] [REQUEST] INFO : Запрос: GET /icons/free-icon-history.png от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:44:27] [REQUEST] DEBUG : Ответ: 404 NOT FOUND для /icons/free-icon-redo.png - app:log_response:98
+[04.04.2026 09:44:27] [REQUEST] INFO : Запрос: GET /src/globals/globals.js от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:44:27] [REQUEST] DEBUG : Ответ: 404 NOT FOUND для /icons/free-icon-history.png - app:log_response:98
+[04.04.2026 09:44:27] [REQUEST] INFO : Запрос: GET /src/tools/tools.js от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:44:27] [REQUEST] DEBUG : Ответ: 304 NOT MODIFIED для /src/globals/globals.js - app:log_response:98
+[04.04.2026 09:44:27] [REQUEST] INFO : Запрос: GET /src/fileManager/fileManager.js от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:44:27] [REQUEST] DEBUG : Ответ: 304 NOT MODIFIED для /src/tools/tools.js - app:log_response:98
+[04.04.2026 09:44:27] [REQUEST] INFO : Запрос: GET /src/history/history.js от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:44:27] [REQUEST] INFO : Запрос: GET /src/imageOps/imageOps.js от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:44:27] [REQUEST] INFO : Запрос: GET /src/recentFiles/recentFiles.js от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:44:27] [REQUEST] DEBUG : Ответ: 304 NOT MODIFIED для /src/fileManager/fileManager.js - app:log_response:98
+[04.04.2026 09:44:27] [REQUEST] DEBUG : Ответ: 304 NOT MODIFIED для /src/imageOps/imageOps.js - app:log_response:98
+[04.04.2026 09:44:27] [REQUEST] INFO : Запрос: GET /src/server/server.js от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:44:27] [REQUEST] DEBUG : Ответ: 304 NOT MODIFIED для /src/history/history.js - app:log_response:98
+[04.04.2026 09:44:27] [REQUEST] DEBUG : Ответ: 304 NOT MODIFIED для /src/recentFiles/recentFiles.js - app:log_response:98
+[04.04.2026 09:44:27] [REQUEST] INFO : Запрос: GET /src/ui/ui.js от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:44:27] [REQUEST] DEBUG : Ответ: 304 NOT MODIFIED для /src/server/server.js - app:log_response:98
+[04.04.2026 09:44:27] [REQUEST] DEBUG : Ответ: 304 NOT MODIFIED для /src/ui/ui.js - app:log_response:98
+[04.04.2026 09:44:27] [REQUEST] INFO : Запрос: GET /icons/free-icon-CurvesEffect.png от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:44:27] [REQUEST] DEBUG : Ответ: 404 NOT FOUND для /icons/free-icon-CurvesEffect.png - app:log_response:98
+[04.04.2026 09:44:27] [REQUEST] INFO : Запрос: GET /src/events/events.js от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:44:27] [REQUEST] INFO : Запрос: GET /src/projectManager/projectManager.js от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:44:27] [REQUEST] DEBUG : Ответ: 304 NOT MODIFIED для /src/events/events.js - app:log_response:98
+[04.04.2026 09:44:27] [REQUEST] INFO : Запрос: GET /src/main/main.js от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:44:27] [REQUEST] DEBUG : Ответ: 304 NOT MODIFIED для /src/projectManager/projectManager.js - app:log_response:98
+[04.04.2026 09:44:27] [REQUEST] INFO : Запрос: GET /src/drawing/drawing.js от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:44:27] [REQUEST] INFO : Запрос: GET /src/tabs/tabs.js от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:44:27] [REQUEST] DEBUG : Ответ: 304 NOT MODIFIED для /src/main/main.js - app:log_response:98
+[04.04.2026 09:44:27] [REQUEST] DEBUG : Ответ: 304 NOT MODIFIED для /src/drawing/drawing.js - app:log_response:98
+[04.04.2026 09:44:27] [REQUEST] INFO : Запрос: GET /src/modals/models.js от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:44:27] [REQUEST] DEBUG : Ответ: 304 NOT MODIFIED для /src/tabs/tabs.js - app:log_response:98
+[04.04.2026 09:44:27] [REQUEST] INFO : Запрос: GET /images/notimages.png от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:44:27] [REQUEST] DEBUG : Ответ: 404 NOT FOUND для /src/modals/models.js - app:log_response:98
+[04.04.2026 09:44:27] [REQUEST] INFO : Запрос: GET /icons/free-icon-rotate1.png от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:44:27] [REQUEST] DEBUG : Ответ: 404 NOT FOUND для /images/notimages.png - app:log_response:98
+[04.04.2026 09:44:27] [REQUEST] INFO : Запрос: GET /icons/free-icon-rotate.png от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:44:27] [REQUEST] DEBUG : Ответ: 404 NOT FOUND для /icons/free-icon-rotate.png - app:log_response:98
+[04.04.2026 09:44:27] [REQUEST] INFO : Запрос: GET /icons/free-icon-refresh.png от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:44:27] [REQUEST] DEBUG : Ответ: 404 NOT FOUND для /icons/free-icon-rotate1.png - app:log_response:98
+[04.04.2026 09:44:27] [REQUEST] INFO : Запрос: GET /icons/free-icon-fold-horizontal.png от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:44:27] [REQUEST] DEBUG : Ответ: 404 NOT FOUND для /icons/free-icon-refresh.png - app:log_response:98
+[04.04.2026 09:44:27] [REQUEST] INFO : Запрос: GET /icons/free-icon-fold-vertical.png от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:44:27] [REQUEST] DEBUG : Ответ: 404 NOT FOUND для /icons/free-icon-fold-horizontal.png - app:log_response:98
+[04.04.2026 09:44:27] [REQUEST] DEBUG : Ответ: 404 NOT FOUND для /icons/free-icon-fold-vertical.png - app:log_response:98
+[04.04.2026 09:44:27] [REQUEST] INFO : Запрос: GET /api/recent_files от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:44:27] [REQUEST] INFO : Запрос: GET /list_projects от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:44:27] [REQUEST] INFO : Запрос: GET /images/SobelEffectPluginIcon.png от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:44:27] [REQUEST] DEBUG : Ответ: 200 OK для /api/recent_files - app:log_response:98
+[04.04.2026 09:44:27] [REQUEST] INFO : Запрос: GET /images/EffectPluginIcon.png от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:44:27] [REQUEST] DEBUG : Ответ: 404 NOT FOUND для /images/SobelEffectPluginIcon.png - app:log_response:98
+[04.04.2026 09:44:27] [REQUEST] DEBUG : Ответ: 404 NOT FOUND для /images/EffectPluginIcon.png - app:log_response:98
+[04.04.2026 09:44:27] [REQUEST] INFO : Запрос: GET /images/ApproximationEffectPluginIcon.png от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:44:27] [REQUEST] DEBUG : Ответ: 404 NOT FOUND для /images/ApproximationEffectPluginIcon.png - app:log_response:98
+[04.04.2026 09:44:27] [REQUEST] INFO : Запрос: GET /images/PrelimProcess.png от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:44:27] [REQUEST] DEBUG : Ответ: 404 NOT FOUND для /images/PrelimProcess.png - app:log_response:98
+[04.04.2026 09:44:27] [REQUEST] INFO : Запрос: GET /images/MedianEffectPluginIcon.png от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:44:27] [REQUEST] DEBUG : Ответ: 404 NOT FOUND для /images/MedianEffectPluginIcon.png - app:log_response:98
+[04.04.2026 09:44:27] [REQUEST] INFO : Запрос: GET /images/NormalizEffectPluginIcon.png от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:44:27] [REQUEST] DEBUG : Ответ: 200 OK для /list_projects - app:log_response:98
+[04.04.2026 09:44:27] [REQUEST] DEBUG : Ответ: 404 NOT FOUND для /images/NormalizEffectPluginIcon.png - app:log_response:98
+[04.04.2026 09:44:27] [REQUEST] INFO : Запрос: GET /icons/free-icon-workflow.png от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:44:27] [REQUEST] DEBUG : Ответ: 404 NOT FOUND для /icons/free-icon-workflow.png - app:log_response:98
+[04.04.2026 09:44:27] [REQUEST] INFO : Запрос: GET /load_project/proj_1775270968460_2764 от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:44:27] [REQUEST] DEBUG : Ответ: 200 OK для /load_project/proj_1775270968460_2764 - app:log_response:98
+[04.04.2026 09:44:31] [REQUEST] INFO : Запрос: GET /penpot-projects.html от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:44:31] [REQUEST] DEBUG : Ответ: 304 NOT MODIFIED для /penpot-projects.html - app:log_response:98
+[04.04.2026 09:44:31] [REQUEST] INFO : Запрос: GET /list_projects от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:44:31] [REQUEST] DEBUG : Ответ: 200 OK для /list_projects - app:log_response:98
+[04.04.2026 09:44:49] [REQUEST] INFO : Запрос: GET /index.html от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:44:49] [REQUEST] DEBUG : Ответ: 304 NOT MODIFIED для /index.html - app:log_response:98
+[04.04.2026 09:44:49] [REQUEST] INFO : Запрос: GET /static/css/browser@4 от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:44:49] [REQUEST] INFO : Запрос: GET /static/js/plotly-2.27.1.min.js от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:44:49] [REQUEST] DEBUG : Ответ: 304 NOT MODIFIED для /static/css/browser@4 - app:log_response:98
+[04.04.2026 09:44:49] [REQUEST] INFO : Запрос: GET /styles/index.css от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:44:49] [REQUEST] DEBUG : Ответ: 304 NOT MODIFIED для /static/js/plotly-2.27.1.min.js - app:log_response:98
+[04.04.2026 09:44:49] [REQUEST] INFO : Запрос: GET /styles/modals.css от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:44:49] [REQUEST] DEBUG : Ответ: 304 NOT MODIFIED для /styles/index.css - app:log_response:98
+[04.04.2026 09:44:49] [REQUEST] INFO : Запрос: GET /icons/free-icon-folder-8316612.png от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:44:49] [REQUEST] DEBUG : Ответ: 304 NOT MODIFIED для /styles/modals.css - app:log_response:98
+[04.04.2026 09:44:49] [REQUEST] INFO : Запрос: GET /icons/free-icon-data-storage-8322520.png от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:44:49] [REQUEST] DEBUG : Ответ: 404 NOT FOUND для /icons/free-icon-data-storage-8322520.png - app:log_response:98
+[04.04.2026 09:44:49] [REQUEST] DEBUG : Ответ: 404 NOT FOUND для /icons/free-icon-folder-8316612.png - app:log_response:98
+[04.04.2026 09:44:49] [REQUEST] INFO : Запрос: GET /icons/free-icon-undo.png от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:44:49] [REQUEST] INFO : Запрос: GET /icons/free-icon-redo.png от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:44:49] [REQUEST] DEBUG : Ответ: 404 NOT FOUND для /icons/free-icon-undo.png - app:log_response:98
+[04.04.2026 09:44:49] [REQUEST] INFO : Запрос: GET /icons/free-icon-history.png от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:44:49] [REQUEST] DEBUG : Ответ: 404 NOT FOUND для /icons/free-icon-redo.png - app:log_response:98
+[04.04.2026 09:44:49] [REQUEST] INFO : Запрос: GET /src/tools/tools.js от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:44:49] [REQUEST] DEBUG : Ответ: 404 NOT FOUND для /icons/free-icon-history.png - app:log_response:98
+[04.04.2026 09:44:49] [REQUEST] INFO : Запрос: GET /src/globals/globals.js от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:44:49] [REQUEST] DEBUG : Ответ: 304 NOT MODIFIED для /src/tools/tools.js - app:log_response:98
+[04.04.2026 09:44:49] [REQUEST] DEBUG : Ответ: 304 NOT MODIFIED для /src/globals/globals.js - app:log_response:98
+[04.04.2026 09:44:49] [REQUEST] INFO : Запрос: GET /src/fileManager/fileManager.js от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:44:49] [REQUEST] DEBUG : Ответ: 304 NOT MODIFIED для /src/fileManager/fileManager.js - app:log_response:98
+[04.04.2026 09:44:49] [REQUEST] INFO : Запрос: GET /src/history/history.js от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:44:49] [REQUEST] INFO : Запрос: GET /src/imageOps/imageOps.js от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:44:49] [REQUEST] DEBUG : Ответ: 304 NOT MODIFIED для /src/history/history.js - app:log_response:98
+[04.04.2026 09:44:49] [REQUEST] DEBUG : Ответ: 304 NOT MODIFIED для /src/imageOps/imageOps.js - app:log_response:98
+[04.04.2026 09:44:49] [REQUEST] INFO : Запрос: GET /src/recentFiles/recentFiles.js от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:44:49] [REQUEST] DEBUG : Ответ: 304 NOT MODIFIED для /src/recentFiles/recentFiles.js - app:log_response:98
+[04.04.2026 09:44:49] [REQUEST] INFO : Запрос: GET /src/server/server.js от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:44:49] [REQUEST] INFO : Запрос: GET /src/ui/ui.js от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:44:49] [REQUEST] INFO : Запрос: GET /icons/free-icon-CurvesEffect.png от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:44:49] [REQUEST] DEBUG : Ответ: 304 NOT MODIFIED для /src/server/server.js - app:log_response:98
+[04.04.2026 09:44:49] [REQUEST] DEBUG : Ответ: 304 NOT MODIFIED для /src/ui/ui.js - app:log_response:98
+[04.04.2026 09:44:49] [REQUEST] DEBUG : Ответ: 404 NOT FOUND для /icons/free-icon-CurvesEffect.png - app:log_response:98
+[04.04.2026 09:44:49] [REQUEST] INFO : Запрос: GET /src/events/events.js от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:44:49] [REQUEST] INFO : Запрос: GET /src/projectManager/projectManager.js от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:44:49] [REQUEST] INFO : Запрос: GET /src/main/main.js от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:44:49] [REQUEST] DEBUG : Ответ: 304 NOT MODIFIED для /src/events/events.js - app:log_response:98
+[04.04.2026 09:44:49] [REQUEST] INFO : Запрос: GET /src/drawing/drawing.js от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:44:49] [REQUEST] DEBUG : Ответ: 304 NOT MODIFIED для /src/projectManager/projectManager.js - app:log_response:98
+[04.04.2026 09:44:49] [REQUEST] INFO : Запрос: GET /src/tabs/tabs.js от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:44:49] [REQUEST] DEBUG : Ответ: 304 NOT MODIFIED для /src/main/main.js - app:log_response:98
+[04.04.2026 09:44:49] [REQUEST] DEBUG : Ответ: 304 NOT MODIFIED для /src/drawing/drawing.js - app:log_response:98
+[04.04.2026 09:44:49] [REQUEST] DEBUG : Ответ: 304 NOT MODIFIED для /src/tabs/tabs.js - app:log_response:98
+[04.04.2026 09:44:49] [REQUEST] INFO : Запрос: GET /src/modals/models.js от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:44:49] [REQUEST] INFO : Запрос: GET /images/notimages.png от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:44:49] [REQUEST] DEBUG : Ответ: 404 NOT FOUND для /src/modals/models.js - app:log_response:98
+[04.04.2026 09:44:49] [REQUEST] DEBUG : Ответ: 404 NOT FOUND для /images/notimages.png - app:log_response:98
+[04.04.2026 09:44:49] [REQUEST] INFO : Запрос: GET /icons/free-icon-rotate1.png от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:44:49] [REQUEST] INFO : Запрос: GET /icons/free-icon-rotate.png от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:44:49] [REQUEST] DEBUG : Ответ: 404 NOT FOUND для /icons/free-icon-rotate.png - app:log_response:98
+[04.04.2026 09:44:49] [REQUEST] DEBUG : Ответ: 404 NOT FOUND для /icons/free-icon-rotate1.png - app:log_response:98
+[04.04.2026 09:44:49] [REQUEST] INFO : Запрос: GET /icons/free-icon-refresh.png от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:44:49] [REQUEST] DEBUG : Ответ: 404 NOT FOUND для /icons/free-icon-refresh.png - app:log_response:98
+[04.04.2026 09:44:49] [REQUEST] INFO : Запрос: GET /icons/free-icon-fold-horizontal.png от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:44:49] [REQUEST] DEBUG : Ответ: 404 NOT FOUND для /icons/free-icon-fold-horizontal.png - app:log_response:98
+[04.04.2026 09:44:49] [REQUEST] INFO : Запрос: GET /icons/free-icon-fold-vertical.png от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:44:49] [REQUEST] INFO : Запрос: GET /api/recent_files от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:44:49] [REQUEST] INFO : Запрос: GET /list_projects от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:44:49] [REQUEST] DEBUG : Ответ: 404 NOT FOUND для /icons/free-icon-fold-vertical.png - app:log_response:98
+[04.04.2026 09:44:49] [REQUEST] INFO : Запрос: GET /images/SobelEffectPluginIcon.png от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:44:49] [REQUEST] DEBUG : Ответ: 200 OK для /api/recent_files - app:log_response:98
+[04.04.2026 09:44:49] [REQUEST] DEBUG : Ответ: 404 NOT FOUND для /images/SobelEffectPluginIcon.png - app:log_response:98
+[04.04.2026 09:44:49] [REQUEST] INFO : Запрос: GET /images/EffectPluginIcon.png от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:44:49] [REQUEST] INFO : Запрос: GET /images/ApproximationEffectPluginIcon.png от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:44:49] [REQUEST] DEBUG : Ответ: 404 NOT FOUND для /images/EffectPluginIcon.png - app:log_response:98
+[04.04.2026 09:44:49] [REQUEST] INFO : Запрос: GET /images/PrelimProcess.png от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:44:49] [REQUEST] DEBUG : Ответ: 404 NOT FOUND для /images/ApproximationEffectPluginIcon.png - app:log_response:98
+[04.04.2026 09:44:49] [REQUEST] INFO : Запрос: GET /images/MedianEffectPluginIcon.png от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:44:49] [REQUEST] DEBUG : Ответ: 404 NOT FOUND для /images/PrelimProcess.png - app:log_response:98
+[04.04.2026 09:44:49] [REQUEST] INFO : Запрос: GET /images/NormalizEffectPluginIcon.png от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:44:49] [REQUEST] DEBUG : Ответ: 200 OK для /list_projects - app:log_response:98
+[04.04.2026 09:44:49] [REQUEST] DEBUG : Ответ: 404 NOT FOUND для /images/MedianEffectPluginIcon.png - app:log_response:98
+[04.04.2026 09:44:50] [REQUEST] INFO : Запрос: GET /icons/free-icon-workflow.png от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:44:50] [REQUEST] DEBUG : Ответ: 404 NOT FOUND для /images/NormalizEffectPluginIcon.png - app:log_response:98
+[04.04.2026 09:44:50] [REQUEST] DEBUG : Ответ: 404 NOT FOUND для /icons/free-icon-workflow.png - app:log_response:98
+[04.04.2026 09:44:50] [REQUEST] INFO : Запрос: GET /load_project/proj_1775270968460_2764 от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:44:50] [REQUEST] DEBUG : Ответ: 200 OK для /load_project/proj_1775270968460_2764 - app:log_response:98
+[04.04.2026 09:44:55] [REQUEST] INFO : Запрос: GET /penpot-projects.html от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:44:55] [REQUEST] DEBUG : Ответ: 304 NOT MODIFIED для /penpot-projects.html - app:log_response:98
+[04.04.2026 09:44:55] [REQUEST] INFO : Запрос: GET /list_projects от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:44:55] [REQUEST] DEBUG : Ответ: 200 OK для /list_projects - app:log_response:98
+[04.04.2026 09:44:57] [REQUEST] INFO : Запрос: GET /index.html от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:44:57] [REQUEST] DEBUG : Ответ: 304 NOT MODIFIED для /index.html - app:log_response:98
+[04.04.2026 09:44:57] [REQUEST] INFO : Запрос: GET /static/css/browser@4 от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:44:57] [REQUEST] INFO : Запрос: GET /static/js/plotly-2.27.1.min.js от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:44:57] [REQUEST] DEBUG : Ответ: 304 NOT MODIFIED для /static/css/browser@4 - app:log_response:98
+[04.04.2026 09:44:57] [REQUEST] DEBUG : Ответ: 304 NOT MODIFIED для /static/js/plotly-2.27.1.min.js - app:log_response:98
+[04.04.2026 09:44:57] [REQUEST] INFO : Запрос: GET /styles/index.css от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:44:57] [REQUEST] INFO : Запрос: GET /styles/modals.css от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:44:57] [REQUEST] DEBUG : Ответ: 304 NOT MODIFIED для /styles/index.css - app:log_response:98
+[04.04.2026 09:44:57] [REQUEST] INFO : Запрос: GET /icons/free-icon-folder-8316612.png от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:44:57] [REQUEST] DEBUG : Ответ: 404 NOT FOUND для /icons/free-icon-folder-8316612.png - app:log_response:98
+[04.04.2026 09:44:57] [REQUEST] INFO : Запрос: GET /icons/free-icon-data-storage-8322520.png от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:44:57] [REQUEST] DEBUG : Ответ: 404 NOT FOUND для /icons/free-icon-data-storage-8322520.png - app:log_response:98
+[04.04.2026 09:44:57] [REQUEST] DEBUG : Ответ: 304 NOT MODIFIED для /styles/modals.css - app:log_response:98
+[04.04.2026 09:44:57] [REQUEST] INFO : Запрос: GET /icons/free-icon-undo.png от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:44:57] [REQUEST] DEBUG : Ответ: 404 NOT FOUND для /icons/free-icon-undo.png - app:log_response:98
+[04.04.2026 09:44:57] [REQUEST] INFO : Запрос: GET /icons/free-icon-redo.png от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:44:57] [REQUEST] DEBUG : Ответ: 404 NOT FOUND для /icons/free-icon-redo.png - app:log_response:98
+[04.04.2026 09:44:57] [REQUEST] INFO : Запрос: GET /icons/free-icon-history.png от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:44:57] [REQUEST] INFO : Запрос: GET /src/globals/globals.js от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:44:57] [REQUEST] DEBUG : Ответ: 404 NOT FOUND для /icons/free-icon-history.png - app:log_response:98
+[04.04.2026 09:44:57] [REQUEST] INFO : Запрос: GET /src/tools/tools.js от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:44:57] [REQUEST] INFO : Запрос: GET /src/fileManager/fileManager.js от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:44:57] [REQUEST] INFO : Запрос: GET /src/history/history.js от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:44:57] [REQUEST] DEBUG : Ответ: 304 NOT MODIFIED для /src/tools/tools.js - app:log_response:98
+[04.04.2026 09:44:57] [REQUEST] DEBUG : Ответ: 304 NOT MODIFIED для /src/globals/globals.js - app:log_response:98
+[04.04.2026 09:44:57] [REQUEST] INFO : Запрос: GET /src/imageOps/imageOps.js от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:44:57] [REQUEST] DEBUG : Ответ: 304 NOT MODIFIED для /src/fileManager/fileManager.js - app:log_response:98
+[04.04.2026 09:44:57] [REQUEST] DEBUG : Ответ: 304 NOT MODIFIED для /src/history/history.js - app:log_response:98
+[04.04.2026 09:44:57] [REQUEST] INFO : Запрос: GET /src/recentFiles/recentFiles.js от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:44:57] [REQUEST] DEBUG : Ответ: 304 NOT MODIFIED для /src/imageOps/imageOps.js - app:log_response:98
+[04.04.2026 09:44:57] [REQUEST] DEBUG : Ответ: 304 NOT MODIFIED для /src/recentFiles/recentFiles.js - app:log_response:98
+[04.04.2026 09:44:57] [REQUEST] INFO : Запрос: GET /src/server/server.js от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:44:57] [REQUEST] INFO : Запрос: GET /src/ui/ui.js от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:44:57] [REQUEST] DEBUG : Ответ: 304 NOT MODIFIED для /src/server/server.js - app:log_response:98
+[04.04.2026 09:44:57] [REQUEST] INFO : Запрос: GET /icons/free-icon-CurvesEffect.png от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:44:57] [REQUEST] DEBUG : Ответ: 304 NOT MODIFIED для /src/ui/ui.js - app:log_response:98
+[04.04.2026 09:44:57] [REQUEST] DEBUG : Ответ: 404 NOT FOUND для /icons/free-icon-CurvesEffect.png - app:log_response:98
+[04.04.2026 09:44:57] [REQUEST] INFO : Запрос: GET /src/events/events.js от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:44:57] [REQUEST] INFO : Запрос: GET /src/projectManager/projectManager.js от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:44:57] [REQUEST] DEBUG : Ответ: 304 NOT MODIFIED для /src/events/events.js - app:log_response:98
+[04.04.2026 09:44:57] [REQUEST] INFO : Запрос: GET /src/main/main.js от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:44:57] [REQUEST] INFO : Запрос: GET /src/drawing/drawing.js от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:44:57] [REQUEST] DEBUG : Ответ: 304 NOT MODIFIED для /src/projectManager/projectManager.js - app:log_response:98
+[04.04.2026 09:44:57] [REQUEST] INFO : Запрос: GET /src/tabs/tabs.js от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:44:57] [REQUEST] DEBUG : Ответ: 304 NOT MODIFIED для /src/main/main.js - app:log_response:98
+[04.04.2026 09:44:57] [REQUEST] DEBUG : Ответ: 304 NOT MODIFIED для /src/drawing/drawing.js - app:log_response:98
+[04.04.2026 09:44:57] [REQUEST] DEBUG : Ответ: 304 NOT MODIFIED для /src/tabs/tabs.js - app:log_response:98
+[04.04.2026 09:44:57] [REQUEST] INFO : Запрос: GET /src/modals/models.js от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:44:57] [REQUEST] INFO : Запрос: GET /images/notimages.png от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:44:57] [REQUEST] DEBUG : Ответ: 404 NOT FOUND для /src/modals/models.js - app:log_response:98
+[04.04.2026 09:44:57] [REQUEST] DEBUG : Ответ: 404 NOT FOUND для /images/notimages.png - app:log_response:98
+[04.04.2026 09:44:57] [REQUEST] INFO : Запрос: GET /icons/free-icon-rotate1.png от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:44:57] [REQUEST] INFO : Запрос: GET /icons/free-icon-rotate.png от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:44:57] [REQUEST] DEBUG : Ответ: 404 NOT FOUND для /icons/free-icon-rotate1.png - app:log_response:98
+[04.04.2026 09:44:57] [REQUEST] INFO : Запрос: GET /icons/free-icon-refresh.png от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:44:57] [REQUEST] DEBUG : Ответ: 404 NOT FOUND для /icons/free-icon-rotate.png - app:log_response:98
+[04.04.2026 09:44:57] [REQUEST] DEBUG : Ответ: 404 NOT FOUND для /icons/free-icon-refresh.png - app:log_response:98
+[04.04.2026 09:44:57] [REQUEST] INFO : Запрос: GET /icons/free-icon-fold-horizontal.png от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:44:57] [REQUEST] DEBUG : Ответ: 404 NOT FOUND для /icons/free-icon-fold-horizontal.png - app:log_response:98
+[04.04.2026 09:44:57] [REQUEST] INFO : Запрос: GET /icons/free-icon-fold-vertical.png от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:44:57] [REQUEST] DEBUG : Ответ: 404 NOT FOUND для /icons/free-icon-fold-vertical.png - app:log_response:98
+[04.04.2026 09:44:57] [REQUEST] INFO : Запрос: GET /api/recent_files от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:44:57] [REQUEST] INFO : Запрос: GET /list_projects от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:44:57] [REQUEST] INFO : Запрос: GET /images/SobelEffectPluginIcon.png от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:44:57] [REQUEST] DEBUG : Ответ: 404 NOT FOUND для /images/SobelEffectPluginIcon.png - app:log_response:98
+[04.04.2026 09:44:57] [REQUEST] INFO : Запрос: GET /images/EffectPluginIcon.png от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:44:57] [REQUEST] DEBUG : Ответ: 200 OK для /api/recent_files - app:log_response:98
+[04.04.2026 09:44:57] [REQUEST] DEBUG : Ответ: 404 NOT FOUND для /images/EffectPluginIcon.png - app:log_response:98
+[04.04.2026 09:44:57] [REQUEST] INFO : Запрос: GET /images/ApproximationEffectPluginIcon.png от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:44:57] [REQUEST] DEBUG : Ответ: 404 NOT FOUND для /images/ApproximationEffectPluginIcon.png - app:log_response:98
+[04.04.2026 09:44:57] [REQUEST] INFO : Запрос: GET /images/PrelimProcess.png от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:44:57] [REQUEST] DEBUG : Ответ: 404 NOT FOUND для /images/PrelimProcess.png - app:log_response:98
+[04.04.2026 09:44:57] [REQUEST] INFO : Запрос: GET /images/MedianEffectPluginIcon.png от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:44:57] [REQUEST] DEBUG : Ответ: 404 NOT FOUND для /images/MedianEffectPluginIcon.png - app:log_response:98
+[04.04.2026 09:44:57] [REQUEST] DEBUG : Ответ: 200 OK для /list_projects - app:log_response:98
+[04.04.2026 09:44:57] [REQUEST] INFO : Запрос: GET /images/NormalizEffectPluginIcon.png от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:44:57] [REQUEST] DEBUG : Ответ: 404 NOT FOUND для /images/NormalizEffectPluginIcon.png - app:log_response:98
+[04.04.2026 09:44:57] [REQUEST] INFO : Запрос: GET /icons/free-icon-workflow.png от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:44:57] [REQUEST] DEBUG : Ответ: 404 NOT FOUND для /icons/free-icon-workflow.png - app:log_response:98
+[04.04.2026 09:44:57] [REQUEST] INFO : Запрос: GET /load_project/proj_1775270968460_2764 от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:44:57] [REQUEST] DEBUG : Ответ: 200 OK для /load_project/proj_1775270968460_2764 - app:log_response:98
+[04.04.2026 09:45:02] [REQUEST] INFO : Запрос: GET /penpot-projects.html от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:45:02] [REQUEST] DEBUG : Ответ: 304 NOT MODIFIED для /penpot-projects.html - app:log_response:98
+[04.04.2026 09:45:02] [REQUEST] INFO : Запрос: GET /list_projects от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:45:02] [REQUEST] DEBUG : Ответ: 200 OK для /list_projects - app:log_response:98
+[04.04.2026 09:45:07] [REQUEST] INFO : Запрос: GET /index.html от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:45:07] [REQUEST] DEBUG : Ответ: 304 NOT MODIFIED для /index.html - app:log_response:98
+[04.04.2026 09:45:07] [REQUEST] INFO : Запрос: GET /styles/index.css от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:45:07] [REQUEST] INFO : Запрос: GET /static/css/browser@4 от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:45:07] [REQUEST] INFO : Запрос: GET /static/js/plotly-2.27.1.min.js от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:45:07] [REQUEST] INFO : Запрос: GET /styles/modals.css от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:45:07] [REQUEST] DEBUG : Ответ: 304 NOT MODIFIED для /styles/index.css - app:log_response:98
+[04.04.2026 09:45:07] [REQUEST] DEBUG : Ответ: 304 NOT MODIFIED для /static/css/browser@4 - app:log_response:98
+[04.04.2026 09:45:07] [REQUEST] INFO : Запрос: GET /icons/free-icon-folder-8316612.png от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:45:07] [REQUEST] DEBUG : Ответ: 304 NOT MODIFIED для /static/js/plotly-2.27.1.min.js - app:log_response:98
+[04.04.2026 09:45:07] [REQUEST] DEBUG : Ответ: 404 NOT FOUND для /icons/free-icon-folder-8316612.png - app:log_response:98
+[04.04.2026 09:45:07] [REQUEST] DEBUG : Ответ: 304 NOT MODIFIED для /styles/modals.css - app:log_response:98
+[04.04.2026 09:45:07] [REQUEST] INFO : Запрос: GET /icons/free-icon-data-storage-8322520.png от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:45:07] [REQUEST] DEBUG : Ответ: 404 NOT FOUND для /icons/free-icon-data-storage-8322520.png - app:log_response:98
+[04.04.2026 09:45:07] [REQUEST] INFO : Запрос: GET /icons/free-icon-undo.png от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:45:07] [REQUEST] DEBUG : Ответ: 404 NOT FOUND для /icons/free-icon-undo.png - app:log_response:98
+[04.04.2026 09:45:07] [REQUEST] INFO : Запрос: GET /icons/free-icon-redo.png от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:45:07] [REQUEST] DEBUG : Ответ: 404 NOT FOUND для /icons/free-icon-redo.png - app:log_response:98
+[04.04.2026 09:45:07] [REQUEST] INFO : Запрос: GET /icons/free-icon-history.png от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:45:07] [REQUEST] INFO : Запрос: GET /src/globals/globals.js от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:45:07] [REQUEST] INFO : Запрос: GET /src/tools/tools.js от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:45:07] [REQUEST] DEBUG : Ответ: 404 NOT FOUND для /icons/free-icon-history.png - app:log_response:98
+[04.04.2026 09:45:07] [REQUEST] INFO : Запрос: GET /src/fileManager/fileManager.js от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:45:07] [REQUEST] DEBUG : Ответ: 304 NOT MODIFIED для /src/globals/globals.js - app:log_response:98
+[04.04.2026 09:45:07] [REQUEST] INFO : Запрос: GET /src/history/history.js от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:45:07] [REQUEST] DEBUG : Ответ: 304 NOT MODIFIED для /src/tools/tools.js - app:log_response:98
+[04.04.2026 09:45:07] [REQUEST] INFO : Запрос: GET /src/imageOps/imageOps.js от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:45:07] [REQUEST] INFO : Запрос: GET /src/recentFiles/recentFiles.js от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:45:07] [REQUEST] DEBUG : Ответ: 304 NOT MODIFIED для /src/fileManager/fileManager.js - app:log_response:98
+[04.04.2026 09:45:07] [REQUEST] DEBUG : Ответ: 304 NOT MODIFIED для /src/history/history.js - app:log_response:98
+[04.04.2026 09:45:07] [REQUEST] DEBUG : Ответ: 304 NOT MODIFIED для /src/imageOps/imageOps.js - app:log_response:98
+[04.04.2026 09:45:07] [REQUEST] INFO : Запрос: GET /src/server/server.js от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:45:07] [REQUEST] DEBUG : Ответ: 304 NOT MODIFIED для /src/recentFiles/recentFiles.js - app:log_response:98
+[04.04.2026 09:45:07] [REQUEST] INFO : Запрос: GET /src/ui/ui.js от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:45:07] [REQUEST] INFO : Запрос: GET /src/events/events.js от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:45:07] [REQUEST] DEBUG : Ответ: 304 NOT MODIFIED для /src/server/server.js - app:log_response:98
+[04.04.2026 09:45:07] [REQUEST] DEBUG : Ответ: 304 NOT MODIFIED для /src/events/events.js - app:log_response:98
+[04.04.2026 09:45:07] [REQUEST] DEBUG : Ответ: 304 NOT MODIFIED для /src/ui/ui.js - app:log_response:98
+[04.04.2026 09:45:07] [REQUEST] INFO : Запрос: GET /src/projectManager/projectManager.js от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:45:07] [REQUEST] INFO : Запрос: GET /src/main/main.js от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:45:07] [REQUEST] INFO : Запрос: GET /icons/free-icon-CurvesEffect.png от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:45:07] [REQUEST] DEBUG : Ответ: 404 NOT FOUND для /icons/free-icon-CurvesEffect.png - app:log_response:98
+[04.04.2026 09:45:07] [REQUEST] DEBUG : Ответ: 304 NOT MODIFIED для /src/projectManager/projectManager.js - app:log_response:98
+[04.04.2026 09:45:07] [REQUEST] DEBUG : Ответ: 304 NOT MODIFIED для /src/main/main.js - app:log_response:98
+[04.04.2026 09:45:07] [REQUEST] INFO : Запрос: GET /src/drawing/drawing.js от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:45:07] [REQUEST] INFO : Запрос: GET /src/tabs/tabs.js от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:45:07] [REQUEST] INFO : Запрос: GET /src/modals/models.js от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:45:07] [REQUEST] DEBUG : Ответ: 404 NOT FOUND для /src/modals/models.js - app:log_response:98
+[04.04.2026 09:45:07] [REQUEST] DEBUG : Ответ: 304 NOT MODIFIED для /src/drawing/drawing.js - app:log_response:98
+[04.04.2026 09:45:07] [REQUEST] DEBUG : Ответ: 304 NOT MODIFIED для /src/tabs/tabs.js - app:log_response:98
+[04.04.2026 09:45:07] [REQUEST] INFO : Запрос: GET /images/notimages.png от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:45:07] [REQUEST] DEBUG : Ответ: 404 NOT FOUND для /images/notimages.png - app:log_response:98
+[04.04.2026 09:45:07] [REQUEST] INFO : Запрос: GET /icons/free-icon-rotate1.png от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:45:07] [REQUEST] DEBUG : Ответ: 404 NOT FOUND для /icons/free-icon-rotate1.png - app:log_response:98
+[04.04.2026 09:45:07] [REQUEST] INFO : Запрос: GET /icons/free-icon-rotate.png от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:45:07] [REQUEST] INFO : Запрос: GET /icons/free-icon-refresh.png от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:45:07] [REQUEST] DEBUG : Ответ: 404 NOT FOUND для /icons/free-icon-rotate.png - app:log_response:98
+[04.04.2026 09:45:07] [REQUEST] DEBUG : Ответ: 404 NOT FOUND для /icons/free-icon-refresh.png - app:log_response:98
+[04.04.2026 09:45:07] [REQUEST] INFO : Запрос: GET /icons/free-icon-fold-horizontal.png от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:45:07] [REQUEST] DEBUG : Ответ: 404 NOT FOUND для /icons/free-icon-fold-horizontal.png - app:log_response:98
+[04.04.2026 09:45:07] [REQUEST] INFO : Запрос: GET /icons/free-icon-fold-vertical.png от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:45:07] [REQUEST] DEBUG : Ответ: 404 NOT FOUND для /icons/free-icon-fold-vertical.png - app:log_response:98
+[04.04.2026 09:45:07] [REQUEST] INFO : Запрос: GET /api/recent_files от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:45:07] [REQUEST] INFO : Запрос: GET /list_projects от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:45:07] [REQUEST] INFO : Запрос: GET /images/SobelEffectPluginIcon.png от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:45:07] [REQUEST] DEBUG : Ответ: 404 NOT FOUND для /images/SobelEffectPluginIcon.png - app:log_response:98
+[04.04.2026 09:45:07] [REQUEST] INFO : Запрос: GET /images/EffectPluginIcon.png от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:45:07] [REQUEST] DEBUG : Ответ: 200 OK для /api/recent_files - app:log_response:98
+[04.04.2026 09:45:07] [REQUEST] DEBUG : Ответ: 404 NOT FOUND для /images/EffectPluginIcon.png - app:log_response:98
+[04.04.2026 09:45:07] [REQUEST] INFO : Запрос: GET /images/ApproximationEffectPluginIcon.png от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:45:07] [REQUEST] INFO : Запрос: GET /images/PrelimProcess.png от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:45:07] [REQUEST] DEBUG : Ответ: 404 NOT FOUND для /images/ApproximationEffectPluginIcon.png - app:log_response:98
+[04.04.2026 09:45:07] [REQUEST] DEBUG : Ответ: 404 NOT FOUND для /images/PrelimProcess.png - app:log_response:98
+[04.04.2026 09:45:07] [REQUEST] INFO : Запрос: GET /images/MedianEffectPluginIcon.png от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:45:07] [REQUEST] DEBUG : Ответ: 200 OK для /list_projects - app:log_response:98
+[04.04.2026 09:45:07] [REQUEST] DEBUG : Ответ: 404 NOT FOUND для /images/MedianEffectPluginIcon.png - app:log_response:98
+[04.04.2026 09:45:07] [REQUEST] INFO : Запрос: GET /images/NormalizEffectPluginIcon.png от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:45:07] [REQUEST] DEBUG : Ответ: 404 NOT FOUND для /images/NormalizEffectPluginIcon.png - app:log_response:98
+[04.04.2026 09:45:07] [REQUEST] INFO : Запрос: GET /icons/free-icon-workflow.png от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:45:07] [REQUEST] DEBUG : Ответ: 404 NOT FOUND для /icons/free-icon-workflow.png - app:log_response:98
+[04.04.2026 09:45:07] [REQUEST] INFO : Запрос: GET /load_project/proj_1775270968460_2764 от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:45:07] [REQUEST] DEBUG : Ответ: 200 OK для /load_project/proj_1775270968460_2764 - app:log_response:98
+[04.04.2026 09:45:09] [REQUEST] INFO : Запрос: GET /index.html от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:45:09] [REQUEST] DEBUG : Ответ: 304 NOT MODIFIED для /index.html - app:log_response:98
+[04.04.2026 09:45:09] [REQUEST] INFO : Запрос: GET /static/css/browser@4 от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:45:09] [REQUEST] INFO : Запрос: GET /static/js/plotly-2.27.1.min.js от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:45:09] [REQUEST] DEBUG : Ответ: 304 NOT MODIFIED для /static/css/browser@4 - app:log_response:98
+[04.04.2026 09:45:09] [REQUEST] INFO : Запрос: GET /styles/index.css от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:45:09] [REQUEST] DEBUG : Ответ: 304 NOT MODIFIED для /static/js/plotly-2.27.1.min.js - app:log_response:98
+[04.04.2026 09:45:09] [REQUEST] DEBUG : Ответ: 304 NOT MODIFIED для /styles/index.css - app:log_response:98
+[04.04.2026 09:45:09] [REQUEST] INFO : Запрос: GET /styles/modals.css от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:45:09] [REQUEST] DEBUG : Ответ: 304 NOT MODIFIED для /styles/modals.css - app:log_response:98
+[04.04.2026 09:45:09] [REQUEST] INFO : Запрос: GET /icons/free-icon-folder-8316612.png от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:45:09] [REQUEST] DEBUG : Ответ: 404 NOT FOUND для /icons/free-icon-folder-8316612.png - app:log_response:98
+[04.04.2026 09:45:09] [REQUEST] INFO : Запрос: GET /icons/free-icon-data-storage-8322520.png от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:45:09] [REQUEST] DEBUG : Ответ: 404 NOT FOUND для /icons/free-icon-data-storage-8322520.png - app:log_response:98
+[04.04.2026 09:45:09] [REQUEST] INFO : Запрос: GET /icons/free-icon-undo.png от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:45:09] [REQUEST] INFO : Запрос: GET /icons/free-icon-redo.png от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:45:09] [REQUEST] INFO : Запрос: GET /icons/free-icon-history.png от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:45:09] [REQUEST] DEBUG : Ответ: 404 NOT FOUND для /icons/free-icon-undo.png - app:log_response:98
+[04.04.2026 09:45:09] [REQUEST] DEBUG : Ответ: 404 NOT FOUND для /icons/free-icon-redo.png - app:log_response:98
+[04.04.2026 09:45:09] [REQUEST] INFO : Запрос: GET /src/globals/globals.js от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:45:09] [REQUEST] DEBUG : Ответ: 404 NOT FOUND для /icons/free-icon-history.png - app:log_response:98
+[04.04.2026 09:45:09] [REQUEST] INFO : Запрос: GET /src/tools/tools.js от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:45:09] [REQUEST] INFO : Запрос: GET /src/fileManager/fileManager.js от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:45:09] [REQUEST] DEBUG : Ответ: 304 NOT MODIFIED для /src/globals/globals.js - app:log_response:98
+[04.04.2026 09:45:09] [REQUEST] INFO : Запрос: GET /src/history/history.js от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:45:09] [REQUEST] DEBUG : Ответ: 304 NOT MODIFIED для /src/tools/tools.js - app:log_response:98
+[04.04.2026 09:45:09] [REQUEST] INFO : Запрос: GET /src/imageOps/imageOps.js от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:45:09] [REQUEST] DEBUG : Ответ: 304 NOT MODIFIED для /src/fileManager/fileManager.js - app:log_response:98
+[04.04.2026 09:45:09] [REQUEST] DEBUG : Ответ: 304 NOT MODIFIED для /src/history/history.js - app:log_response:98
+[04.04.2026 09:45:09] [REQUEST] INFO : Запрос: GET /src/recentFiles/recentFiles.js от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:45:09] [REQUEST] DEBUG : Ответ: 304 NOT MODIFIED для /src/imageOps/imageOps.js - app:log_response:98
+[04.04.2026 09:45:09] [REQUEST] DEBUG : Ответ: 304 NOT MODIFIED для /src/recentFiles/recentFiles.js - app:log_response:98
+[04.04.2026 09:45:09] [REQUEST] INFO : Запрос: GET /src/server/server.js от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:45:09] [REQUEST] INFO : Запрос: GET /src/ui/ui.js от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:45:09] [REQUEST] INFO : Запрос: GET /icons/free-icon-CurvesEffect.png от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:45:09] [REQUEST] DEBUG : Ответ: 404 NOT FOUND для /icons/free-icon-CurvesEffect.png - app:log_response:98
+[04.04.2026 09:45:09] [REQUEST] INFO : Запрос: GET /src/events/events.js от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:45:09] [REQUEST] DEBUG : Ответ: 304 NOT MODIFIED для /src/server/server.js - app:log_response:98
+[04.04.2026 09:45:09] [REQUEST] DEBUG : Ответ: 304 NOT MODIFIED для /src/ui/ui.js - app:log_response:98
+[04.04.2026 09:45:09] [REQUEST] INFO : Запрос: GET /src/projectManager/projectManager.js от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:45:09] [REQUEST] DEBUG : Ответ: 304 NOT MODIFIED для /src/events/events.js - app:log_response:98
+[04.04.2026 09:45:09] [REQUEST] INFO : Запрос: GET /src/main/main.js от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:45:09] [REQUEST] DEBUG : Ответ: 304 NOT MODIFIED для /src/projectManager/projectManager.js - app:log_response:98
+[04.04.2026 09:45:09] [REQUEST] INFO : Запрос: GET /src/drawing/drawing.js от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:45:09] [REQUEST] INFO : Запрос: GET /src/tabs/tabs.js от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:45:09] [REQUEST] DEBUG : Ответ: 304 NOT MODIFIED для /src/main/main.js - app:log_response:98
+[04.04.2026 09:45:09] [REQUEST] INFO : Запрос: GET /src/modals/models.js от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:45:09] [REQUEST] DEBUG : Ответ: 304 NOT MODIFIED для /src/tabs/tabs.js - app:log_response:98
+[04.04.2026 09:45:09] [REQUEST] DEBUG : Ответ: 404 NOT FOUND для /src/modals/models.js - app:log_response:98
+[04.04.2026 09:45:09] [REQUEST] INFO : Запрос: GET /images/notimages.png от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:45:09] [REQUEST] DEBUG : Ответ: 304 NOT MODIFIED для /src/drawing/drawing.js - app:log_response:98
+[04.04.2026 09:45:09] [REQUEST] INFO : Запрос: GET /icons/free-icon-rotate1.png от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:45:09] [REQUEST] DEBUG : Ответ: 404 NOT FOUND для /images/notimages.png - app:log_response:98
+[04.04.2026 09:45:09] [REQUEST] INFO : Запрос: GET /icons/free-icon-rotate.png от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:45:09] [REQUEST] DEBUG : Ответ: 404 NOT FOUND для /icons/free-icon-rotate1.png - app:log_response:98
+[04.04.2026 09:45:09] [REQUEST] INFO : Запрос: GET /icons/free-icon-refresh.png от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:45:09] [REQUEST] DEBUG : Ответ: 404 NOT FOUND для /icons/free-icon-rotate.png - app:log_response:98
+[04.04.2026 09:45:09] [REQUEST] INFO : Запрос: GET /icons/free-icon-fold-horizontal.png от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:45:09] [REQUEST] INFO : Запрос: GET /icons/free-icon-fold-vertical.png от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:45:09] [REQUEST] DEBUG : Ответ: 404 NOT FOUND для /icons/free-icon-refresh.png - app:log_response:98
+[04.04.2026 09:45:09] [REQUEST] DEBUG : Ответ: 404 NOT FOUND для /icons/free-icon-fold-horizontal.png - app:log_response:98
+[04.04.2026 09:45:09] [REQUEST] DEBUG : Ответ: 404 NOT FOUND для /icons/free-icon-fold-vertical.png - app:log_response:98
+[04.04.2026 09:45:09] [REQUEST] INFO : Запрос: GET /images/SobelEffectPluginIcon.png от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:45:09] [REQUEST] INFO : Запрос: GET /api/recent_files от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:45:09] [REQUEST] INFO : Запрос: GET /list_projects от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:45:09] [REQUEST] DEBUG : Ответ: 404 NOT FOUND для /images/SobelEffectPluginIcon.png - app:log_response:98
+[04.04.2026 09:45:09] [REQUEST] INFO : Запрос: GET /images/EffectPluginIcon.png от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:45:09] [REQUEST] DEBUG : Ответ: 404 NOT FOUND для /images/EffectPluginIcon.png - app:log_response:98
+[04.04.2026 09:45:09] [REQUEST] INFO : Запрос: GET /images/ApproximationEffectPluginIcon.png от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:45:09] [REQUEST] DEBUG : Ответ: 200 OK для /api/recent_files - app:log_response:98
+[04.04.2026 09:45:09] [REQUEST] DEBUG : Ответ: 404 NOT FOUND для /images/ApproximationEffectPluginIcon.png - app:log_response:98
+[04.04.2026 09:45:09] [REQUEST] INFO : Запрос: GET /images/PrelimProcess.png от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:45:09] [REQUEST] DEBUG : Ответ: 404 NOT FOUND для /images/PrelimProcess.png - app:log_response:98
+[04.04.2026 09:45:09] [REQUEST] INFO : Запрос: GET /images/MedianEffectPluginIcon.png от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:45:09] [REQUEST] DEBUG : Ответ: 404 NOT FOUND для /images/MedianEffectPluginIcon.png - app:log_response:98
+[04.04.2026 09:45:09] [REQUEST] INFO : Запрос: GET /images/NormalizEffectPluginIcon.png от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:45:09] [REQUEST] DEBUG : Ответ: 404 NOT FOUND для /images/NormalizEffectPluginIcon.png - app:log_response:98
+[04.04.2026 09:45:09] [REQUEST] INFO : Запрос: GET /icons/free-icon-workflow.png от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:45:09] [REQUEST] DEBUG : Ответ: 404 NOT FOUND для /icons/free-icon-workflow.png - app:log_response:98
+[04.04.2026 09:45:09] [REQUEST] DEBUG : Ответ: 200 OK для /list_projects - app:log_response:98
+[04.04.2026 09:45:09] [REQUEST] INFO : Запрос: GET /load_project/proj_1775270968460_2764 от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:45:09] [REQUEST] DEBUG : Ответ: 200 OK для /load_project/proj_1775270968460_2764 - app:log_response:98
+[04.04.2026 09:45:10] [REQUEST] INFO : Запрос: GET /penpot-projects.html от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:45:10] [REQUEST] DEBUG : Ответ: 304 NOT MODIFIED для /penpot-projects.html - app:log_response:98
+[04.04.2026 09:45:10] [REQUEST] INFO : Запрос: GET /list_projects от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:45:10] [REQUEST] DEBUG : Ответ: 200 OK для /list_projects - app:log_response:98
+[04.04.2026 09:45:25] [REQUEST] INFO : Запрос: GET /penpot-fusion.html от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:45:25] [REQUEST] DEBUG : Ответ: 304 NOT MODIFIED для /penpot-fusion.html - app:log_response:98
+[04.04.2026 09:45:32] [REQUEST] INFO : Запрос: GET /index.html от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:45:32] [REQUEST] DEBUG : Ответ: 304 NOT MODIFIED для /index.html - app:log_response:98
+[04.04.2026 09:45:32] [REQUEST] INFO : Запрос: GET /static/css/browser@4 от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:45:32] [REQUEST] DEBUG : Ответ: 304 NOT MODIFIED для /static/css/browser@4 - app:log_response:98
+[04.04.2026 09:45:32] [REQUEST] INFO : Запрос: GET /styles/index.css от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:45:32] [REQUEST] INFO : Запрос: GET /static/js/plotly-2.27.1.min.js от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:45:32] [REQUEST] INFO : Запрос: GET /styles/modals.css от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:45:32] [REQUEST] DEBUG : Ответ: 304 NOT MODIFIED для /styles/index.css - app:log_response:98
+[04.04.2026 09:45:32] [REQUEST] INFO : Запрос: GET /icons/free-icon-folder-8316612.png от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:45:32] [REQUEST] DEBUG : Ответ: 304 NOT MODIFIED для /static/js/plotly-2.27.1.min.js - app:log_response:98
+[04.04.2026 09:45:32] [REQUEST] DEBUG : Ответ: 404 NOT FOUND для /icons/free-icon-folder-8316612.png - app:log_response:98
+[04.04.2026 09:45:32] [REQUEST] DEBUG : Ответ: 304 NOT MODIFIED для /styles/modals.css - app:log_response:98
+[04.04.2026 09:45:32] [REQUEST] INFO : Запрос: GET /icons/free-icon-data-storage-8322520.png от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:45:32] [REQUEST] DEBUG : Ответ: 404 NOT FOUND для /icons/free-icon-data-storage-8322520.png - app:log_response:98
+[04.04.2026 09:45:32] [REQUEST] INFO : Запрос: GET /icons/free-icon-undo.png от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:45:32] [REQUEST] INFO : Запрос: GET /icons/free-icon-redo.png от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:45:32] [REQUEST] DEBUG : Ответ: 404 NOT FOUND для /icons/free-icon-undo.png - app:log_response:98
+[04.04.2026 09:45:32] [REQUEST] DEBUG : Ответ: 404 NOT FOUND для /icons/free-icon-redo.png - app:log_response:98
+[04.04.2026 09:45:32] [REQUEST] INFO : Запрос: GET /icons/free-icon-history.png от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:45:32] [REQUEST] DEBUG : Ответ: 404 NOT FOUND для /icons/free-icon-history.png - app:log_response:98
+[04.04.2026 09:45:32] [REQUEST] INFO : Запрос: GET /src/globals/globals.js от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:45:32] [REQUEST] INFO : Запрос: GET /src/fileManager/fileManager.js от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:45:32] [REQUEST] INFO : Запрос: GET /src/tools/tools.js от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:45:32] [REQUEST] INFO : Запрос: GET /src/history/history.js от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:45:32] [REQUEST] DEBUG : Ответ: 304 NOT MODIFIED для /src/globals/globals.js - app:log_response:98
+[04.04.2026 09:45:32] [REQUEST] DEBUG : Ответ: 304 NOT MODIFIED для /src/fileManager/fileManager.js - app:log_response:98
+[04.04.2026 09:45:32] [REQUEST] DEBUG : Ответ: 304 NOT MODIFIED для /src/tools/tools.js - app:log_response:98
+[04.04.2026 09:45:32] [REQUEST] INFO : Запрос: GET /src/imageOps/imageOps.js от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:45:32] [REQUEST] DEBUG : Ответ: 304 NOT MODIFIED для /src/history/history.js - app:log_response:98
+[04.04.2026 09:45:32] [REQUEST] INFO : Запрос: GET /src/recentFiles/recentFiles.js от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:45:32] [REQUEST] DEBUG : Ответ: 304 NOT MODIFIED для /src/imageOps/imageOps.js - app:log_response:98
+[04.04.2026 09:45:32] [REQUEST] DEBUG : Ответ: 304 NOT MODIFIED для /src/recentFiles/recentFiles.js - app:log_response:98
+[04.04.2026 09:45:32] [REQUEST] INFO : Запрос: GET /icons/free-icon-CurvesEffect.png от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:45:32] [REQUEST] DEBUG : Ответ: 404 NOT FOUND для /icons/free-icon-CurvesEffect.png - app:log_response:98
+[04.04.2026 09:45:32] [REQUEST] INFO : Запрос: GET /src/server/server.js от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:45:32] [REQUEST] INFO : Запрос: GET /src/ui/ui.js от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:45:32] [REQUEST] DEBUG : Ответ: 304 NOT MODIFIED для /src/server/server.js - app:log_response:98
+[04.04.2026 09:45:32] [REQUEST] INFO : Запрос: GET /src/events/events.js от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:45:32] [REQUEST] DEBUG : Ответ: 304 NOT MODIFIED для /src/ui/ui.js - app:log_response:98
+[04.04.2026 09:45:32] [REQUEST] INFO : Запрос: GET /src/projectManager/projectManager.js от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:45:32] [REQUEST] DEBUG : Ответ: 304 NOT MODIFIED для /src/events/events.js - app:log_response:98
+[04.04.2026 09:45:32] [REQUEST] INFO : Запрос: GET /src/main/main.js от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:45:32] [REQUEST] DEBUG : Ответ: 304 NOT MODIFIED для /src/projectManager/projectManager.js - app:log_response:98
+[04.04.2026 09:45:32] [REQUEST] INFO : Запрос: GET /src/drawing/drawing.js от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:45:32] [REQUEST] DEBUG : Ответ: 304 NOT MODIFIED для /src/main/main.js - app:log_response:98
+[04.04.2026 09:45:32] [REQUEST] INFO : Запрос: GET /src/tabs/tabs.js от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:45:32] [REQUEST] DEBUG : Ответ: 304 NOT MODIFIED для /src/drawing/drawing.js - app:log_response:98
+[04.04.2026 09:45:32] [REQUEST] INFO : Запрос: GET /src/modals/models.js от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:45:32] [REQUEST] DEBUG : Ответ: 304 NOT MODIFIED для /src/tabs/tabs.js - app:log_response:98
+[04.04.2026 09:45:32] [REQUEST] INFO : Запрос: GET /images/notimages.png от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:45:32] [REQUEST] DEBUG : Ответ: 404 NOT FOUND для /src/modals/models.js - app:log_response:98
+[04.04.2026 09:45:32] [REQUEST] DEBUG : Ответ: 404 NOT FOUND для /images/notimages.png - app:log_response:98
+[04.04.2026 09:45:32] [REQUEST] INFO : Запрос: GET /icons/free-icon-rotate1.png от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:45:32] [REQUEST] DEBUG : Ответ: 404 NOT FOUND для /icons/free-icon-rotate1.png - app:log_response:98
+[04.04.2026 09:45:32] [REQUEST] INFO : Запрос: GET /icons/free-icon-rotate.png от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:45:32] [REQUEST] INFO : Запрос: GET /icons/free-icon-refresh.png от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:45:32] [REQUEST] INFO : Запрос: GET /icons/free-icon-fold-horizontal.png от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:45:32] [REQUEST] DEBUG : Ответ: 404 NOT FOUND для /icons/free-icon-rotate.png - app:log_response:98
+[04.04.2026 09:45:32] [REQUEST] DEBUG : Ответ: 404 NOT FOUND для /icons/free-icon-refresh.png - app:log_response:98
+[04.04.2026 09:45:32] [REQUEST] INFO : Запрос: GET /icons/free-icon-fold-vertical.png от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:45:32] [REQUEST] DEBUG : Ответ: 404 NOT FOUND для /icons/free-icon-fold-horizontal.png - app:log_response:98
+[04.04.2026 09:45:32] [REQUEST] INFO : Запрос: GET /images/SobelEffectPluginIcon.png от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:45:32] [REQUEST] DEBUG : Ответ: 404 NOT FOUND для /icons/free-icon-fold-vertical.png - app:log_response:98
+[04.04.2026 09:45:32] [REQUEST] INFO : Запрос: GET /api/recent_files от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:45:32] [REQUEST] DEBUG : Ответ: 404 NOT FOUND для /images/SobelEffectPluginIcon.png - app:log_response:98
+[04.04.2026 09:45:32] [REQUEST] INFO : Запрос: GET /list_projects от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:45:32] [REQUEST] INFO : Запрос: GET /images/EffectPluginIcon.png от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:45:32] [REQUEST] DEBUG : Ответ: 404 NOT FOUND для /images/EffectPluginIcon.png - app:log_response:98
+[04.04.2026 09:45:32] [REQUEST] INFO : Запрос: GET /images/ApproximationEffectPluginIcon.png от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:45:32] [REQUEST] DEBUG : Ответ: 404 NOT FOUND для /images/ApproximationEffectPluginIcon.png - app:log_response:98
+[04.04.2026 09:45:32] [REQUEST] DEBUG : Ответ: 200 OK для /api/recent_files - app:log_response:98
+[04.04.2026 09:45:32] [REQUEST] INFO : Запрос: GET /images/PrelimProcess.png от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:45:32] [REQUEST] DEBUG : Ответ: 404 NOT FOUND для /images/PrelimProcess.png - app:log_response:98
+[04.04.2026 09:45:32] [REQUEST] INFO : Запрос: GET /images/MedianEffectPluginIcon.png от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:45:32] [REQUEST] DEBUG : Ответ: 404 NOT FOUND для /images/MedianEffectPluginIcon.png - app:log_response:98
+[04.04.2026 09:45:32] [REQUEST] INFO : Запрос: GET /images/NormalizEffectPluginIcon.png от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:45:32] [REQUEST] DEBUG : Ответ: 404 NOT FOUND для /images/NormalizEffectPluginIcon.png - app:log_response:98
+[04.04.2026 09:45:32] [REQUEST] INFO : Запрос: GET /icons/free-icon-workflow.png от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:45:32] [REQUEST] DEBUG : Ответ: 404 NOT FOUND для /icons/free-icon-workflow.png - app:log_response:98
+[04.04.2026 09:45:32] [REQUEST] DEBUG : Ответ: 200 OK для /list_projects - app:log_response:98
+[04.04.2026 09:45:32] [REQUEST] INFO : Запрос: GET /load_project/proj_1775270968460_2764 от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:45:32] [REQUEST] DEBUG : Ответ: 200 OK для /load_project/proj_1775270968460_2764 - app:log_response:98
+[04.04.2026 09:45:33] [REQUEST] INFO : Запрос: GET /penpot-projects.html от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:45:33] [REQUEST] DEBUG : Ответ: 304 NOT MODIFIED для /penpot-projects.html - app:log_response:98
+[04.04.2026 09:45:33] [REQUEST] INFO : Запрос: GET /list_projects от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:45:33] [REQUEST] DEBUG : Ответ: 200 OK для /list_projects - app:log_response:98
+[04.04.2026 09:45:44] [REQUEST] INFO : Запрос: POST /save_project от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:45:44] [REQUEST] DEBUG : Ответ: 201 CREATED для /save_project - app:log_response:98
+[04.04.2026 09:45:46] [REQUEST] INFO : Запрос: GET /workflow.html от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:45:46] [REQUEST] DEBUG : Ответ: 200 OK для /workflow.html - app:log_response:98
+[04.04.2026 09:45:46] [REQUEST] INFO : Запрос: GET /static/css/litegraph.css от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:45:46] [REQUEST] DEBUG : Ответ: 404 NOT FOUND для /static/css/litegraph.css - app:log_response:98
+[04.04.2026 09:45:46] [REQUEST] INFO : Запрос: GET /styles/workflow.css от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:45:46] [REQUEST] INFO : Запрос: GET /static/js/litegraph.js от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:45:46] [REQUEST] DEBUG : Ответ: 200 OK для /styles/workflow.css - app:log_response:98
+[04.04.2026 09:45:46] [REQUEST] DEBUG : Ответ: 404 NOT FOUND для /static/js/litegraph.js - app:log_response:98
+[04.04.2026 09:45:56] [REQUEST] INFO : Запрос: GET /index.html от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:45:56] [REQUEST] DEBUG : Ответ: 304 NOT MODIFIED для /index.html - app:log_response:98
+[04.04.2026 09:45:56] [REQUEST] INFO : Запрос: GET /static/css/browser@4 от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:45:56] [REQUEST] INFO : Запрос: GET /static/js/plotly-2.27.1.min.js от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:45:56] [REQUEST] DEBUG : Ответ: 304 NOT MODIFIED для /static/css/browser@4 - app:log_response:98
+[04.04.2026 09:45:56] [REQUEST] INFO : Запрос: GET /styles/modals.css от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:45:56] [REQUEST] INFO : Запрос: GET /styles/index.css от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:45:56] [REQUEST] DEBUG : Ответ: 304 NOT MODIFIED для /styles/modals.css - app:log_response:98
+[04.04.2026 09:45:56] [REQUEST] DEBUG : Ответ: 304 NOT MODIFIED для /static/js/plotly-2.27.1.min.js - app:log_response:98
+[04.04.2026 09:45:56] [REQUEST] INFO : Запрос: GET /icons/free-icon-folder-8316612.png от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:45:56] [REQUEST] DEBUG : Ответ: 304 NOT MODIFIED для /styles/index.css - app:log_response:98
+[04.04.2026 09:45:56] [REQUEST] DEBUG : Ответ: 404 NOT FOUND для /icons/free-icon-folder-8316612.png - app:log_response:98
+[04.04.2026 09:45:56] [REQUEST] INFO : Запрос: GET /icons/free-icon-data-storage-8322520.png от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:45:56] [REQUEST] DEBUG : Ответ: 404 NOT FOUND для /icons/free-icon-data-storage-8322520.png - app:log_response:98
+[04.04.2026 09:45:56] [REQUEST] INFO : Запрос: GET /icons/free-icon-undo.png от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:45:56] [REQUEST] DEBUG : Ответ: 404 NOT FOUND для /icons/free-icon-undo.png - app:log_response:98
+[04.04.2026 09:45:56] [REQUEST] INFO : Запрос: GET /icons/free-icon-redo.png от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:45:56] [REQUEST] DEBUG : Ответ: 404 NOT FOUND для /icons/free-icon-redo.png - app:log_response:98
+[04.04.2026 09:45:56] [REQUEST] INFO : Запрос: GET /icons/free-icon-history.png от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:45:56] [REQUEST] DEBUG : Ответ: 404 NOT FOUND для /icons/free-icon-history.png - app:log_response:98
+[04.04.2026 09:45:56] [REQUEST] INFO : Запрос: GET /src/globals/globals.js от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:45:56] [REQUEST] DEBUG : Ответ: 304 NOT MODIFIED для /src/globals/globals.js - app:log_response:98
+[04.04.2026 09:45:56] [REQUEST] INFO : Запрос: GET /src/tools/tools.js от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:45:56] [REQUEST] DEBUG : Ответ: 304 NOT MODIFIED для /src/tools/tools.js - app:log_response:98
+[04.04.2026 09:45:56] [REQUEST] INFO : Запрос: GET /src/fileManager/fileManager.js от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:45:56] [REQUEST] INFO : Запрос: GET /src/history/history.js от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:45:56] [REQUEST] DEBUG : Ответ: 304 NOT MODIFIED для /src/fileManager/fileManager.js - app:log_response:98
+[04.04.2026 09:45:56] [REQUEST] DEBUG : Ответ: 304 NOT MODIFIED для /src/history/history.js - app:log_response:98
+[04.04.2026 09:45:56] [REQUEST] INFO : Запрос: GET /src/imageOps/imageOps.js от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:45:56] [REQUEST] DEBUG : Ответ: 304 NOT MODIFIED для /src/imageOps/imageOps.js - app:log_response:98
+[04.04.2026 09:45:56] [REQUEST] INFO : Запрос: GET /src/recentFiles/recentFiles.js от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:45:56] [REQUEST] DEBUG : Ответ: 304 NOT MODIFIED для /src/recentFiles/recentFiles.js - app:log_response:98
+[04.04.2026 09:45:56] [REQUEST] INFO : Запрос: GET /src/server/server.js от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:45:56] [REQUEST] INFO : Запрос: GET /src/ui/ui.js от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:45:56] [REQUEST] DEBUG : Ответ: 304 NOT MODIFIED для /src/server/server.js - app:log_response:98
+[04.04.2026 09:45:56] [REQUEST] DEBUG : Ответ: 304 NOT MODIFIED для /src/ui/ui.js - app:log_response:98
+[04.04.2026 09:45:56] [REQUEST] INFO : Запрос: GET /src/events/events.js от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:45:56] [REQUEST] INFO : Запрос: GET /src/projectManager/projectManager.js от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:45:56] [REQUEST] DEBUG : Ответ: 304 NOT MODIFIED для /src/events/events.js - app:log_response:98
+[04.04.2026 09:45:57] [REQUEST] DEBUG : Ответ: 304 NOT MODIFIED для /src/projectManager/projectManager.js - app:log_response:98
+[04.04.2026 09:45:57] [REQUEST] INFO : Запрос: GET /src/main/main.js от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:45:57] [REQUEST] INFO : Запрос: GET /src/drawing/drawing.js от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:45:57] [REQUEST] DEBUG : Ответ: 304 NOT MODIFIED для /src/main/main.js - app:log_response:98
+[04.04.2026 09:45:57] [REQUEST] DEBUG : Ответ: 304 NOT MODIFIED для /src/drawing/drawing.js - app:log_response:98
+[04.04.2026 09:45:57] [REQUEST] INFO : Запрос: GET /src/tabs/tabs.js от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:45:57] [REQUEST] INFO : Запрос: GET /src/modals/models.js от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:45:57] [REQUEST] DEBUG : Ответ: 404 NOT FOUND для /src/modals/models.js - app:log_response:98
+[04.04.2026 09:45:57] [REQUEST] DEBUG : Ответ: 304 NOT MODIFIED для /src/tabs/tabs.js - app:log_response:98
+[04.04.2026 09:45:57] [REQUEST] INFO : Запрос: GET /images/notimages.png от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:45:57] [REQUEST] DEBUG : Ответ: 404 NOT FOUND для /images/notimages.png - app:log_response:98
+[04.04.2026 09:45:57] [REQUEST] INFO : Запрос: GET /icons/free-icon-rotate1.png от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:45:57] [REQUEST] DEBUG : Ответ: 404 NOT FOUND для /icons/free-icon-rotate1.png - app:log_response:98
+[04.04.2026 09:45:57] [REQUEST] INFO : Запрос: GET /icons/free-icon-rotate.png от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:45:57] [REQUEST] DEBUG : Ответ: 404 NOT FOUND для /icons/free-icon-rotate.png - app:log_response:98
+[04.04.2026 09:45:57] [REQUEST] INFO : Запрос: GET /icons/free-icon-refresh.png от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:45:57] [REQUEST] DEBUG : Ответ: 404 NOT FOUND для /icons/free-icon-refresh.png - app:log_response:98
+[04.04.2026 09:45:57] [REQUEST] INFO : Запрос: GET /icons/free-icon-fold-horizontal.png от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:45:57] [REQUEST] DEBUG : Ответ: 404 NOT FOUND для /icons/free-icon-fold-horizontal.png - app:log_response:98
+[04.04.2026 09:45:57] [REQUEST] INFO : Запрос: GET /icons/free-icon-fold-vertical.png от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:45:57] [REQUEST] DEBUG : Ответ: 404 NOT FOUND для /icons/free-icon-fold-vertical.png - app:log_response:98
+[04.04.2026 09:45:57] [REQUEST] INFO : Запрос: GET /images/SobelEffectPluginIcon.png от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:45:57] [REQUEST] DEBUG : Ответ: 404 NOT FOUND для /images/SobelEffectPluginIcon.png - app:log_response:98
+[04.04.2026 09:45:57] [REQUEST] INFO : Запрос: GET /images/EffectPluginIcon.png от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:45:57] [REQUEST] DEBUG : Ответ: 404 NOT FOUND для /images/EffectPluginIcon.png - app:log_response:98
+[04.04.2026 09:45:57] [REQUEST] INFO : Запрос: GET /images/ApproximationEffectPluginIcon.png от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:45:57] [REQUEST] DEBUG : Ответ: 404 NOT FOUND для /images/ApproximationEffectPluginIcon.png - app:log_response:98
+[04.04.2026 09:45:57] [REQUEST] INFO : Запрос: GET /images/PrelimProcess.png от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:45:57] [REQUEST] INFO : Запрос: GET /images/MedianEffectPluginIcon.png от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:45:57] [REQUEST] DEBUG : Ответ: 404 NOT FOUND для /images/PrelimProcess.png - app:log_response:98
+[04.04.2026 09:45:57] [REQUEST] DEBUG : Ответ: 404 NOT FOUND для /images/MedianEffectPluginIcon.png - app:log_response:98
+[04.04.2026 09:45:57] [REQUEST] INFO : Запрос: GET /images/NormalizEffectPluginIcon.png от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:45:57] [REQUEST] INFO : Запрос: GET /icons/free-icon-workflow.png от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:45:57] [REQUEST] DEBUG : Ответ: 404 NOT FOUND для /images/NormalizEffectPluginIcon.png - app:log_response:98
+[04.04.2026 09:45:57] [REQUEST] DEBUG : Ответ: 404 NOT FOUND для /icons/free-icon-workflow.png - app:log_response:98
+[04.04.2026 09:45:57] [REQUEST] INFO : Запрос: GET /icons/free-icon-CurvesEffect.png от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:45:57] [REQUEST] DEBUG : Ответ: 404 NOT FOUND для /icons/free-icon-CurvesEffect.png - app:log_response:98
+[04.04.2026 09:45:57] [REQUEST] INFO : Запрос: GET /images/notimages.png от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:45:57] [REQUEST] DEBUG : Ответ: 404 NOT FOUND для /images/notimages.png - app:log_response:98
+[04.04.2026 09:45:57] [REQUEST] INFO : Запрос: GET /api/recent_files от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:45:57] [REQUEST] INFO : Запрос: GET /list_projects от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:45:57] [REQUEST] DEBUG : Ответ: 200 OK для /api/recent_files - app:log_response:98
+[04.04.2026 09:45:57] [REQUEST] DEBUG : Ответ: 200 OK для /list_projects - app:log_response:98
+[04.04.2026 09:45:57] [REQUEST] INFO : Запрос: GET /load_project/proj_1775270968460_2764 от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:45:57] [REQUEST] DEBUG : Ответ: 200 OK для /load_project/proj_1775270968460_2764 - app:log_response:98
+[04.04.2026 09:45:58] [REQUEST] INFO : Запрос: GET /penpot-projects.html от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:45:58] [REQUEST] DEBUG : Ответ: 304 NOT MODIFIED для /penpot-projects.html - app:log_response:98
+[04.04.2026 09:45:58] [REQUEST] INFO : Запрос: GET /list_projects от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:45:58] [REQUEST] DEBUG : Ответ: 200 OK для /list_projects - app:log_response:98
+[04.04.2026 09:46:09] [REQUEST] INFO : Запрос: GET /workflow.html от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:46:09] [REQUEST] DEBUG : Ответ: 304 NOT MODIFIED для /workflow.html - app:log_response:98
+[04.04.2026 09:46:09] [REQUEST] INFO : Запрос: GET /static/css/litegraph.css от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:46:09] [REQUEST] DEBUG : Ответ: 404 NOT FOUND для /static/css/litegraph.css - app:log_response:98
+[04.04.2026 09:46:09] [REQUEST] INFO : Запрос: GET /styles/workflow.css от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:46:09] [REQUEST] INFO : Запрос: GET /static/js/litegraph.js от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:46:09] [REQUEST] DEBUG : Ответ: 304 NOT MODIFIED для /styles/workflow.css - app:log_response:98
+[04.04.2026 09:46:09] [REQUEST] DEBUG : Ответ: 404 NOT FOUND для /static/js/litegraph.js - app:log_response:98
+[04.04.2026 09:46:13] [REQUEST] INFO : Запрос: GET /penpot-projects.html от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:46:13] [REQUEST] DEBUG : Ответ: 304 NOT MODIFIED для /penpot-projects.html - app:log_response:98
+[04.04.2026 09:46:13] [REQUEST] INFO : Запрос: GET /list_projects от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:46:13] [REQUEST] DEBUG : Ответ: 200 OK для /list_projects - app:log_response:98
+[04.04.2026 09:46:16] [REQUEST] INFO : Запрос: GET /index.html от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:46:16] [REQUEST] DEBUG : Ответ: 304 NOT MODIFIED для /index.html - app:log_response:98
+[04.04.2026 09:46:16] [REQUEST] INFO : Запрос: GET /static/css/browser@4 от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:46:16] [REQUEST] INFO : Запрос: GET /styles/index.css от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:46:16] [REQUEST] DEBUG : Ответ: 304 NOT MODIFIED для /static/css/browser@4 - app:log_response:98
+[04.04.2026 09:46:16] [REQUEST] INFO : Запрос: GET /styles/modals.css от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:46:16] [REQUEST] DEBUG : Ответ: 304 NOT MODIFIED для /styles/index.css - app:log_response:98
+[04.04.2026 09:46:16] [REQUEST] INFO : Запрос: GET /static/js/plotly-2.27.1.min.js от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:46:16] [REQUEST] INFO : Запрос: GET /icons/free-icon-folder-8316612.png от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:46:16] [REQUEST] DEBUG : Ответ: 304 NOT MODIFIED для /static/js/plotly-2.27.1.min.js - app:log_response:98
+[04.04.2026 09:46:16] [REQUEST] DEBUG : Ответ: 304 NOT MODIFIED для /styles/modals.css - app:log_response:98
+[04.04.2026 09:46:16] [REQUEST] INFO : Запрос: GET /icons/free-icon-data-storage-8322520.png от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:46:16] [REQUEST] DEBUG : Ответ: 404 NOT FOUND для /icons/free-icon-folder-8316612.png - app:log_response:98
+[04.04.2026 09:46:16] [REQUEST] DEBUG : Ответ: 404 NOT FOUND для /icons/free-icon-data-storage-8322520.png - app:log_response:98
+[04.04.2026 09:46:16] [REQUEST] INFO : Запрос: GET /icons/free-icon-undo.png от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:46:16] [REQUEST] DEBUG : Ответ: 404 NOT FOUND для /icons/free-icon-undo.png - app:log_response:98
+[04.04.2026 09:46:16] [REQUEST] INFO : Запрос: GET /icons/free-icon-redo.png от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:46:16] [REQUEST] DEBUG : Ответ: 404 NOT FOUND для /icons/free-icon-redo.png - app:log_response:98
+[04.04.2026 09:46:16] [REQUEST] INFO : Запрос: GET /icons/free-icon-history.png от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:46:16] [REQUEST] INFO : Запрос: GET /src/globals/globals.js от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:46:16] [REQUEST] DEBUG : Ответ: 404 NOT FOUND для /icons/free-icon-history.png - app:log_response:98
+[04.04.2026 09:46:16] [REQUEST] INFO : Запрос: GET /src/tools/tools.js от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:46:16] [REQUEST] DEBUG : Ответ: 304 NOT MODIFIED для /src/tools/tools.js - app:log_response:98
+[04.04.2026 09:46:16] [REQUEST] DEBUG : Ответ: 304 NOT MODIFIED для /src/globals/globals.js - app:log_response:98
+[04.04.2026 09:46:16] [REQUEST] INFO : Запрос: GET /src/fileManager/fileManager.js от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:46:16] [REQUEST] INFO : Запрос: GET /src/history/history.js от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:46:16] [REQUEST] INFO : Запрос: GET /src/imageOps/imageOps.js от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:46:16] [REQUEST] DEBUG : Ответ: 304 NOT MODIFIED для /src/fileManager/fileManager.js - app:log_response:98
+[04.04.2026 09:46:16] [REQUEST] INFO : Запрос: GET /src/recentFiles/recentFiles.js от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:46:16] [REQUEST] INFO : Запрос: GET /src/server/server.js от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:46:16] [REQUEST] DEBUG : Ответ: 304 NOT MODIFIED для /src/history/history.js - app:log_response:98
+[04.04.2026 09:46:16] [REQUEST] DEBUG : Ответ: 304 NOT MODIFIED для /src/imageOps/imageOps.js - app:log_response:98
+[04.04.2026 09:46:16] [REQUEST] DEBUG : Ответ: 304 NOT MODIFIED для /src/recentFiles/recentFiles.js - app:log_response:98
+[04.04.2026 09:46:16] [REQUEST] DEBUG : Ответ: 304 NOT MODIFIED для /src/server/server.js - app:log_response:98
+[04.04.2026 09:46:16] [REQUEST] INFO : Запрос: GET /src/ui/ui.js от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:46:16] [REQUEST] INFO : Запрос: GET /src/events/events.js от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:46:16] [REQUEST] INFO : Запрос: GET /src/projectManager/projectManager.js от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:46:16] [REQUEST] INFO : Запрос: GET /icons/free-icon-CurvesEffect.png от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:46:16] [REQUEST] DEBUG : Ответ: 304 NOT MODIFIED для /src/ui/ui.js - app:log_response:98
+[04.04.2026 09:46:16] [REQUEST] DEBUG : Ответ: 404 NOT FOUND для /icons/free-icon-CurvesEffect.png - app:log_response:98
+[04.04.2026 09:46:16] [REQUEST] INFO : Запрос: GET /src/main/main.js от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:46:16] [REQUEST] DEBUG : Ответ: 304 NOT MODIFIED для /src/projectManager/projectManager.js - app:log_response:98
+[04.04.2026 09:46:16] [REQUEST] DEBUG : Ответ: 304 NOT MODIFIED для /src/events/events.js - app:log_response:98
+[04.04.2026 09:46:16] [REQUEST] INFO : Запрос: GET /src/drawing/drawing.js от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:46:16] [REQUEST] INFO : Запрос: GET /src/tabs/tabs.js от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:46:16] [REQUEST] INFO : Запрос: GET /src/modals/models.js от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:46:16] [REQUEST] DEBUG : Ответ: 304 NOT MODIFIED для /src/main/main.js - app:log_response:98
+[04.04.2026 09:46:16] [REQUEST] INFO : Запрос: GET /images/notimages.png от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:46:16] [REQUEST] INFO : Запрос: GET /icons/free-icon-rotate1.png от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:46:16] [REQUEST] DEBUG : Ответ: 304 NOT MODIFIED для /src/drawing/drawing.js - app:log_response:98
+[04.04.2026 09:46:16] [REQUEST] DEBUG : Ответ: 304 NOT MODIFIED для /src/tabs/tabs.js - app:log_response:98
+[04.04.2026 09:46:16] [REQUEST] DEBUG : Ответ: 404 NOT FOUND для /src/modals/models.js - app:log_response:98
+[04.04.2026 09:46:16] [REQUEST] DEBUG : Ответ: 404 NOT FOUND для /images/notimages.png - app:log_response:98
+[04.04.2026 09:46:16] [REQUEST] DEBUG : Ответ: 404 NOT FOUND для /icons/free-icon-rotate1.png - app:log_response:98
+[04.04.2026 09:46:16] [REQUEST] INFO : Запрос: GET /icons/free-icon-rotate.png от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:46:16] [REQUEST] INFO : Запрос: GET /icons/free-icon-refresh.png от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:46:16] [REQUEST] DEBUG : Ответ: 404 NOT FOUND для /icons/free-icon-rotate.png - app:log_response:98
+[04.04.2026 09:46:16] [REQUEST] INFO : Запрос: GET /icons/free-icon-fold-horizontal.png от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:46:16] [REQUEST] DEBUG : Ответ: 404 NOT FOUND для /icons/free-icon-refresh.png - app:log_response:98
+[04.04.2026 09:46:16] [REQUEST] INFO : Запрос: GET /icons/free-icon-fold-vertical.png от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:46:16] [REQUEST] DEBUG : Ответ: 404 NOT FOUND для /icons/free-icon-fold-horizontal.png - app:log_response:98
+[04.04.2026 09:46:16] [REQUEST] INFO : Запрос: GET /api/recent_files от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:46:16] [REQUEST] DEBUG : Ответ: 404 NOT FOUND для /icons/free-icon-fold-vertical.png - app:log_response:98
+[04.04.2026 09:46:16] [REQUEST] INFO : Запрос: GET /list_projects от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:46:16] [REQUEST] DEBUG : Ответ: 200 OK для /api/recent_files - app:log_response:98
+[04.04.2026 09:46:16] [REQUEST] INFO : Запрос: GET /images/SobelEffectPluginIcon.png от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:46:16] [REQUEST] DEBUG : Ответ: 404 NOT FOUND для /images/SobelEffectPluginIcon.png - app:log_response:98
+[04.04.2026 09:46:16] [REQUEST] INFO : Запрос: GET /images/EffectPluginIcon.png от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:46:16] [REQUEST] DEBUG : Ответ: 404 NOT FOUND для /images/EffectPluginIcon.png - app:log_response:98
+[04.04.2026 09:46:16] [REQUEST] INFO : Запрос: GET /images/ApproximationEffectPluginIcon.png от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:46:16] [REQUEST] DEBUG : Ответ: 404 NOT FOUND для /images/ApproximationEffectPluginIcon.png - app:log_response:98
+[04.04.2026 09:46:16] [REQUEST] INFO : Запрос: GET /images/PrelimProcess.png от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:46:16] [REQUEST] DEBUG : Ответ: 404 NOT FOUND для /images/PrelimProcess.png - app:log_response:98
+[04.04.2026 09:46:16] [REQUEST] DEBUG : Ответ: 200 OK для /list_projects - app:log_response:98
+[04.04.2026 09:46:16] [REQUEST] INFO : Запрос: GET /images/MedianEffectPluginIcon.png от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:46:16] [REQUEST] INFO : Запрос: GET /images/NormalizEffectPluginIcon.png от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:46:16] [REQUEST] DEBUG : Ответ: 404 NOT FOUND для /images/MedianEffectPluginIcon.png - app:log_response:98
+[04.04.2026 09:46:16] [REQUEST] DEBUG : Ответ: 404 NOT FOUND для /images/NormalizEffectPluginIcon.png - app:log_response:98
+[04.04.2026 09:46:16] [REQUEST] INFO : Запрос: GET /icons/free-icon-workflow.png от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:46:16] [REQUEST] DEBUG : Ответ: 404 NOT FOUND для /icons/free-icon-workflow.png - app:log_response:98
+[04.04.2026 09:46:16] [REQUEST] INFO : Запрос: GET /load_project/proj_1775270968460_2764 от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:46:16] [REQUEST] DEBUG : Ответ: 200 OK для /load_project/proj_1775270968460_2764 - app:log_response:98
+[04.04.2026 09:46:17] [REQUEST] INFO : Запрос: GET /penpot-projects.html от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:46:17] [REQUEST] DEBUG : Ответ: 304 NOT MODIFIED для /penpot-projects.html - app:log_response:98
+[04.04.2026 09:46:17] [REQUEST] INFO : Запрос: GET /list_projects от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:46:17] [REQUEST] DEBUG : Ответ: 200 OK для /list_projects - app:log_response:98
+[04.04.2026 09:46:20] [REQUEST] INFO : Запрос: POST /save_project от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:46:20] [REQUEST] DEBUG : Ответ: 201 CREATED для /save_project - app:log_response:98
+[04.04.2026 09:46:20] [REQUEST] INFO : Запрос: POST /save_project от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:46:21] [REQUEST] DEBUG : Ответ: 201 CREATED для /save_project - app:log_response:98
+[04.04.2026 09:46:21] [REQUEST] INFO : Запрос: POST /save_project от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:46:21] [REQUEST] DEBUG : Ответ: 201 CREATED для /save_project - app:log_response:98
+[04.04.2026 09:46:21] [REQUEST] INFO : Запрос: POST /save_project от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:46:21] [REQUEST] DEBUG : Ответ: 201 CREATED для /save_project - app:log_response:98
+[04.04.2026 09:46:23] [REQUEST] INFO : Запрос: POST /save_project от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:46:23] [REQUEST] DEBUG : Ответ: 201 CREATED для /save_project - app:log_response:98
+[04.04.2026 09:46:23] [REQUEST] INFO : Запрос: POST /save_project от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:46:23] [REQUEST] DEBUG : Ответ: 201 CREATED для /save_project - app:log_response:98
+[04.04.2026 09:46:23] [REQUEST] INFO : Запрос: POST /save_project от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:46:23] [REQUEST] DEBUG : Ответ: 201 CREATED для /save_project - app:log_response:98
+[04.04.2026 09:46:23] [REQUEST] INFO : Запрос: POST /save_project от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:46:23] [REQUEST] DEBUG : Ответ: 201 CREATED для /save_project - app:log_response:98
+[04.04.2026 09:46:26] [REQUEST] INFO : Запрос: GET /index.html от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:46:26] [REQUEST] DEBUG : Ответ: 304 NOT MODIFIED для /index.html - app:log_response:98
+[04.04.2026 09:46:26] [REQUEST] INFO : Запрос: GET /static/css/browser@4 от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:46:26] [REQUEST] INFO : Запрос: GET /static/js/plotly-2.27.1.min.js от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:46:26] [REQUEST] INFO : Запрос: GET /styles/index.css от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:46:26] [REQUEST] INFO : Запрос: GET /icons/free-icon-data-storage-8322520.png от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:46:26] [REQUEST] DEBUG : Ответ: 404 NOT FOUND для /icons/free-icon-data-storage-8322520.png - app:log_response:98
+[04.04.2026 09:46:26] [REQUEST] DEBUG : Ответ: 304 NOT MODIFIED для /static/js/plotly-2.27.1.min.js - app:log_response:98
+[04.04.2026 09:46:26] [REQUEST] DEBUG : Ответ: 304 NOT MODIFIED для /static/css/browser@4 - app:log_response:98
+[04.04.2026 09:46:26] [REQUEST] DEBUG : Ответ: 304 NOT MODIFIED для /styles/index.css - app:log_response:98
+[04.04.2026 09:46:26] [REQUEST] INFO : Запрос: GET /icons/free-icon-folder-8316612.png от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:46:26] [REQUEST] INFO : Запрос: GET /styles/modals.css от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:46:26] [REQUEST] DEBUG : Ответ: 404 NOT FOUND для /icons/free-icon-folder-8316612.png - app:log_response:98
+[04.04.2026 09:46:26] [REQUEST] INFO : Запрос: GET /icons/free-icon-undo.png от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:46:26] [REQUEST] DEBUG : Ответ: 404 NOT FOUND для /icons/free-icon-undo.png - app:log_response:98
+[04.04.2026 09:46:26] [REQUEST] DEBUG : Ответ: 304 NOT MODIFIED для /styles/modals.css - app:log_response:98
+[04.04.2026 09:46:26] [REQUEST] INFO : Запрос: GET /icons/free-icon-redo.png от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:46:26] [REQUEST] DEBUG : Ответ: 404 NOT FOUND для /icons/free-icon-redo.png - app:log_response:98
+[04.04.2026 09:46:26] [REQUEST] INFO : Запрос: GET /icons/free-icon-history.png от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:46:26] [REQUEST] DEBUG : Ответ: 404 NOT FOUND для /icons/free-icon-history.png - app:log_response:98
+[04.04.2026 09:46:26] [REQUEST] INFO : Запрос: GET /src/globals/globals.js от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:46:26] [REQUEST] INFO : Запрос: GET /src/tools/tools.js от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:46:26] [REQUEST] DEBUG : Ответ: 304 NOT MODIFIED для /src/globals/globals.js - app:log_response:98
+[04.04.2026 09:46:26] [REQUEST] INFO : Запрос: GET /src/fileManager/fileManager.js от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:46:26] [REQUEST] DEBUG : Ответ: 304 NOT MODIFIED для /src/tools/tools.js - app:log_response:98
+[04.04.2026 09:46:26] [REQUEST] INFO : Запрос: GET /src/history/history.js от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:46:26] [REQUEST] INFO : Запрос: GET /src/imageOps/imageOps.js от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:46:26] [REQUEST] DEBUG : Ответ: 304 NOT MODIFIED для /src/fileManager/fileManager.js - app:log_response:98
+[04.04.2026 09:46:26] [REQUEST] INFO : Запрос: GET /src/recentFiles/recentFiles.js от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:46:26] [REQUEST] INFO : Запрос: GET /src/server/server.js от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:46:26] [REQUEST] DEBUG : Ответ: 304 NOT MODIFIED для /src/history/history.js - app:log_response:98
+[04.04.2026 09:46:26] [REQUEST] INFO : Запрос: GET /src/ui/ui.js от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:46:26] [REQUEST] DEBUG : Ответ: 304 NOT MODIFIED для /src/imageOps/imageOps.js - app:log_response:98
+[04.04.2026 09:46:26] [REQUEST] DEBUG : Ответ: 304 NOT MODIFIED для /src/server/server.js - app:log_response:98
+[04.04.2026 09:46:26] [REQUEST] DEBUG : Ответ: 304 NOT MODIFIED для /src/recentFiles/recentFiles.js - app:log_response:98
+[04.04.2026 09:46:26] [REQUEST] INFO : Запрос: GET /src/events/events.js от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:46:26] [REQUEST] DEBUG : Ответ: 304 NOT MODIFIED для /src/ui/ui.js - app:log_response:98
+[04.04.2026 09:46:26] [REQUEST] INFO : Запрос: GET /src/projectManager/projectManager.js от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:46:26] [REQUEST] DEBUG : Ответ: 304 NOT MODIFIED для /src/events/events.js - app:log_response:98
+[04.04.2026 09:46:26] [REQUEST] INFO : Запрос: GET /src/main/main.js от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:46:26] [REQUEST] DEBUG : Ответ: 304 NOT MODIFIED для /src/projectManager/projectManager.js - app:log_response:98
+[04.04.2026 09:46:26] [REQUEST] INFO : Запрос: GET /src/drawing/drawing.js от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:46:26] [REQUEST] DEBUG : Ответ: 304 NOT MODIFIED для /src/main/main.js - app:log_response:98
+[04.04.2026 09:46:26] [REQUEST] INFO : Запрос: GET /icons/free-icon-CurvesEffect.png от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:46:26] [REQUEST] DEBUG : Ответ: 304 NOT MODIFIED для /src/drawing/drawing.js - app:log_response:98
+[04.04.2026 09:46:26] [REQUEST] DEBUG : Ответ: 404 NOT FOUND для /icons/free-icon-CurvesEffect.png - app:log_response:98
+[04.04.2026 09:46:26] [REQUEST] INFO : Запрос: GET /src/tabs/tabs.js от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:46:26] [REQUEST] INFO : Запрос: GET /src/modals/models.js от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:46:26] [REQUEST] DEBUG : Ответ: 404 NOT FOUND для /src/modals/models.js - app:log_response:98
+[04.04.2026 09:46:26] [REQUEST] DEBUG : Ответ: 304 NOT MODIFIED для /src/tabs/tabs.js - app:log_response:98
+[04.04.2026 09:46:26] [REQUEST] INFO : Запрос: GET /images/notimages.png от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:46:26] [REQUEST] DEBUG : Ответ: 404 NOT FOUND для /images/notimages.png - app:log_response:98
+[04.04.2026 09:46:26] [REQUEST] INFO : Запрос: GET /icons/free-icon-rotate1.png от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:46:26] [REQUEST] INFO : Запрос: GET /icons/free-icon-rotate.png от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:46:26] [REQUEST] DEBUG : Ответ: 404 NOT FOUND для /icons/free-icon-rotate1.png - app:log_response:98
+[04.04.2026 09:46:26] [REQUEST] DEBUG : Ответ: 404 NOT FOUND для /icons/free-icon-rotate.png - app:log_response:98
+[04.04.2026 09:46:26] [REQUEST] INFO : Запрос: GET /icons/free-icon-refresh.png от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:46:26] [REQUEST] DEBUG : Ответ: 404 NOT FOUND для /icons/free-icon-refresh.png - app:log_response:98
+[04.04.2026 09:46:26] [REQUEST] INFO : Запрос: GET /icons/free-icon-fold-horizontal.png от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:46:26] [REQUEST] INFO : Запрос: GET /icons/free-icon-fold-vertical.png от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:46:26] [REQUEST] DEBUG : Ответ: 404 NOT FOUND для /icons/free-icon-fold-horizontal.png - app:log_response:98
+[04.04.2026 09:46:26] [REQUEST] INFO : Запрос: GET /images/SobelEffectPluginIcon.png от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:46:26] [REQUEST] DEBUG : Ответ: 404 NOT FOUND для /icons/free-icon-fold-vertical.png - app:log_response:98
+[04.04.2026 09:46:26] [REQUEST] DEBUG : Ответ: 404 NOT FOUND для /images/SobelEffectPluginIcon.png - app:log_response:98
+[04.04.2026 09:46:26] [REQUEST] INFO : Запрос: GET /api/recent_files от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:46:26] [REQUEST] INFO : Запрос: GET /list_projects от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:46:26] [REQUEST] DEBUG : Ответ: 200 OK для /api/recent_files - app:log_response:98
+[04.04.2026 09:46:26] [REQUEST] INFO : Запрос: GET /images/EffectPluginIcon.png от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:46:26] [REQUEST] DEBUG : Ответ: 404 NOT FOUND для /images/EffectPluginIcon.png - app:log_response:98
+[04.04.2026 09:46:26] [REQUEST] INFO : Запрос: GET /images/ApproximationEffectPluginIcon.png от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:46:26] [REQUEST] DEBUG : Ответ: 404 NOT FOUND для /images/ApproximationEffectPluginIcon.png - app:log_response:98
+[04.04.2026 09:46:26] [REQUEST] INFO : Запрос: GET /images/PrelimProcess.png от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:46:26] [REQUEST] INFO : Запрос: GET /images/MedianEffectPluginIcon.png от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:46:26] [REQUEST] DEBUG : Ответ: 404 NOT FOUND для /images/PrelimProcess.png - app:log_response:98
+[04.04.2026 09:46:26] [REQUEST] DEBUG : Ответ: 404 NOT FOUND для /images/MedianEffectPluginIcon.png - app:log_response:98
+[04.04.2026 09:46:26] [REQUEST] INFO : Запрос: GET /images/NormalizEffectPluginIcon.png от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:46:26] [REQUEST] DEBUG : Ответ: 404 NOT FOUND для /images/NormalizEffectPluginIcon.png - app:log_response:98
+[04.04.2026 09:46:26] [REQUEST] INFO : Запрос: GET /icons/free-icon-workflow.png от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:46:26] [REQUEST] DEBUG : Ответ: 404 NOT FOUND для /icons/free-icon-workflow.png - app:log_response:98
+[04.04.2026 09:46:26] [REQUEST] DEBUG : Ответ: 200 OK для /list_projects - app:log_response:98
+[04.04.2026 09:46:26] [REQUEST] INFO : Запрос: GET /load_project/proj_1775270968460_2764 от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:46:26] [REQUEST] DEBUG : Ответ: 200 OK для /load_project/proj_1775270968460_2764 - app:log_response:98
+[04.04.2026 09:46:37] [REQUEST] INFO : Запрос: POST /api/recent_files от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:46:37] [REQUEST] DEBUG : Ответ: 200 OK для /api/recent_files - app:log_response:98
+[04.04.2026 09:46:43] [REQUEST] INFO : Запрос: POST /api/recent_files от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:46:43] [REQUEST] DEBUG : Ответ: 200 OK для /api/recent_files - app:log_response:98
+[04.04.2026 09:47:12] [REQUEST] INFO : Запрос: GET /penpot-projects.html от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:47:12] [REQUEST] DEBUG : Ответ: 304 NOT MODIFIED для /penpot-projects.html - app:log_response:98
+[04.04.2026 09:47:12] [REQUEST] INFO : Запрос: GET /list_projects от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:47:12] [REQUEST] DEBUG : Ответ: 200 OK для /list_projects - app:log_response:98
+[04.04.2026 09:47:17] [REQUEST] INFO : Запрос: GET /index.html от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:47:17] [REQUEST] DEBUG : Ответ: 304 NOT MODIFIED для /index.html - app:log_response:98
+[04.04.2026 09:47:17] [REQUEST] INFO : Запрос: GET /static/css/browser@4 от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:47:17] [REQUEST] INFO : Запрос: GET /styles/index.css от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:47:17] [REQUEST] DEBUG : Ответ: 304 NOT MODIFIED для /static/css/browser@4 - app:log_response:98
+[04.04.2026 09:47:17] [REQUEST] INFO : Запрос: GET /static/js/plotly-2.27.1.min.js от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:47:17] [REQUEST] DEBUG : Ответ: 304 NOT MODIFIED для /styles/index.css - app:log_response:98
+[04.04.2026 09:47:17] [REQUEST] INFO : Запрос: GET /styles/modals.css от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:47:17] [REQUEST] DEBUG : Ответ: 304 NOT MODIFIED для /static/js/plotly-2.27.1.min.js - app:log_response:98
+[04.04.2026 09:47:17] [REQUEST] DEBUG : Ответ: 304 NOT MODIFIED для /styles/modals.css - app:log_response:98
+[04.04.2026 09:47:17] [REQUEST] INFO : Запрос: GET /icons/free-icon-folder-8316612.png от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:47:17] [REQUEST] DEBUG : Ответ: 404 NOT FOUND для /icons/free-icon-folder-8316612.png - app:log_response:98
+[04.04.2026 09:47:17] [REQUEST] INFO : Запрос: GET /icons/free-icon-data-storage-8322520.png от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:47:17] [REQUEST] DEBUG : Ответ: 404 NOT FOUND для /icons/free-icon-data-storage-8322520.png - app:log_response:98
+[04.04.2026 09:47:17] [REQUEST] INFO : Запрос: GET /icons/free-icon-undo.png от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:47:17] [REQUEST] DEBUG : Ответ: 404 NOT FOUND для /icons/free-icon-undo.png - app:log_response:98
+[04.04.2026 09:47:17] [REQUEST] INFO : Запрос: GET /icons/free-icon-redo.png от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:47:17] [REQUEST] DEBUG : Ответ: 404 NOT FOUND для /icons/free-icon-redo.png - app:log_response:98
+[04.04.2026 09:47:17] [REQUEST] INFO : Запрос: GET /icons/free-icon-history.png от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:47:17] [REQUEST] DEBUG : Ответ: 404 NOT FOUND для /icons/free-icon-history.png - app:log_response:98
+[04.04.2026 09:47:17] [REQUEST] INFO : Запрос: GET /src/globals/globals.js от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:47:17] [REQUEST] INFO : Запрос: GET /src/tools/tools.js от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:47:17] [REQUEST] DEBUG : Ответ: 304 NOT MODIFIED для /src/globals/globals.js - app:log_response:98
+[04.04.2026 09:47:17] [REQUEST] INFO : Запрос: GET /src/fileManager/fileManager.js от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:47:17] [REQUEST] DEBUG : Ответ: 304 NOT MODIFIED для /src/tools/tools.js - app:log_response:98
+[04.04.2026 09:47:17] [REQUEST] INFO : Запрос: GET /src/history/history.js от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:47:17] [REQUEST] INFO : Запрос: GET /src/imageOps/imageOps.js от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:47:17] [REQUEST] DEBUG : Ответ: 304 NOT MODIFIED для /src/fileManager/fileManager.js - app:log_response:98
+[04.04.2026 09:47:17] [REQUEST] DEBUG : Ответ: 304 NOT MODIFIED для /src/imageOps/imageOps.js - app:log_response:98
+[04.04.2026 09:47:17] [REQUEST] DEBUG : Ответ: 304 NOT MODIFIED для /src/history/history.js - app:log_response:98
+[04.04.2026 09:47:17] [REQUEST] INFO : Запрос: GET /src/recentFiles/recentFiles.js от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:47:17] [REQUEST] INFO : Запрос: GET /src/server/server.js от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:47:17] [REQUEST] INFO : Запрос: GET /icons/free-icon-CurvesEffect.png от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:47:17] [REQUEST] DEBUG : Ответ: 404 NOT FOUND для /icons/free-icon-CurvesEffect.png - app:log_response:98
+[04.04.2026 09:47:17] [REQUEST] DEBUG : Ответ: 304 NOT MODIFIED для /src/server/server.js - app:log_response:98
+[04.04.2026 09:47:17] [REQUEST] DEBUG : Ответ: 304 NOT MODIFIED для /src/recentFiles/recentFiles.js - app:log_response:98
+[04.04.2026 09:47:17] [REQUEST] INFO : Запрос: GET /src/ui/ui.js от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:47:17] [REQUEST] INFO : Запрос: GET /src/events/events.js от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:47:17] [REQUEST] INFO : Запрос: GET /src/projectManager/projectManager.js от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:47:17] [REQUEST] DEBUG : Ответ: 304 NOT MODIFIED для /src/events/events.js - app:log_response:98
+[04.04.2026 09:47:17] [REQUEST] DEBUG : Ответ: 304 NOT MODIFIED для /src/ui/ui.js - app:log_response:98
+[04.04.2026 09:47:17] [REQUEST] INFO : Запрос: GET /src/main/main.js от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:47:17] [REQUEST] DEBUG : Ответ: 304 NOT MODIFIED для /src/projectManager/projectManager.js - app:log_response:98
+[04.04.2026 09:47:17] [REQUEST] INFO : Запрос: GET /src/drawing/drawing.js от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:47:17] [REQUEST] DEBUG : Ответ: 304 NOT MODIFIED для /src/main/main.js - app:log_response:98
+[04.04.2026 09:47:17] [REQUEST] INFO : Запрос: GET /src/tabs/tabs.js от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:47:17] [REQUEST] DEBUG : Ответ: 304 NOT MODIFIED для /src/drawing/drawing.js - app:log_response:98
+[04.04.2026 09:47:17] [REQUEST] INFO : Запрос: GET /src/modals/models.js от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:47:17] [REQUEST] DEBUG : Ответ: 304 NOT MODIFIED для /src/tabs/tabs.js - app:log_response:98
+[04.04.2026 09:47:18] [REQUEST] INFO : Запрос: GET /images/notimages.png от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:47:18] [REQUEST] DEBUG : Ответ: 404 NOT FOUND для /src/modals/models.js - app:log_response:98
+[04.04.2026 09:47:18] [REQUEST] INFO : Запрос: GET /icons/free-icon-rotate1.png от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:47:18] [REQUEST] DEBUG : Ответ: 404 NOT FOUND для /images/notimages.png - app:log_response:98
+[04.04.2026 09:47:18] [REQUEST] INFO : Запрос: GET /icons/free-icon-rotate.png от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:47:18] [REQUEST] DEBUG : Ответ: 404 NOT FOUND для /icons/free-icon-rotate1.png - app:log_response:98
+[04.04.2026 09:47:18] [REQUEST] INFO : Запрос: GET /icons/free-icon-refresh.png от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:47:18] [REQUEST] DEBUG : Ответ: 404 NOT FOUND для /icons/free-icon-rotate.png - app:log_response:98
+[04.04.2026 09:47:18] [REQUEST] DEBUG : Ответ: 404 NOT FOUND для /icons/free-icon-refresh.png - app:log_response:98
+[04.04.2026 09:47:18] [REQUEST] INFO : Запрос: GET /icons/free-icon-fold-horizontal.png от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:47:18] [REQUEST] DEBUG : Ответ: 404 NOT FOUND для /icons/free-icon-fold-horizontal.png - app:log_response:98
+[04.04.2026 09:47:18] [REQUEST] INFO : Запрос: GET /icons/free-icon-fold-vertical.png от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:47:18] [REQUEST] DEBUG : Ответ: 404 NOT FOUND для /icons/free-icon-fold-vertical.png - app:log_response:98
+[04.04.2026 09:47:18] [REQUEST] INFO : Запрос: GET /api/recent_files от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:47:18] [REQUEST] INFO : Запрос: GET /list_projects от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:47:18] [REQUEST] DEBUG : Ответ: 200 OK для /api/recent_files - app:log_response:98
+[04.04.2026 09:47:18] [REQUEST] INFO : Запрос: GET /images/SobelEffectPluginIcon.png от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:47:18] [REQUEST] DEBUG : Ответ: 404 NOT FOUND для /images/SobelEffectPluginIcon.png - app:log_response:98
+[04.04.2026 09:47:18] [REQUEST] INFO : Запрос: GET /images/EffectPluginIcon.png от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:47:18] [REQUEST] DEBUG : Ответ: 404 NOT FOUND для /images/EffectPluginIcon.png - app:log_response:98
+[04.04.2026 09:47:18] [REQUEST] INFO : Запрос: GET /images/ApproximationEffectPluginIcon.png от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:47:18] [REQUEST] INFO : Запрос: GET /images/PrelimProcess.png от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:47:18] [REQUEST] DEBUG : Ответ: 404 NOT FOUND для /images/ApproximationEffectPluginIcon.png - app:log_response:98
+[04.04.2026 09:47:18] [REQUEST] INFO : Запрос: GET /images/MedianEffectPluginIcon.png от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:47:18] [REQUEST] DEBUG : Ответ: 404 NOT FOUND для /images/PrelimProcess.png - app:log_response:98
+[04.04.2026 09:47:18] [REQUEST] INFO : Запрос: GET /images/NormalizEffectPluginIcon.png от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:47:18] [REQUEST] DEBUG : Ответ: 404 NOT FOUND для /images/MedianEffectPluginIcon.png - app:log_response:98
+[04.04.2026 09:47:18] [REQUEST] DEBUG : Ответ: 404 NOT FOUND для /images/NormalizEffectPluginIcon.png - app:log_response:98
+[04.04.2026 09:47:18] [REQUEST] INFO : Запрос: GET /icons/free-icon-workflow.png от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:47:18] [REQUEST] DEBUG : Ответ: 404 NOT FOUND для /icons/free-icon-workflow.png - app:log_response:98
+[04.04.2026 09:47:18] [REQUEST] DEBUG : Ответ: 200 OK для /list_projects - app:log_response:98
+[04.04.2026 09:47:18] [REQUEST] INFO : Запрос: GET /load_project/proj_1775270968460_2764 от 127.0.0.1 - app:log_request:94
+[04.04.2026 09:47:18] [REQUEST] DEBUG : Ответ: 200 OK для /load_project/proj_1775270968460_2764 - app:log_response:98
