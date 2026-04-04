@@ -2305,3 +2305,7 @@
 [04.04.2026 09:47:18] [REQUEST] DEBUG : Ответ: 200 OK для /list_projects - app:log_response:98
 [04.04.2026 09:47:18] [REQUEST] INFO : Запрос: GET /load_project/proj_1775270968460_2764 от 127.0.0.1 - app:log_request:94
 [04.04.2026 09:47:18] [REQUEST] DEBUG : Ответ: 200 OK для /load_project/proj_1775270968460_2764 - app:log_response:98
+[04.04.2026 20:32:29] [REQUEST] INFO : Запрос: GET /penpot-projects.html от 127.0.0.1 - app:log_request:94
+[04.04.2026 20:32:29] [REQUEST] DEBUG : Ответ: 304 NOT MODIFIED для /penpot-projects.html - app:log_response:98
+[04.04.2026 20:32:29] [REQUEST] INFO : Запрос: GET /list_projects от 127.0.0.1 - app:log_request:94
+[04.04.2026 20:32:29] [REQUEST] DEBUG : Ответ: 200 OK для /list_projects - app:log_response:98
