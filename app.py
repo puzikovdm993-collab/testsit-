@@ -152,8 +152,8 @@ def set_minio_client():
 
     # Получаем параметры из окружения (с дефолтами)
     endpoint = os.getenv("MINIO_ENDPOINT", "localhost:9000")
-    access_key = os.getenv("MINIO_ACCESS_KEY", "test")
-    secret_key = os.getenv("MINIO_SECRET_KEY", "test")
+    access_key = os.getenv("MINIO_ACCESS_KEY", "minioadmin")
+    secret_key = os.getenv("MINIO_SECRET_KEY", "minioadmin")
     bucket = os.getenv("MINIO_BUCKET", "wtis")
     region = os.getenv("MINIO_REGION", "us-east-1")
     secure = os.getenv("MINIO_SECURE", "False").lower() == "true"
