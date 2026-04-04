@@ -35,6 +35,21 @@ document.addEventListener('DOMContentLoaded', function() {
     
     initDomElements();
     initRecentFiles();
+    
+    // Инициализация менеджера проектов: загрузка последнего проекта или создание нового
+    initProjectManager().then(project => {
+        if (project) {
+            console.log('✅ Менеджер проектов инициализирован');
+            
+            // Настраиваем периодическое автосохранение (каждые 30 секунд)
+            setupAutoSave();
+        } else {
+            console.warn('⚠️ Не удалось инициализировать менеджер проектов');
+        }
+    }).catch(error => {
+        console.error('❌ Ошибка при инициализации менеджера проектов:', error);
+    });
+    
     updateToolInfo();
     // Инициализируем состояние кнопок при загрузке (когда файлов еще нет)
     updateButtonsState();

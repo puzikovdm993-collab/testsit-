@@ -2,6 +2,48 @@
 // Все данные о проектах хранятся только в MinIO, без localStorage/IndexedDB
 
 let currentProject = null;
+let lastProjectId = null; // ID последнего открытого проекта
+
+/**
+ * Инициализация менеджера проектов при старте приложения
+ * Загружает последний активный проект из MinIO или создает новый
+ */
+async function initProjectManager() {
+    console.log('🔄 Инициализация менеджера проектов...');
+    
+    try {
+        // Получаем список проектов
+        const projects = await listProjects();
+        
+        if (projects && projects.length > 0) {
+            // Сортируем проекты по дате изменения (последний сверху)
+            projects.sort((a, b) => {
+                return new Date(b.last_modified) - new Date(a.last_modified);
+            });
+            
+            // Загружаем последний проект
+            const lastProject = projects[0];
+            console.log('📁 Найден последний проект:', lastProject.id);
+            
+            const loadedProject = await loadProject(lastProject.id);
+            if (loadedProject) {
+                lastProjectId = lastProject.id;
+                console.log('✅ Проект загружен при старте:', lastProject.id);
+                return loadedProject;
+            }
+        }
+        
+        // Если проектов нет или не удалось загрузить - создаем новый
+        console.log('ℹ️ Проекты не найдены, создаем новый проект');
+        const newProject = await createNewProject("Новый проект");
+        return newProject;
+        
+    } catch (error) {
+        console.error('❌ Ошибка инициализации менеджера проектов:', error);
+        // В случае ошибки создаем новый проект
+        return await createNewProject("Новый проект");
+    }
+}
 
 /**
  * Создать новый проект и сохранить его в MinIO
@@ -293,6 +335,7 @@ function getCurrentProject() {
 
 // Экспорт функций для использования в других модулях
 if (typeof window !== 'undefined') {
+    window.initProjectManager = initProjectManager;
     window.createNewProject = createNewProject;
     window.saveCurrentProject = saveCurrentProject;
     window.loadProject = loadProject;
@@ -300,4 +343,34 @@ if (typeof window !== 'undefined') {
     window.deleteProject = deleteProject;
     window.hasActiveProject = hasActiveProject;
     window.getCurrentProject = getCurrentProject;
+    window.setupAutoSave = setupAutoSave;
+}
+
+/**
+ * Настроить периодическое автосохранение проекта
+ */
+function setupAutoSave() {
+    // Автосохранение каждые 30 секунд
+    const AUTO_SAVE_INTERVAL = 30000;
+    
+    setInterval(async () => {
+        if (hasActiveProject()) {
+            console.log('🔄 Автосохранение проекта...');
+            await saveCurrentProject();
+        }
+    }, AUTO_SAVE_INTERVAL);
+    
+    // Сохранение при закрытии/обновлении страницы
+    window.addEventListener('beforeunload', async (event) => {
+        if (hasActiveProject()) {
+            console.log('💾 Сохранение проекта перед закрытием...');
+            try {
+                await saveCurrentProject();
+            } catch (error) {
+                console.error('Ошибка сохранения перед закрытием:', error);
+            }
+        }
+    });
+    
+    console.log(`✅ Автосохранение настроено (интервал: ${AUTO_SAVE_INTERVAL / 1000} сек)`);
 }
