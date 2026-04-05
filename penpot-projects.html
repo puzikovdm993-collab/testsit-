@@ -33,6 +33,7 @@
             --show-avatar-icon: inline-block;
             --stat-display: none;
             --card-icon-display: none;
+            --grid-min-width: 260px;
         }
 
         body.classic {
@@ -74,6 +75,10 @@
             --accent-soft: #2d3a5e;
         }
 
+        body.grid-density-compact { --grid-min-width: 200px; --card-padding: 8px; --card-gap: 12px; }
+        body.grid-density-normal   { --grid-min-width: 260px; --card-padding: 12px; --card-gap: 16px; }
+        body.grid-density-large    { --grid-min-width: 320px; --card-padding: 20px; --card-gap: 24px; }
+
         body {
             background: var(--bg);
             font-family: var(--font);
@@ -92,7 +97,6 @@
             overflow: hidden;
         }
 
-        /* ----- SIDEBAR ----- */
         .sidebar {
             width: 280px;
             background: var(--surface);
@@ -116,11 +120,8 @@
             align-items: center;
             gap: 8px;
             cursor: pointer;
-            transition: opacity 0.1s;
         }
-        .avatar-large:hover {
-            opacity: 0.8;
-        }
+        .avatar-large:hover { opacity: 0.8; }
         body.classic .avatar-large {
             width: 48px;
             height: 48px;
@@ -130,31 +131,12 @@
             font-size: 1.4rem;
             color: white;
         }
-        .avatar-large span {
-            display: var(--show-avatar-icon);
-        }
+        .avatar-large span { display: var(--show-avatar-icon); }
 
-        .user-name {
-            font-size: 0.9rem;
-            font-weight: 500;
-            color: var(--text);
-        }
-        body.classic .user-name {
-            font-weight: 700;
-            font-size: 1rem;
-        }
-
-        .user-role {
-            font-size: 0.7rem;
-            color: var(--text-secondary);
-            margin-top: 4px;
-        }
-        body.classic .user-role {
-            background: var(--accent-soft);
-            display: inline-block;
-            padding: 2px 10px;
-            border-radius: 30px;
-        }
+        .user-name { font-size: 0.9rem; font-weight: 500; color: var(--text); }
+        body.classic .user-name { font-weight: 700; font-size: 1rem; }
+        .user-role { font-size: 0.7rem; color: var(--text-secondary); margin-top: 4px; }
+        body.classic .user-role { background: var(--accent-soft); display: inline-block; padding: 2px 10px; border-radius: 30px; }
 
         .user-stats {
             display: var(--stat-display);
@@ -164,59 +146,18 @@
             padding: 10px 12px;
             border-radius: var(--radius);
             font-size: 0.7rem;
-            color: var(--text-secondary);
             border: 1px solid var(--border);
         }
-        .stat-item {
-            display: flex;
-            align-items: center;
-            gap: 6px;
-        }
+        .stat-item { display: flex; align-items: center; gap: 6px; }
 
-        .search-section {
-            padding: 16px;
-            border-bottom: 1px solid var(--border);
-        }
-        .search-label {
-            font-size: 0.65rem;
-            font-weight: 600;
-            text-transform: uppercase;
-            color: var(--text-secondary);
-            margin-bottom: 8px;
-        }
-        .search-box {
-            display: flex;
-            align-items: center;
-            border: 1px solid var(--border);
-            padding: 6px 10px;
-            border-radius: var(--radius);
-            background: var(--surface);
-        }
-        .search-box input {
-            background: transparent;
-            border: none;
-            width: 100%;
-            font-size: 0.8rem;
-            outline: none;
-            color: var(--text);
-            font-family: var(--font);
-        }
-        .search-box span {
-            color: var(--text-secondary);
-            margin-right: 8px;
-        }
+        .search-section { padding: 16px; border-bottom: 1px solid var(--border); }
+        .search-label { font-size: 0.65rem; font-weight: 600; text-transform: uppercase; color: var(--text-secondary); margin-bottom: 8px; }
+        .search-box { display: flex; align-items: center; border: 1px solid var(--border); padding: 6px 10px; border-radius: var(--radius); background: var(--surface); }
+        .search-box input { background: transparent; border: none; width: 100%; font-size: 0.8rem; outline: none; color: var(--text); font-family: var(--font); }
+        .search-box span { color: var(--text-secondary); margin-right: 8px; }
 
-        .projects-list-sidebar {
-            flex: 1;
-            padding: 12px 0;
-        }
-        .sidebar-title {
-            font-size: 0.65rem;
-            font-weight: 600;
-            text-transform: uppercase;
-            color: var(--text-secondary);
-            padding: 8px 16px;
-        }
+        .projects-list-sidebar { flex: 1; padding: 12px 0; }
+        .sidebar-title { font-size: 0.65rem; font-weight: 600; text-transform: uppercase; color: var(--text-secondary); padding: 8px 16px; }
         .project-side-item {
             padding: 8px 16px;
             cursor: pointer;
@@ -225,88 +166,30 @@
             border-left: 2px solid transparent;
             transition: 0.05s;
         }
-        body.classic .project-side-item {
-            margin: 2px 12px;
-            border-radius: var(--radius-sm);
-            border-left: none;
-        }
-        .project-side-item:hover {
-            background: var(--accent-soft);
-            color: var(--text);
-        }
-        .project-side-item.active-side {
-            background: var(--accent-soft);
-            border-left-color: var(--accent);
-            color: var(--accent);
-            font-weight: 500;
-        }
-        body.classic .project-side-item.active-side {
-            border-left: 3px solid var(--accent);
-            background: var(--accent-soft);
-        }
+        body.classic .project-side-item { margin: 2px 12px; border-radius: var(--radius-sm); border-left: none; }
+        .project-side-item:hover { background: var(--accent-soft); color: var(--text); }
+        .project-side-item.active-side { background: var(--accent-soft); border-left-color: var(--accent); color: var(--accent); font-weight: 500; }
+        body.classic .project-side-item.active-side { border-left: 3px solid var(--accent); background: var(--accent-soft); }
 
-        /* ----- MAIN ----- */
-        .main-content {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            overflow-y: auto;
-            padding: 24px 28px;
-        }
+        .main-content { flex: 1; display: flex; flex-direction: column; overflow-y: auto; padding: 24px 28px; }
+        .projects-header { display: flex; align-items: center; gap: 16px; flex-wrap: wrap; margin-bottom: 24px; }
+        .back-to-projects-btn { background: none; border: 1px solid var(--border); padding: 5px 12px; font-size: 0.7rem; cursor: pointer; color: var(--text-secondary); border-radius: var(--radius); }
+        .back-to-projects-btn:hover { border-color: var(--accent); color: var(--accent); }
+        .projects-header h2 { font-size: 1rem; font-weight: 500; color: var(--text); }
+        body.classic .projects-header h2 { font-size: 1.3rem; font-weight: 700; }
+        .result-count { font-size: 0.7rem; color: var(--text-secondary); }
+        .btn-primary { background: var(--accent); border: none; padding: 6px 14px; font-size: 0.7rem; font-weight: 500; cursor: pointer; color: var(--bg); border-radius: var(--radius); }
+        .btn-primary:hover { opacity: 0.85; }
+        .btn-icon { background: none; border: 1px solid var(--border); padding: 6px 12px; font-size: 0.8rem; cursor: pointer; border-radius: var(--radius); color: var(--text-secondary); }
+        .btn-icon:hover { border-color: var(--accent); color: var(--accent); }
+        .density-buttons { display: flex; gap: 6px; margin-left: auto; }
+        .density-btn.active { background: var(--accent); color: var(--bg); border-color: var(--accent); }
 
-        .projects-header {
-            display: flex;
-            align-items: center;
-            gap: 16px;
-            flex-wrap: wrap;
-            margin-bottom: 24px;
-        }
-        .back-to-projects-btn {
-            background: none;
-            border: 1px solid var(--border);
-            padding: 5px 12px;
-            font-size: 0.7rem;
-            cursor: pointer;
-            color: var(--text-secondary);
-            border-radius: var(--radius);
-        }
-        .back-to-projects-btn:hover {
-            border-color: var(--accent);
-            color: var(--accent);
-        }
-        .projects-header h2 {
-            font-size: 1rem;
-            font-weight: 500;
-            color: var(--text);
-        }
-        body.classic .projects-header h2 {
-            font-size: 1.3rem;
-            font-weight: 700;
-        }
-        .result-count {
-            font-size: 0.7rem;
-            color: var(--text-secondary);
-        }
-        .btn-primary {
-            background: var(--accent);
-            border: none;
-            padding: 6px 14px;
-            font-size: 0.7rem;
-            font-weight: 500;
-            cursor: pointer;
-            color: var(--bg);
-            transition: 0.1s;
-            border-radius: var(--radius);
-        }
-        .btn-primary:hover {
-            opacity: 0.85;
-        }
-
-        /* карточки */
         .projects-grid-main {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+            grid-template-columns: repeat(auto-fill, minmax(var(--grid-min-width), 1fr));
             gap: var(--card-gap);
+            transition: all 0.2s ease;
         }
 
         .project-card-main {
@@ -318,79 +201,24 @@
             position: relative;
             border-radius: var(--radius);
             box-shadow: var(--shadow);
+            animation: fadeIn 0.2s ease;
         }
-        .project-card-main.drag-over {
-            border-color: var(--accent);
-            background: var(--accent-soft);
-        }
-        .project-card-main:hover {
-            border-color: var(--accent);
-        }
-        .drag-handle {
-            position: absolute;
-            top: 8px;
-            left: 8px;
-            font-size: 1rem;
-            cursor: grab;
-            color: var(--text-secondary);
-            padding: 4px 6px;
-            border-radius: var(--radius);
-            user-select: none;
-            z-index: 5;
-        }
-        .drag-handle:active {
-            cursor: grabbing;
-        }
-        .drag-handle:hover {
-            background: var(--accent-soft);
-            color: var(--accent);
-        }
-        .project-settings-btn {
-            position: absolute;
-            top: 8px;
-            right: 8px;
-            background: none;
-            border: none;
-            color: var(--text-secondary);
-            font-size: 1rem;
-            cursor: pointer;
-            padding: 4px 6px;
-            border-radius: var(--radius);
-            z-index: 5;
-        }
-        .project-settings-btn:hover {
-            background: var(--accent-soft);
-            color: var(--accent);
-        }
-        .card-header-icon {
-            display: var(--card-icon-display);
-            font-size: 1.5rem;
-            margin-bottom: 12px;
-            margin-top: 8px;
-        }
-        .card-title {
-            font-weight: 500;
-            font-size: 0.85rem;
-            margin-bottom: 6px;
-            color: var(--text);
-            padding-right: 24px;
-            padding-left: 20px;
-        }
-        body.classic .card-title {
-            font-weight: 600;
-            font-size: 0.95rem;
-        }
-        .card-meta {
-            font-size: 0.7rem;
-            color: var(--text-secondary);
-            display: flex;
-            gap: 12px;
-            font-family: monospace;
-            margin-top: 6px;
-        }
-        .card-meta.extra-meta {
-            display: var(--show-extra-meta);
-        }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
+        .project-card-main.drag-over-placeholder { border-color: transparent; background: transparent; box-shadow: none; }
+        .project-card-main.dragging { opacity: 0.4; }
+        .drag-placeholder { background: var(--accent-soft); border: 2px dashed var(--accent); border-radius: var(--radius); margin: 4px 0; transition: all 0.1s; height: 80px; }
+        .drag-handle { position: absolute; top: 8px; left: 8px; font-size: 1rem; cursor: grab; color: var(--text-secondary); padding: 4px 6px; border-radius: var(--radius); user-select: none; z-index: 5; }
+        .drag-handle:active { cursor: grabbing; }
+        .drag-handle:hover { background: var(--accent-soft); color: var(--accent); }
+        .project-settings-btn { position: absolute; top: 8px; right: 8px; background: none; border: none; color: var(--text-secondary); font-size: 1rem; cursor: pointer; padding: 4px 6px; border-radius: var(--radius); z-index: 5; }
+        .project-settings-btn:hover { background: var(--accent-soft); color: var(--accent); }
+        .favorite-btn { position: absolute; bottom: 8px; left: 8px; background: none; border: none; font-size: 1.1rem; cursor: pointer; color: #fbbf24; text-shadow: 0 0 2px rgba(0,0,0,0.2); z-index: 5; transition: transform 0.1s; }
+        .favorite-btn:hover { transform: scale(1.1); }
+        .card-header-icon { display: var(--card-icon-display); font-size: 1.5rem; margin-bottom: 12px; margin-top: 8px; }
+        .card-title { font-weight: 500; font-size: 0.85rem; margin-bottom: 6px; color: var(--text); padding-right: 24px; padding-left: 20px; }
+        body.classic .card-title { font-weight: 600; font-size: 0.95rem; }
+        .card-meta { font-size: 0.7rem; color: var(--text-secondary); display: flex; gap: 12px; font-family: monospace; margin-top: 6px; }
+        .card-meta.extra-meta { display: var(--show-extra-meta); }
         .project-settings-menu {
             position: absolute;
             top: 32px;
@@ -398,15 +226,13 @@
             background: var(--surface);
             border: 1px solid var(--border);
             padding: 6px 0;
-            min-width: 150px;
+            min-width: 160px;
             z-index: 100;
             display: none;
             border-radius: var(--radius);
             box-shadow: var(--shadow);
         }
-        .project-settings-menu.show {
-            display: block;
-        }
+        .project-settings-menu.show { display: block; }
         .project-settings-menu-item {
             display: flex;
             align-items: center;
@@ -420,21 +246,9 @@
             color: var(--text-secondary);
             text-align: left;
         }
-        .project-settings-menu-item:hover {
-            background: var(--accent-soft);
-            color: var(--accent);
-        }
-        .empty-projects {
-            text-align: center;
-            padding: 48px;
-            color: var(--text-secondary);
-            border: 1px solid var(--border);
-            grid-column: 1 / -1;
-            font-size: 0.8rem;
-            border-radius: var(--radius);
-        }
+        .project-settings-menu-item:hover { background: var(--accent-soft); color: var(--accent); }
+        .empty-projects { text-align: center; padding: 48px; color: var(--text-secondary); border: 1px solid var(--border); grid-column: 1 / -1; font-size: 0.8rem; border-radius: var(--radius); }
 
-        /* модалки */
         .user-settings-modal {
             position: fixed;
             top: 0;
@@ -447,9 +261,7 @@
             align-items: center;
             z-index: 2000;
         }
-        .user-settings-modal.show {
-            display: flex;
-        }
+        .user-settings-modal.show { display: flex; }
         .user-settings-panel {
             background: var(--surface);
             border: 1px solid var(--border);
@@ -459,64 +271,15 @@
             border-radius: var(--radius);
             box-shadow: var(--shadow);
         }
-        .settings-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 20px;
-            padding-bottom: 12px;
-            border-bottom: 1px solid var(--border);
-        }
-        .settings-header h3 {
-            font-size: 1rem;
-            font-weight: 600;
-        }
-        .close-settings-btn {
-            background: none;
-            border: none;
-            font-size: 1.2rem;
-            cursor: pointer;
-            color: var(--text-secondary);
-        }
-        .settings-form-group {
-            margin-bottom: 18px;
-        }
-        .settings-form-group label {
-            font-size: 0.7rem;
-            font-weight: 600;
-            text-transform: uppercase;
-            color: var(--text-secondary);
-            display: block;
-            margin-bottom: 6px;
-        }
-        .settings-form-group input, .settings-form-group select {
-            width: 100%;
-            padding: 8px 12px;
-            background: var(--bg);
-            border: 1px solid var(--border);
-            color: var(--text);
-            font-size: 0.8rem;
-            font-family: var(--font);
-            border-radius: var(--radius);
-        }
-        .settings-form-group input:focus, .settings-form-group select:focus {
-            outline: none;
-            border-color: var(--accent);
-        }
-        .settings-actions {
-            display: flex;
-            gap: 12px;
-            margin-top: 24px;
-        }
-        .btn-secondary {
-            background: none;
-            border: 1px solid var(--border);
-            padding: 6px 14px;
-            font-size: 0.7rem;
-            cursor: pointer;
-            color: var(--text-secondary);
-            border-radius: var(--radius);
-        }
+        .settings-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; padding-bottom: 12px; border-bottom: 1px solid var(--border); }
+        .settings-header h3 { font-size: 1rem; font-weight: 600; }
+        .close-settings-btn { background: none; border: none; font-size: 1.2rem; cursor: pointer; color: var(--text-secondary); }
+        .settings-form-group { margin-bottom: 18px; }
+        .settings-form-group label { font-size: 0.7rem; font-weight: 600; text-transform: uppercase; color: var(--text-secondary); display: block; margin-bottom: 6px; }
+        .settings-form-group input, .settings-form-group select { width: 100%; padding: 8px 12px; background: var(--bg); border: 1px solid var(--border); color: var(--text); font-size: 0.8rem; font-family: var(--font); border-radius: var(--radius); }
+        .settings-form-group input:focus, .settings-form-group select:focus { outline: none; border-color: var(--accent); }
+        .settings-actions { display: flex; gap: 12px; margin-top: 24px; }
+        .btn-secondary { background: none; border: 1px solid var(--border); padding: 6px 14px; font-size: 0.7rem; cursor: pointer; color: var(--text-secondary); border-radius: var(--radius); }
         .toast-msg {
             position: fixed;
             bottom: 20px;
@@ -532,20 +295,12 @@
             pointer-events: none;
             border-radius: var(--radius);
         }
-        .toast-msg.show {
-            opacity: 1;
-        }
+        .toast-msg.show { opacity: 1; }
         @media (max-width: 768px) {
-            .app-layout {
-                flex-direction: column;
-            }
-            .sidebar {
-                width: 100%;
-                max-height: 40vh;
-            }
-            .main-content {
-                padding: 16px;
-            }
+            .app-layout { flex-direction: column; }
+            .sidebar { width: 100%; max-height: 40vh; }
+            .main-content { padding: 16px; }
+            .density-buttons { margin-left: 0; }
         }
     </style>
 </head>
@@ -556,17 +311,15 @@
             <div class="avatar-large"><span>◉</span></div>
             <div class="user-name" id="displayUserName">Алина</div>
             <div class="user-role" id="displayUserRole">дизайнер</div>
-            <div class="user-stats" id="userStatsPanel">
+            <div class="user-stats">
                 <div class="stat-item"><span>📁</span> <span id="statProjects">0</span> проектов</div>
                 <div class="stat-item"><span>⚡</span> <span id="statInProgress">0</span> активных</div>
+                <div class="stat-item"><span>⭐</span> <span id="statFavorites">0</span> избранных</div>
             </div>
         </div>
         <div class="search-section">
             <div class="search-label">поиск</div>
-            <div class="search-box">
-                <span>⌕</span>
-                <input type="text" id="sidebarSearchInput" placeholder="проект...">
-            </div>
+            <div class="search-box"><span>⌕</span><input type="text" id="sidebarSearchInput" placeholder="проект..."></div>
         </div>
         <div class="projects-list-sidebar">
             <div class="sidebar-title">проекты</div>
@@ -577,15 +330,20 @@
     <div class="main-content">
         <div class="projects-header" style="margin-bottom: 1rem;">
             <button id="openCreateProjectModalBtn" class="btn-primary">+ создать</button>
+            <button id="exportProjectsBtn" class="btn-icon">📤 экспорт всех</button>
+            <button id="importProjectsBtn" class="btn-icon">📥 импорт всех</button>
+            <div class="density-buttons">
+                <button data-density="compact" class="btn-icon density-btn" title="Компактный">▤</button>
+                <button data-density="normal" class="btn-icon density-btn active" title="Нормальный">▦</button>
+                <button data-density="large" class="btn-icon density-btn" title="Крупный">▣</button>
+            </div>
         </div>
         <div class="projects-header">
             <button id="backToProjectsBtn" class="back-to-projects-btn">← все</button>
             <h2>проекты</h2>
             <div class="result-count" id="projectsCountDisplay">0</div>
         </div>
-        <div id="projectsGridMain" class="projects-grid-main">
-            <div class="empty-projects">[ пусто ]</div>
-        </div>
+        <div id="projectsGridMain" class="projects-grid-main"><div class="empty-projects">[ пусто ]</div></div>
     </div>
 </div>
 
@@ -594,82 +352,37 @@
 <!-- модалка настроек -->
 <div id="userSettingsModal" class="user-settings-modal">
     <div class="user-settings-panel">
-        <div class="settings-header">
-            <h3>настройки</h3>
-            <button id="closeSettingsBtn" class="close-settings-btn">✕</button>
-        </div>
-        <div class="settings-form-group">
-            <label>имя</label>
-            <input type="text" id="settingsUserName" value="Алина">
-        </div>
-        <div class="settings-form-group">
-            <label>роль</label>
-            <input type="text" id="settingsUserRole" value="дизайнер">
-        </div>
-        <div class="settings-form-group">
-            <label>тема оформления</label>
-            <select id="settingsTheme">
-                <option value="dark">🌙 тёмная</option>
-                <option value="light">☀️ светлая</option>
-            </select>
-        </div>
-        <div class="settings-form-group">
-            <label>стиль интерфейса</label>
-            <select id="settingsUiStyle">
-                <option value="minimal">минималистичный</option>
-                <option value="classic">классический (светлая тема)</option>
-            </select>
-        </div>
-        <div class="settings-actions">
-            <button id="saveSettingsBtn" class="btn-primary">сохранить</button>
-            <button id="cancelSettingsBtn" class="btn-secondary">отмена</button>
-        </div>
+        <div class="settings-header"><h3>настройки</h3><button id="closeSettingsBtn" class="close-settings-btn">✕</button></div>
+        <div class="settings-form-group"><label>имя</label><input type="text" id="settingsUserName" value="Алина"></div>
+        <div class="settings-form-group"><label>роль</label><input type="text" id="settingsUserRole" value="дизайнер"></div>
+        <div class="settings-form-group"><label>тема оформления</label><select id="settingsTheme"><option value="dark">🌙 тёмная</option><option value="light">☀️ светлая</option></select></div>
+        <div class="settings-form-group"><label>стиль интерфейса</label><select id="settingsUiStyle"><option value="minimal">минималистичный</option><option value="classic">классический</option></select></div>
+        <div class="settings-actions"><button id="saveSettingsBtn" class="btn-primary">сохранить</button><button id="cancelSettingsBtn" class="btn-secondary">отмена</button></div>
     </div>
 </div>
 
 <!-- модалка создания проекта -->
 <div id="createProjectModal" class="user-settings-modal">
     <div class="user-settings-panel">
-        <div class="settings-header">
-            <h3>новый проект</h3>
-            <button id="closeCreateProjectModalBtn" class="close-settings-btn">✕</button>
-        </div>
-        <div class="settings-form-group">
-            <label>название</label>
-            <input type="text" id="newProjectName" placeholder="имя">
-        </div>
-        <div class="settings-form-group">
-            <label>категория</label>
-            <select id="projectCategory">
-                <option>веб</option>
-                <option>мобильное</option>
-                <option>ui kit</option>
-                <option>прототип</option>
-            </select>
-        </div>
-        <div class="settings-form-group">
-            <label>тип</label>
-            <select id="projectType">
-                <option value="classic">classic</option>
-                <option value="tis">tis</option>
-                <option value="workflow">workflow</option>
-            </select>
-        </div>
-        <div class="settings-actions">
-            <button id="createProjectModalBtn" class="btn-primary">создать</button>
-            <button id="cancelCreateProjectModalBtn" class="btn-secondary">отмена</button>
-        </div>
+        <div class="settings-header"><h3>новый проект</h3><button id="closeCreateProjectModalBtn" class="close-settings-btn">✕</button></div>
+        <div class="settings-form-group"><label>название</label><input type="text" id="newProjectName" placeholder="имя"></div>
+        <div class="settings-form-group"><label>категория</label><select id="projectCategory"><option>веб</option><option>мобильное</option><option>ui kit</option><option>прототип</option></select></div>
+        <div class="settings-form-group"><label>тип</label><select id="projectType"><option value="classic">classic</option><option value="tis">tis</option><option value="workflow">workflow</option></select></div>
+        <div class="settings-actions"><button id="createProjectModalBtn" class="btn-primary">создать</button><button id="cancelCreateProjectModalBtn" class="btn-secondary">отмена</button></div>
     </div>
 </div>
 
 <script>
-    // ---------- ПОЛНАЯ ЛОГИКА С ПОДДЕРЖКОЙ ДВУХ СТИЛЕЙ И DRAG-AND-DROP ----------
+    // ---------- ПОЛНАЯ ЛОГИКА С ПОДДЕРЖКОЙ ДВУХ СТИЛЕЙ, ИЗБРАННЫМ, ЭКСПОРТОМ/ИМПОРТОМ, ПЛОТНОСТЬЮ, УЛУЧШЕННЫМ DND ----------
     let projects = [];
     const API_BASE_URL = window.location.origin;
     let activeProjectId = null;
     let draggedProjectId = null;
+    let dragPlaceholder = null;
+    let dragSourceCard = null;
 
-    // DOM элементы
+    let favoriteIds = JSON.parse(localStorage.getItem('favorite_projects') || '[]');
+
     const sidebarListEl = document.getElementById('sidebarProjectsList');
     const projectsGridMain = document.getElementById('projectsGridMain');
     const projectsCountDisplay = document.getElementById('projectsCountDisplay');
@@ -696,13 +409,27 @@
     const displayUserRoleSpan = document.getElementById('displayUserRole');
     const statProjectsSpan = document.getElementById('statProjects');
     const statInProgressSpan = document.getElementById('statInProgress');
-    const userStatsPanel = document.getElementById('userStatsPanel');
+    const statFavoritesSpan = document.getElementById('statFavorites');
     const avatarLarge = document.querySelector('.avatar-large');
 
     function showToast(msg, isError = false) {
         toastMsg.textContent = msg;
         toastMsg.classList.add('show');
         setTimeout(() => toastMsg.classList.remove('show'), 1800);
+    }
+
+    function saveFavorites() {
+        localStorage.setItem('favorite_projects', JSON.stringify(favoriteIds));
+        updateUserStatsUI();
+        renderAll();
+    }
+
+    function toggleFavorite(projectId) {
+        const idx = favoriteIds.indexOf(projectId);
+        if (idx === -1) favoriteIds.push(projectId);
+        else favoriteIds.splice(idx, 1);
+        saveFavorites();
+        showToast(idx === -1 ? '⭐ В избранном' : '☆ Убрано из избранного');
     }
 
     async function loadProjectsFromMinIO() {
@@ -712,15 +439,9 @@
             const data = await res.json();
             if (data.success && Array.isArray(data.projects)) {
                 projects = data.projects;
-                // Присвоить order, если отсутствует
-                let maxOrder = 0;
                 for (let i = 0; i < projects.length; i++) {
-                    if (projects[i].order === undefined || projects[i].order === null) {
-                        projects[i].order = i;
-                    }
-                    if (projects[i].order > maxOrder) maxOrder = projects[i].order;
+                    if (projects[i].order === undefined || projects[i].order === null) projects[i].order = i;
                 }
-                // Сортировка по order
                 projects.sort((a,b) => (a.order || 0) - (b.order || 0));
                 return true;
             }
@@ -744,26 +465,32 @@
 
     function getFilteredProjects() {
         const term = sidebarSearchInput.value.trim().toLowerCase();
-        if (!term) return [...projects];
-        return projects.filter(p => p.name.toLowerCase().includes(term));
+        let filtered = [...projects];
+        if (term) filtered = filtered.filter(p => p.name.toLowerCase().includes(term));
+        filtered.sort((a,b) => {
+            const aFav = favoriteIds.includes(a.id);
+            const bFav = favoriteIds.includes(b.id);
+            if (aFav && !bFav) return -1;
+            if (!aFav && bFav) return 1;
+            return (a.order || 0) - (b.order || 0);
+        });
+        return filtered;
     }
 
     function getIconByType(type) { return type === "classic" ? "◧" : (type === "tis" ? "◨" : "◩"); }
-    function escapeHtml(str) { return str.replace(/[&<>]/g, function(m){ return m === '&' ? '&amp;' : (m === '<' ? '&lt;' : '&gt;'); }); }
+    function escapeHtml(str) { return str.replace(/[&<>]/g, m => m === '&' ? '&amp;' : (m === '<' ? '&lt;' : '&gt;')); }
 
     function updateUserStatsUI() {
         statProjectsSpan.innerText = projects.length;
         const inProgress = projects.filter(p => p.deadline && p.deadline >= new Date().toISOString().slice(0,10)).length;
         statInProgressSpan.innerText = inProgress;
+        statFavoritesSpan.innerText = favoriteIds.length;
     }
 
     function renderSidebarList() {
         const filtered = getFilteredProjects();
         sidebarListEl.innerHTML = '';
-        if (filtered.length === 0) {
-            sidebarListEl.innerHTML = '<div style="padding: 8px 16px; color: var(--text-secondary);">—</div>';
-            return;
-        }
+        if (filtered.length === 0) { sidebarListEl.innerHTML = '<div style="padding: 8px 16px; color: var(--text-secondary);">—</div>'; return; }
         filtered.forEach(p => {
             const div = document.createElement('div');
             div.className = 'project-side-item';
@@ -775,84 +502,87 @@
     }
 
     // ---------- DRAG & DROP ----------
-    async function updateOrderOnServer(updatedProjects) {
-        // Сохраняем каждый изменённый проект (те, у которых order отличается от предыдущего)
-        // Для простоты сохраняем все проекты, у которых order был изменён. Но можно и все.
-        // projects уже содержит новые order, сохраняем каждый проект.
-        for (let p of updatedProjects) {
-            await saveProjectToMinIO(p);
-        }
-    }
-
     function handleDragStart(e, projectId) {
-        const searchActive = sidebarSearchInput.value.trim() !== '';
-        if (searchActive) {
-            e.preventDefault();
-            showToast('✖ Снимите поиск для изменения порядка', true);
-            return false;
-        }
+        if (sidebarSearchInput.value.trim() !== '') { e.preventDefault(); showToast('✖ Снимите поиск для изменения порядка', true); return false; }
         draggedProjectId = projectId;
         e.dataTransfer.setData('text/plain', projectId);
         e.dataTransfer.effectAllowed = 'move';
-        // Стиль при перетаскивании
-        e.target.closest('.project-card-main')?.classList.add('dragging');
+        dragSourceCard = e.target.closest('.project-card-main');
+        if (dragSourceCard) dragSourceCard.classList.add('dragging');
+        const dragImage = dragSourceCard.cloneNode(true);
+        dragImage.style.opacity = '0.5';
+        dragImage.style.position = 'absolute';
+        dragImage.style.top = '-1000px';
+        document.body.appendChild(dragImage);
+        e.dataTransfer.setDragImage(dragImage, 0, 0);
+        setTimeout(() => document.body.removeChild(dragImage), 0);
     }
 
     function handleDragEnd(e) {
-        document.querySelectorAll('.project-card-main').forEach(card => {
-            card.classList.remove('dragging', 'drag-over');
-        });
+        if (dragSourceCard) dragSourceCard.classList.remove('dragging');
+        if (dragPlaceholder && dragPlaceholder.parentNode) dragPlaceholder.remove();
+        dragPlaceholder = null;
         draggedProjectId = null;
+        dragSourceCard = null;
+        document.querySelectorAll('.project-card-main').forEach(card => card.classList.remove('drag-over-placeholder'));
     }
 
     function handleDragOver(e) {
         e.preventDefault();
         e.dataTransfer.dropEffect = 'move';
-        const card = e.target.closest('.project-card-main');
-        if (card && draggedProjectId) {
-            card.classList.add('drag-over');
+        const grid = projectsGridMain;
+        const afterElement = getDragAfterElement(grid, e.clientY);
+        if (document.querySelector('.drag-placeholder') && afterElement !== document.querySelector('.drag-placeholder').nextSibling) {
+            document.querySelector('.drag-placeholder')?.remove();
+        }
+        if (!dragPlaceholder) {
+            dragPlaceholder = document.createElement('div');
+            dragPlaceholder.className = 'drag-placeholder';
+            dragPlaceholder.style.height = (dragSourceCard ? dragSourceCard.offsetHeight : 80) + 'px';
+            grid.insertBefore(dragPlaceholder, afterElement);
+        } else if (afterElement) {
+            grid.insertBefore(dragPlaceholder, afterElement);
+        } else {
+            grid.appendChild(dragPlaceholder);
         }
     }
 
-    function handleDragLeave(e) {
-        const card = e.target.closest('.project-card-main');
-        if (card) card.classList.remove('drag-over');
+    function getDragAfterElement(container, y) {
+        const draggableElements = [...container.querySelectorAll('.project-card-main:not(.dragging)')];
+        return draggableElements.reduce((closest, child) => {
+            const box = child.getBoundingClientRect();
+            const offset = y - box.top - box.height / 2;
+            if (offset < 0 && offset > closest.offset) return { offset: offset, element: child };
+            else return closest;
+        }, { offset: Number.NEGATIVE_INFINITY }).element;
     }
 
-    async function handleDrop(e, targetProjectId) {
+    async function handleDrop(e, targetProjectId = null) {
         e.preventDefault();
-        const sourceId = draggedProjectId;
-        if (!sourceId || sourceId === targetProjectId) return;
-        
-        const searchActive = sidebarSearchInput.value.trim() !== '';
-        if (searchActive) {
-            showToast('✖ Снимите поиск для изменения порядка', true);
-            return;
-        }
-
-        // Найти индексы в основном массиве projects (не в отфильтрованном)
-        const sourceIndex = projects.findIndex(p => p.id === sourceId);
-        const targetIndex = projects.findIndex(p => p.id === targetProjectId);
+        if (!draggedProjectId) return;
+        if (sidebarSearchInput.value.trim() !== '') { showToast('✖ Снимите поиск для изменения порядка', true); return; }
+        const placeholder = document.querySelector('.drag-placeholder');
+        if (!placeholder) return;
+        const targetCard = placeholder.nextSibling?.classList?.contains('project-card-main') ? placeholder.nextSibling : null;
+        let targetId = targetCard ? targetCard.getAttribute('data-id') : (placeholder.previousSibling?.getAttribute('data-id'));
+        if (!targetId && targetProjectId) targetId = targetProjectId;
+        if (!targetId) return;
+        const sourceIndex = projects.findIndex(p => p.id === draggedProjectId);
+        const targetIndex = projects.findIndex(p => p.id === targetId);
         if (sourceIndex === -1 || targetIndex === -1) return;
-
-        // Перемещение элемента
         const [movedProject] = projects.splice(sourceIndex, 1);
-        projects.splice(targetIndex, 0, movedProject);
-
-        // Обновить order для всех проектов в соответствии с новой позицией
-        for (let i = 0; i < projects.length; i++) {
-            projects[i].order = i;
-        }
-
-        // Сохранить изменения на сервере
-        await updateOrderOnServer(projects);
-        
-        // Перерисовать интерфейс
+        const newIndex = sourceIndex < targetIndex ? targetIndex - 1 : targetIndex;
+        projects.splice(newIndex, 0, movedProject);
+        for (let i = 0; i < projects.length; i++) projects[i].order = i;
+        for (let p of projects) await saveProjectToMinIO(p);
         renderAll();
         showToast('Порядок сохранён');
+        if (placeholder) placeholder.remove();
+        dragPlaceholder = null;
+        draggedProjectId = null;
     }
 
-    // ---------- ОСТАЛЬНАЯ ЛОГИКА ----------
+    // ---------- ОСНОВНЫЕ ДЕЙСТВИЯ С ПРОЕКТАМИ ----------
     function selectProject(projectId) {
         const p = projects.find(p => p.id === projectId);
         if(!p) return;
@@ -872,7 +602,7 @@
         if(!name) { showToast("укажите название", true); return; }
         if(projects.some(p => p.name.toLowerCase() === name.toLowerCase())) { showToast("проект существует", true); return; }
         const newId = 'proj_' + Date.now() + '_' + Math.random().toString(36).substr(2,6);
-        const maxOrder = projects.length > 0 ? Math.max(...projects.map(p => p.order || 0)) : -1;
+        const maxOrder = projects.length ? Math.max(...projects.map(p => p.order || 0)) : -1;
         const newProj = {
             id: newId, name, category: projectCategory.value, type: projectType.value,
             deadline: "", createdAt: new Date().toISOString().slice(0,10),
@@ -894,20 +624,11 @@
         const original = projects.find(p => p.id === projectId);
         if(!original) return;
         const newId = 'proj_' + Date.now() + '_' + Math.random().toString(36).substr(2,6);
-        const maxOrder = Math.max(...projects.map(p => p.order || 0));
-        const copy = { 
-            ...original, 
-            id: newId, 
-            name: `${original.name} (копия)`, 
-            createdAt: new Date().toISOString().slice(0,10),
-            order: maxOrder + 1
-        };
+        const maxOrder = projects.length ? Math.max(...projects.map(p => p.order || 0)) : -1;
+        const copy = { ...original, id: newId, name: `${original.name} (копия)`, createdAt: new Date().toISOString().slice(0,10), order: maxOrder + 1 };
         const saved = await saveProjectToMinIO(copy);
-        if(saved) { 
-            projects.push(copy); 
-            renderAll(); 
-            showToast(`✓ дубль`);
-        } else showToast("ошибка", true);
+        if(saved) { projects.push(copy); renderAll(); showToast(`✓ дубль`); }
+        else showToast("ошибка", true);
         closeAllMenus();
     }
 
@@ -917,11 +638,10 @@
         const deleted = await deleteProjectFromMinIO(projectId);
         if(!deleted) { showToast("ошибка", true); return; }
         projects = projects.filter(pr => pr.id !== projectId);
-        // Перенумеровать order
-        for (let i = 0; i < projects.length; i++) {
-            projects[i].order = i;
-        }
-        await updateOrderOnServer(projects);
+        favoriteIds = favoriteIds.filter(id => id !== projectId);
+        saveFavorites();
+        for (let i = 0; i < projects.length; i++) projects[i].order = i;
+        for (let p of projects) await saveProjectToMinIO(p);
         if(activeProjectId === projectId) activeProjectId = null;
         renderAll();
         showToast(`🗑 удалён`);
@@ -935,6 +655,127 @@
         closeAllMenus();
     }
 
+    // ---------- ЭКСПОРТ / ИМПОРТ ОТДЕЛЬНОГО ПРОЕКТА ----------
+    function exportSingleProject(projectId) {
+        const project = projects.find(p => p.id === projectId);
+        if (!project) return;
+        const dataStr = JSON.stringify(project, null, 2);
+        const blob = new Blob([dataStr], {type: 'application/json'});
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `project_${project.name.replace(/[^a-z0-9]/gi, '_')}_${project.id}.json`;
+        a.click();
+        URL.revokeObjectURL(url);
+        showToast(`Проект "${project.name}" экспортирован`);
+        closeAllMenus();
+    }
+
+    async function importSingleProject(projectId) {
+        const targetProject = projects.find(p => p.id === projectId);
+        if (!targetProject) return;
+        const input = document.createElement('input');
+        input.type = 'file';
+        input.accept = 'application/json';
+        input.onchange = async (e) => {
+            const file = e.target.files[0];
+            if (!file) return;
+            const text = await file.text();
+            try {
+                const imported = JSON.parse(text);
+                // Проверяем, что это объект проекта (должен иметь id, name, category, type)
+                if (!imported.id || !imported.name || !imported.category || !imported.type) {
+                    throw new Error('Невалидный файл проекта');
+                }
+                if (!confirm(`Заменить проект "${targetProject.name}" данными из файла?\nID проекта останется прежним (${targetProject.id}).`)) return;
+                // Сохраняем старый ID и order, заменяем остальные поля
+                const oldId = targetProject.id;
+                const oldOrder = targetProject.order;
+                const updatedProject = {
+                    ...imported,
+                    id: oldId,
+                    order: oldOrder,
+                    // если в импортированном нет createdAt, ставим текущий
+                    createdAt: imported.createdAt || new Date().toISOString().slice(0,10)
+                };
+                // Обновляем в массиве
+                const index = projects.findIndex(p => p.id === oldId);
+                if (index !== -1) projects[index] = updatedProject;
+                // Сохраняем на сервер
+                const saved = await saveProjectToMinIO(updatedProject);
+                if (saved) {
+                    renderAll();
+                    showToast(`Проект "${updatedProject.name}" обновлён из файла`);
+                } else {
+                    showToast('Ошибка сохранения', true);
+                }
+            } catch(err) {
+                showToast('Неверный JSON файл проекта', true);
+            }
+            closeAllMenus();
+        };
+        input.click();
+    }
+
+    // ---------- ГЛОБАЛЬНЫЙ ЭКСПОРТ / ИМПОРТ (все проекты) ----------
+    function exportAllProjects() {
+        const dataStr = JSON.stringify(projects, null, 2);
+        const blob = new Blob([dataStr], {type: 'application/json'});
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `penpot_projects_${new Date().toISOString().slice(0,19)}.json`;
+        a.click();
+        URL.revokeObjectURL(url);
+        showToast('Экспорт всех проектов выполнен');
+    }
+
+    function importAllProjects() {
+        const input = document.createElement('input');
+        input.type = 'file';
+        input.accept = 'application/json';
+        input.onchange = async (e) => {
+            const file = e.target.files[0];
+            if (!file) return;
+            const text = await file.text();
+            try {
+                const imported = JSON.parse(text);
+                if (!Array.isArray(imported)) throw new Error();
+                if (confirm('Заменить все текущие проекты? (Отмена — добавить)')) {
+                    projects = imported;
+                    favoriteIds = [];
+                } else {
+                    projects.push(...imported);
+                }
+                for (let i = 0; i < projects.length; i++) {
+                    if (!projects[i].id) projects[i].id = 'proj_' + Date.now() + '_' + i + '_' + Math.random().toString(36).substr(2,4);
+                    projects[i].order = i;
+                }
+                for (let p of projects) await saveProjectToMinIO(p);
+                renderAll();
+                showToast('Импорт завершён');
+            } catch(err) {
+                showToast('Неверный JSON файл', true);
+            }
+        };
+        input.click();
+    }
+
+    // ---------- ПЛОТНОСТЬ СЕТКИ ----------
+    function setDensity(density) {
+        document.body.classList.remove('grid-density-compact', 'grid-density-normal', 'grid-density-large');
+        document.body.classList.add(`grid-density-${density}`);
+        localStorage.setItem('grid_density', density);
+        document.querySelectorAll('.density-btn').forEach(btn => btn.classList.remove('active'));
+        document.querySelector(`.density-btn[data-density="${density}"]`).classList.add('active');
+    }
+    function loadDensity() {
+        const saved = localStorage.getItem('grid_density');
+        if (saved && ['compact', 'normal', 'large'].includes(saved)) setDensity(saved);
+        else setDensity('normal');
+    }
+
+    // ---------- ОТРИСОВКА ГЛАВНОЙ СЕТКИ ----------
     function renderMainGrid() {
         const filtered = getFilteredProjects();
         projectsGridMain.innerHTML = '';
@@ -950,53 +791,51 @@
             const typeLabel = project.type === 'classic' ? 'cls' : (project.type === 'tis' ? 'tis' : 'wf');
             const deadlineText = project.deadline ? `⏱ ${project.deadline}` : '—';
             const isClassic = document.body.classList.contains('classic');
+            const isFavorite = favoriteIds.includes(project.id);
             
-            // Кнопка-ручка для перетаскивания
             const dragHandle = `<div class="drag-handle" draggable="true" data-id="${project.id}">⠿</div>`;
+            const favoriteStar = `<button class="favorite-btn" data-id="${project.id}">${isFavorite ? '★' : '☆'}</button>`;
             
             card.innerHTML = `
                 ${dragHandle}
+                ${favoriteStar}
                 <button class="project-settings-btn" data-id="${project.id}">⋮</button>
                 ${isClassic ? `<div class="card-header-icon">${getIconByType(project.type)}</div>` : ''}
                 <div class="card-title">${escapeHtml(project.name)}</div>
-                <div class="card-meta"><span>${project.category}</span><span>${typeLabel}</span></div>
+                <div class="card-meta"><span>${escapeHtml(project.category)}</span><span>${typeLabel}</span></div>
                 ${isClassic ? `<div class="card-meta extra-meta"><span>${deadlineText}</span><span>📅 ${project.createdAt || '—'}</span></div>
                 <div class="card-meta extra-meta"><span>👤 ${escapeHtml(project.owner)}</span></div>` : ''}
                 <div class="project-settings-menu" id="menu-${project.id}">
-                    <button class="project-settings-menu-item" onclick="openProjectSettings('${project.id}')">настройки</button>
-                    <button class="project-settings-menu-item" onclick="duplicateProject('${project.id}')">дублировать</button>
-                    <button class="project-settings-menu-item" onclick="deleteProject('${project.id}')" style="color: var(--danger);">удалить</button>
+                    <button class="project-settings-menu-item" onclick="window.openProjectSettings('${project.id}')">⚙️ настройки</button>
+                    <button class="project-settings-menu-item" onclick="window.duplicateProject('${project.id}')">📑 дублировать</button>
+                    <button class="project-settings-menu-item" onclick="window.exportSingleProject('${project.id}')">📤 экспорт проекта</button>
+                    <button class="project-settings-menu-item" onclick="window.importSingleProject('${project.id}')">📥 импорт проекта</button>
+                    <button class="project-settings-menu-item" onclick="window.deleteProject('${project.id}')" style="color: var(--danger);">🗑 удалить</button>
                 </div>
             `;
             
-            // Обработчик клика по карточке (кроме кнопок)
             card.addEventListener('click', (e) => {
-                if(!e.target.closest('.project-settings-btn') && !e.target.closest('.drag-handle') && !e.target.closest('.project-settings-menu')) 
+                if(!e.target.closest('.project-settings-btn') && !e.target.closest('.drag-handle') && !e.target.closest('.project-settings-menu') && !e.target.closest('.favorite-btn')) 
                     selectProject(project.id);
             });
             
-            // Кнопка меню (три точки)
-            const btn = card.querySelector('.project-settings-btn');
-            btn.addEventListener('click', (e) => { e.stopPropagation(); toggleMenu(project.id); });
+            const settingsBtn = card.querySelector('.project-settings-btn');
+            settingsBtn.addEventListener('click', (e) => { e.stopPropagation(); toggleMenu(project.id); });
             
-            // Drag-and-drop на карточке (для drop)
+            const favBtn = card.querySelector('.favorite-btn');
+            favBtn.addEventListener('click', (e) => { e.stopPropagation(); toggleFavorite(project.id); });
+            
+            const handle = card.querySelector('.drag-handle');
+            handle.setAttribute('draggable', 'true');
+            handle.addEventListener('dragstart', (e) => { handleDragStart(e, project.id); });
+            handle.addEventListener('dragend', handleDragEnd);
+            
             card.addEventListener('dragover', handleDragOver);
-            card.addEventListener('dragleave', handleDragLeave);
+            card.addEventListener('dragleave', (e) => {});
             card.addEventListener('drop', (e) => { handleDrop(e, project.id); });
             
             projectsGridMain.appendChild(card);
         });
-        
-        // Назначить обработчики для всех ручек после добавления в DOM
-        document.querySelectorAll('.drag-handle').forEach(handle => {
-            handle.setAttribute('draggable', 'true');
-            handle.addEventListener('dragstart', (e) => {
-                const projectId = handle.getAttribute('data-id');
-                handleDragStart(e, projectId);
-            });
-            handle.addEventListener('dragend', handleDragEnd);
-        });
-        
         projectsCountDisplay.innerText = filtered.length;
     }
 
@@ -1007,21 +846,16 @@
 
     // --- Управление стилями и темой ---
     function applyUiStyle(style) {
-        if(style === 'classic') {
-            document.body.classList.add('classic');
-        } else {
-            document.body.classList.remove('classic');
-        }
+        if(style === 'classic') document.body.classList.add('classic');
+        else document.body.classList.remove('classic');
         localStorage.setItem('ui_style', style);
         renderAll();
     }
-
     function applyTheme(theme) {
         if(theme === 'dark') document.body.classList.add('dark');
         else document.body.classList.remove('dark');
         localStorage.setItem('user_theme', theme);
     }
-
     function loadUserSettings() {
         const savedName = localStorage.getItem('user_name');
         const savedRole = localStorage.getItem('user_role');
@@ -1034,7 +868,6 @@
         settingsUiStyle.value = uiStyle;
         applyUiStyle(uiStyle);
     }
-
     function saveUserSettingsFromModal() {
         const newName = settingsUserName.value.trim();
         const newRole = settingsUserRole.value.trim();
@@ -1060,20 +893,30 @@
         document.addEventListener('click', (e) => { if(!e.target.closest('.project-settings-btn') && !e.target.closest('.project-settings-menu')) closeAllMenus(); });
         createProjectModal.addEventListener('click', (e) => { if(e.target === createProjectModal) createProjectModal.classList.remove('show'); });
         userSettingsModal.addEventListener('click', (e) => { if(e.target === userSettingsModal) userSettingsModal.classList.remove('show'); });
+        
+        document.getElementById('exportProjectsBtn').onclick = exportAllProjects;
+        document.getElementById('importProjectsBtn').onclick = importAllProjects;
+        document.querySelectorAll('.density-btn').forEach(btn => {
+            btn.addEventListener('click', () => setDensity(btn.dataset.density));
+        });
     }
 
     async function init() {
         await loadProjectsFromMinIO();
         loadUserSettings();
+        loadDensity();
         if(projects.length > 0 && !activeProjectId) activeProjectId = projects[0].id;
         renderAll();
         initEvents();
     }
     init();
 
+    // Делаем функции глобальными для вызова из onclick в меню
     window.openProjectSettings = openProjectSettings;
     window.duplicateProject = duplicateProject;
     window.deleteProject = deleteProject;
+    window.exportSingleProject = exportSingleProject;
+    window.importSingleProject = importSingleProject;
 </script>
 </body>
 </html>
