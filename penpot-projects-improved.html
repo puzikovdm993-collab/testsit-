@@ -1438,7 +1438,11 @@
         closeSettingsBtn.onclick = () => userSettingsModal.classList.remove('show');
         cancelSettingsBtn.onclick = () => userSettingsModal.classList.remove('show');
         saveSettingsBtn.onclick = saveUserSettingsFromModal;
-        backToProjectsBtn.onclick = () => document.querySelector('.main-content').scrollTo({top:0, behavior:'smooth'});
+        
+        // Кнопка "назад" опциональна - навигация через хлебные крошки
+        if (backToProjectsBtn) {
+            backToProjectsBtn.onclick = () => document.querySelector('.main-content').scrollTo({top:0, behavior:'smooth'});
+        }
         document.addEventListener('click', (e) => { if(!e.target.closest('.project-settings-btn') && !e.target.closest('.project-settings-menu')) closeAllMenus(); });
         createProjectModal.addEventListener('click', (e) => { if(e.target === createProjectModal) createProjectModal.classList.remove('show'); });
         userSettingsModal.addEventListener('click', (e) => { if(e.target === userSettingsModal) userSettingsModal.classList.remove('show'); });
