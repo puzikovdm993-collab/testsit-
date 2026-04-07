@@ -1,0 +1,1475 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>Penpot Fusion | Улучшенный интерфейс</title>
+    <style>
+        /* ---------- БАЗОВЫЕ ПЕРЕМЕННЫЕ ---------- */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* ----- СТИЛЬ: МИНИМАЛИСТИЧНЫЙ (по умолчанию) ----- */
+        body {
+            --bg: #ffffff;
+            --surface: #ffffff;
+            --border: #e5e5e5;
+            --text: #171717;
+            --text-secondary: #737373;
+            --accent: #000000;
+            --accent-soft: #f5f5f5;
+            --danger: #dc2626;
+            --danger-hover: #b91c1c;
+            --success: #16a34a;
+            --warning: #ca8a04;
+            --radius: 0px;
+            --radius-sm: 4px;
+            --radius-md: 8px;
+            --shadow: none;
+            --shadow-lg: 0 10px 40px rgba(0,0,0,0.15);
+            --font: -apple-system, 'Inter', 'Segoe UI', monospace;
+            --card-padding: 12px;
+            --card-gap: 16px;
+            --avatar-bg: transparent;
+            --avatar-icon: '◉';
+            --show-extra-meta: none;
+            --show-avatar-icon: inline-block;
+            --stat-display: none;
+            --card-icon-display: none;
+            --grid-min-width: 260px;
+            --transition-fast: 0.15s ease;
+            --transition-normal: 0.2s ease;
+        }
+
+        body.classic {
+            --bg: #f0f2f8;
+            --surface: #ffffff;
+            --border: #e2e8f0;
+            --text: #1e293b;
+            --text-secondary: #475569;
+            --accent: #6366f1;
+            --accent-soft: #e0e7ff;
+            --danger: #ef4444;
+            --danger-hover: #dc2626;
+            --success: #22c55e;
+            --warning: #eab308;
+            --radius: 12px;
+            --radius-sm: 6px;
+            --radius-md: 10px;
+            --shadow: 0 1px 3px rgba(0,0,0,0.05), 0 1px 2px rgba(0,0,0,0.1);
+            --shadow-lg: 0 10px 40px rgba(0,0,0,0.12);
+            --font: 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
+            --card-padding: 18px;
+            --card-gap: 20px;
+            --show-extra-meta: flex;
+            --show-avatar-icon: none;
+            --stat-display: flex;
+            --card-icon-display: block;
+        }
+
+        body.dark {
+            --bg: #000000;
+            --surface: #000000;
+            --border: #262626;
+            --text: #ededed;
+            --text-secondary: #a3a3a3;
+            --accent: #ffffff;
+            --accent-soft: #1a1a1a;
+            --danger: #ef4444;
+            --danger-hover: #dc2626;
+            --success: #22c55e;
+            --warning: #eab308;
+        }
+        body.classic.dark {
+            --bg: #0f172a;
+            --surface: #1e293b;
+            --border: #334155;
+            --text: #f1f5f9;
+            --text-secondary: #cbd5e1;
+            --accent: #818cf8;
+            --accent-soft: #2d3a5e;
+        }
+
+        body.grid-density-compact { --grid-min-width: 200px; --card-padding: 8px; --card-gap: 12px; }
+        body.grid-density-normal   { --grid-min-width: 260px; --card-padding: 12px; --card-gap: 16px; }
+        body.grid-density-large    { --grid-min-width: 320px; --card-padding: 20px; --card-gap: 24px; }
+
+        body {
+            background: var(--bg);
+            font-family: var(--font);
+            color: var(--text);
+            height: 100vh;
+            overflow: hidden;
+            font-size: 13px;
+            line-height: 1.5;
+            transition: background 0.2s, color 0.2s;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        .app-layout {
+            display: flex;
+            height: 100vh;
+            width: 100%;
+            overflow: hidden;
+        }
+
+        .sidebar {
+            width: 280px;
+            background: var(--surface);
+            border-right: 1px solid var(--border);
+            display: flex;
+            flex-direction: column;
+            overflow-y: auto;
+            flex-shrink: 0;
+        }
+
+        .user-profile {
+            padding: 20px 16px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .avatar-large {
+            font-size: 1.5rem;
+            margin-bottom: 12px;
+            color: var(--text-secondary);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
+        }
+        .avatar-large:hover { opacity: 0.8; }
+        body.classic .avatar-large {
+            width: 48px;
+            height: 48px;
+            background: linear-gradient(135deg, var(--accent), #a855f7);
+            border-radius: var(--radius);
+            justify-content: center;
+            font-size: 1.4rem;
+            color: white;
+        }
+        .avatar-large span { display: var(--show-avatar-icon); }
+
+        .user-name { font-size: 0.9rem; font-weight: 500; color: var(--text); }
+        body.classic .user-name { font-weight: 700; font-size: 1rem; }
+        .user-role { font-size: 0.7rem; color: var(--text-secondary); margin-top: 4px; }
+        body.classic .user-role { background: var(--accent-soft); display: inline-block; padding: 2px 10px; border-radius: 30px; }
+
+        .user-stats {
+            display: var(--stat-display);
+            gap: 12px;
+            margin-top: 16px;
+            background: var(--accent-soft);
+            padding: 10px 12px;
+            border-radius: var(--radius);
+            font-size: 0.7rem;
+            border: 1px solid var(--border);
+        }
+        .stat-item { display: flex; align-items: center; gap: 6px; }
+
+        .search-section { padding: 16px; border-bottom: 1px solid var(--border); }
+        .search-label { font-size: 0.65rem; font-weight: 600; text-transform: uppercase; color: var(--text-secondary); margin-bottom: 8px; }
+        .search-box { display: flex; align-items: center; border: 1px solid var(--border); padding: 6px 10px; border-radius: var(--radius); background: var(--surface); }
+        .search-box input { background: transparent; border: none; width: 100%; font-size: 0.8rem; outline: none; color: var(--text); font-family: var(--font); }
+        .search-box span { color: var(--text-secondary); margin-right: 8px; }
+
+        .projects-list-sidebar { flex: 1; padding: 12px 0; }
+        .sidebar-title { font-size: 0.65rem; font-weight: 600; text-transform: uppercase; color: var(--text-secondary); padding: 8px 16px; }
+        .project-side-item {
+            padding: 8px 16px;
+            cursor: pointer;
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            border-left: 2px solid transparent;
+            transition: 0.05s;
+        }
+        body.classic .project-side-item { margin: 2px 12px; border-radius: var(--radius-sm); border-left: none; }
+        .project-side-item:hover { background: var(--accent-soft); color: var(--text); }
+        .project-side-item.active-side { background: var(--accent-soft); border-left-color: var(--accent); color: var(--accent); font-weight: 500; }
+        body.classic .project-side-item.active-side { border-left: 3px solid var(--accent); background: var(--accent-soft); }
+
+        .main-content { flex: 1; display: flex; flex-direction: column; overflow-y: auto; padding: 24px 28px; }
+        
+        /* Улучшенная навигация с хлебными крошками */
+        .breadcrumb-nav {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 16px;
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+        }
+        .breadcrumb-separator { color: var(--border); }
+        .breadcrumb-current { color: var(--text); font-weight: 500; }
+        
+        .projects-header { display: flex; align-items: center; gap: 16px; flex-wrap: wrap; margin-bottom: 24px; }
+        .back-to-projects-btn { 
+            background: none; 
+            border: 1px solid var(--border); 
+            padding: 6px 14px; 
+            font-size: 0.75rem; 
+            cursor: pointer; 
+            color: var(--text-secondary); 
+            border-radius: var(--radius);
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            transition: var(--transition-fast);
+        }
+        .back-to-projects-btn:hover { 
+            border-color: var(--accent); 
+            color: var(--accent);
+            background: var(--accent-soft);
+        }
+        .projects-header h2 { font-size: 1rem; font-weight: 500; color: var(--text); }
+        body.classic .projects-header h2 { font-size: 1.3rem; font-weight: 700; }
+        .result-count { 
+            font-size: 0.75rem; 
+            color: var(--text-secondary);
+            background: var(--accent-soft);
+            padding: 4px 10px;
+            border-radius: var(--radius-sm);
+        }
+        
+        /* Улучшенные кнопки с визуальной иерархией */
+        .btn-primary { 
+            background: var(--accent); 
+            border: none; 
+            padding: 8px 18px; 
+            font-size: 0.75rem; 
+            font-weight: 600; 
+            cursor: pointer; 
+            color: var(--bg); 
+            border-radius: var(--radius);
+            transition: var(--transition-fast);
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            box-shadow: var(--shadow);
+        }
+        .btn-primary:hover { 
+            opacity: 0.9;
+            transform: translateY(-1px);
+            box-shadow: var(--shadow-lg);
+        }
+        .btn-primary:active { transform: translateY(0); }
+        
+        .btn-secondary { 
+            background: var(--surface); 
+            border: 1px solid var(--border); 
+            padding: 8px 16px; 
+            font-size: 0.75rem; 
+            cursor: pointer; 
+            color: var(--text-secondary); 
+            border-radius: var(--radius);
+            transition: var(--transition-fast);
+            font-weight: 500;
+        }
+        .btn-secondary:hover { 
+            border-color: var(--text-secondary);
+            color: var(--text);
+            background: var(--accent-soft);
+        }
+        
+        .btn-icon { 
+            background: var(--surface);
+            border: 1px solid var(--border); 
+            padding: 8px 14px; 
+            font-size: 0.8rem; 
+            cursor: pointer; 
+            border-radius: var(--radius); 
+            color: var(--text-secondary);
+            transition: var(--transition-fast);
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .btn-icon:hover { 
+            border-color: var(--accent); 
+            color: var(--accent);
+            background: var(--accent-soft);
+            transform: translateY(-1px);
+        }
+        
+        .btn-danger {
+            background: var(--danger);
+            border: none;
+            padding: 8px 16px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            cursor: pointer;
+            color: white;
+            border-radius: var(--radius);
+            transition: var(--transition-fast);
+        }
+        .btn-danger:hover {
+            background: var(--danger-hover);
+            transform: translateY(-1px);
+        }
+        
+        /* Индикатор загрузки */
+        .loading-spinner {
+            display: inline-block;
+            width: 16px;
+            height: 16px;
+            border: 2px solid var(--accent-soft);
+            border-top-color: var(--accent);
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+        }
+        @keyframes spin { to { transform: rotate(360deg); } }
+        
+        .btn-loading {
+            pointer-events: none;
+            opacity: 0.7;
+        }
+        .btn-loading .btn-text { display: none; }
+        
+        .density-buttons { display: flex; gap: 6px; margin-left: auto; }
+        .density-btn.active { 
+            background: var(--accent); 
+            color: var(--bg); 
+            border-color: var(--accent);
+            box-shadow: var(--shadow);
+        }
+        .density-btn {
+            min-width: 36px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .projects-grid-main {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(var(--grid-min-width), 1fr));
+            gap: var(--card-gap);
+            transition: all 0.2s ease;
+        }
+
+        /* Улучшенные карточки проектов с hover-эффектами */
+        .project-card-main {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            padding: var(--card-padding);
+            transition: var(--transition-normal);
+            cursor: default;
+            position: relative;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            animation: fadeIn 0.2s ease;
+        }
+        .project-card-main:hover {
+            box-shadow: var(--shadow-lg);
+            transform: translateY(-2px);
+            border-color: var(--accent);
+        }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
+        .project-card-main.drag-over-placeholder { border-color: transparent; background: transparent; box-shadow: none; }
+        .project-card-main.dragging { opacity: 0.4; transform: scale(0.98); }
+        .drag-placeholder { background: var(--accent-soft); border: 2px dashed var(--accent); border-radius: var(--radius); margin: 4px 0; transition: all 0.1s; height: 80px; }
+        
+        /* Улучшенный drag-handle - больше и заметнее */
+        .drag-handle { 
+            position: absolute; 
+            top: 6px; 
+            left: 6px; 
+            font-size: 1.1rem; 
+            cursor: grab; 
+            color: var(--text-secondary); 
+            padding: 6px 8px; 
+            border-radius: var(--radius-sm); 
+            user-select: none; 
+            z-index: 5;
+            line-height: 1;
+            background: transparent;
+            transition: var(--transition-fast);
+        }
+        .drag-handle:active { cursor: grabbing; }
+        .drag-handle:hover { 
+            background: var(--accent-soft); 
+            color: var(--accent);
+            transform: scale(1.1);
+        }
+        
+        .project-settings-btn { 
+            position: absolute; 
+            top: 6px; 
+            right: 6px; 
+            background: none; 
+            border: none; 
+            color: var(--text-secondary); 
+            font-size: 1.1rem; 
+            cursor: pointer; 
+            padding: 6px 8px; 
+            border-radius: var(--radius-sm); 
+            z-index: 5;
+            transition: var(--transition-fast);
+        }
+        .project-settings-btn:hover { 
+            background: var(--accent-soft); 
+            color: var(--accent);
+            transform: scale(1.1);
+        }
+        
+        .favorite-btn { 
+            position: absolute; 
+            bottom: var(--card-padding); 
+            left: var(--card-padding); 
+            background: none; 
+            border: none; 
+            font-size: 1.2rem; 
+            cursor: pointer; 
+            color: #fbbf24; 
+            text-shadow: 0 0 2px rgba(0,0,0,0.2); 
+            z-index: 5; 
+            transition: var(--transition-fast);
+            padding: 4px;
+            border-radius: var(--radius-sm);
+        }
+        .favorite-btn:hover { 
+            transform: scale(1.2);
+            background: var(--accent-soft);
+        }
+        .favorite-btn.favorited { animation: pulse 0.3s ease; }
+        @keyframes pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.3); } }
+        
+        .card-header-icon { display: var(--card-icon-display); font-size: 1.5rem; margin-bottom: 12px; margin-top: 8px; }
+        .card-title { 
+            font-weight: 500; 
+            font-size: 0.85rem; 
+            margin-bottom: 6px; 
+            color: var(--text); 
+            padding-right: 24px; 
+            padding-left: 24px;
+            line-height: 1.4;
+        }
+        body.classic .card-title { font-weight: 600; font-size: 0.95rem; }
+        .card-meta { 
+            font-size: 0.7rem; 
+            color: var(--text-secondary); 
+            display: flex; 
+            gap: 12px; 
+            font-family: monospace; 
+            margin-top: 8px;
+            flex-wrap: wrap;
+        }
+        .card-meta.extra-meta { display: var(--show-extra-meta); }
+        
+        /* Улучшенное меню настроек проекта */
+        .project-settings-menu {
+            position: absolute;
+            top: 36px;
+            right: 8px;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            padding: 6px 0;
+            min-width: 180px;
+            z-index: 100;
+            display: none;
+            border-radius: var(--radius-md);
+            box-shadow: var(--shadow-lg);
+            animation: slideDown 0.15s ease;
+        }
+        @keyframes slideDown { from { opacity: 0; transform: translateY(-8px); } to { opacity: 1; transform: translateY(0); } }
+        .project-settings-menu.show { display: block; }
+        .project-settings-menu-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px 16px;
+            width: 100%;
+            background: none;
+            border: none;
+            font-size: 0.75rem;
+            cursor: pointer;
+            color: var(--text-secondary);
+            text-align: left;
+            transition: var(--transition-fast);
+        }
+        .project-settings-menu-item:hover { 
+            background: var(--accent-soft); 
+            color: var(--accent);
+        }
+        .project-settings-menu-item.danger { color: var(--danger); }
+        .project-settings-menu-item.danger:hover { 
+            background: var(--danger); 
+            color: white;
+        }
+        
+        /* Улучшенное пустое состояние */
+        .empty-projects { 
+            text-align: center; 
+            padding: 64px 32px; 
+            color: var(--text-secondary); 
+            border: 2px dashed var(--border); 
+            grid-column: 1 / -1; 
+            font-size: 0.85rem; 
+            border-radius: var(--radius);
+            background: var(--accent-soft);
+        }
+        .empty-projects-icon { font-size: 3rem; margin-bottom: 16px; opacity: 0.5; }
+        .empty-projects-title { font-size: 1rem; font-weight: 600; color: var(--text); margin-bottom: 8px; }
+        .empty-projects-desc { margin-bottom: 20px; max-width: 300px; margin-left: auto; margin-right: auto; }
+
+        .user-settings-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(4px);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 2000;
+            opacity: 0;
+            transition: opacity 0.2s ease;
+        }
+        .user-settings-modal.show { 
+            display: flex; 
+            opacity: 1;
+        }
+        .user-settings-panel {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            padding: 28px;
+            width: 90%;
+            max-width: 460px;
+            border-radius: var(--radius-md);
+            box-shadow: var(--shadow-lg);
+            animation: modalSlideIn 0.25s ease;
+        }
+        @keyframes modalSlideIn { from { opacity: 0; transform: translateY(-20px) scale(0.95); } to { opacity: 1; transform: translateY(0) scale(1); } }
+        .settings-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px; padding-bottom: 16px; border-bottom: 1px solid var(--border); }
+        .settings-header h3 { font-size: 1.1rem; font-weight: 600; color: var(--text); }
+        .close-settings-btn { 
+            background: none; 
+            border: none; 
+            font-size: 1.4rem; 
+            cursor: pointer; 
+            color: var(--text-secondary);
+            padding: 4px;
+            border-radius: var(--radius-sm);
+            transition: var(--transition-fast);
+            line-height: 1;
+        }
+        .close-settings-btn:hover {
+            background: var(--accent-soft);
+            color: var(--text);
+        }
+        .settings-form-group { margin-bottom: 20px; }
+        .settings-form-group label { 
+            font-size: 0.7rem; 
+            font-weight: 600; 
+            text-transform: uppercase; 
+            letter-spacing: 0.5px;
+            color: var(--text-secondary); 
+            display: block; 
+            margin-bottom: 8px; 
+        }
+        .settings-form-group input, .settings-form-group select { 
+            width: 100%; 
+            padding: 10px 14px; 
+            background: var(--bg); 
+            border: 1px solid var(--border); 
+            color: var(--text); 
+            font-size: 0.85rem; 
+            font-family: var(--font); 
+            border-radius: var(--radius);
+            transition: var(--transition-fast);
+        }
+        .settings-form-group input:focus, .settings-form-group select:focus { 
+            outline: none; 
+            border-color: var(--accent);
+            box-shadow: 0 0 0 3px var(--accent-soft);
+        }
+        .settings-actions { display: flex; gap: 12px; margin-top: 28px; }
+        
+        /* Улучшенные toast-уведомления */
+        .toast-msg {
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            background: var(--surface);
+            color: var(--text);
+            padding: 12px 20px;
+            font-size: 0.8rem;
+            font-family: var(--font);
+            z-index: 1300;
+            opacity: 0;
+            transform: translateY(10px);
+            transition: all 0.25s ease;
+            pointer-events: none;
+            border-radius: var(--radius-md);
+            box-shadow: var(--shadow-lg);
+            border: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            min-width: 200px;
+        }
+        .toast-msg.show { 
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .toast-msg.success { border-left: 3px solid var(--success); }
+        .toast-msg.error { border-left: 3px solid var(--danger); }
+        .toast-msg.warning { border-left: 3px solid var(--warning); }
+        .toast-icon { font-size: 1.1rem; }
+        
+        /* Модальное окно подтверждения */
+        .confirm-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(4px);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 2100;
+            opacity: 0;
+            transition: opacity 0.2s ease;
+        }
+        .confirm-modal.show { 
+            display: flex; 
+            opacity: 1;
+        }
+        .confirm-panel {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            padding: 28px;
+            width: 90%;
+            max-width: 400px;
+            border-radius: var(--radius-md);
+            box-shadow: var(--shadow-lg);
+            animation: modalSlideIn 0.25s ease;
+        }
+        .confirm-title { font-size: 1.1rem; font-weight: 600; color: var(--text); margin-bottom: 12px; }
+        .confirm-message { font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 24px; line-height: 1.5; }
+        .confirm-actions { display: flex; gap: 12px; justify-content: flex-end; }
+        
+        /* Поиск и фильтры в хедере */
+        .header-search-filters {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+        .header-search-box {
+            flex: 1;
+            min-width: 200px;
+            display: flex;
+            align-items: center;
+            border: 1px solid var(--border);
+            padding: 8px 14px;
+            border-radius: var(--radius);
+            background: var(--surface);
+            transition: var(--transition-fast);
+        }
+        .header-search-box:focus-within {
+            border-color: var(--accent);
+            box-shadow: 0 0 0 3px var(--accent-soft);
+        }
+        .header-search-box input {
+            background: transparent;
+            border: none;
+            width: 100%;
+            font-size: 0.85rem;
+            outline: none;
+            color: var(--text);
+            font-family: var(--font);
+            margin-left: 8px;
+        }
+        .header-search-box span { color: var(--text-secondary); }
+        
+        .filter-select {
+            padding: 8px 14px;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            color: var(--text);
+            font-size: 0.8rem;
+            font-family: var(--font);
+            cursor: pointer;
+            transition: var(--transition-fast);
+        }
+        .filter-select:hover { border-color: var(--accent); }
+        .filter-select:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-soft); }
+        
+        @media (max-width: 768px) {
+            .app-layout { flex-direction: column; }
+            .sidebar { width: 100%; max-height: 40vh; }
+            .main-content { padding: 16px; }
+            .density-buttons { margin-left: 0; }
+            .header-search-filters { flex-direction: column; }
+            .header-search-box { min-width: 100%; }
+        }
+    </style>
+</head>
+<body>
+<div class="app-layout">
+    <div class="sidebar">
+        <div class="user-profile">
+            <div class="avatar-large" role="button" tabindex="0" aria-label="Настройки профиля"><span>◉</span></div>
+            <div class="user-name" id="displayUserName">Алина</div>
+            <div class="user-role" id="displayUserRole">дизайнер</div>
+            <div class="user-stats">
+                <div class="stat-item"><span>📁</span> <span id="statProjects">0</span> проектов</div>
+                <div class="stat-item"><span>⚡</span> <span id="statInProgress">0</span> активных</div>
+                <div class="stat-item"><span>⭐</span> <span id="statFavorites">0</span> избранных</div>
+            </div>
+        </div>
+        <div class="search-section">
+            <div class="search-label">поиск</div>
+            <div class="search-box" role="search"><span>⌕</span><input type="text" id="sidebarSearchInput" placeholder="проект..." aria-label="Поиск проектов"></div>
+        </div>
+        <div class="projects-list-sidebar">
+            <div class="sidebar-title">проекты</div>
+            <div id="sidebarProjectsList" role="list"></div>
+        </div>
+    </div>
+
+    <div class="main-content" role="main">
+        <!-- Хлебные крошки -->
+        <div class="breadcrumb-nav" aria-label="Навигация">
+            <span>Главная</span>
+            <span class="breadcrumb-separator">/</span>
+            <span class="breadcrumb-current">Проекты</span>
+        </div>
+        
+        <div class="projects-header" style="margin-bottom: 1rem;">
+            <button id="openCreateProjectModalBtn" class="btn-primary" aria-label="Создать новый проект">
+                <span>+</span> <span class="btn-text">создать проект</span>
+            </button>
+            <button id="exportProjectsBtn" class="btn-icon" aria-label="Экспортировать все проекты">
+                <span>📤</span> <span class="btn-text">экспорт</span>
+            </button>
+            <button id="importProjectsBtn" class="btn-icon" aria-label="Импортировать проекты">
+                <span>📥</span> <span class="btn-text">импорт</span>
+            </button>
+            <div class="density-buttons" role="group" aria-label="Плотность сетки">
+                <button data-density="compact" class="btn-icon density-btn" title="Компактный вид" aria-label="Компактная плотность">▤</button>
+                <button data-density="normal" class="btn-icon density-btn active" title="Нормальный вид" aria-label="Нормальная плотность">▦</button>
+                <button data-density="large" class="btn-icon density-btn" title="Крупный вид" aria-label="Крупная плотность">▣</button>
+            </div>
+        </div>
+        
+        <!-- Поиск и фильтры -->
+        <div class="header-search-filters">
+            <div class="header-search-box" role="search">
+                <span>🔍</span>
+                <input type="text" id="mainSearchInput" placeholder="Поиск проектов по названию, категории или типу..." aria-label="Поиск проектов">
+            </div>
+            <select class="filter-select" id="categoryFilter" aria-label="Фильтр по категории">
+                <option value="">Все категории</option>
+                <option value="веб">Веб</option>
+                <option value="мобильное">Мобильное</option>
+                <option value="ui kit">UI Kit</option>
+                <option value="прототип">Прототип</option>
+            </select>
+            <select class="filter-select" id="typeFilter" aria-label="Фильтр по типу">
+                <option value="">Все типы</option>
+                <option value="classic">Classic</option>
+                <option value="tis">TIS</option>
+                <option value="workflow">Workflow</option>
+            </select>
+            <select class="filter-select" id="sortFilter" aria-label="Сортировка">
+                <option value="order">По порядку</option>
+                <option value="name">По названию</option>
+                <option value="date">По дате</option>
+            </select>
+        </div>
+        
+        <div class="projects-header">
+            <h2>Все проекты</h2>
+            <div class="result-count" id="projectsCountDisplay" aria-live="polite">0</div>
+        </div>
+        <div id="projectsGridMain" class="projects-grid-main" role="list" aria-label="Список проектов">
+            <div class="empty-projects">
+                <div class="empty-projects-icon">📁</div>
+                <div class="empty-projects-title">Нет проектов</div>
+                <div class="empty-projects-desc">Создайте свой первый проект или импортируйте существующие</div>
+                <button id="emptyStateCreateBtn" class="btn-primary">+ создать проект</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Toast уведомления -->
+<div id="toastMsg" class="toast-msg" role="alert" aria-live="assertive">
+    <span class="toast-icon"></span>
+    <span class="toast-text"></span>
+</div>
+
+<!-- Модальное окно подтверждения -->
+<div id="confirmModal" class="confirm-modal" role="dialog" aria-modal="true" aria-labelledby="confirmTitle">
+    <div class="confirm-panel">
+        <div class="settings-header">
+            <h3 id="confirmTitle">Подтверждение</h3>
+            <button class="close-settings-btn" onclick="hideConfirmModal()" aria-label="Закрыть">✕</button>
+        </div>
+        <p class="confirm-message" id="confirmMessage">Вы уверены?</p>
+        <div class="confirm-actions">
+            <button class="btn-secondary" onclick="hideConfirmModal()">Отмена</button>
+            <button id="confirmActionBtn" class="btn-danger">Подтвердить</button>
+        </div>
+    </div>
+</div>
+
+<!-- модалка настроек -->
+<div id="userSettingsModal" class="user-settings-modal">
+    <div class="user-settings-panel">
+        <div class="settings-header"><h3>настройки</h3><button id="closeSettingsBtn" class="close-settings-btn">✕</button></div>
+        <div class="settings-form-group"><label>имя</label><input type="text" id="settingsUserName" value="Алина"></div>
+        <div class="settings-form-group"><label>роль</label><input type="text" id="settingsUserRole" value="дизайнер"></div>
+        <div class="settings-form-group"><label>тема оформления</label><select id="settingsTheme"><option value="dark">🌙 тёмная</option><option value="light">☀️ светлая</option></select></div>
+        <div class="settings-form-group"><label>стиль интерфейса</label><select id="settingsUiStyle"><option value="minimal">минималистичный</option><option value="classic">классический</option></select></div>
+        <div class="settings-actions"><button id="saveSettingsBtn" class="btn-primary">сохранить</button><button id="cancelSettingsBtn" class="btn-secondary">отмена</button></div>
+    </div>
+</div>
+
+<!-- модалка создания проекта -->
+<div id="createProjectModal" class="user-settings-modal">
+    <div class="user-settings-panel">
+        <div class="settings-header"><h3>новый проект</h3><button id="closeCreateProjectModalBtn" class="close-settings-btn">✕</button></div>
+        <div class="settings-form-group"><label>название</label><input type="text" id="newProjectName" placeholder="имя"></div>
+        <div class="settings-form-group"><label>категория</label><select id="projectCategory"><option>веб</option><option>мобильное</option><option>ui kit</option><option>прототип</option></select></div>
+        <div class="settings-form-group"><label>тип</label><select id="projectType"><option value="classic">classic</option><option value="tis">tis</option><option value="workflow">workflow</option></select></div>
+        <div class="settings-actions"><button id="createProjectModalBtn" class="btn-primary">создать</button><button id="cancelCreateProjectModalBtn" class="btn-secondary">отмена</button></div>
+    </div>
+</div>
+
+<script>
+    // ---------- ПОЛНАЯ ЛОГИКА С ПОДДЕРЖКОЙ ДВУХ СТИЛЕЙ, ИЗБРАННЫМ, ЭКСПОРТОМ/ИМПОРТОМ, ПЛОТНОСТЬЮ, УЛУЧШЕННЫМ DND ----------
+    let projects = [];
+    const API_BASE_URL = window.location.origin;
+    let activeProjectId = null;
+    let draggedProjectId = null;
+    let dragPlaceholder = null;
+    let dragSourceCard = null;
+
+    let favoriteIds = JSON.parse(localStorage.getItem('favorite_projects') || '[]');
+
+    const sidebarListEl = document.getElementById('sidebarProjectsList');
+    const projectsGridMain = document.getElementById('projectsGridMain');
+    const projectsCountDisplay = document.getElementById('projectsCountDisplay');
+    const sidebarSearchInput = document.getElementById('sidebarSearchInput');
+    const newProjectName = document.getElementById('newProjectName');
+    const projectCategory = document.getElementById('projectCategory');
+    const projectType = document.getElementById('projectType');
+    const toastMsg = document.getElementById('toastMsg');
+    const userSettingsModal = document.getElementById('userSettingsModal');
+    const closeSettingsBtn = document.getElementById('closeSettingsBtn');
+    const saveSettingsBtn = document.getElementById('saveSettingsBtn');
+    const cancelSettingsBtn = document.getElementById('cancelSettingsBtn');
+    const backToProjectsBtn = document.getElementById('backToProjectsBtn');
+    const settingsUserName = document.getElementById('settingsUserName');
+    const settingsUserRole = document.getElementById('settingsUserRole');
+    const settingsTheme = document.getElementById('settingsTheme');
+    const settingsUiStyle = document.getElementById('settingsUiStyle');
+    const createProjectModal = document.getElementById('createProjectModal');
+    const openCreateProjectModalBtn = document.getElementById('openCreateProjectModalBtn');
+    const closeCreateProjectModalBtn = document.getElementById('closeCreateProjectModalBtn');
+    const createProjectModalBtn = document.getElementById('createProjectModalBtn');
+    const cancelCreateProjectModalBtn = document.getElementById('cancelCreateProjectModalBtn');
+    const displayUserNameSpan = document.getElementById('displayUserName');
+    const displayUserRoleSpan = document.getElementById('displayUserRole');
+    const statProjectsSpan = document.getElementById('statProjects');
+    const statInProgressSpan = document.getElementById('statInProgress');
+    const statFavoritesSpan = document.getElementById('statFavorites');
+    const avatarLarge = document.querySelector('.avatar-large');
+    const confirmModal = document.getElementById('confirmModal');
+    const confirmTitle = document.getElementById('confirmTitle');
+    const confirmMessage = document.getElementById('confirmMessage');
+    const confirmActionBtn = document.getElementById('confirmActionBtn');
+    const mainSearchInput = document.getElementById('mainSearchInput');
+    const categoryFilter = document.getElementById('categoryFilter');
+    const typeFilter = document.getElementById('typeFilter');
+    const sortFilter = document.getElementById('sortFilter');
+    const emptyStateCreateBtn = document.getElementById('emptyStateCreateBtn');
+    
+    let confirmCallback = null;
+
+    // Улучшенная функция toast-уведомлений с типами и иконками
+    function showToast(msg, type = 'success', duration = 2500) {
+        const iconMap = {
+            success: '✓',
+            error: '✕',
+            warning: '⚠',
+            info: 'ℹ'
+        };
+        const icon = iconMap[type] || iconMap.success;
+        
+        toastMsg.querySelector('.toast-icon').textContent = icon;
+        toastMsg.querySelector('.toast-text').textContent = msg;
+        toastMsg.className = 'toast-msg show ' + type;
+        
+        setTimeout(() => {
+            toastMsg.classList.remove('show');
+        }, duration);
+    }
+    
+    // Функция показа модального окна подтверждения
+    function showConfirmModal(title, message, callback) {
+        confirmTitle.textContent = title;
+        confirmMessage.textContent = message;
+        confirmCallback = callback;
+        confirmModal.classList.add('show');
+    }
+    
+    // Функция скрытия модального окна подтверждения
+    function hideConfirmModal() {
+        confirmModal.classList.remove('show');
+        confirmCallback = null;
+    }
+    
+    // Назначаем обработчик для кнопки подтверждения
+    confirmActionBtn.addEventListener('click', () => {
+        if (confirmCallback) {
+            confirmCallback();
+        }
+        hideConfirmModal();
+    });
+    
+    // Закрытие по клику вне модального окна
+    confirmModal.addEventListener('click', (e) => {
+        if (e.target === confirmModal) {
+            hideConfirmModal();
+        }
+    });
+    
+    // Закрытие по Escape
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') {
+            hideConfirmModal();
+        }
+    });
+
+    function saveFavorites() {
+        localStorage.setItem('favorite_projects', JSON.stringify(favoriteIds));
+        updateUserStatsUI();
+        renderAll();
+    }
+
+    function toggleFavorite(projectId) {
+        const idx = favoriteIds.indexOf(projectId);
+        if (idx === -1) {
+            favoriteIds.push(projectId);
+            showToast('Добавлено в избранное', 'success');
+        } else {
+            favoriteIds.splice(idx, 1);
+            showToast('Удалено из избранного', 'info');
+        }
+        saveFavorites();
+    }
+
+    async function loadProjectsFromMinIO() {
+        try {
+            const res = await fetch(`${API_BASE_URL}/list_projects`);
+            if (!res.ok) throw new Error();
+            const data = await res.json();
+            if (data.success && Array.isArray(data.projects)) {
+                projects = data.projects;
+                for (let i = 0; i < projects.length; i++) {
+                    if (projects[i].order === undefined || projects[i].order === null) projects[i].order = i;
+                }
+                projects.sort((a,b) => (a.order || 0) - (b.order || 0));
+                return true;
+            }
+            return false;
+        } catch(e) { return false; }
+    }
+    async function saveProjectToMinIO(project) {
+        try {
+            const res = await fetch(`${API_BASE_URL}/save_project`, { method: 'POST', headers: {'Content-Type':'application/json'}, body: JSON.stringify({ project }) });
+            const data = await res.json();
+            return data.success;
+        } catch(e) { return false; }
+    }
+    async function deleteProjectFromMinIO(projectId) {
+        try {
+            const res = await fetch(`${API_BASE_URL}/delete_project/${projectId}`, { method: 'DELETE' });
+            const data = await res.json();
+            return data.success;
+        } catch(e) { return false; }
+    }
+
+    function getFilteredProjects() {
+        const term = sidebarSearchInput.value.trim().toLowerCase();
+        let filtered = [...projects];
+        if (term) filtered = filtered.filter(p => p.name.toLowerCase().includes(term));
+        filtered.sort((a,b) => {
+            const aFav = favoriteIds.includes(a.id);
+            const bFav = favoriteIds.includes(b.id);
+            if (aFav && !bFav) return -1;
+            if (!aFav && bFav) return 1;
+            return (a.order || 0) - (b.order || 0);
+        });
+        return filtered;
+    }
+
+    function getIconByType(type) { return type === "classic" ? "◧" : (type === "tis" ? "◨" : "◩"); }
+    function escapeHtml(str) { return str.replace(/[&<>]/g, m => m === '&' ? '&amp;' : (m === '<' ? '&lt;' : '&gt;')); }
+
+    function updateUserStatsUI() {
+        statProjectsSpan.innerText = projects.length;
+        const inProgress = projects.filter(p => p.deadline && p.deadline >= new Date().toISOString().slice(0,10)).length;
+        statInProgressSpan.innerText = inProgress;
+        statFavoritesSpan.innerText = favoriteIds.length;
+    }
+
+    function renderSidebarList() {
+        const filtered = getFilteredProjects();
+        sidebarListEl.innerHTML = '';
+        if (filtered.length === 0) { sidebarListEl.innerHTML = '<div style="padding: 8px 16px; color: var(--text-secondary);">—</div>'; return; }
+        filtered.forEach(p => {
+            const div = document.createElement('div');
+            div.className = 'project-side-item';
+            if (activeProjectId === p.id) div.classList.add('active-side');
+            div.textContent = p.name;
+            div.addEventListener('click', () => selectProject(p.id));
+            sidebarListEl.appendChild(div);
+        });
+    }
+
+    // ---------- DRAG & DROP ----------
+    function handleDragStart(e, projectId) {
+        if (sidebarSearchInput.value.trim() !== '') { e.preventDefault(); showToast('✖ Снимите поиск для изменения порядка', true); return false; }
+        draggedProjectId = projectId;
+        e.dataTransfer.setData('text/plain', projectId);
+        e.dataTransfer.effectAllowed = 'move';
+        dragSourceCard = e.target.closest('.project-card-main');
+        if (dragSourceCard) dragSourceCard.classList.add('dragging');
+        const dragImage = dragSourceCard.cloneNode(true);
+        dragImage.style.opacity = '0.5';
+        dragImage.style.position = 'absolute';
+        dragImage.style.top = '-1000px';
+        document.body.appendChild(dragImage);
+        e.dataTransfer.setDragImage(dragImage, 0, 0);
+        setTimeout(() => document.body.removeChild(dragImage), 0);
+    }
+
+    function handleDragEnd(e) {
+        if (dragSourceCard) dragSourceCard.classList.remove('dragging');
+        if (dragPlaceholder && dragPlaceholder.parentNode) dragPlaceholder.remove();
+        dragPlaceholder = null;
+        draggedProjectId = null;
+        dragSourceCard = null;
+        document.querySelectorAll('.project-card-main').forEach(card => card.classList.remove('drag-over-placeholder'));
+    }
+
+    function handleDragOver(e) {
+        e.preventDefault();
+        e.dataTransfer.dropEffect = 'move';
+        const grid = projectsGridMain;
+        const afterElement = getDragAfterElement(grid, e.clientY);
+        if (document.querySelector('.drag-placeholder') && afterElement !== document.querySelector('.drag-placeholder').nextSibling) {
+            document.querySelector('.drag-placeholder')?.remove();
+        }
+        if (!dragPlaceholder) {
+            dragPlaceholder = document.createElement('div');
+            dragPlaceholder.className = 'drag-placeholder';
+            dragPlaceholder.style.height = (dragSourceCard ? dragSourceCard.offsetHeight : 80) + 'px';
+            grid.insertBefore(dragPlaceholder, afterElement);
+        } else if (afterElement) {
+            grid.insertBefore(dragPlaceholder, afterElement);
+        } else {
+            grid.appendChild(dragPlaceholder);
+        }
+    }
+
+    function getDragAfterElement(container, y) {
+        const draggableElements = [...container.querySelectorAll('.project-card-main:not(.dragging)')];
+        return draggableElements.reduce((closest, child) => {
+            const box = child.getBoundingClientRect();
+            const offset = y - box.top - box.height / 2;
+            if (offset < 0 && offset > closest.offset) return { offset: offset, element: child };
+            else return closest;
+        }, { offset: Number.NEGATIVE_INFINITY }).element;
+    }
+
+    async function handleDrop(e, targetProjectId = null) {
+        e.preventDefault();
+        if (!draggedProjectId) return;
+        if (sidebarSearchInput.value.trim() !== '') { showToast('✖ Снимите поиск для изменения порядка', true); return; }
+        const placeholder = document.querySelector('.drag-placeholder');
+        if (!placeholder) return;
+        const targetCard = placeholder.nextSibling?.classList?.contains('project-card-main') ? placeholder.nextSibling : null;
+        let targetId = targetCard ? targetCard.getAttribute('data-id') : (placeholder.previousSibling?.getAttribute('data-id'));
+        if (!targetId && targetProjectId) targetId = targetProjectId;
+        if (!targetId) return;
+        const sourceIndex = projects.findIndex(p => p.id === draggedProjectId);
+        const targetIndex = projects.findIndex(p => p.id === targetId);
+        if (sourceIndex === -1 || targetIndex === -1) return;
+        const [movedProject] = projects.splice(sourceIndex, 1);
+        const newIndex = sourceIndex < targetIndex ? targetIndex - 1 : targetIndex;
+        projects.splice(newIndex, 0, movedProject);
+        for (let i = 0; i < projects.length; i++) projects[i].order = i;
+        for (let p of projects) await saveProjectToMinIO(p);
+        renderAll();
+        showToast('Порядок сохранён');
+        if (placeholder) placeholder.remove();
+        dragPlaceholder = null;
+        draggedProjectId = null;
+    }
+
+    // ---------- ОСНОВНЫЕ ДЕЙСТВИЯ С ПРОЕКТАМИ ----------
+    function selectProject(projectId) {
+        const p = projects.find(p => p.id === projectId);
+        if(!p) return;
+        activeProjectId = projectId;
+        renderSidebarList(); renderMainGrid();
+        showToast(p.name);
+        setTimeout(() => {
+            let url = 'penpot-fusion.html';
+            if(p.type === 'tis') url = 'index.html';
+            else if(p.type === 'workflow') url = 'workflow.html';
+            window.location.href = url;
+        }, 400);
+    }
+
+    async function createNewProject() {
+        const name = newProjectName.value.trim();
+        if(!name) { showToast("укажите название", true); return; }
+        if(projects.some(p => p.name.toLowerCase() === name.toLowerCase())) { showToast("проект существует", true); return; }
+        const newId = 'proj_' + Date.now() + '_' + Math.random().toString(36).substr(2,6);
+        const maxOrder = projects.length ? Math.max(...projects.map(p => p.order || 0)) : -1;
+        const newProj = {
+            id: newId, name, category: projectCategory.value, type: projectType.value,
+            deadline: "", createdAt: new Date().toISOString().slice(0,10),
+            owner: displayUserNameSpan.innerText,
+            order: maxOrder + 1
+        };
+        const saved = await saveProjectToMinIO(newProj);
+        if(!saved) { showToast("ошибка", true); return; }
+        projects.push(newProj);
+        newProjectName.value = '';
+        activeProjectId = newId;
+        sidebarSearchInput.value = '';
+        renderAll();
+        showToast(`✓ ${name}`);
+        createProjectModal.classList.remove('show');
+    }
+
+    async function duplicateProject(projectId) {
+        const original = projects.find(p => p.id === projectId);
+        if(!original) return;
+        const newId = 'proj_' + Date.now() + '_' + Math.random().toString(36).substr(2,6);
+        const maxOrder = projects.length ? Math.max(...projects.map(p => p.order || 0)) : -1;
+        const copy = { ...original, id: newId, name: `${original.name} (копия)`, createdAt: new Date().toISOString().slice(0,10), order: maxOrder + 1 };
+        const saved = await saveProjectToMinIO(copy);
+        if(saved) { projects.push(copy); renderAll(); showToast(`✓ дубль`); }
+        else showToast("ошибка", true);
+        closeAllMenus();
+    }
+
+    async function deleteProject(projectId) {
+        const p = projects.find(p => p.id === projectId);
+        if (!p) return;
+        
+        // Показываем модальное окно подтверждения вместо confirm()
+        showConfirmModal(
+            'Удаление проекта',
+            `Вы уверены, что хотите удалить проект "${p.name}"? Это действие нельзя отменить.`,
+            async () => {
+                const deleted = await deleteProjectFromMinIO(projectId);
+                if (!deleted) { 
+                    showToast("Ошибка при удалении", "error"); 
+                    return; 
+                }
+                projects = projects.filter(pr => pr.id !== projectId);
+                favoriteIds = favoriteIds.filter(id => id !== projectId);
+                saveFavorites();
+                for (let i = 0; i < projects.length; i++) projects[i].order = i;
+                for (let proj of projects) await saveProjectToMinIO(proj);
+                if (activeProjectId === projectId) activeProjectId = null;
+                renderAll();
+                showToast(`Проект удалён`, "success");
+            }
+        );
+        closeAllMenus();
+    }
+
+    function openProjectSettings(projectId) {
+        const p = projects.find(p => p.id === projectId);
+        if(p) showToast(`⚙️ ${p.name}`);
+        localStorage.setItem('activeProjectId', projectId);
+        closeAllMenus();
+    }
+
+    // ---------- ЭКСПОРТ / ИМПОРТ ОТДЕЛЬНОГО ПРОЕКТА ----------
+    function exportSingleProject(projectId) {
+        const project = projects.find(p => p.id === projectId);
+        if (!project) return;
+        const dataStr = JSON.stringify(project, null, 2);
+        const blob = new Blob([dataStr], {type: 'application/json'});
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `project_${project.name.replace(/[^a-z0-9]/gi, '_')}_${project.id}.json`;
+        a.click();
+        URL.revokeObjectURL(url);
+        showToast(`Проект "${project.name}" экспортирован`);
+        closeAllMenus();
+    }
+
+    async function importSingleProject(projectId) {
+        const targetProject = projects.find(p => p.id === projectId);
+        if (!targetProject) return;
+        const input = document.createElement('input');
+        input.type = 'file';
+        input.accept = 'application/json';
+        input.onchange = async (e) => {
+            const file = e.target.files[0];
+            if (!file) return;
+            const text = await file.text();
+            try {
+                const imported = JSON.parse(text);
+                // Проверяем, что это объект проекта (должен иметь id, name, category, type)
+                if (!imported.id || !imported.name || !imported.category || !imported.type) {
+                    throw new Error('Невалидный файл проекта');
+                }
+                if (!confirm(`Заменить проект "${targetProject.name}" данными из файла?\nID проекта останется прежним (${targetProject.id}).`)) return;
+                // Сохраняем старый ID и order, заменяем остальные поля
+                const oldId = targetProject.id;
+                const oldOrder = targetProject.order;
+                const updatedProject = {
+                    ...imported,
+                    id: oldId,
+                    order: oldOrder,
+                    // если в импортированном нет createdAt, ставим текущий
+                    createdAt: imported.createdAt || new Date().toISOString().slice(0,10)
+                };
+                // Обновляем в массиве
+                const index = projects.findIndex(p => p.id === oldId);
+                if (index !== -1) projects[index] = updatedProject;
+                // Сохраняем на сервер
+                const saved = await saveProjectToMinIO(updatedProject);
+                if (saved) {
+                    renderAll();
+                    showToast(`Проект "${updatedProject.name}" обновлён из файла`);
+                } else {
+                    showToast('Ошибка сохранения', true);
+                }
+            } catch(err) {
+                showToast('Неверный JSON файл проекта', true);
+            }
+            closeAllMenus();
+        };
+        input.click();
+    }
+
+    // ---------- ГЛОБАЛЬНЫЙ ЭКСПОРТ / ИМПОРТ (все проекты) ----------
+    function exportAllProjects() {
+        const dataStr = JSON.stringify(projects, null, 2);
+        const blob = new Blob([dataStr], {type: 'application/json'});
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `penpot_projects_${new Date().toISOString().slice(0,19)}.json`;
+        a.click();
+        URL.revokeObjectURL(url);
+        showToast('Экспорт всех проектов выполнен');
+    }
+
+    function importAllProjects() {
+        const input = document.createElement('input');
+        input.type = 'file';
+        input.accept = 'application/json';
+        input.onchange = async (e) => {
+            const file = e.target.files[0];
+            if (!file) return;
+            const text = await file.text();
+            try {
+                const imported = JSON.parse(text);
+                if (!Array.isArray(imported)) throw new Error();
+                if (confirm('Заменить все текущие проекты? (Отмена — добавить)')) {
+                    projects = imported;
+                    favoriteIds = [];
+                } else {
+                    projects.push(...imported);
+                }
+                for (let i = 0; i < projects.length; i++) {
+                    if (!projects[i].id) projects[i].id = 'proj_' + Date.now() + '_' + i + '_' + Math.random().toString(36).substr(2,4);
+                    projects[i].order = i;
+                }
+                for (let p of projects) await saveProjectToMinIO(p);
+                renderAll();
+                showToast('Импорт завершён');
+            } catch(err) {
+                showToast('Неверный JSON файл', true);
+            }
+        };
+        input.click();
+    }
+
+    // ---------- ПЛОТНОСТЬ СЕТКИ ----------
+    function setDensity(density) {
+        document.body.classList.remove('grid-density-compact', 'grid-density-normal', 'grid-density-large');
+        document.body.classList.add(`grid-density-${density}`);
+        localStorage.setItem('grid_density', density);
+        document.querySelectorAll('.density-btn').forEach(btn => btn.classList.remove('active'));
+        document.querySelector(`.density-btn[data-density="${density}"]`).classList.add('active');
+    }
+    function loadDensity() {
+        const saved = localStorage.getItem('grid_density');
+        if (saved && ['compact', 'normal', 'large'].includes(saved)) setDensity(saved);
+        else setDensity('normal');
+    }
+
+    // ---------- ОТРИСОВКА ГЛАВНОЙ СЕТКИ ----------
+    function renderMainGrid() {
+        const filtered = getFilteredProjects();
+        projectsGridMain.innerHTML = '';
+        if (filtered.length === 0) {
+            projectsGridMain.innerHTML = '<div class="empty-projects">∅</div>';
+            projectsCountDisplay.innerText = '0';
+            return;
+        }
+        filtered.forEach(project => {
+            const card = document.createElement('div');
+            card.className = 'project-card-main';
+            card.setAttribute('data-id', project.id);
+            const typeLabel = project.type === 'classic' ? 'cls' : (project.type === 'tis' ? 'tis' : 'wf');
+            const deadlineText = project.deadline ? `⏱ ${project.deadline}` : '—';
+            const isClassic = document.body.classList.contains('classic');
+            const isFavorite = favoriteIds.includes(project.id);
+            
+            const dragHandle = `<div class="drag-handle" draggable="true" data-id="${project.id}">⠿</div>`;
+            const favoriteStar = `<button class="favorite-btn" data-id="${project.id}">${isFavorite ? '★' : '☆'}</button>`;
+            
+            card.innerHTML = `
+                ${dragHandle}
+                ${favoriteStar}
+                <button class="project-settings-btn" data-id="${project.id}">⋮</button>
+                ${isClassic ? `<div class="card-header-icon">${getIconByType(project.type)}</div>` : ''}
+                <div class="card-title">${escapeHtml(project.name)}</div>
+                <div class="card-meta"><span>${escapeHtml(project.category)}</span><span>${typeLabel}</span></div>
+                ${isClassic ? `<div class="card-meta extra-meta"><span>${deadlineText}</span><span>📅 ${project.createdAt || '—'}</span></div>
+                <div class="card-meta extra-meta"><span>👤 ${escapeHtml(project.owner)}</span></div>` : ''}
+                <div class="project-settings-menu" id="menu-${project.id}">
+                    <button class="project-settings-menu-item" onclick="window.openProjectSettings('${project.id}')">⚙️ настройки</button>
+                    <button class="project-settings-menu-item" onclick="window.duplicateProject('${project.id}')">📑 дублировать</button>
+                    <button class="project-settings-menu-item" onclick="window.exportSingleProject('${project.id}')">📤 экспорт проекта</button>
+                    <button class="project-settings-menu-item" onclick="window.importSingleProject('${project.id}')">📥 импорт проекта</button>
+                    <button class="project-settings-menu-item" onclick="window.deleteProject('${project.id}')" style="color: var(--danger);">🗑 удалить</button>
+                </div>
+            `;
+            
+            card.addEventListener('click', (e) => {
+                if(!e.target.closest('.project-settings-btn') && !e.target.closest('.drag-handle') && !e.target.closest('.project-settings-menu') && !e.target.closest('.favorite-btn')) 
+                    selectProject(project.id);
+            });
+            
+            const settingsBtn = card.querySelector('.project-settings-btn');
+            settingsBtn.addEventListener('click', (e) => { e.stopPropagation(); toggleMenu(project.id); });
+            
+            const favBtn = card.querySelector('.favorite-btn');
+            favBtn.addEventListener('click', (e) => { e.stopPropagation(); toggleFavorite(project.id); });
+            
+            const handle = card.querySelector('.drag-handle');
+            handle.setAttribute('draggable', 'true');
+            handle.addEventListener('dragstart', (e) => { handleDragStart(e, project.id); });
+            handle.addEventListener('dragend', handleDragEnd);
+            
+            card.addEventListener('dragover', handleDragOver);
+            card.addEventListener('dragleave', (e) => {});
+            card.addEventListener('drop', (e) => { handleDrop(e, project.id); });
+            
+            projectsGridMain.appendChild(card);
+        });
+        projectsCountDisplay.innerText = filtered.length;
+    }
+
+    function toggleMenu(id) { closeAllMenus(); const m = document.getElementById(`menu-${id}`); if(m) m.classList.toggle('show'); }
+    function closeAllMenus() { document.querySelectorAll('.project-settings-menu').forEach(m => m.classList.remove('show')); }
+
+    function renderAll() { renderSidebarList(); renderMainGrid(); updateUserStatsUI(); }
+
+    // --- Управление стилями и темой ---
+    function applyUiStyle(style) {
+        if(style === 'classic') document.body.classList.add('classic');
+        else document.body.classList.remove('classic');
+        localStorage.setItem('ui_style', style);
+        renderAll();
+    }
+    function applyTheme(theme) {
+        if(theme === 'dark') document.body.classList.add('dark');
+        else document.body.classList.remove('dark');
+        localStorage.setItem('user_theme', theme);
+    }
+    function loadUserSettings() {
+        const savedName = localStorage.getItem('user_name');
+        const savedRole = localStorage.getItem('user_role');
+        if(savedName) { displayUserNameSpan.innerText = savedName; settingsUserName.value = savedName; }
+        if(savedRole) { displayUserRoleSpan.innerText = savedRole; settingsUserRole.value = savedRole; }
+        const theme = localStorage.getItem('user_theme') || 'light';
+        settingsTheme.value = theme;
+        applyTheme(theme);
+        const uiStyle = localStorage.getItem('ui_style') || 'minimal';
+        settingsUiStyle.value = uiStyle;
+        applyUiStyle(uiStyle);
+    }
+    function saveUserSettingsFromModal() {
+        const newName = settingsUserName.value.trim();
+        const newRole = settingsUserRole.value.trim();
+        if(newName) { displayUserNameSpan.innerText = newName; localStorage.setItem('user_name', newName); }
+        if(newRole) { displayUserRoleSpan.innerText = newRole; localStorage.setItem('user_role', newRole); }
+        applyTheme(settingsTheme.value);
+        applyUiStyle(settingsUiStyle.value);
+        showToast("сохранено");
+        userSettingsModal.classList.remove('show');
+    }
+
+    function initEvents() {
+        openCreateProjectModalBtn.onclick = () => createProjectModal.classList.add('show');
+        closeCreateProjectModalBtn.onclick = () => createProjectModal.classList.remove('show');
+        cancelCreateProjectModalBtn.onclick = () => createProjectModal.classList.remove('show');
+        createProjectModalBtn.onclick = createNewProject;
+        sidebarSearchInput.addEventListener('input', () => renderAll());
+        avatarLarge.addEventListener('click', () => userSettingsModal.classList.add('show'));
+        closeSettingsBtn.onclick = () => userSettingsModal.classList.remove('show');
+        cancelSettingsBtn.onclick = () => userSettingsModal.classList.remove('show');
+        saveSettingsBtn.onclick = saveUserSettingsFromModal;
+        
+        // Кнопка "назад" опциональна - навигация через хлебные крошки
+        if (backToProjectsBtn) {
+            backToProjectsBtn.onclick = () => document.querySelector('.main-content').scrollTo({top:0, behavior:'smooth'});
+        }
+        document.addEventListener('click', (e) => { if(!e.target.closest('.project-settings-btn') && !e.target.closest('.project-settings-menu')) closeAllMenus(); });
+        createProjectModal.addEventListener('click', (e) => { if(e.target === createProjectModal) createProjectModal.classList.remove('show'); });
+        userSettingsModal.addEventListener('click', (e) => { if(e.target === userSettingsModal) userSettingsModal.classList.remove('show'); });
+        
+        document.getElementById('exportProjectsBtn').onclick = exportAllProjects;
+        document.getElementById('importProjectsBtn').onclick = importAllProjects;
+        document.querySelectorAll('.density-btn').forEach(btn => {
+            btn.addEventListener('click', () => setDensity(btn.dataset.density));
+        });
+    }
+
+    async function init() {
+        await loadProjectsFromMinIO();
+        loadUserSettings();
+        loadDensity();
+        if(projects.length > 0 && !activeProjectId) activeProjectId = projects[0].id;
+        renderAll();
+        initEvents();
+    }
+    init();
+
+    // Делаем функции глобальными для вызова из onclick в меню
+    window.openProjectSettings = openProjectSettings;
+    window.duplicateProject = duplicateProject;
+    window.deleteProject = deleteProject;
+    window.exportSingleProject = exportSingleProject;
+    window.importSingleProject = importSingleProject;
+</script>
+</body>
+</html>
