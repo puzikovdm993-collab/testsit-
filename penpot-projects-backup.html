@@ -22,8 +22,14 @@
             --accent: #000000;
             --accent-soft: #f5f5f5;
             --danger: #dc2626;
+            --danger-hover: #b91c1c;
+            --success: #16a34a;
+            --warning: #ca8a04;
             --radius: 0px;
+            --radius-sm: 4px;
+            --radius-md: 8px;
             --shadow: none;
+            --shadow-lg: 0 10px 40px rgba(0,0,0,0.15);
             --font: -apple-system, 'Inter', 'Segoe UI', monospace;
             --card-padding: 12px;
             --card-gap: 16px;
@@ -34,6 +40,8 @@
             --stat-display: none;
             --card-icon-display: none;
             --grid-min-width: 260px;
+            --transition-fast: 0.15s ease;
+            --transition-normal: 0.2s ease;
         }
 
         body.classic {
@@ -45,8 +53,14 @@
             --accent: #6366f1;
             --accent-soft: #e0e7ff;
             --danger: #ef4444;
+            --danger-hover: #dc2626;
+            --success: #22c55e;
+            --warning: #eab308;
             --radius: 12px;
+            --radius-sm: 6px;
+            --radius-md: 10px;
             --shadow: 0 1px 3px rgba(0,0,0,0.05), 0 1px 2px rgba(0,0,0,0.1);
+            --shadow-lg: 0 10px 40px rgba(0,0,0,0.12);
             --font: 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
             --card-padding: 18px;
             --card-gap: 20px;
@@ -64,6 +78,10 @@
             --text-secondary: #a3a3a3;
             --accent: #ffffff;
             --accent-soft: #1a1a1a;
+            --danger: #ef4444;
+            --danger-hover: #dc2626;
+            --success: #22c55e;
+            --warning: #eab308;
         }
         body.classic.dark {
             --bg: #0f172a;
@@ -86,8 +104,10 @@
             height: 100vh;
             overflow: hidden;
             font-size: 13px;
-            line-height: 1.4;
+            line-height: 1.5;
             transition: background 0.2s, color 0.2s;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
         }
 
         .app-layout {
@@ -284,18 +304,30 @@
             position: fixed;
             bottom: 20px;
             right: 20px;
-            background: var(--accent);
-            color: var(--bg);
-            padding: 6px 14px;
-            font-size: 0.7rem;
-            font-family: monospace;
+            background: var(--surface);
+            color: var(--text);
+            padding: 10px 16px;
+            font-size: 0.8rem;
+            font-family: var(--font);
             z-index: 1300;
             opacity: 0;
-            transition: opacity 0.15s;
+            transition: opacity 0.2s, transform 0.2s;
             pointer-events: none;
-            border-radius: var(--radius);
+            border-radius: var(--radius-md);
+            box-shadow: var(--shadow-lg);
+            border: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            min-width: 200px;
         }
-        .toast-msg.show { opacity: 1; }
+        .toast-msg.show { opacity: 1; transform: translateY(0); }
+        .toast-msg.success { background: var(--success); color: white; border-color: var(--success); }
+        .toast-msg.error { background: var(--danger); color: white; border-color: var(--danger); }
+        .toast-msg.warning { background: var(--warning); color: white; border-color: var(--warning); }
+        .toast-msg.info { background: var(--accent); color: var(--bg); border-color: var(--accent); }
+        .toast-icon { font-size: 1rem; font-weight: bold; }
+        .toast-text { flex: 1; }
         @media (max-width: 768px) {
             .app-layout { flex-direction: column; }
             .sidebar { width: 100%; max-height: 40vh; }
@@ -347,7 +379,22 @@
     </div>
 </div>
 
-<div id="toastMsg" class="toast-msg"></div>
+<div id="toastMsg" class="toast-msg">
+    <span class="toast-icon"></span>
+    <span class="toast-text"></span>
+</div>
+
+<!-- модалка подтверждения -->
+<div id="confirmModal" class="user-settings-modal">
+    <div class="user-settings-panel">
+        <div class="settings-header"><h3 id="confirmTitle">Подтверждение</h3></div>
+        <div style="padding: 16px 0;"><p id="confirmMessage" style="font-size: 0.85rem; color: var(--text-secondary);"></p></div>
+        <div class="settings-actions" style="justify-content: flex-end;">
+            <button id="confirmCancelBtn" class="btn-secondary">Отмена</button>
+            <button id="confirmActionBtn" class="btn-primary">Подтвердить</button>
+        </div>
+    </div>
+</div>
 
 <!-- модалка настроек -->
 <div id="userSettingsModal" class="user-settings-modal">
@@ -411,12 +458,76 @@
     const statInProgressSpan = document.getElementById('statInProgress');
     const statFavoritesSpan = document.getElementById('statFavorites');
     const avatarLarge = document.querySelector('.avatar-large');
+    const confirmModal = document.getElementById('confirmModal');
+    const confirmTitle = document.getElementById('confirmTitle');
+    const confirmMessage = document.getElementById('confirmMessage');
+    const confirmActionBtn = document.getElementById('confirmActionBtn');
+    const confirmCancelBtn = document.getElementById('confirmCancelBtn');
+    const mainSearchInput = document.getElementById('mainSearchInput');
+    const categoryFilter = document.getElementById('categoryFilter');
+    const typeFilter = document.getElementById('typeFilter');
+    const sortFilter = document.getElementById('sortFilter');
+    const emptyStateCreateBtn = document.getElementById('emptyStateCreateBtn');
+    
+    let confirmCallback = null;
 
-    function showToast(msg, isError = false) {
-        toastMsg.textContent = msg;
-        toastMsg.classList.add('show');
-        setTimeout(() => toastMsg.classList.remove('show'), 1800);
+    // Улучшенная функция toast-уведомлений с типами и иконками
+    function showToast(msg, type = 'success', duration = 2500) {
+        const iconMap = {
+            success: '✓',
+            error: '✕',
+            warning: '⚠',
+            info: 'ℹ'
+        };
+        const icon = iconMap[type] || iconMap.success;
+        
+        toastMsg.querySelector('.toast-icon').textContent = icon;
+        toastMsg.querySelector('.toast-text').textContent = msg;
+        toastMsg.className = 'toast-msg show ' + type;
+        
+        setTimeout(() => {
+            toastMsg.classList.remove('show');
+        }, duration);
     }
+    
+    // Функция показа модального окна подтверждения
+    function showConfirmModal(title, message, callback) {
+        confirmTitle.textContent = title;
+        confirmMessage.textContent = message;
+        confirmCallback = callback;
+        confirmModal.classList.add('show');
+    }
+    
+    // Функция скрытия модального окна подтверждения
+    function hideConfirmModal() {
+        confirmModal.classList.remove('show');
+        confirmCallback = null;
+    }
+    
+    // Назначаем обработчик для кнопки подтверждения
+    confirmActionBtn.addEventListener('click', () => {
+        if (confirmCallback) {
+            confirmCallback();
+        }
+        hideConfirmModal();
+    });
+    
+    // Кнопка отмены
+    confirmCancelBtn.addEventListener('click', hideConfirmModal);
+    
+    // Закрытие по клику вне модального окна
+    confirmModal.addEventListener('click', (e) => {
+        if (e.target === confirmModal) {
+            hideConfirmModal();
+        }
+    });
+    
+    // Закрытие по Escape
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') {
+            hideConfirmModal();
+        }
+    });
 
     function saveFavorites() {
         localStorage.setItem('favorite_projects', JSON.stringify(favoriteIds));
@@ -426,10 +537,14 @@
 
     function toggleFavorite(projectId) {
         const idx = favoriteIds.indexOf(projectId);
-        if (idx === -1) favoriteIds.push(projectId);
-        else favoriteIds.splice(idx, 1);
+        if (idx === -1) {
+            favoriteIds.push(projectId);
+            showToast('Добавлено в избранное', 'success');
+        } else {
+            favoriteIds.splice(idx, 1);
+            showToast('Удалено из избранного', 'info');
+        }
         saveFavorites();
-        showToast(idx === -1 ? '⭐ В избранном' : '☆ Убрано из избранного');
     }
 
     async function loadProjectsFromMinIO() {
@@ -627,24 +742,39 @@
         const maxOrder = projects.length ? Math.max(...projects.map(p => p.order || 0)) : -1;
         const copy = { ...original, id: newId, name: `${original.name} (копия)`, createdAt: new Date().toISOString().slice(0,10), order: maxOrder + 1 };
         const saved = await saveProjectToMinIO(copy);
-        if(saved) { projects.push(copy); renderAll(); showToast(`✓ дубль`); }
-        else showToast("ошибка", true);
+        if(saved) { 
+            projects.push(copy); 
+            renderAll(); 
+            showToast('Проект продублирован', 'success'); 
+        }
+        else showToast("Ошибка при дублировании", "error");
         closeAllMenus();
     }
 
     async function deleteProject(projectId) {
         const p = projects.find(p => p.id === projectId);
-        if(!p || !confirm(`Удалить "${p.name}"?`)) return;
-        const deleted = await deleteProjectFromMinIO(projectId);
-        if(!deleted) { showToast("ошибка", true); return; }
-        projects = projects.filter(pr => pr.id !== projectId);
-        favoriteIds = favoriteIds.filter(id => id !== projectId);
-        saveFavorites();
-        for (let i = 0; i < projects.length; i++) projects[i].order = i;
-        for (let p of projects) await saveProjectToMinIO(p);
-        if(activeProjectId === projectId) activeProjectId = null;
-        renderAll();
-        showToast(`🗑 удалён`);
+        if (!p) return;
+        
+        // Показываем модальное окно подтверждения вместо confirm()
+        showConfirmModal(
+            'Удаление проекта',
+            `Вы уверены, что хотите удалить проект "${p.name}"? Это действие нельзя отменить.`,
+            async () => {
+                const deleted = await deleteProjectFromMinIO(projectId);
+                if (!deleted) {
+                    showToast("Ошибка при удалении", "error");
+                    return;
+                }
+                projects = projects.filter(pr => pr.id !== projectId);
+                favoriteIds = favoriteIds.filter(id => id !== projectId);
+                saveFavorites();
+                for (let i = 0; i < projects.length; i++) projects[i].order = i;
+                for (let proj of projects) await saveProjectToMinIO(proj);
+                if (activeProjectId === projectId) activeProjectId = null;
+                renderAll();
+                showToast(`Проект удалён`, "success");
+            }
+        );
         closeAllMenus();
     }
 
@@ -674,47 +804,48 @@
     async function importSingleProject(projectId) {
         const targetProject = projects.find(p => p.id === projectId);
         if (!targetProject) return;
-        const input = document.createElement('input');
-        input.type = 'file';
-        input.accept = 'application/json';
-        input.onchange = async (e) => {
-            const file = e.target.files[0];
-            if (!file) return;
-            const text = await file.text();
-            try {
-                const imported = JSON.parse(text);
-                // Проверяем, что это объект проекта (должен иметь id, name, category, type)
-                if (!imported.id || !imported.name || !imported.category || !imported.type) {
-                    throw new Error('Невалидный файл проекта');
-                }
-                if (!confirm(`Заменить проект "${targetProject.name}" данными из файла?\nID проекта останется прежним (${targetProject.id}).`)) return;
-                // Сохраняем старый ID и order, заменяем остальные поля
-                const oldId = targetProject.id;
-                const oldOrder = targetProject.order;
-                const updatedProject = {
-                    ...imported,
-                    id: oldId,
-                    order: oldOrder,
-                    // если в импортированном нет createdAt, ставим текущий
-                    createdAt: imported.createdAt || new Date().toISOString().slice(0,10)
+        
+        showConfirmModal(
+            'Импорт проекта',
+            `Заменить проект "${targetProject.name}" данными из файла?`,
+            () => {
+                const input = document.createElement('input');
+                input.type = 'file';
+                input.accept = 'application/json';
+                input.onchange = async (e) => {
+                    const file = e.target.files[0];
+                    if (!file) return;
+                    const text = await file.text();
+                    try {
+                        const imported = JSON.parse(text);
+                        if (!imported.id || !imported.name || !imported.category || !imported.type) {
+                            throw new Error('Невалидный файл проекта');
+                        }
+                        const oldId = targetProject.id;
+                        const oldOrder = targetProject.order;
+                        const updatedProject = {
+                            ...imported,
+                            id: oldId,
+                            order: oldOrder,
+                            createdAt: imported.createdAt || new Date().toISOString().slice(0,10)
+                        };
+                        const index = projects.findIndex(p => p.id === oldId);
+                        if (index !== -1) projects[index] = updatedProject;
+                        const saved = await saveProjectToMinIO(updatedProject);
+                        if (saved) {
+                            renderAll();
+                            showToast(`Проект обновлён из файла`, 'success');
+                        } else {
+                            showToast('Ошибка сохранения', 'error');
+                        }
+                    } catch(err) {
+                        showToast('Неверный JSON файл', 'error');
+                    }
+                    closeAllMenus();
                 };
-                // Обновляем в массиве
-                const index = projects.findIndex(p => p.id === oldId);
-                if (index !== -1) projects[index] = updatedProject;
-                // Сохраняем на сервер
-                const saved = await saveProjectToMinIO(updatedProject);
-                if (saved) {
-                    renderAll();
-                    showToast(`Проект "${updatedProject.name}" обновлён из файла`);
-                } else {
-                    showToast('Ошибка сохранения', true);
-                }
-            } catch(err) {
-                showToast('Неверный JSON файл проекта', true);
+                input.click();
             }
-            closeAllMenus();
-        };
-        input.click();
+        );
     }
 
     // ---------- ГЛОБАЛЬНЫЙ ЭКСПОРТ / ИМПОРТ (все проекты) ----------
@@ -731,35 +862,55 @@
     }
 
     function importAllProjects() {
-        const input = document.createElement('input');
-        input.type = 'file';
-        input.accept = 'application/json';
-        input.onchange = async (e) => {
-            const file = e.target.files[0];
-            if (!file) return;
-            const text = await file.text();
-            try {
-                const imported = JSON.parse(text);
-                if (!Array.isArray(imported)) throw new Error();
-                if (confirm('Заменить все текущие проекты? (Отмена — добавить)')) {
-                    projects = imported;
-                    favoriteIds = [];
-                } else {
-                    projects.push(...imported);
-                }
-                for (let i = 0; i < projects.length; i++) {
-                    if (!projects[i].id) projects[i].id = 'proj_' + Date.now() + '_' + i + '_' + Math.random().toString(36).substr(2,4);
-                    projects[i].order = i;
-                }
-                for (let p of projects) await saveProjectToMinIO(p);
-                renderAll();
-                showToast('Импорт завершён');
-            } catch(err) {
-                showToast('Неверный JSON файл', true);
+        showConfirmModal(
+            'Импорт всех проектов',
+            'Заменить все текущие проекты? (Отмена — добавить новые)',
+            () => {
+                const input = document.createElement('input');
+                input.type = 'file';
+                input.accept = 'application/json';
+                input.onchange = async (e) => {
+                    const file = e.target.files[0];
+                    if (!file) return;
+                    const text = await file.text();
+                    try {
+                        const imported = JSON.parse(text);
+                        if (!Array.isArray(imported)) throw new Error();
+                        if (confirmCallbackTemp) {
+                            projects = imported;
+                            favoriteIds = [];
+                            showToast('Все проекты заменены', 'success');
+                        } else {
+                            projects.push(...imported);
+                            showToast('Проекты добавлены', 'info');
+                        }
+                        for (let i = 0; i < projects.length; i++) {
+                            if (!projects[i].id) projects[i].id = 'proj_' + Date.now() + '_' + i + '_' + Math.random().toString(36).substr(2,4);
+                            projects[i].order = i;
+                        }
+                        for (let p of projects) await saveProjectToMinIO(p);
+                        renderAll();
+                        showToast('Импорт завершён', 'success');
+                    } catch(err) {
+                        showToast('Неверный JSON файл', 'error');
+                    }
+                };
+                input.click();
             }
-        };
-        input.click();
+        );
     }
+    
+    // Временная переменная для хранения состояния подтверждения
+    let confirmCallbackTemp = false;
+    
+    // Переопределяем обработчик кнопки подтверждения для импорта всех проектов
+    const originalConfirmAction = confirmActionBtn.onclick;
+    confirmActionBtn.addEventListener('click', () => {
+        confirmCallbackTemp = true;
+    });
+    confirmCancelBtn.addEventListener('click', () => {
+        confirmCallbackTemp = false;
+    });
 
     // ---------- ПЛОТНОСТЬ СЕТКИ ----------
     function setDensity(density) {
@@ -875,7 +1026,7 @@
         if(newRole) { displayUserRoleSpan.innerText = newRole; localStorage.setItem('user_role', newRole); }
         applyTheme(settingsTheme.value);
         applyUiStyle(settingsUiStyle.value);
-        showToast("сохранено");
+        showToast("Настройки сохранены", "success");
         userSettingsModal.classList.remove('show');
     }
 
@@ -898,6 +1049,13 @@
         document.getElementById('importProjectsBtn').onclick = importAllProjects;
         document.querySelectorAll('.density-btn').forEach(btn => {
             btn.addEventListener('click', () => setDensity(btn.dataset.density));
+        });
+        
+        // Сброс флага подтверждения при закрытии модального окна
+        confirmModal.addEventListener('click', (e) => {
+            if (e.target === confirmModal) {
+                confirmCallbackTemp = false;
+            }
         });
     }
 
