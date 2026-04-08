@@ -82,7 +82,14 @@ function undo() {
     if (!file) return;
     if (file.historyIndex > 0) {
         file.historyIndex--;
+        // Очищаем историю до текущего шага
+        file.history = file.history.slice(0, file.historyIndex + 1);
         restoreState(file, file.history[file.historyIndex]);
+        
+        // Обновляем окно истории, если оно открыто
+        if (typeof isHistoryModalOpen === 'function' && isHistoryModalOpen()) {
+            updateHistoryModal();
+        }
     }
 }
 
@@ -125,3 +132,5 @@ function captureState(file) {
 // Экспорт функций в глобальную область видимости
 window.setActionName = setActionName;
 window.captureState = captureState;
+window.undo = undo;
+window.redo = redo;
