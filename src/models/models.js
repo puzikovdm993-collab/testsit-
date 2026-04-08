@@ -477,7 +477,17 @@ console.log('✅ modals.js загружен (финальная версия с 
             'Оттенки серого': 'Оттенки серого'
         };
 
-        return map[state.action] || state.action;
+        let name = map[state.action] || state.action;
+        
+        // Добавляем параметры действия, если они есть
+        if (state.params) {
+            const paramsList = Object.entries(state.params)
+                .map(([key, value]) => `${key}: ${value}`)
+                .join(', ');
+            name += ` (${paramsList})`;
+        }
+        
+        return name;
     }
     if (typeof getActionIcon !== 'function') window.getActionIcon = () => '📄';
     if (typeof formatTimestamp !== 'function') {

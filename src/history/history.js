@@ -1,6 +1,18 @@
 
 // ============ Система истории (Undo/Redo) ============
 
+// Глобальная переменная для хранения названия текущего действия
+let currentActionName = 'Изменение';
+
+// Глобальная переменная для хранения параметров текущего действия
+let currentActionParams = null;
+
+// Функция для установки названия действия перед сохранением состояния
+function setActionName(name, params = null) {
+    currentActionName = name;
+    currentActionParams = params;
+}
+
 // Сброс истории для файла
 function resetHistory(file) {
     file.history = [];
@@ -17,6 +29,10 @@ function pushState(file) {
         file.history.shift();
         file.historyIndex--;
     }
+
+    // Сбрасываем название действия и параметры после сохранения
+    currentActionName = 'Изменение';
+    currentActionParams = null;
 
     // Обновляем окно истории, если оно открыто
     if (typeof isHistoryModalOpen === 'function' && isHistoryModalOpen()) {
@@ -80,9 +96,10 @@ function redo() {
     }
 }
 
-// Улучшенный захват состояния — автоматически определяет название действия
+// Улучшенный захват состояния — автоматически определяет название действия и параметры
 function captureState(file) {
-    let action = 'Изменение';
+    let action = currentActionName;
+    let params = currentActionParams;
 
     // Приоритет 1: если в текущем инструменте есть понятное название
     if (currentTool) {
@@ -100,6 +117,11 @@ function captureState(file) {
         h: file.canvas.height,
         data: file.ctx.getImageData(0, 0, file.canvas.width, file.canvas.height),
         timestamp: Date.now(),
-        action: action
+        action: action,
+        params: params
     };
 }
+
+// Экспорт функций в глобальную область видимости
+window.setActionName = setActionName;
+window.captureState = captureState;
