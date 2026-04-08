@@ -160,6 +160,7 @@ function rotateCanvas123(degrees) {
         applyZoom();
     }
     
+    setActionName('Поворот', { angle: degrees });
     saveState();
 }
 function rotateCanvas(angle) {
@@ -177,7 +178,7 @@ function rotateCanvas(angle) {
     file.matrix = restoredMatrix. matrix;
     file.width= restoredMatrix.width;
     file.height  = restoredMatrix.height;
-
+    
     // Находим минимальное и максимальное значения в матрице:
     let minVal = Infinity, maxVal = -Infinity;  // Инициализация
     for (let y = 0; y < file.height; y++) {          // Проходим по строкам
@@ -242,6 +243,7 @@ function rotateCanvas(angle) {
         applyZoom();
     }
     
+    setActionName('Поворот');
     saveState();
 }
 
@@ -631,6 +633,7 @@ function flipCanvas(direction) {
         applyZoom();
     }
     
+    setActionName('Отражение');
     saveState();
 }
 
@@ -1005,6 +1008,7 @@ async function applyMedianFilter() {
         }
 
         updateProgress(100, 'Готово!');
+        setActionName('Медианный фильтр', { aperture: aprture });
         saveState();
 
         // Закрываем модальное окно через небольшую задержку
