@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="ru">
 <head>
@@ -10,7 +9,425 @@
     <script src="static/js/plotly-2.27.1.min.js"></script>
 
     <link rel="icon" type="image/x-icon" href="favicon.ico">
-    <link rel="stylesheet" href="styles/index.css">
+    
+    <style>
+        /* --- CSS Variables & Reset - VS Code Style --- */
+        :root {
+            /* VS Code Dark Theme Colors */
+            --color-bg: #1e1e1e;
+            --color-surface: #252526;
+            --color-surface-hover: #2a2d2e;
+            --color-text: #cccccc;
+            --color-text-secondary: #858585;
+            --color-primary: #0e639c;
+            --color-primary-hover: #1177bb;
+            --color-danger: #f44336;
+            --color-danger-hover: #d32f2f;
+            --color-border: #3c3c3c;
+            --color-focus: #007fd4;
+            --shadow-sm: 0 1px 2px rgba(0,0,0,0.3);
+            --shadow-md: 0 4px 6px rgba(0,0,0,0.4);
+            --radius: 2px;
+            --transition: 0.15s ease;
+            --font-family: 'Consolas', 'Courier New', monospace;
+            --font-ui: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        
+        body {
+            font-family: var(--font-ui);
+            background-color: var(--color-bg);
+            color: var(--color-text);
+            line-height: 1.5;
+            transition: background-color var(--transition), color var(--transition);
+            font-size: 13px;
+        }
+
+        button {
+            font-family: inherit;
+            cursor: pointer;
+            border: none;
+            background: none;
+            color: inherit;
+        }
+
+        /* --- Tabs Container - VS Code Activity Bar Style --- */
+        .tabs-container {
+            background: var(--color-surface);
+            border-bottom: 1px solid var(--color-border);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .tabs-header {
+            display: flex;
+            align-items: center;
+            padding: 0 0;
+            gap: 0;
+            border-bottom: 1px solid var(--color-border);
+            background: var(--color-surface);
+            overflow-x: auto;
+        }
+
+        .back-to-projects-btn {
+            padding: 8px 12px;
+            background: transparent;
+            color: var(--color-text);
+            font-size: 12px;
+            border-right: 1px solid var(--color-border);
+            white-space: nowrap;
+        }
+        .back-to-projects-btn:hover {
+            background: var(--color-surface-hover);
+        }
+
+        .tab-btn {
+            padding: 8px 16px;
+            border: none;
+            border-right: 1px solid var(--color-border);
+            background: transparent;
+            color: var(--color-text-secondary);
+            font-size: 12px;
+            font-family: var(--font-ui);
+            cursor: pointer;
+            transition: all var(--transition);
+            white-space: nowrap;
+        }
+
+        .tab-btn:hover {
+            background: var(--color-surface-hover);
+            color: var(--color-text);
+        }
+
+        .tab-btn.active {
+            background: var(--color-bg);
+            color: var(--color-text);
+            border-bottom: 2px solid var(--color-primary);
+            margin-bottom: -1px;
+        }
+
+        .tabs-content {
+            background: var(--color-bg);
+            min-height: 400px;
+        }
+
+        .tab-pane {
+            display: none;
+            padding: 12px;
+        }
+
+        .tab-pane.active {
+            display: block;
+        }
+
+        /* --- Ribbon Groups --- */
+        .ribbon-group {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            padding: 4px 8px;
+            border-right: 1px solid var(--color-border);
+        }
+
+        .ribbon-buttons {
+            display: flex;
+            gap: 4px;
+            position: relative;
+        }
+
+        .ribbon-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 4px 8px;
+            background: transparent;
+            color: var(--color-text);
+            border: 1px solid transparent;
+            border-radius: var(--radius);
+            font-size: 12px;
+            transition: all var(--transition);
+        }
+
+        .ribbon-btn:hover {
+            background: var(--color-surface-hover);
+            border-color: var(--color-border);
+        }
+
+        .ribbon-btn-large {
+            padding: 6px 10px;
+        }
+
+        .ribbon-btn-thumb {
+            width: 24px;
+            height: 24px;
+            object-fit: contain;
+            border-radius: 2px;
+        }
+
+        .ribbon-btn-label {
+            max-width: 100px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .file-count-badge {
+            background: var(--color-primary);
+            color: white;
+            font-size: 10px;
+            padding: 1px 4px;
+            border-radius: 10px;
+            min-width: 16px;
+            text-align: center;
+        }
+
+        /* --- Open Files Dropdown --- */
+        .open-files-dropdown {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background: var(--color-surface);
+            border: 1px solid var(--color-border);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow-md);
+            z-index: 1000;
+            min-width: 280px;
+            max-height: 400px;
+            overflow-y: auto;
+            display: none;
+        }
+
+        .open-files-dropdown.show {
+            display: block;
+        }
+
+        .open-files-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 8px 12px;
+            border-bottom: 1px solid var(--color-border);
+            font-weight: 600;
+            font-size: 12px;
+        }
+
+        .close-dropdown-btn {
+            background: transparent;
+            border: none;
+            color: var(--color-text-secondary);
+            cursor: pointer;
+            padding: 2px;
+        }
+        .close-dropdown-btn:hover {
+            color: var(--color-text);
+        }
+
+        .open-files-list {
+            padding: 4px 0;
+        }
+
+        .open-file-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 6px 12px;
+            cursor: pointer;
+            transition: background var(--transition);
+        }
+
+        .open-file-item:hover {
+            background: var(--color-surface-hover);
+        }
+
+        .open-file-item.active {
+            background: var(--color-primary);
+            color: white;
+        }
+
+        .open-file-thumbnail {
+            width: 32px;
+            height: 32px;
+            background: var(--color-bg);
+            border: 1px solid var(--color-border);
+            border-radius: var(--radius);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .open-file-thumbnail-placeholder {
+            color: var(--color-text-secondary);
+            font-size: 16px;
+        }
+
+        .open-file-info {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .open-file-name {
+            font-size: 12px;
+            font-weight: 500;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .open-file-details {
+            display: flex;
+            gap: 8px;
+            font-size: 10px;
+            color: var(--color-text-secondary);
+        }
+
+        .open-file-item.active .open-file-details {
+            color: rgba(255,255,255,0.7);
+        }
+
+        .open-file-actions {
+            display: flex;
+            gap: 4px;
+        }
+
+        .close-file-btn {
+            background: transparent;
+            border: none;
+            color: var(--color-text-secondary);
+            padding: 2px;
+            cursor: pointer;
+            border-radius: 2px;
+        }
+        .close-file-btn:hover {
+            background: var(--color-danger);
+            color: white;
+        }
+
+        .open-files-footer {
+            display: flex;
+            gap: 4px;
+            padding: 8px;
+            border-top: 1px solid var(--color-border);
+        }
+
+        .footer-btn {
+            flex: 1;
+            padding: 6px 8px;
+            background: transparent;
+            border: 1px solid var(--color-border);
+            color: var(--color-text);
+            font-size: 11px;
+            border-radius: var(--radius);
+            cursor: pointer;
+            transition: all var(--transition);
+        }
+
+        .footer-btn:hover {
+            background: var(--color-surface-hover);
+            border-color: var(--color-primary);
+        }
+
+        /* --- Tab Sections --- */
+        .tab-section {
+            display: inline-block;
+            vertical-align: top;
+            padding: 8px 12px;
+            border-right: 1px solid var(--color-border);
+            margin-right: 8px;
+        }
+
+        .tab-section:last-child {
+            border-right: none;
+        }
+
+        .tab-section h4 {
+            font-size: 11px;
+            color: var(--color-text-secondary);
+            margin-top: 6px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .tab-buttons {
+            display: flex;
+            gap: 4px;
+            flex-wrap: wrap;
+        }
+
+        .tab-action-btn {
+            width: 32px;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: transparent;
+            border: 1px solid transparent;
+            border-radius: var(--radius);
+            cursor: pointer;
+            transition: all var(--transition);
+        }
+
+        .tab-action-btn:hover {
+            background: var(--color-surface-hover);
+            border-color: var(--color-border);
+        }
+
+        .tab-action-btn img {
+            width: 20px;
+            height: 20px;
+            opacity: 0.8;
+        }
+
+        .tab-action-btn:hover img {
+            opacity: 1;
+        }
+
+        /* --- Canvas Area --- */
+        .canvas-area {
+            background: var(--color-bg);
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        #imageCanvas {
+            background: #000;
+            box-shadow: var(--shadow-md);
+        }
+
+        /* --- Scrollbars --- */
+        ::-webkit-scrollbar {
+            width: 10px;
+            height: 10px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--color-bg);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--color-border);
+            border-radius: 5px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--color-text-secondary);
+        }
+
+        /* --- Utility Classes --- */
+        .sr-only {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            border: 0;
+        }
+    </style>
+    
     <link rel="stylesheet" href="styles/modals.css">
 
 </head>

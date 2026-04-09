@@ -1,15 +1,18 @@
 
-/* modals.css - Clean UI / Linear style */
+/* modals.css - VS Code Dark Theme Style */
 
 :root {
-    --modal-bg: #ffffff;
-    --modal-border: #e4e4e7;
-    --modal-header-bg: #fafafa;
-    --modal-text: #18181b;
-    --modal-text-muted: #71717a;
-    --modal-shadow: 0 8px 32px rgba(0, 0, 0, 0.16);
-    --modal-radius: 8px;
-    --modal-overlay: rgba(0, 0, 0, 0.4);
+    --modal-bg: #252526;
+    --modal-border: #3c3c3c;
+    --modal-header-bg: #2d2d2e;
+    --modal-text: #cccccc;
+    --modal-text-muted: #858585;
+    --modal-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+    --modal-radius: 2px;
+    --modal-overlay: rgba(0, 0, 0, 0.5);
+    --modal-primary: #0e639c;
+    --modal-primary-hover: #1177bb;
+    --modal-danger: #f44336;
 }
 
 /* Overlay for modals */
@@ -64,7 +67,7 @@
 
 /* Заголовок — область перетаскивания */
 .modal-title {
-    background: linear-gradient(135deg, var(--modal-header-bg) 0%, #f4f4f5 100%);
+    background: var(--modal-header-bg);
     color: var(--modal-text);
     padding: 0 16px;
     display: flex;
@@ -74,9 +77,9 @@
     user-select: none;
     border-bottom: 1px solid var(--modal-border);
     flex-shrink: 0;
-    font-size: 13px;
-    font-weight: 600;
-    letter-spacing: -0.01em;
+    font-size: 12px;
+    font-weight: 500;
+    height: 32px;
 }
 
 .modal-title:active {
@@ -86,7 +89,7 @@
 /* Тело модалки */
 .modal-body {
     flex: 1;
-    padding: 6px 10px 10px 6px;
+    padding: 12px;
     display: flex;
     flex-direction: column;
     min-height: 0;
@@ -94,8 +97,8 @@
 }
 .modal-body p {
     flex-shrink: 0;
-    font-size: 14px;
-    font-weight: 600;
+    font-size: 13px;
+    font-weight: 400;
     color: var(--modal-text);
     padding-bottom: 8px;
     text-align: center; 
@@ -106,12 +109,11 @@
 .graph-container {
     flex: 1;
     min-height: 0;
-    background: #f8fafc;
+    background: #1e1e1e;
     border: 1px solid var(--modal-border);
     position: relative;
     overflow: hidden;
-    border-radius: 6px;
-    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.05);
+    border-radius: 0;
 }
 
 #graphCanvas {
@@ -122,71 +124,62 @@
 
 /* Кнопки модалки */
 .modal-buttons {
-    padding: 2px 20px;
+    padding: 8px 16px;
     display: flex;
     justify-content: flex-end;
-    gap: 10px;
+    gap: 8px;
     border-top: 1px solid var(--modal-border);
-    background: linear-gradient(135deg, var(--modal-header-bg) 0%, #f4f4f5 100%);
+    background: var(--modal-header-bg);
+    height: 40px;
 }
 
 .modal-btn {
-    height: 32px;
-    padding: 0 16px;
-    font-size: 13px;
-    font-weight: 500;
+    height: 28px;
+    padding: 0 12px;
+    font-size: 12px;
+    font-weight: 400;
     border: 1px solid var(--modal-border);
     background: var(--modal-bg);
     color: var(--modal-text);
-    border-radius: 6px;
+    border-radius: 2px;
     cursor: pointer;
-    transition: all 0.2s ease;
+    transition: all 0.15s ease;
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    gap: 8px;
+    gap: 6px;
     outline: none;
-    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
 }
 
 .modal-btn:hover {
-    background: #f8fafc;
-    border-color: #d4d4d8;
-    transform: translateY(-1px);
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.08);
+    background: var(--modal-surface-hover, #2a2d2e);
+    border-color: var(--modal-primary);
 }
 
 .modal-btn:active {
-    transform: translateY(0);
-    background: #fafafa;
-    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+    background: var(--modal-bg);
 }
 
 .modal-btn.primary {
-    background: linear-gradient(135deg, var(--modal-text) 0%, #27272a 100%);
-    border-color: var(--modal-text);
+    background: var(--modal-primary);
+    border-color: var(--modal-primary);
     color: #ffffff;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
 }
 
 .modal-btn.primary:hover {
-    background: linear-gradient(135deg, #000 0%, #18181b 100%);
-    border-color: #000;
-    opacity: 0.95;
-    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2);
+    background: var(--modal-primary-hover);
+    border-color: var(--modal-primary-hover);
 }
 
 .modal-btn.danger {
-    color: #dc2626;
-    border-color: #fecaca;
-    background: #fef2f2;
-    box-shadow: 0 1px 2px rgba(220, 38, 38, 0.1);
+    color: #ffffff;
+    border-color: var(--modal-danger);
+    background: var(--modal-danger);
 }
 
 .modal-btn.danger:hover {
-    background: #fee2e2;
-    border-color: #fecaca;
-    box-shadow: 0 2px 4px rgba(220, 38, 38, 0.15);
+    background: var(--modal-danger-hover, #d32f2f);
+    border-color: var(--modal-danger-hover, #d32f2f);
 }
 
 /* Ручка изменения размера */
@@ -219,20 +212,19 @@
     border: none;
     color: var(--modal-text-muted);
     cursor: pointer;
-    font-size: 18px;
+    font-size: 16px;
     line-height: 1;
-    padding: 6px 8px;
-    border-radius: 6px;
-    transition: all 0.2s ease;
+    padding: 4px 8px;
+    border-radius: 2px;
+    transition: all 0.15s ease;
     display: inline-flex;
     align-items: center;
     justify-content: center;
 }
 
 .modal-title button:hover {
-    background: #e4e4e7;
-    color: #ef4444;
-    transform: rotate(90deg);
+    background: var(--modal-danger);
+    color: #ffffff;
 }
 
 /* Graph panel styles */
@@ -245,8 +237,8 @@
 
 .graph-panel h3 {
     flex-shrink: 0;
-    font-size: 14px;
-    font-weight: 600;
+    font-size: 13px;
+    font-weight: 500;
     color: var(--modal-text);
     padding-bottom: 8px;
     text-align: center; 
@@ -255,33 +247,35 @@
 /* Input fields in modals */
 .modal-input {
     width: 100%;
-    padding: 10px 12px;
-    font-size: 13px;
+    padding: 6px 10px;
+    font-size: 12px;
     border: 1px solid var(--modal-border);
-    border-radius: 6px;
-    background: var(--modal-bg);
+    border-radius: 2px;
+    background: #1e1e1e;
     color: var(--modal-text);
     outline: none;
-    transition: all 0.2s ease;
+    transition: all 0.15s ease;
 }
 
 .modal-input:focus {
-    border-color: var(--modal-text);
-    box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.08);
+    border-color: var(--modal-primary);
+    box-shadow: 0 0 0 1px var(--modal-primary);
 }
 
 /* Modal labels */
 .modal-label {
-    font-size: 12px;
-    font-weight: 500;
+    font-size: 11px;
+    font-weight: 400;
     color: var(--modal-text-muted);
-    margin-bottom: 6px;
+    margin-bottom: 4px;
     display: block;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
 }
 
 /* Form groups in modals */
 .modal-form-group {
-    margin-bottom: 16px;
+    margin-bottom: 12px;
 }
 
 .modal-form-group:last-child {
