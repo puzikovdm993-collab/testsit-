@@ -11,390 +11,553 @@
     <link rel="icon" type="image/x-icon" href="favicon.ico">
     
     <style>
-        /* --- CSS Variables & Reset - VS Code Style --- */
+        /* =============================================
+           VS CODE DARK+ THEME - COMPLETE REDESIGN
+           ============================================= */
         :root {
-            /* VS Code Dark Theme Colors */
-            --color-bg: #1e1e1e;
-            --color-surface: #252526;
-            --color-surface-hover: #2a2d2e;
-            --color-text: #cccccc;
-            --color-text-secondary: #858585;
-            --color-primary: #0e639c;
-            --color-primary-hover: #1177bb;
-            --color-danger: #f44336;
-            --color-danger-hover: #d32f2f;
-            --color-border: #3c3c3c;
-            --color-focus: #007fd4;
-            --shadow-sm: 0 1px 2px rgba(0,0,0,0.3);
-            --shadow-md: 0 4px 6px rgba(0,0,0,0.4);
-            --radius: 2px;
-            --transition: 0.15s ease;
-            --font-family: 'Consolas', 'Courier New', monospace;
-            --font-ui: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            /* VS Code Dark+ Official Colors */
+            --vscode-bg: #1e1e1e;
+            --vscode-sidebar-bg: #252526;
+            --vscode-activitybar-bg: #333333;
+            --vscode-titlebar-bg: #3c3c3c;
+            --vscode-tab-active: #1e1e1e;
+            --vscode-tab-inactive: #2d2d2d;
+            --vscode-tab-hover: #383838;
+            --vscode-editor-bg: #1e1e1e;
+            --vscode-panel-bg: #1e1e1e;
+            --vscode-statusbar-bg: #007acc;
+            --vscode-statusbar-fg: #ffffff;
+            --vscode-border: #454545;
+            --vscode-text: #cccccc;
+            --vscode-text-secondary: #858585;
+            --vscode-accent: #0e639c;
+            --vscode-accent-hover: #1177bb;
+            --vscode-selection: #264f78;
+            --vscode-line-highlight: #282828;
+            --vscode-scrollbar: #424242;
+            --vscode-scrollbar-hover: #4f4f4f;
+            --vscode-input-bg: #3c3c3c;
+            --vscode-input-border: #3c3c3c;
+            --vscode-input-focus: #007fd4;
+            --vscode-badge-bg: #4d4d4d;
+            --vscode-badge-fg: #ffffff;
+            --vscode-error: #f48771;
+            --vscode-warning: #cca700;
+            --vscode-info: #3794ff;
+            
+            /* Dimensions */
+            --titlebar-height: 30px;
+            --activitybar-width: 48px;
+            --sidebar-width: 250px;
+            --tab-height: 35px;
+            --statusbar-height: 22px;
+            --panel-min-height: 150px;
+            
+            /* Typography */
+            --font-ui: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            --font-code: "Consolas", "Courier New", monospace;
+            --font-size: 13px;
+            --font-size-small: 11px;
+            
+            /* Transitions */
+            --transition: 0.12s ease;
         }
 
-        * { box-sizing: border-box; margin: 0; padding: 0; }
+        * { 
+            box-sizing: border-box; 
+            margin: 0; 
+            padding: 0; 
+        }
         
+        html, body {
+            height: 100%;
+            overflow: hidden;
+        }
+
         body {
             font-family: var(--font-ui);
-            background-color: var(--color-bg);
-            color: var(--color-text);
+            background-color: var(--vscode-bg);
+            color: var(--vscode-text);
+            font-size: var(--font-size);
             line-height: 1.5;
-            transition: background-color var(--transition), color var(--transition);
-            font-size: 13px;
+            display: flex;
+            flex-direction: column;
         }
 
         button {
             font-family: inherit;
             cursor: pointer;
             border: none;
-            background: none;
+            background: transparent;
             color: inherit;
+            font-size: inherit;
         }
 
-        /* --- Tabs Container - VS Code Style --- */
-        .tabs-container {
-            background: var(--color-surface);
-            border-bottom: 1px solid var(--color-border);
+        button:hover {
+            background: var(--vscode-tab-hover);
         }
 
-        .tabs-header {
+        button:active {
+            background: var(--vscode-selection);
+        }
+
+        /* =============================================
+           TITLE BAR
+           ============================================= */
+        .titlebar {
+            height: var(--titlebar-height);
+            background: var(--vscode-titlebar-bg);
             display: flex;
             align-items: center;
-            padding: 0;
-            gap: 0;
-            border-bottom: 1px solid var(--color-border);
-            background: var(--color-surface);
-            overflow-x: auto;
-            height: 35px;
-        }
-
-        .back-to-projects-btn {
-            padding: 0 12px;
-            height: 35px;
-            display: flex;
-            align-items: center;
-            background: transparent;
-            color: var(--color-text);
-            font-size: 12px;
-            border-right: 1px solid var(--color-border);
-            white-space: nowrap;
-            cursor: pointer;
-        }
-        .back-to-projects-btn:hover {
-            background: var(--color-surface-hover);
-        }
-
-        .tab-btn {
-            padding: 0 16px;
-            height: 35px;
-            display: flex;
-            align-items: center;
-            border: none;
-            border-right: 1px solid var(--color-border);
-            border-bottom: 2px solid transparent;
-            background: transparent;
-            color: var(--color-text-secondary);
-            font-size: 12px;
-            font-family: var(--font-ui);
-            cursor: pointer;
-            transition: all var(--transition);
-            white-space: nowrap;
-        }
-
-        .tab-btn:hover {
-            background: var(--color-surface-hover);
-            color: var(--color-text);
-        }
-
-        .tab-btn.active {
-            background: var(--color-bg);
-            color: var(--color-text);
-            border-bottom-color: var(--color-primary);
-        }
-
-        .tabs-content {
-            background: var(--color-bg);
-            flex: 1;
-            overflow: auto;
-        }
-
-        .tab-pane {
-            display: none;
-            padding: 8px 12px;
-        }
-
-        .tab-pane.active {
-            display: block;
-        }
-
-        /* --- Ribbon Groups --- */
-        .ribbon-group {
-            display: inline-flex;
-            align-items: center;
-            gap: 4px;
-            padding: 4px 8px;
-            border-right: 1px solid var(--color-border);
-        }
-
-        .ribbon-buttons {
-            display: flex;
-            gap: 4px;
-            position: relative;
-        }
-
-        .ribbon-btn {
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-            padding: 4px 8px;
-            background: transparent;
-            color: var(--color-text);
-            border: 1px solid transparent;
-            border-radius: var(--radius);
-            font-size: 12px;
-            transition: all var(--transition);
-        }
-
-        .ribbon-btn:hover {
-            background: var(--color-surface-hover);
-            border-color: var(--color-border);
-        }
-
-        .ribbon-btn-large {
-            padding: 6px 10px;
-        }
-
-        .ribbon-btn-thumb {
-            width: 24px;
-            height: 24px;
-            object-fit: contain;
-            border-radius: 2px;
-        }
-
-        .ribbon-btn-label {
-            max-width: 100px;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            white-space: nowrap;
-        }
-
-        .file-count-badge {
-            background: var(--color-primary);
-            color: white;
-            font-size: 10px;
-            padding: 1px 4px;
-            border-radius: 10px;
-            min-width: 16px;
-            text-align: center;
-        }
-
-        /* --- Open Files Dropdown --- */
-        .open-files-dropdown {
-            position: absolute;
-            top: 100%;
-            left: 0;
-            background: var(--color-surface);
-            border: 1px solid var(--color-border);
-            border-radius: var(--radius);
-            box-shadow: var(--shadow-md);
-            z-index: 1000;
-            min-width: 280px;
-            max-height: 400px;
-            overflow-y: auto;
-            display: none;
-        }
-
-        .open-files-dropdown.show {
-            display: block;
-        }
-
-        .open-files-header {
-            display: flex;
             justify-content: space-between;
-            align-items: center;
-            padding: 8px 12px;
-            border-bottom: 1px solid var(--color-border);
-            font-weight: 600;
-            font-size: 12px;
+            padding: 0 8px;
+            user-select: none;
+            -webkit-app-region: drag;
         }
 
-        .close-dropdown-btn {
-            background: transparent;
-            border: none;
-            color: var(--color-text-secondary);
-            cursor: pointer;
-            padding: 2px;
-        }
-        .close-dropdown-btn:hover {
-            color: var(--color-text);
-        }
-
-        .open-files-list {
-            padding: 4px 0;
-        }
-
-        .open-file-item {
+        .titlebar-left {
             display: flex;
             align-items: center;
             gap: 8px;
-            padding: 6px 12px;
-            cursor: pointer;
-            transition: background var(--transition);
         }
 
-        .open-file-item:hover {
-            background: var(--color-surface-hover);
+        .titlebar-icon {
+            width: 16px;
+            height: 16px;
+            opacity: 0.8;
         }
 
-        .open-file-item.active {
-            background: var(--color-primary);
-            color: white;
+        .titlebar-menu {
+            display: flex;
+            gap: 2px;
         }
 
-        .open-file-thumbnail {
-            width: 32px;
-            height: 32px;
-            background: var(--color-bg);
-            border: 1px solid var(--color-border);
-            border-radius: var(--radius);
+        .menu-item {
+            padding: 2px 8px;
+            font-size: 12px;
+            color: var(--vscode-text);
+            border-radius: 4px;
+            -webkit-app-region: no-drag;
+        }
+
+        .menu-item:hover {
+            background: var(--vscode-tab-hover);
+        }
+
+        .titlebar-center {
+            flex: 1;
+            text-align: center;
+            font-size: 12px;
+            color: var(--vscode-text);
+            opacity: 0.8;
+        }
+
+        .titlebar-right {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            -webkit-app-region: no-drag;
+        }
+
+        .window-control {
+            width: 46px;
+            height: 30px;
             display: flex;
             align-items: center;
             justify-content: center;
+            font-size: 14px;
+            color: var(--vscode-text);
         }
 
-        .open-file-thumbnail-placeholder {
-            color: var(--color-text-secondary);
-            font-size: 16px;
+        .window-control:hover {
+            background: var(--vscode-tab-hover);
         }
 
-        .open-file-info {
-            flex: 1;
-            min-width: 0;
-        }
-
-        .open-file-name {
-            font-size: 12px;
-            font-weight: 500;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-        }
-
-        .open-file-details {
-            display: flex;
-            gap: 8px;
-            font-size: 10px;
-            color: var(--color-text-secondary);
-        }
-
-        .open-file-item.active .open-file-details {
-            color: rgba(255,255,255,0.7);
-        }
-
-        .open-file-actions {
-            display: flex;
-            gap: 4px;
-        }
-
-        .close-file-btn {
-            background: transparent;
-            border: none;
-            color: var(--color-text-secondary);
-            padding: 2px;
-            cursor: pointer;
-            border-radius: 2px;
-        }
-        .close-file-btn:hover {
-            background: var(--color-danger);
+        .window-control.close:hover {
+            background: #e81123;
             color: white;
         }
 
-        .open-files-footer {
+        /* =============================================
+           MAIN LAYOUT
+           ============================================= */
+        .workbench {
             display: flex;
-            gap: 4px;
-            padding: 8px;
-            border-top: 1px solid var(--color-border);
-        }
-
-        .footer-btn {
             flex: 1;
-            padding: 6px 8px;
-            background: transparent;
-            border: 1px solid var(--color-border);
-            color: var(--color-text);
-            font-size: 11px;
-            border-radius: var(--radius);
-            cursor: pointer;
-            transition: all var(--transition);
-        }
-
-        .footer-btn:hover {
-            background: var(--color-surface-hover);
-            border-color: var(--color-primary);
-        }
-
-        /* --- Main Container & Toolbar - VS Code Style --- */
-        .main-container {
-            display: flex;
-            flex-direction: row;
-            height: calc(100vh - 35px - 28px); /* header - footer */
             overflow: hidden;
         }
 
-        /* Left Sidebar (Activity Bar + Panels) */
-        .left-sidebar {
-            width: 48px;
-            background: var(--color-surface);
-            border-right: 1px solid var(--color-border);
+        /* Activity Bar (Leftmost) */
+        .activity-bar {
+            width: var(--activitybar-width);
+            background: var(--vscode-activitybar-bg);
             display: flex;
             flex-direction: column;
             align-items: center;
-            padding-top: 8px;
+            padding-top: 4px;
+            border-right: 1px solid var(--vscode-border);
         }
 
-        .sidebar-tool-btn {
+        .activity-item {
             width: 48px;
             height: 48px;
             display: flex;
             align-items: center;
             justify-content: center;
-            background: transparent;
-            border: none;
-            border-left: 2px solid transparent;
             cursor: pointer;
+            border-left: 2px solid transparent;
+            color: var(--vscode-text-secondary);
+            font-size: 22px;
             transition: all var(--transition);
-            color: var(--color-text-secondary);
-            font-size: 20px;
+            position: relative;
         }
 
-        .sidebar-tool-btn:hover {
-            color: var(--color-text);
+        .activity-item:hover {
+            color: var(--vscode-text);
         }
 
-        .sidebar-tool-btn.active {
-            color: var(--color-text);
-            border-left-color: var(--color-primary);
-            background: rgba(14, 99, 156, 0.1);
+        .activity-item.active {
+            color: var(--vscode-text);
+            border-left-color: var(--vscode-text);
         }
 
-        /* Main Content Area */
-        .main-content {
+        .activity-item .badge {
+            position: absolute;
+            top: 8px;
+            right: 8px;
+            background: var(--vscode-accent);
+            color: white;
+            font-size: 9px;
+            padding: 1px 4px;
+            border-radius: 10px;
+            min-width: 14px;
+            text-align: center;
+        }
+
+        .activity-bar-bottom {
+            margin-top: auto;
+            padding-bottom: 8px;
+        }
+
+        /* Sidebar (Explorer Panel) */
+        .sidebar {
+            width: var(--sidebar-width);
+            background: var(--vscode-sidebar-bg);
+            border-right: 1px solid var(--vscode-border);
+            display: flex;
+            flex-direction: column;
+            min-width: 170px;
+            max-width: 500px;
+        }
+
+        .sidebar-title {
+            height: 35px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 16px;
+            font-size: 11px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: var(--vscode-text-secondary);
+        }
+
+        .sidebar-actions {
+            display: flex;
+            gap: 4px;
+        }
+
+        .sidebar-action-btn {
+            width: 20px;
+            height: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 4px;
+            color: var(--vscode-text-secondary);
+            font-size: 14px;
+        }
+
+        .sidebar-action-btn:hover {
+            background: var(--vscode-tab-hover);
+            color: var(--vscode-text);
+        }
+
+        .sidebar-content {
+            flex: 1;
+            overflow-y: auto;
+            overflow-x: hidden;
+        }
+
+        .explorer-section {
+            border-bottom: 1px solid var(--vscode-border);
+        }
+
+        .explorer-header {
+            display: flex;
+            align-items: center;
+            padding: 4px 8px;
+            font-size: 11px;
+            font-weight: 600;
+            color: var(--vscode-text-secondary);
+            cursor: pointer;
+            user-select: none;
+        }
+
+        .explorer-header:hover {
+            background: var(--vscode-tab-hover);
+        }
+
+        .explorer-arrow {
+            width: 16px;
+            height: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 10px;
+            margin-right: 4px;
+            transition: transform var(--transition);
+        }
+
+        .explorer-arrow.collapsed {
+            transform: rotate(-90deg);
+        }
+
+        .explorer-body {
+            display: none;
+        }
+
+        .explorer-body.open {
+            display: block;
+        }
+
+        .file-tree {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .file-item {
+            display: flex;
+            align-items: center;
+            padding: 3px 8px 3px 20px;
+            cursor: pointer;
+            font-size: 13px;
+            color: var(--vscode-text);
+            border-radius: 4px;
+            margin: 1px 4px;
+        }
+
+        .file-item:hover {
+            background: var(--vscode-tab-hover);
+        }
+
+        .file-item.active {
+            background: var(--vscode-selection);
+        }
+
+        .file-icon {
+            width: 16px;
+            height: 16px;
+            margin-right: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+        }
+
+        /* =============================================
+           EDITOR AREA
+           ============================================= */
+        .editor-area {
             flex: 1;
             display: flex;
             flex-direction: column;
             overflow: hidden;
+            background: var(--vscode-editor-bg);
         }
 
-        /* Top Toolbar */
-        .toolbar-top {
+        /* Tabs Bar */
+        .tabs-bar {
             display: flex;
+            height: var(--tab-height);
+            background: var(--vscode-sidebar-bg);
+            overflow-x: auto;
+            overflow-y: hidden;
+            border-bottom: 1px solid var(--vscode-border);
+        }
+
+        .tabs-bar::-webkit-scrollbar {
+            height: 3px;
+        }
+
+        .tab {
+            display: flex;
+            align-items: center;
+            min-width: 120px;
+            max-width: 200px;
+            height: 100%;
+            padding: 0 8px;
+            background: var(--vscode-tab-inactive);
+            border-right: 1px solid var(--vscode-border);
+            cursor: pointer;
+            user-select: none;
+            position: relative;
+        }
+
+        .tab:hover {
+            background: var(--vscode-tab-hover);
+        }
+
+        .tab.active {
+            background: var(--vscode-tab-active);
+            border-top: 1px solid var(--vscode-accent);
+        }
+
+        .tab-icon {
+            width: 16px;
+            height: 16px;
+            margin-right: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+        }
+
+        .tab-title {
+            flex: 1;
+            font-size: 13px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .tab-close {
+            width: 20px;
+            height: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 4px;
+            font-size: 14px;
+            opacity: 0;
+            transition: opacity var(--transition);
+        }
+
+        .tab:hover .tab-close {
+            opacity: 1;
+        }
+
+        .tab-close:hover {
+            background: var(--vscode-badge-bg);
+        }
+
+        .tab.modified .tab-title::after {
+            content: '●';
+            margin-left: 4px;
+            color: var(--vscode-text-secondary);
+        }
+
+        /* Breadcrumbs */
+        .breadcrumbs {
+            display: flex;
+            align-items: center;
+            height: 22px;
+            padding: 0 12px;
+            background: var(--vscode-editor-bg);
+            border-bottom: 1px solid var(--vscode-border);
+            font-size: 12px;
+            color: var(--vscode-text-secondary);
+        }
+
+        .breadcrumb-item {
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+        }
+
+        .breadcrumb-item:hover {
+            color: var(--vscode-text);
+        }
+
+        .breadcrumb-separator {
+            margin: 0 4px;
+            opacity: 0.5;
+        }
+
+        /* Menu Ribbon */
+        .menu-ribbon {
+            display: flex;
+            align-items: center;
             gap: 4px;
             padding: 4px 8px;
-            background: var(--color-surface);
-            border-bottom: 1px solid var(--color-border);
+            background: var(--vscode-sidebar-bg);
+            border-bottom: 1px solid var(--vscode-border);
+            flex-wrap: wrap;
+        }
+
+        .ribbon-group {
+            display: flex;
             align-items: center;
-            min-height: 32px;
+            gap: 2px;
+            padding: 2px 6px;
+            border-right: 1px solid var(--vscode-border);
+        }
+
+        .ribbon-group:last-child {
+            border-right: none;
+        }
+
+        .ribbon-label {
+            font-size: 9px;
+            color: var(--vscode-text-secondary);
+            text-transform: uppercase;
+            margin-right: 4px;
+        }
+
+        .ribbon-btn {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 4px 6px;
+            border-radius: 4px;
+            min-width: 28px;
+            min-height: 28px;
+        }
+
+        .ribbon-btn:hover {
+            background: var(--vscode-tab-hover);
+        }
+
+        .ribbon-btn.active {
+            background: var(--vscode-selection);
+        }
+
+        .ribbon-btn-icon {
+            width: 20px;
+            height: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+            margin-bottom: 2px;
+        }
+
+        .ribbon-btn-label {
+            font-size: 9px;
+            color: var(--vscode-text-secondary);
+        }
+
+        /* Toolbar */
+        .toolbar {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            padding: 4px 8px;
+            background: var(--vscode-sidebar-bg);
+            border-bottom: 1px solid var(--vscode-border);
         }
 
         .tool-btn {
@@ -403,166 +566,44 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            background: transparent;
-            border: 1px solid transparent;
-            border-radius: var(--radius);
-            cursor: pointer;
-            transition: all var(--transition);
-            color: var(--color-text);
+            border-radius: 4px;
             font-size: 14px;
+            color: var(--vscode-text);
         }
 
         .tool-btn:hover {
-            background: var(--color-surface-hover);
-            border-color: var(--color-border);
+            background: var(--vscode-tab-hover);
         }
 
         .tool-btn.active {
-            background: var(--color-primary);
-            border-color: var(--color-primary);
-            color: white;
+            background: var(--vscode-selection);
         }
 
-        .tool-btn svg,
-        .tool-btn img {
-            width: 16px;
-            height: 16px;
-        }
-
-        /* Color Bar - Vertical Left Panel */
-        .color-bar-container {
-            width: 200px;
-            background: var(--color-surface);
-            border-right: 1px solid var(--color-border);
-            display: flex;
-            flex-direction: column;
-            padding: 8px;
-            gap: 12px;
-        }
-
-        .color-bar {
-            display: flex;
-            flex-direction: column;
-            gap: 6px;
-        }
-
-        #colorBarGradient {
-            width: 100%;
-            height: 24px;
-            background: linear-gradient(to right, black, white);
-            border: 1px solid var(--color-border);
-            border-radius: var(--radius);
-        }
-
-        .color-bar-labels {
-            display: flex;
-            justify-content: space-between;
-            font-size: 10px;
-            color: var(--color-text-secondary);
-            font-family: var(--font-family);
-        }
-
-        .color-bar-label {
-            font-size: 10px;
-            color: var(--color-text-secondary);
-            font-family: var(--font-family);
-        }
-
-        /* --- Tab Sections - VS Code Style --- */
-        .tab-section {
-            display: inline-flex;
-            flex-direction: column;
-            align-items: flex-start;
-            gap: 6px;
-            padding: 4px 8px;
-            border-right: 1px solid var(--color-border);
-            margin-right: 8px;
-        }
-
-        .tab-section:last-child {
-            border-right: none;
-        }
-
-        .tab-section h4 {
-            font-size: 10px;
-            color: var(--color-text-secondary);
-            margin: 0;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            font-weight: 600;
-        }
-
-        .tab-buttons {
-            display: flex;
-            gap: 2px;
-            flex-wrap: wrap;
-        }
-
-        .tab-action-btn {
-            width: 28px;
-            height: 28px;
+        .zoom-control {
             display: flex;
             align-items: center;
-            justify-content: center;
-            background: transparent;
-            border: 1px solid transparent;
-            border-radius: var(--radius);
-            cursor: pointer;
-            transition: all var(--transition);
+            gap: 4px;
+            margin-left: auto;
         }
 
-        .tab-action-btn:hover {
-            background: var(--color-surface-hover);
-            border-color: var(--color-border);
-        }
-
-        .tab-action-btn img {
-            width: 18px;
-            height: 18px;
-            opacity: 0.8;
-        }
-
-        .tab-action-btn:hover img {
-            opacity: 1;
-        }
-
-        /* --- Status Bar --- */
-        .status-bar {
-            background: var(--color-surface);
-            border-top: 1px solid var(--color-border);
-            padding: 4px 12px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
+        .zoom-value {
             font-size: 12px;
-            color: var(--color-text-secondary);
-            font-family: var(--font-mono);
+            color: var(--vscode-text-secondary);
+            min-width: 50px;
+            text-align: center;
         }
 
-        .status-left,
-        .status-right {
-            display: flex;
-            gap: 16px;
-        }
-
-        .status-bar span {
-            white-space: nowrap;
-        }
-
-        /* --- Canvas Area - VS Code Style --- */
-        .canvas-area {
-            background: var(--color-bg);
+        /* Canvas Area */
+        .canvas-container {
+            flex: 1;
             position: relative;
             overflow: auto;
-            display: flex;
-            flex: 1;
+            background: var(--vscode-editor-bg);
         }
 
         .canvas-wrapper {
             width: 100%;
             height: 100%;
-            position: relative;
-            overflow: auto;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -571,14 +612,10 @@
 
         #canvasHost {
             position: relative;
-            display: flex;
-            align-items: center;
-            justify-content: center;
         }
 
         #imageCanvas {
-            background: #1e1e1e;
-            border: 1px solid var(--color-border);
+            background: var(--vscode-editor-bg);
             image-rendering: pixelated;
             max-width: 100%;
             max-height: 100%;
@@ -604,44 +641,260 @@
             width: 100%;
             height: 100%;
             background: transparent;
-            border: 1px dashed var(--color-accent);
-            color: var(--color-text);
-            font-family: var(--font-mono);
+            border: 1px dashed var(--vscode-accent);
+            color: var(--vscode-text);
+            font-family: var(--font-code);
             font-size: 14px;
             padding: 8px;
             resize: none;
             outline: none;
         }
 
-        /* --- Scrollbars --- */
+        /* Panel (Bottom) */
+        .panel {
+            height: var(--panel-min-height);
+            background: var(--vscode-panel-bg);
+            border-top: 1px solid var(--vscode-border);
+            display: flex;
+            flex-direction: column;
+            min-height: 100px;
+            max-height: 60%;
+        }
+
+        .panel-tabs {
+            display: flex;
+            height: 30px;
+            background: var(--vscode-sidebar-bg);
+            border-bottom: 1px solid var(--vscode-border);
+        }
+
+        .panel-tab {
+            display: flex;
+            align-items: center;
+            padding: 0 16px;
+            font-size: 11px;
+            text-transform: uppercase;
+            color: var(--vscode-text-secondary);
+            cursor: pointer;
+            border-right: 1px solid var(--vscode-border);
+            letter-spacing: 0.5px;
+        }
+
+        .panel-tab:hover {
+            color: var(--vscode-text);
+            background: var(--vscode-tab-hover);
+        }
+
+        .panel-tab.active {
+            color: var(--vscode-text);
+            border-top: 1px solid var(--vscode-accent);
+            background: var(--vscode-panel-bg);
+        }
+
+        .panel-content {
+            flex: 1;
+            overflow-y: auto;
+            padding: 8px;
+            font-family: var(--font-code);
+            font-size: 12px;
+        }
+
+        /* =============================================
+           STATUS BAR
+           ============================================= */
+        .status-bar {
+            height: var(--statusbar-height);
+            background: var(--vscode-statusbar-bg);
+            color: var(--vscode-statusbar-fg);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 8px;
+            font-size: 11px;
+            user-select: none;
+        }
+
+        .status-left,
+        .status-right {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .status-item {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            cursor: pointer;
+            padding: 0 4px;
+        }
+
+        .status-item:hover {
+            background: rgba(255,255,255,0.1);
+        }
+
+        /* =============================================
+           COLOR BAR PANEL
+           ============================================= */
+        .color-bar-panel {
+            width: 200px;
+            background: var(--vscode-sidebar-bg);
+            border-left: 1px solid var(--vscode-border);
+            padding: 12px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .color-bar-gradient {
+            width: 100%;
+            height: 24px;
+            background: linear-gradient(to right, #000000, #ffffff);
+            border: 1px solid var(--vscode-border);
+            border-radius: 2px;
+            cursor: crosshair;
+        }
+
+        .color-bar-labels {
+            display: flex;
+            justify-content: space-between;
+            font-size: 10px;
+            color: var(--vscode-text-secondary);
+            font-family: var(--font-code);
+        }
+
+        .color-input-row {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .color-input {
+            flex: 1;
+            background: var(--vscode-input-bg);
+            border: 1px solid var(--vscode-input-border);
+            color: var(--vscode-text);
+            padding: 4px 8px;
+            font-family: var(--font-code);
+            font-size: 11px;
+            border-radius: 2px;
+        }
+
+        .color-input:focus {
+            outline: 1px solid var(--vscode-input-focus);
+        }
+
+        /* =============================================
+           SCROLLBARS
+           ============================================= */
         ::-webkit-scrollbar {
             width: 10px;
             height: 10px;
         }
 
         ::-webkit-scrollbar-track {
-            background: var(--color-bg);
+            background: transparent;
         }
 
         ::-webkit-scrollbar-thumb {
-            background: var(--color-border);
+            background: var(--vscode-scrollbar);
             border-radius: 5px;
+            border: 2px solid transparent;
+            background-clip: content-box;
         }
 
         ::-webkit-scrollbar-thumb:hover {
-            background: var(--color-text-secondary);
+            background-color: var(--vscode-scrollbar-hover);
+            background-clip: content-box;
         }
 
-        /* --- Utility Classes --- */
-        .sr-only {
+        /* Horizontal scrollbar for tabs */
+        .tabs-bar::-webkit-scrollbar {
+            height: 3px;
+        }
+
+        .tabs-bar::-webkit-scrollbar-thumb {
+            background: var(--vscode-scrollbar);
+            border-radius: 2px;
+        }
+
+        /* =============================================
+           CONTEXT MENU DROPDOWN
+           ============================================= */
+        .dropdown {
             position: absolute;
-            width: 1px;
+            background: var(--vscode-sidebar-bg);
+            border: 1px solid var(--vscode-border);
+            border-radius: 4px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+            z-index: 1000;
+            min-width: 200px;
+            display: none;
+        }
+
+        .dropdown.show {
+            display: block;
+        }
+
+        .dropdown-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 6px 12px;
+            cursor: pointer;
+            font-size: 12px;
+        }
+
+        .dropdown-item:hover {
+            background: var(--vscode-selection);
+        }
+
+        .dropdown-divider {
             height: 1px;
-            padding: 0;
-            margin: -1px;
-            overflow: hidden;
-            clip: rect(0, 0, 0, 0);
-            border: 0;
+            background: var(--vscode-border);
+            margin: 4px 0;
+        }
+
+        /* =============================================
+           UTILITY CLASSES
+           ============================================= */
+        .hidden {
+            display: none !important;
+        }
+
+        .flex {
+            display: flex;
+        }
+
+        .flex-col {
+            flex-direction: column;
+        }
+
+        .flex-1 {
+            flex: 1;
+        }
+
+        .items-center {
+            align-items: center;
+        }
+
+        .justify-between {
+            justify-content: space-between;
+        }
+
+        .gap-1 { gap: 4px; }
+        .gap-2 { gap: 8px; }
+        .gap-3 { gap: 12px; }
+
+        .text-secondary {
+            color: var(--vscode-text-secondary);
+        }
+
+        .divider {
+            width: 1px;
+            background: var(--vscode-border);
+            height: 16px;
+            margin: 0 4px;
         }
     </style>
     
@@ -682,1264 +935,293 @@
     </svg>
     
 
-    <!-- Основной интерфейс -->
-    <div style="display: flex; flex-direction: column; height: calc(100vh - 28px);">
-        <!-- Панель вкладок (Tabs) -->
-        <div class="tabs-container">
-            <div class="tabs-header">
-                <a href="penpot-projects.html" class="back-to-projects-btn" title="Вернуться к проектам">
-                    ← Назад к проектам
-                </a>
-                <button class="tab-btn active" data-tab="file">Файл</button>
-                <button class="tab-btn" data-tab="edit">Правка</button>
-                <button class="tab-btn" data-tab="view">Вид</button>
-                <button class="tab-btn" data-tab="image">Изображение</button>
-                <button class="tab-btn" data-tab="filters">Фильтры</button>
-                <button class="tab-btn" data-tab="adjustments">Регулировка</button>
-                <button class="tab-btn" data-tab="tools">Инструменты</button>
-                <button class="tab-btn" data-tab="modes">Режимы</button>
-                <button class="tab-btn" data-tab="options">Настройки</button>
+    <!-- VS Code Style Interface -->
+    <!-- Title Bar -->
+    <div class="titlebar">
+        <div class="titlebar-left">
+            <img src="favicon.ico" alt="" class="titlebar-icon">
+            <div class="titlebar-menu">
+                <span class="menu-item">File</span>
+                <span class="menu-item">Edit</span>
+                <span class="menu-item">View</span>
+                <span class="menu-item">Image</span>
+                <span class="menu-item">Filters</span>
+                <span class="menu-item">Tools</span>
+                <span class="menu-item">Help</span>
             </div>
-            <div class="tabs-content">
-            <!-- Контент вкладки "Файл" -->
-            <div class="tab-pane active" id="tab-file">
-                <!-- Группа открытых файлов (перемещена из верхнего ribbon) -->
-                <div class="ribbon-group" id="ribbonFilesGroup">
-                    <div class="ribbon-buttons" style="position: relative;">
-                        <button class="ribbon-btn ribbon-btn-large" id="openFilesDropdownBtn" title="Открытые файлы" onclick="toggleOpenFilesDropdown()">
-                            <!-- Превью активного файла (если есть) -->
-                            <canvas id="activeFileThumbCanvas" width="32" height="32" class="ribbon-btn-thumb" style="display: none;"></canvas>
-                            <img id="activeFileThumbImg" class="ribbon-btn-thumb" width="32" height="32" style="display: none;">
-                            <span class="ribbon-btn-label" id="currentFileLabel" style="display: none;">Безымянный</span>
-                            <div class="file-count-badge" id="fileCountBadge" style="display: none;">1</div>
-                        </button>
-                        <div class="open-files-dropdown" id="openFilesDropdown">
-                            <div class="open-files-header">
-                                <span>Открытые изображения</span>
-                                <button class="close-dropdown-btn" onclick="toggleOpenFilesDropdown()">
-                                    <i class="fas fa-times"></i>
-                                </button>
-                            </div>
-                            <div class="open-files-list" id="openFilesList">
-                                <div class="open-file-item active" data-file-id="1" onclick="switchToFile(1)">
-                                    <div class="open-file-thumbnail">
-                                        <div class="fas fa-image open-file-thumbnail-placeholder"></div>
-                                    </div>
-                                    <div class="open-file-info">
-                                        <div class="open-file-name">Безымянный.png</div>
-                                        <div class="open-file-details">
-                                            <span class="open-file-resolution">800×600</span>
-                                            <span class="open-file-format">PNG</span>
-                                        </div>
-                                    </div>
-                                    <div class="open-file-actions">
-                                        <button class="close-file-btn" onclick="closeFile(1, event)" title="Закрыть">
-                                            <i class="fas fa-times"></i>
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="open-files-footer">
-                                <button class="footer-btn" onclick="openAllImages()">
-                                    <i class="fas fa-folder-open"></i> Открыть все
-                                </button>
-                                <button class="footer-btn" onclick="closeAllImages()">
-                                    <i class="fas fa-times-circle"></i> Закрыть все
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- <span class="ribbon-group-title">Файлы</span> -->
-                </div>
-
-                <div class="tab-section">
-                    <div class="tab-buttons">
-                        <button class="tab-action-btn" onclick="showLoadMethodModal()" title="Открыть">
-                            <img src="icons/free-icon-folder-8316612.png" alt=""> 
-                        </button>
-                        <button class="tab-action-btn" onclick="showSaveMethodModal()" title="Сохранить">
-                            <img src="icons/free-icon-data-storage-8322520.png" alt=""> 
-                        </button>
-                    </div>
-                    <h4>Управление файлами</h4>
-                </div>
-
-            </div>
-            <!-- Контент вкладки "Правка" -->
-            <div class="tab-pane" id="tab-edit">
-                <div class="tab-section">
-                    <div class="tab-buttons">
-                        <button class="tab-action-btn" onclick="undo()" title="Отменить (Ctrl+Z)">
-                            <img src="icons/free-icon-undo.png" alt="">
-                        </button>
-                        <button class="tab-action-btn" onclick="redo()" title="Повторить (Ctrl+Y)">
-                            <img src="icons/free-icon-redo.png" alt="">
-                        </button>
-                        <button class="tab-action-btn" onclick="showHistoryModal()" title="История (Ctrl+H)">
-                            <img src="icons/free-icon-history.png" alt="">
-                        </button>
-                    </div>
-                    <h4>История действий</h4>
-                </div>
-            </div>
-            <!-- Контент вкладки "Вид" -->
-            <div class="tab-pane" id="tab-view">
-                <div class="tab-section">
-                    <div class="tab-buttons">
-                        <button class="tab-action-btn" onclick="zoomIn()"title="Увеличить">
-                            <img src="images/notimages.png" alt="">
-                        </button>
-                        <button class="tab-action-btn" onclick="zoomOut()"title="Уменьшить">
-                            <img src="images/notimages.png" alt="">
-                        </button>
-                        <button class="tab-action-btn" onclick="zoomReset()"title="100%">
-                            <img src="images/notimages.png" alt="">
-                        </button>
-                        <button class="tab-action-btn" onclick="fitImageToScreen()"title="По размеру окна">
-                            <img src="images/notimages.png" alt="">
-                        </button>
-                    </div>
-                    <h4>Масштаб</h4>
-                </div>
-            </div>
-
-
-            <!-- Контент вкладки "Изображение" -->
-            <div class="tab-pane" id="tab-image">
-                <div class="tab-section">
-                    <div class="tab-buttons">
-                        <button class="tab-action-btn" onclick="cropToSelection()" title="По выделению">
-                            <img src="images/notimages.png" alt="">
-                        </button>
-                    </div>
-                    <h4>Обрезка</h4>
-                </div>
-                <div class="tab-section">
-                    <div class="tab-buttons">
-                        <button class="tab-action-btn" onclick="rotateCanvas(90)" title="↻ На 90° вправо">
-                            <img src="icons/free-icon-rotate1.png" alt="">
-                        </button>
-                        <button class="tab-action-btn" onclick="rotateCanvas(270)" title="↺ На 90° влево">
-                            <img src="icons/free-icon-rotate.png" alt="">   
-                        </button>
-                        <button class="tab-action-btn" onclick="rotateCanvas(180)" title="↻ На 180°">
-                            <img src="icons/free-icon-refresh.png" alt="">
-                        </button>
-                        <!-- <button class="tab-action-btn" onclick="rotateCanvasCustom()" title="Произвольный...">
-                            <img src="images/notimages.png" alt="">
-                        </button> -->
-                    </div>
-                    <h4>Поворот</h4>
-                </div>
-                <div class="tab-section">
-                    <div class="tab-buttons">
-                        <button class="tab-action-btn" onclick="flipCanvas('horizontal')" title="По горизонтали">
-                            <img src="icons/free-icon-fold-horizontal.png" alt="">
-                        </button>
-                        <button class="tab-action-btn" onclick="flipCanvas('vertical')" title="По вертикали">
-                            <img src="icons/free-icon-fold-vertical.png" alt="">
-                        </button>
-                    </div>
-                    <h4>Отражение</h4>
-                </div>
-            </div>
-
-            <!-- Контент вкладки "Фильтры" -->
-            <div class="tab-pane" id="tab-filters">
-                <div class="tab-section">
-                    <div class="tab-buttons">
-                        <button class="tab-action-btn" onclick="applyEdgeFilter()" title="Контур">
-                            <img src="images/notimages.png" alt="">
-                        </button>
-                        <button class="tab-action-btn" onclick="applyEdgeDetection()" title="Определение границ">
-                            <img src="images/notimages.png" alt="">
-                        </button>
-                        <button class="tab-action-btn" onclick="applyReliefFilter()" title="Рельеф">
-                            <img src="images/notimages.png" alt="">
-                        </button>
-                        <button class="tab-action-btn" onclick="applySobelFilter()" title="Фильтр Edge">
-                            <img src="images/SobelEffectPluginIcon.png" alt="">
-                        </button>
-                    </div>
-                    <h4>Выделение контуров</h4>
-                </div>
-                <div class="tab-section">
-                    <div class="tab-buttons">
-                        <button class="tab-action-btn" onclick="showOffsetCalculator()" title="Калькулятор смещений">
-                            <img src="images/notimages.png" alt="">
-                        </button>
-                        <button class="tab-action-btn" onclick="showSymmetryAxis()" title="Ось симметрии">
-                            <img src="images/notimages.png" alt="">
-                        </button>
-                        <button class="tab-action-btn" onclick="showRoundSearchingModal()" title="Поиск окружности">
-                            <img src="images/EffectPluginIcon.png" alt="">
-                        </button>
-                        <button class="tab-action-btn" onclick="showCenterDetector()" title="Центральный детектор">
-                            <img src="images/notimages.png" alt="">
-                        </button>
-                        <button class="tab-action-btn" onclick="showViewCentering()" title="Центровка Ракурсов">
-                            <img src="images/notimages.png" alt="">
-                        </button>
-                    </div>
-                    <h4>Поиск объектов</h4>
-                </div>
-                <div class="tab-section">
-                    <div class="tab-buttons">
-                        <button class="tab-action-btn" onclick="showApproximationModal()" title="Аппроксимация поверхностью">
-                            <img src="images/ApproximationEffectPluginIcon.png" alt="">
-                        </button>
-                        <button class="tab-action-btn" onclick="showArithmeticCalculator()" title="Арифметический калькулятор">
-                            <img src="images/notimages.png" alt="">
-                        </button>
-                        <button class="tab-action-btn" onclick="showParaboloidCalc()" title="Вычисление параболоида">
-                            <img src="images/notimages.png" alt="">
-                        </button>
-                        <button class="tab-action-btn" onclick="showPlaneCalc()" title="Вычисление плоскости">
-                            <img src="images/notimages.png" alt="">
-                        </button>
-                        <button class="tab-action-btn" onclick="showKozlowskiSurface()" title="Вычисление поверхности Козловского">
-                            <img src="images/notimages.png" alt="">
-                        </button>
-                        <button class="tab-action-btn" onclick="showCylindricalWedge()" title="Обработка по цилиндрическому клину">
-                            <img src="images/notimages.png" alt="">
-                        </button>
-                        <button class="tab-action-btn" onclick="showOpticalDensity()" title="Оптическая плотность">
-                            <img src="images/notimages.png" alt="">
-                        </button>
-                        <button class="tab-action-btn" onclick="applyLogorifmFilter()"title="Предобработка">
-                            <img src="images/PrelimProcess.png" alt=""> 
-                        </button>
-                        <button class="tab-action-btn" onclick="showScannerBandsRemoval()" title="Удаление полос сканера">
-                            <img src="images/notimages.png" alt="">
-                        </button>
-                        <button class="tab-action-btn" onclick="showDefectRemoval()" title="Устранение точечных дефектов">
-                            <img src="images/notimages.png" alt="">
-                        </button>
-                        <button class="tab-action-btn" onclick="showCharacteristicCurve()" title="Характеристическая кривая">
-                            <img src="images/notimages.png" alt="">
-                        </button>
-                    </div>
-                    <h4>Предварительная обработка</h4>
-                </div>
-                <div class="tab-section">
-                    <div class="tab-buttons">
-                        <button class="tab-action-btn" onclick="showMedianModal()" title="Медианный фильтра">
-                            <img src="images/MedianEffectPluginIcon.png">
-                        </button>
-                        <button class="tab-action-btn" onclick="showNormalisatioModal()" title="Нормализация">
-                            <img src="images/NormalizEffectPluginIcon.png">
-                        </button>
-                    </div>
-                    <h4>Прочее</h4>
-                </div>
-            </div>
-
-            <!-- Контент вкладки "Регулировка" -->
-            <div class="tab-pane" id="tab-adjustments">
-                <div class="tab-section">
-                    <div class="tab-buttons">
-                        <button class="tab-action-btn" onclick="showRotateScaleModal()" title="Поворот/Масштабирование"><img src="images/notimages.png" alt=""></button>
-                        <button class="tab-action-btn" onclick="showWindowFunctions()" title="Функции окна"><img src="images/notimages.png" alt=""></button>
-                        <button class="tab-action-btn" onclick="showBrightnessContrast()" title="Яркость/Контраст"><img src="images/notimages.png" alt=""></button>
-                    </div>
-                    <h4>Основные настройки</h4>
-                </div>
-                <div class="tab-section">
-                    <div class="tab-buttons">
-                        <button class="tab-action-btn" onclick="showColorBalance()" title="Баланс цвета"><img src="images/notimages.png" alt=""></button>
-                        <button class="tab-action-btn" onclick="showHueSaturation()" title="Тон/Насыщенность"><img src="images/notimages.png" alt=""></button>
-                        <button class="tab-action-btn" onclick="showLevelsModal()" title="Уровни"><img src="images/notimages.png" alt=""></button>
-                        <button class="tab-action-btn" onclick="showCurvesModal()" title="Кривые"><img src="images/notimages.png" alt=""></button>
-                    </div>
-                    <h4>Цветокоррекция</h4>
-                </div>
-            </div>
-
-            <!-- Контент вкладки "Инструменты" -->
-            <div class="tab-pane" id="tab-tools">
-                <div class="tab-section">
-                    <div class="tab-buttons">
-                        <button class="tab-action-btn" onclick="showCodeLab()" title="Code Lab"><img src="images/notimages.png" alt=""></button>
-                    </div>
-                    <h4>Скрипты</h4>
-                </div>
-                <div class="tab-section">
-                    <div class="tab-buttons">
-                        <button class="tab-action-btn" onclick="applySRTIFix()" title="Исправить"><img src="images/notimages.png" alt=""></button>
-                        <button class="tab-action-btn" onclick="applySRTIFilter()" title="Фильтр СРТИ"><img src="images/notimages.png" alt=""></button>
-                    </div>
-                    <h4>СРТИ</h4>
-                </div>
-                <div class="tab-section">
-                    <div class="tab-buttons">
-                        <button class="tab-action-btn" onclick="applyFHMFilter()" title="Фильтр ФХМ"><img src="images/notimages.png" alt=""></button>
-                    </div>
-                    <h4>Фотохронометрия</h4>
-                </div>
-            </div>
-
-            <!-- Контент вкладки "Режимы" -->
-            <div class="tab-pane" id="tab-modes">
-                <div class="tab-section">
-                    <div class="tab-buttons">
-                        <button class="tab-action-btn" onclick="location.href='workflow.html'" title="Режимы">
-                            <img src="icons/free-icon-workflow.png" alt="Режимы">
-                        </button>
-                        <h4>Режимы</h4>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Контент вкладки "Настройки" -->
-            <div class="tab-pane" id="tab-options">
-                <div class="tab-section">
-                    <div class="tab-buttons">
-                        <div class="tab-checkbox-container">
-                            <input type="checkbox" id="colorbarViewToggle" class="tab-checkbox" checked>
-                            <label for="colorbarViewToggle" class="tab-checkbox-label" >
-                            </label>
-                        </div>
-                        <!-- <label for="customSelect">Палитра:</label> -->
-                        <select id="customSelect" class="tab-checkbox-container">
-                            <option value="gray">Gray</option>
-                            <option value="plasma">Plasma</option>
-                            <option value="inferno">Inferno</option>
-                            <option value="magma">Magma</option>
-                            <option value="cividis">Cividis</option>
-                            <option value="rainbow">Rainbow</option>
-                            <option value="coolwarm">Сoolwarm</option>
-                        </select>
-                    </div>
-                </div>
-            </div>
+        </div>
+        <div class="titlebar-center">WTIS - Image Editor</div>
+        <div class="titlebar-right">
+            <div class="window-control">─</div>
+            <div class="window-control">□</div>
+            <div class="window-control close">×</div>
         </div>
     </div>
 
-
-
-    <!-- <input type="file" id="fileInput" accept=".tpt" onchange="loadImage(event)" multiple> -->
-    <input type="file" id="run" accept=".tpt"  multiple>
-    
-    <!-- Основной контейнер с боковой панелью, верхней панелью и холстом -->
-    <div class="main-container">
-        <!-- Левая боковая панель (Sidebar) с цветовой палитрой -->
-        <div class="color-bar-container">
-            <div class="color-bar">
-                <div id="colorBarGradient"></div>
-                <div class="color-bar-labels">
-                    <span class="color-bar-label" id="color_bar_label_min">Min</span>
-                    <span class="color-bar-label" id="color_bar_label_median">Median</span>
-                    <span class="color-bar-label" id="color_bar_label_max">Max</span>
+    <!-- Main Workbench -->
+    <div class="workbench">
+        <!-- Activity Bar (Leftmost) -->
+        <div class="activity-bar">
+            <div class="activity-item active" title="Explorer">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M20 6h-8l-2-2H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2zm0 12H4V8h16v10z"/></svg>
+            </div>
+            <div class="activity-item" title="Search">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14zM7 9h5v1H7z"/></svg>
+            </div>
+            <div class="activity-item" title="Source Control">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="3"/><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8z"/></svg>
+            </div>
+            <div class="activity-item" title="Extensions">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M20.5 11H19V7c0-1.1-.9-2-2-2h-4V3.5C13 2.12 11.88 1 10.5 1S8 2.12 8 3.5V5H4c-1.1 0-1.99.9-1.99 2v3.8H3.5c1.38 0 2.5 1.12 2.5 2.5s-1.12 2.5-2.5 2.5H2v2c0 1.1.9 2 2 2h4v1.5c0 1.38 1.12 2.5 2.5 2.5s2.5-1.12 2.5-2.5V19h4c1.1 0 2-.9 2-2v-4h1.5c1.38 0 2.5-1.12 2.5-2.5s-1.12-2.5-2.5-2.5z"/></svg>
+            </div>
+            <div class="activity-bar-bottom">
+                <div class="activity-item" title="Settings">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M19.14 12.94c.04-.31.06-.63.06-.94 0-.31-.02-.63-.06-.94l2.03-1.58c.18-.14.23-.41.12-.61l-1.92-3.32c-.12-.22-.37-.29-.59-.22l-2.39.96c-.5-.38-1.03-.7-1.62-.94l-.36-2.54c-.04-.24-.24-.41-.48-.41h-3.84c-.24 0-.43.17-.47.41l-.36 2.54c-.59.24-1.13.57-1.62.94l-2.39-.96c-.22-.08-.47 0-.59.22L2.74 8.87c-.12.21-.08.47.12.61l2.03 1.58c-.04.31-.06.63-.06.94s.02.63.06.94l-2.03 1.58c-.18.14-.23.41-.12.61l1.92 3.32c.12.22.37.29.59.22l2.39-.96c.5.38 1.03.7 1.62.94l.36 2.54c.05.24.24.41.48.41h3.84c.24 0 .44-.17.47-.41l.36-2.54c.59-.24 1.13-.56 1.62-.94l2.39.96c.22.08.47 0 .59-.22l1.92-3.32c.12-.22.07-.47-.12-.61l-2.01-1.58zM12 15.6c-1.98 0-3.6-1.62-3.6-3.6s1.62-3.6 3.6-3.6 3.6 1.62 3.6 3.6-1.62 3.6-3.6 3.6z"/></svg>
                 </div>
             </div>
         </div>
 
-        <!-- Основная область контента -->
-        <div class="main-content">
-            <!-- Верхняя панель инструментов -->
-            <div class="toolbar-top">
-                <button class="tool-btn active" data-tool="cursor" onclick="setTool('cursor')" title="Курсор">
-                    <svg class="tool-icon"><use href="#mouse-pointer.svg"></use></svg>
+        <!-- Sidebar (Explorer Panel) -->
+        <div class="sidebar">
+            <div class="sidebar-title">
+                <span>Explorer</span>
+                <div class="sidebar-actions">
+                    <button class="sidebar-action-btn" title="New File">+</button>
+                    <button class="sidebar-action-btn" title="Refresh">↻</button>
+                </div>
+            </div>
+            <div class="sidebar-content">
+                <div class="explorer-section">
+                    <div class="explorer-header" onclick="toggleExplorerSection(this)">
+                        <span class="explorer-arrow">▼</span>
+                        <span>OPEN EDITORS</span>
+                    </div>
+                    <div class="explorer-body open">
+                        <ul class="file-tree">
+                            <li class="file-item active">
+                                <span class="file-icon">🖼️</span>
+                                <span>Untitled.png</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="explorer-section">
+                    <div class="explorer-header" onclick="toggleExplorerSection(this)">
+                        <span class="explorer-arrow">▼</span>
+                        <span>PROJECT</span>
+                    </div>
+                    <div class="explorer-body open">
+                        <ul class="file-tree">
+                            <li class="file-item">
+                                <span class="file-icon">📁</span>
+                                <span>images</span>
+                            </li>
+                            <li class="file-item">
+                                <span class="file-icon">📄</span>
+                                <span>index.html</span>
+                            </li>
+                            <li class="file-item">
+                                <span class="file-icon">🎨</span>
+                                <span>styles.css</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Editor Area -->
+        <div class="editor-area">
+            <!-- Tabs Bar -->
+            <div class="tabs-bar">
+                <div class="tab active">
+                    <span class="tab-icon">🖼️</span>
+                    <span class="tab-title">Untitled.png</span>
+                    <span class="tab-close">×</span>
+                </div>
+            </div>
+
+            <!-- Breadcrumbs -->
+            <div class="breadcrumbs">
+                <span class="breadcrumb-item">WTIS</span>
+                <span class="breadcrumb-separator">›</span>
+                <span class="breadcrumb-item">Editor</span>
+            </div>
+
+            <!-- Menu Ribbon -->
+            <div class="menu-ribbon">
+                <div class="ribbon-group">
+                    <button class="ribbon-btn" onclick="showLoadMethodModal()" title="Open">
+                        <span class="ribbon-btn-icon">📂</span>
+                        <span class="ribbon-btn-label">Open</span>
+                    </button>
+                    <button class="ribbon-btn" onclick="showSaveMethodModal()" title="Save">
+                        <span class="ribbon-btn-icon">💾</span>
+                        <span class="ribbon-btn-label">Save</span>
+                    </button>
+                </div>
+                <div class="ribbon-group">
+                    <button class="ribbon-btn" onclick="undo()" title="Undo">
+                        <span class="ribbon-btn-icon">↩️</span>
+                        <span class="ribbon-btn-label">Undo</span>
+                    </button>
+                    <button class="ribbon-btn" onclick="redo()" title="Redo">
+                        <span class="ribbon-btn-icon">↪️</span>
+                        <span class="ribbon-btn-label">Redo</span>
+                    </button>
+                </div>
+                <div class="ribbon-group">
+                    <button class="ribbon-btn" onclick="zoomIn()" title="Zoom In">
+                        <span class="ribbon-btn-icon">🔍+</span>
+                        <span class="ribbon-btn-label">Zoom In</span>
+                    </button>
+                    <button class="ribbon-btn" onclick="zoomOut()" title="Zoom Out">
+                        <span class="ribbon-btn-icon">🔍-</span>
+                        <span class="ribbon-btn-label">Zoom Out</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Toolbar -->
+            <div class="toolbar">
+                <button class="tool-btn active" data-tool="cursor" onclick="setTool('cursor')" title="Cursor">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12.586 12.586 19 19" /><path d="M3.688 3.037a.497.497 0 0 0-.651.651l6.5 15.999a.501.501 0 0 0 .947-.062l1.569-6.083a2 2 0 0 1 1.448-1.479l6.124-1.579a.5.5 0 0 0 .063-.947z" /></svg>
                 </button>
-                <button class="tool-btn" data-tool="profile" onclick="setTool('profile')" title="Профиль">
-                    <img src="icons/free-icon-CurvesEffect.png" alt="">
+                <button class="tool-btn" data-tool="profile" onclick="setTool('profile')" title="Profile">
+                    📈
                 </button>
-                <button class="tool-btn" data-tool="lasso" onclick="setTool('lasso')" title="Лассо">
+                <button class="tool-btn" data-tool="lasso" onclick="setTool('lasso')" title="Lasso">
                     ⭕
                 </button>
-                <button class="tool-btn" data-tool="move" onclick="setTool('move')" title="Перемещение выделения">
+                <button class="tool-btn" data-tool="move" onclick="setTool('move')" title="Move Selection">
                     ✂️
                 </button>
+                <div class="divider"></div>
+                <button class="tool-btn" onclick="rotateImage()" title="Rotate">
+                    🔄
+                </button>
+                <button class="tool-btn" onclick="flipHorizontal()" title="Flip Horizontal">
+                    ↔️
+                </button>
+                <button class="tool-btn" onclick="flipVertical()" title="Flip Vertical">
+                    ↕️
+                </button>
+                <div class="zoom-control">
+                    <button class="tool-btn" onclick="zoomOut()">−</button>
+                    <span class="zoom-value" id="zoomValueDisplay">100%</span>
+                    <button class="tool-btn" onclick="zoomIn()">+</button>
+                </div>
             </div>
-            
-            <!-- Область холста -->
-            <div class="canvas-area" id="canvasArea">
+
+            <!-- Canvas Container -->
+            <div class="canvas-container" id="canvasArea">
                 <div class="canvas-wrapper" id="canvasWrapper">
-                    <!-- Контейнер для canvas элементов -->
                     <div id="canvasHost"></div>
-                    <!-- Overlay для ввода текста -->
                     <div class="text-input-overlay" id="textInputOverlay">
-                        <textarea id="textInput" placeholder="Введите текст..."></textarea>
+                        <textarea id="textInput" placeholder="Enter text..."></textarea>
                     </div>
                 </div>
+            </div>
+
+            <!-- Bottom Panel -->
+            <div class="panel">
+                <div class="panel-tabs">
+                    <div class="panel-tab active">Problems</div>
+                    <div class="panel-tab">Output</div>
+                    <div class="panel-tab">Terminal</div>
+                    <div class="panel-tab">Debug Console</div>
+                </div>
+                <div class="panel-content">
+                    <div class="text-secondary">No problems detected.</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Color Bar Panel (Right Sidebar) -->
+        <div class="color-bar-panel">
+            <div class="color-bar-gradient" id="colorBarGradient"></div>
+            <div class="color-bar-labels">
+                <span id="color_bar_label_min">Min</span>
+                <span id="color_bar_label_median">Median</span>
+                <span id="color_bar_label_max">Max</span>
+            </div>
+            <div class="color-input-row">
+                <input type="text" class="color-input" id="colorValueInput" placeholder="#000000">
             </div>
         </div>
     </div>
 
-    <!-- Строка состояния -->
+    <!-- Status Bar -->
     <footer class="status-bar">
         <div class="status-left">
-            <span id="cursorPos">X: 0, Y: 0</span>
-            <span id="canvasSize">—</span>
-            <span id="zoomLevel">Масштаб: 100%</span>
+            <div class="status-item">
+                <span id="cursorPos">Ln 1, Col 1</span>
+            </div>
+            <div class="status-item">
+                <span id="canvasSize">800×600</span>
+            </div>
+            <div class="status-item">
+                <span id="zoomLevel">100%</span>
+            </div>
         </div>
-        
-        <div>
-            <span id="toolInfo">Инструмент: -</span>
+        <div class="status-right">
+            <div class="status-item">
+                <span id="toolInfo">Tool: Cursor</span>
+            </div>
+            <div class="status-item">UTF-8</div>
+            <div class="status-item">PNG</div>
         </div>
     </footer>
 
-</div>
-<!-- Конец основного интерфейса -->
-
-
-<!-- Модальное окно выбора способа сохранения -->
-<div class="modal" id="saveMethodModal">
-    <div class="modal-content">
-        <div class="modal-title">
-            <span>Сохранить изображение</span>
-            <button style="background:none;border:none;color:white;cursor:pointer;">✕</button>
-        </div>
-        <div class="modal-body">
-            <div class="modal-row">
-                <p>Выберите способ сохранения:</p>
-            </div>
-            <div class="modal-row" style="display: flex; flex-direction: column; gap: 10px;">
-                <button class="modal-btn" style="width:100%; text-align:left;" onclick="saveToLocal()">
-                    <i class="fas fa-desktop"></i> Локально на компьютер
-                </button>
-                <button class="modal-btn" style="width:100%; text-align:left;" onclick="saveToServer()">
-                    <i class="fas fa-server"></i> На сервер
-                </button>
-                <div id="serverMessage" style="margin-top:10px; display:none; padding:8px; background:#e8f5e8; border:1px solid #4CAF50; border-radius:3px;">
-                    <span id="serverMessageText"></span>
-                </div>
-                <div id="serverProgress" style="margin-top:10px; display:none;">
-                    <div style="width:100%; height:20px; background:#f0f0f0; border-radius:3px; overflow:hidden;">
-                        <div id="progressBar" style="width:0%; height:100%; background:#4CAF50; transition:width 0.3s;"></div>
-                    </div>
-                    <div id="progressText" style="font-size:11px; text-align:center; margin-top:4px;">0%</div>
-                </div>
-            </div>
-            <div class="modal-row" id="serverImagesList" style="display:none; max-height:200px; overflow-y:auto; border:1px solid #ccc; padding:8px; margin-top:10px;">
-                <h4 style="margin-bottom:8px;">Изображения на сервере:</h4>
-                <div id="imagesList"></div>
-            </div>
-        </div>
-        <div class="modal-buttons">
-            <button class="modal-btn" onclick="closeSaveMethodModal()">Отмена</button>
-        </div>
-        <div class="modal-resize-handle"></div>
-    </div>
-</div>
-
-<!-- Модальное окно выбора способа загрузки -->
-<div class="modal" id="loadMethodModal">
-    <div class="modal-content" style=" width: 300px; height: 200px">
-        <div class="modal-title">
-            <span>Загрузка изображение</span>
-            <button style="background:none;border:none;color:white;cursor:pointer;">✕</button>
-        </div>
-        <div class="modal-body">
-            <div class="modal-row">
-                <p>Выберите способ загрузки:</p>
-            </div>
-            <div class="modal-row" style="display: flex; flex-direction: column; gap: 10px;">
-                <button class="modal-btn" style="width:100%; text-align:left;" onclick="loadToLocal()">
-                    Локально с компьютера
-                </button>
-                <button class="modal-btn" style="width:100%; text-align:left;" onclick="loadToServer()">
-                    С сервера
-                </button>
-            </div>
-        </div>
-        <div class="modal-buttons">
-            <button class="modal-btn" onclick="closeLoadMethodModal()">Отмена</button>
-        </div>
-        <div class="modal-resize-handle"></div>
-    </div>
-</div>
-
-<!-- Модальное окно загрузки с сервера (каталоги) -->
-<div class="modal" id="loadFromServerModal">
-    <div class="modal-content" style="width: 800px; max-width: 90vw;">
-        <div class="modal-title">
-            <span>Загрузка изображений с сервера</span>
-            <button onclick="closeLoadFromServerModal()">✕</button>
-        </div>
-        <div class="modal-body">
-            <!-- Панель навигации -->
-            <div class="modal-row" style="display: flex; gap: 8px; margin-bottom: 12px; align-items: center;">
-                <button class="modal-btn" id="serverNavBack" onclick="navigateBack()" disabled title="Назад">←</button>
-                <span id="currentServerPath" style="flex:1; background:#f5f5f5; padding:4px 8px; border-radius:3px;">/</span>
-                <input type="text" id="imageSearch" class="modal-input" placeholder="Поиск..." style="width: 200px;">
-                <select id="sortImages" class="modal-input" style="width: 120px;">
-                    <option value="name">Имя (А-Я)</option>
-                    <option value="size_asc">Размер (↑)</option>
-                    <option value="size_desc">Размер (↓)</option>
-                </select>
-                <button class="modal-btn" onclick="refreshServerImages()">🔄 Обновить</button>
-                <button class="modal-btn" onclick="confirmClearAllImages()" style="background:#ffebee; color:#c62828;">🗑 Очистить все</button>
-            </div>
-
-            <!-- Контейнер для списка файлов/папок -->
-            <div id="serverFilesContainer" style="max-height: 400px; overflow-y: auto; border: 1px solid #ddd; border-radius: 4px;">
-                <table class="server-files-table" style="width: 100%; border-collapse: collapse;">
-                    <thead>
-                        <tr style="background: #f5f5f5;">
-                            <th style="padding: 8px; text-align: left;">Имя</th>
-                            <th style="padding: 8px; text-align: right;">Размер</th>
-                            <th style="padding: 8px; text-align: left;">Дата изменения</th>
-                            <th style="padding: 8px; text-align: center;">Действие</th>
-                        </tr>
-                    </thead>
-                    <tbody id="serverFilesList">
-                        <!-- Динамически заполняется -->
-                    </tbody>
-                </table>
-            </div>
-
-            <div id="loadServerMessage" style="margin-top:10px; display:none; padding:8px; border-radius:3px;"></div>
-        </div>
-        <div class="modal-buttons">
-            <button class="modal-btn" onclick="closeLoadFromServerModal()">Закрыть</button>
-        </div>
-        <div class="modal-resize-handle"></div>
-    </div>
-</div>
-
-<!-- Модальное окно сохранения на сервер -->
-<div class="modal" id="filenameModal">
-    <div class="modal-content" style="width:450px;">
-        <div class="modal-title">
-            <span>Сохранение на сервер</span>
-            <button onclick="closeFilenameModal()">✕</button>
-        </div>
-        <div class="modal-body">
-            <div class="modal-row">
-                <label>Имя файла:</label>
-                <input type="text" id="serverFilename" class="modal-input" value="drawing">
-            </div>
-
-            <!-- Блок выбора папки -->
-            <!-- <div class="modal-row">
-                <label>Папка на сервере:</label>
-                <div style="display: flex; gap: 8px;">
-                    <input type="text" id="serverFolderPath" class="modal-input" 
-                           placeholder="например: папка/подпапка/" style="flex: 1;">
-                    <button class="modal-btn" onclick="openFolderBrowser()" title="Обзор">📁</button>
-                </div>
-                <select id="serverFolderSelect" class="modal-input" style="margin-top: 8px;" 
-                        onchange="document.getElementById('serverFolderPath').value = this.value">
-                    <option value="">-- Выберите существующую папку --</option>
-                </select>
-            </div> -->
-
-            <div class="modal-row">
-                <label>Формат:</label>
-                <select id="serverFormat" class="modal-input">
-                    <option value="tpt">TPT (Текстовая матрица)</option>
-                </select>
-            </div>
-            <div class="modal-row">
-                <label style="display:flex; align-items:center; gap:8px;">
-                    <input type="checkbox" id="addTimestamp" checked>
-                    <span>Добавить дату к имени файла</span>
-                </label>
-            </div>
-
-            <!-- Индикатор загрузки и сообщения -->
-            <div id="uploadStatus" style="display:none; margin-top:15px;">
-                <div style="display:flex; align-items:center; gap:10px; margin-bottom:10px;">
-                    <div class="fas fa-spinner fa-spin"></div>
-                    <span id="uploadMessage">Загрузка на сервер...</span>
-                </div>
-                <div style="width:100%; height:4px; background:#eee; border-radius:2px; overflow:hidden;">
-                    <div id="uploadProgressBar" style="width:0%; height:100%; background:#0078d7;"></div>
-                </div>
-                <div style="font-size:11px; color:#666; margin-top:5px; text-align:center;">
-                    <span id="uploadProgressText">0%</span>
-                </div>
-            </div>
-
-            <div id="uploadResult" style="display:none; margin-top:15px; padding:10px; border-radius:4px; background:#e8f5e8; border:1px solid #4CAF50;">
-                <div style="display:flex; align-items:center; gap:10px;">
-                    <div class="fas fa-check-circle" style="color:#4CAF50;"></div>
-                    <span id="resultMessage">Изображение успешно сохранено!</span>
-                </div>
-                <div style="font-size:11px; color:#2e7d32; margin-top:5px;">
-                    <span id="resultDetails"></span>
-                </div>
-            </div>
-
-            <div id="uploadError" style="display:none; margin-top:15px; padding:10px; border-radius:4px; background:#ffebee; border:1px solid #f44336;">
-                <div style="display:flex; align-items:center; gap:10px;">
-                    <div class="fas fa-exclamation-triangle" style="color:#f44336;"></div>
-                    <span id="errorMessage">Ошибка загрузки</span>
-                </div>
-                <div style="font-size:11px; color:#c62828; margin-top:5px;">
-                    <span id="errorDetails"></span>
-                </div>
-            </div>
-        </div>
-        <div class="modal-buttons">
-            <button class="modal-btn" id="uploadButton" onclick="uploadToServer()">Загрузить</button>
-            <button class="modal-btn" onclick="closeFilenameModal()" id="cancelButton">Отмена</button>
-        </div>
-        <div class="modal-resize-handle"></div>
-    </div>
-</div>
-
-<!-- Модальное окно для выбора из недавних файлов -->
-<div class="modal" id="recentFilesModal">
-    <div class="modal-content" style="width: 500px;">
-        <div class="modal-title">
-            <span>Недавние файлы</span>
-            <button style="background:none;border:none;color:white;cursor:pointer;">
-                <i class="fas fa-times"></i>
-            </button>
-        </div>
-        <div class="modal-body">
-            <div id="recentFilesContainer">
-                <!-- Здесь будут отображаться недавние файлы -->
-            </div>
-            <div class="modal-row" style="margin-top: 15px;">
-                <div style="display: flex; justify-content: space-between; align-items: center;">
-                    <button onclick="clearRecentFiles()" class="modal-btn" style="padding: 4px 12px; background: #ffebee; color: #c62828;">
-                        <i class="fas fa-trash"></i> Очистить список
-                    </button>
-                    <span style="font-size: 11px; color: #666;" id="recentFilesCount">Загрузка...</span>
-                </div>
-            </div>
-        </div>
-        <div class="modal-buttons">
-            <button class="modal-btn" onclick="closeRecentFilesModal()">Закрыть</button>
-        </div>
-        <div class="modal-resize-handle"></div>
-    </div>
-</div>
-
-<!-- Модальное окно для изменения размера холста -->
-<div class="modal" id="resizeModal">
-    <div class="modal-content">
-        <div class="modal-title">
-            <span>Изменение размера</span>
-            <button style="background:none;border:none;color:white;cursor:pointer;">✕</button>
-        </div>
-        <div class="modal-body">
-            <div class="modal-row">
-                <label>Ширина:</label>
-                <input type="number" id="newWidth" class="modal-input" value="800">
-            </div>
-            <div class="modal-row">
-                <label>Высота:</label>
-                <input type="number" id="newHeight" class="modal-input" value="600">
-            </div>
-        </div>
-        <div class="modal-buttons">
-            <button class="modal-btn" onclick="applyResize()">OK</button>
-            <button class="modal-btn" onclick="closeResizeModal()">Отмена</button>
-        </div>
-        <div class="modal-resize-handle"></div>
-    </div>
-</div>
-
-<!-- Модальное окно для медианного фильтра -->
-<div class="modal" id="medianModal">
-    <div class="modal-content">
-        <div class="modal-title">
-            <span>Медианный фильтр</span>
-            <button style="background:none;border:none;color:white;cursor:pointer;">✕</button>
-        </div>
-        <div class="modal-body">
-            <div class="modal-row">
-                <label>Размер апертуры:</label>
-                <input type="number" id="newAperture" class="modal-input" value="3">
-            </div>
-        </div>
-        <div class="modal-buttons">
-            <button class="modal-btn" onclick="applyMedianFilter()">OK</button>
-            <button class="modal-btn" onclick="closeMedianModal()">Отмена</button>
-        </div>
-        <div class="modal-resize-handle"></div>
-    </div>
-</div>
-
-<!-- Модальное окно для сохранения -->
-<div class="modal" id="saveModal">
-    <div class="modal-content">
-        <div class="modal-title">
-            <span>Сохранение</span>
-            <button style="background:none;border:none;color:white;cursor:pointer;">✕</button>
-        </div>
-        <div class="modal-body">
-            <div class="modal-row">
-                <label>Имя:</label>
-                <input type="string" id="saveName" class="modal-input" value="Result">
-            </div>
-            <div class="modal-row">
-                <label>Формат сохранения:</label>
-                <select id="saveFormat" class="modal-select">
-                    <option value="tpt">.tpt</option>
-                    <option value="png">.png</option>
-                </select>
-            </div>
-        </div>
-        <div class="modal-buttons">
-            <button class="modal-btn" onclick="applySave()">OK</button>
-            <button class="modal-btn" onclick="closeSaveModal()">Отмена</button>
-        </div>
-        <div class="modal-resize-handle"></div>
-    </div>
-</div>
-
-<!-- Модальное окно для нормализации -->
-<div class="modal" id="normalizModal">
-    <div class="modal-content">
-        <div class="modal-title">
-            <span>Нормализация</span>
-            <button style="background:none;border:none;color:white;cursor:pointer;">✕</button>
-        </div>
-        <div class="modal-body">
-            <div class="modal-row">
-                <label>min:</label>
-                <input type="number" id="normalizBegin" class="modal-input" value="0">
-            </div>
-            <div class="modal-row">
-                <label>max:</label>
-                <input type="number" id="normalizEnd" class="modal-input" value="1">
-            </div>
-        </div>
-        <div class="modal-buttons">
-            <button class="modal-btn" onclick="applyNormalisatioFilter()">OK</button>
-            <button class="modal-btn" onclick="closeNormalisatioModal()">Отмена</button>
-        </div>
-        <div class="modal-resize-handle"></div>
-    </div>
-</div>
-
-<!-- Модальное окно для аппроксимации -->
-<div class="modal" id="approximationModal">
-    <div class="modal-content">
-        <div class="modal-title">
-            <span>Аппроксимация</span>
-            <button style="background:none;border:none;color:white;cursor:pointer;">✕</button>
-        </div>
-        <div class="modal-body">
-            <div class="modal-row">
-                <label>Порядок поверхности аппроксимации:</label>
-                <input type="number" id="node_order" class="modal-input" value="3">
-            </div>
-        </div>
-        <div class="modal-buttons">
-            <button class="modal-btn" onclick="applyApproximationFilter()">OK</button>
-            <button class="modal-btn" onclick="closeApproximationModal()">Отмена</button>
-        </div>
-        <div class="modal-resize-handle"></div>
-    </div>
-</div>
-
-<!-- Модальное окно для порога -->
-<div class="modal" id="thresholdModal">
-    <div class="modal-content">
-        <div class="modal-title">
-            <span>Порог</span>
-            <button style="background:none;border:none;color:white;cursor:pointer;">✕</button>
-        </div>
-        <div class="modal-body">
-            <div class="modal-row">
-                <label>min:</label>
-                <input type="number" id="thresholdMin" class="modal-input" value="0">
-            </div>
-            <div class="modal-row">
-                <label>меньше min:</label>
-                <input type="number" id="thresholdLessMin" class="modal-input" value="0">
-            </div>
-            <div class="modal-row">
-                <label>max:</label>
-                <input type="number" id="thresholdMax" class="modal-input" value="1">
-            </div>
-            <div class="modal-row">
-                <label>>max:</label>
-                <input type="number" id="thresholdMoreMax" class="modal-input" value="1">
-            </div>
-        </div>
-        <div class="modal-buttons">
-            <button class="modal-btn" onclick="applyThresholdFilter()">OK</button>
-            <button class="modal-btn" onclick="closeThresholdModal()">Отмена</button>
-        </div>
-        <div class="modal-resize-handle"></div>
-    </div>
-</div>
-
-<!-- Модальное окно для просмотра canvas -->
-<div class="modal" id="canvasPreviewModal">
-    <div class="modal-content" style="width: 80%; max-width: 800px; height: 70%; max-height: 600px;">
-        <div class="modal-title">
-            <span>Предпросмотр изображения</span>
-            <button style="background: none; border: none; color: white; cursor: pointer; font-size: 1.2em; line-height: 1;">✕</button>
-        </div>
-        <div class="modal-body" style="height: 80%; display: flex; flex-direction: column; align-items: center; justify-content: center;">
-            <canvas id="previewCanvas" width="600" height="400" style="border: 1px solid #ccc; max-width: 100%; max-height: 80%;"></canvas>
-
-            <div style="margin-top: 10px; width: 100%; display: flex; align-items: center;">
-                <label style="margin-right: 10px;">Масштаб: </label>
-                <input type="range" id="scaleSlider" min="0.1" max="2.0" step="0.1" value="1.0" 
-                       oninput="updateCanvasScale()" style="flex: 1;">
-                <span id="scaleValue" style="margin-left: 10px; width: 40px; text-align: right;">100%</span>
-            </div>
-        </div>
-        <div class="modal-buttons" style="display: flex; justify-content: flex-end;">
-            <button class="modal-btn" onclick="closeCanvasPreview()">Закрыть</button>
-            <button class="modal-btn" style="background-color: #4CAF50; color: white;" 
-                    onclick="saveCanvasAsPng()">Сохранить как PNG</button>
-        </div>
-        <div class="modal-resize-handle"></div>
-    </div>
-</div>
-
-
-<!-- Модальное окно для графика -->
-<div class="modal" id="graphModal">
-    <div class="modal-content" style=" width: 400px; height: 300px">
-        <div class="modal-title">
-            <span>Профильные характеристики ...</span>
-            <button onclick="closeGraphModal()">✕</button>
-        </div>
-        <div class="modal-body">
-            <div class="graph-panel">
-                <h3>График(профиль)</h3>
-                <div class="graph-container">
-                    <div id="graphCanvas"></div>
-                </div>
-            </div>
-        </div>
-        <div class="modal-resize-handle"></div>
-    </div>
-</div>
-
-<!-- Модальное окно перемещения файла -->
-<div class="modal" id="moveFileModal">
-    <div class="modal-content" style="width: 450px;">
-        <div class="modal-title">
-            <span>Переместить файл</span>
-            <button onclick="closeMoveModal()">✕</button>
-        </div>
-        <div class="modal-body">
-            <p><strong>Файл:</strong> <span id="moveSourceFile"></span></p>
-            <label for="moveDestinationFolder">Выберите целевую папку:</label>
-            <select id="moveDestinationFolder" class="modal-input" style="width:100%; margin-bottom: 12px;">
-                <option value="/">/ (корень)</option>
-            </select>
-            <p style="text-align:center; margin:8px 0;">— или —</p>
-            <label for="moveCustomPath">Введите путь вручную:</label>
-            <input type="text" id="moveCustomPath" class="modal-input" 
-                   placeholder="например: папка/подпапка/" style="width:100%; margin-bottom: 12px;">
-            <p style="font-size:12px; color:#666;">* Имя файла сохранится, изменится только путь.</p>
-            <div id="moveMessage" style="margin-top:10px; display:none;"></div>
-        </div>
-        <div class="modal-buttons">
-            <button class="modal-btn" onclick="executeMove()">Переместить</button>
-            <button class="modal-btn" onclick="closeMoveModal()">Отмена</button>
-        </div>
-    </div>
-</div>
-
-<!-- Модальное окно обзора сервера (универсальное) -->
-<div class="modal" id="serverBrowserModal">
-    <div class="modal-content" style="width: 800px; max-width: 90vw; height: 600px; max-height: 90vh; display: flex; flex-direction: column;">
-        <div class="modal-title">
-            <span id="serverBrowserTitle">Обзор сервера</span>
-            <button onclick="closeServerBrowser()">✕</button>
-        </div>
-        <div class="modal-body" style="flex: 1; display: flex; flex-direction: column; overflow: hidden; padding: 12px;">
-            <!-- Панель навигации -->
-            <div style="display: flex; gap: 8px; margin-bottom: 12px; align-items: center;">
-                <button class="modal-btn" id="browserNavBack" onclick="browserNavigateBack()" disabled title="Назад">←</button>
-                <span id="browserCurrentPath" style="flex:1; background:#f5f5f5; padding:4px 8px; border-radius:3px; font-family: monospace;">/</span>
-                <input type="text" id="browserSearch" class="modal-input" placeholder="Поиск..." style="width: 200px;">
-                <select id="browserSort" class="modal-input" style="width: 120px;">
-                    <option value="name">Имя (А-Я)</option>
-                    <option value="size_asc">Размер (↑)</option>
-                    <option value="size_desc">Размер (↓)</option>
-                </select>
-                <button class="modal-btn" onclick="refreshBrowser()">🔄 Обновить</button>
-                <button class="modal-btn" onclick="promptNewFolder()" title="Создать новую папку">➕ Новая папка</button>
-            </div>
-
-            <!-- Таблица файлов -->
-            <div style="flex: 1; overflow-y: auto; border: 1px solid #ddd; border-radius: 4px;">
-                <table class="server-files-table" style="width: 100%; border-collapse: collapse;">
-                    <thead>
-                        <tr style="background: #f5f5f5; position: sticky; top: 0;">
-                            <th style="padding: 8px; text-align: left;">Имя</th>
-                            <th style="padding: 8px; text-align: right;">Размер</th>
-                            <th style="padding: 8px; text-align: left;">Дата изменения</th>
-                            <th style="padding: 8px; text-align: center;">Действие</th>
-                        </tr>
-                    </thead>
-                    <tbody id="browserFilesList">
-                        <!-- динамическое содержимое -->
-                    </tbody>
-                </table>
-            </div>
-
-            <!-- Строка состояния -->
-            <div style="display: flex; justify-content: space-between; margin-top: 8px; font-size: 12px; color: #666;">
-                <span id="browserStats"></span>
-                <span id="browserSelectedInfo"></span>
-            </div>
-
-            <!-- Дополнительная панель для режима сохранения -->
-            <div id="browserSavePanel" style="display: none; margin-top: 12px; padding: 12px; background: #f9f9f9; border-radius: 4px; border: 1px solid #ddd;">
-                <label>Имя файла:</label>
-                <input type="text" id="browserSaveFilename" class="modal-input" style="width: 100%; margin-bottom: 8px;" placeholder="введите имя файла">
-                <div style="display: flex; gap: 8px; justify-content: flex-end;">
-                    <button class="modal-btn" onclick="browserSaveHere()">Сохранить сюда</button>
-                </div>
-            </div>
-        </div>
-        <div class="modal-buttons" style="padding: 8px 16px;">
-            <button class="modal-btn" id="browserActionBtn" onclick="browserAction()">Выбрать</button>
-            <button class="modal-btn" onclick="closeServerBrowser()">Отмена</button>
-        </div>
-        <div class="modal-resize-handle"></div>
-    </div>
-</div>
-
-<!-- Модальное окно для истории действий (адаптивное по высоте) -->
-<div class="modal" id="historyModal" aria-modal="true" role="dialog" aria-labelledby="historyModalTitle">
-    <div class="modal-content" 
-         style="width: 580px; 
-                max-width: 95vw; 
-                min-height: 480px; 
-                max-height: 92vh; 
-                display: flex; 
-                flex-direction: column;">
-
-        <!-- Заголовок -->
-        <div class="modal-title" id="historyModalTitle" 
-             style="display: flex; justify-content: space-between; align-items: center; 
-                    padding: 12px 16px; background: #007bff; color: white; font-weight: bold;">
-            <span>История изменений</span>
-            <button onclick="closeHistoryModal()" 
-                    aria-label="Закрыть" 
-                    style="background: none; border: none; color: white; cursor: pointer; font-size: 1.4em; line-height: 1;">
-                ✕
-            </button>
-        </div>
-
-        <!-- Основное тело окна — полностью адаптивное -->
-        <div class="modal-body" 
-             style="flex: 1 1 auto; 
-                    display: flex; 
-                    flex-direction: column; 
-                    gap: 16px; 
-                    padding: 16px; 
-                    background: #f9f9f9; 
-                    overflow: hidden;">
-
-            <!-- 1. Статистика -->
-            <section class="history-stats" style="flex: 0 0 auto; padding: 12px; background: white; border-radius: 8px; box-shadow: 0 1px 3px rgba(0,0,0,0.1);">
-                <div style="display: flex; justify-content: space-around; text-align: center;">
-                    <div>
-                        <strong>Действий:</strong><br>
-                        <span id="totalActionsCount" style="font-size: 1.35em; color: #007bff;">0</span>
-                    </div>
-                    <div>
-                        <strong>Позиция:</strong><br>
-                        <span id="currentActionPosition" style="font-size: 1.35em; color: #007bff;">0</span>
-                    </div>
-                </div>
-            </section>
-
-            <!-- 2. Таймлайн -->
-            <section class="history-timeline" style="flex: 0 0 auto; padding: 12px; background: white; border-radius: 8px; box-shadow: 0 1px 3px rgba(0,0,0,0.1);">
-                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
-                    <span style="font-weight: bold; font-size: 14px;">Временная шкала</span>
-                    <div style="display: flex; gap: 8px;">
-                        <button class="modal-btn" onclick="undo()" style="padding: 5px 10px;" title="Отменить (Ctrl+Z)">←</button>
-                        <button class="modal-btn" onclick="redo()" style="padding: 5px 10px;" title="Повторить (Ctrl+Y)">→</button>
-                    </div>
-                </div>
-                <div style="position: relative; height: 32px;">
-                    <input type="range" id="historySlider" min="0" max="0" value="0" step="1"
-                           style="width: 100%; position: absolute; top: 50%; transform: translateY(-50%);"
-                           oninput="debounceTemporaryRestore(this.value)"
-                           onchange="jumpToHistoryState(this.value)">
-                    <div class="history-markers" style="position: absolute; width: 100%; height: 100%; display: flex; align-items: center; pointer-events: none;"></div>
-                </div>
-                <div style="display: flex; justify-content: space-between; margin-top: 4px; font-size: 12px; color: #666;">
-                    <span>Начало</span>
-                    <span>Текущее</span>
-                    <span>Конец</span>
-                </div>
-            </section>
-
-            <!-- 3. Список действий — АДАПТИВНЫЙ ПО ВЫСОТЕ -->
-            <section class="history-list-container" 
-                     style="flex: 1 1 auto; 
-                            min-height: 0; 
-                            display: flex; 
-                            flex-direction: column; 
-                            background: white; 
-                            border-radius: 8px; 
-                            box-shadow: 0 1px 3px rgba(0,0,0,0.1); 
-                            overflow: hidden;">
-
-                <ul id="historyListBody" 
-                    style="list-style: none; 
-                           padding: 0; 
-                           margin: 0; 
-                           flex: 1 1 auto; 
-                           overflow-y: auto; 
-                           overflow-x: hidden;">
-                    <!-- Динамически заполняется через JS -->
-                </ul>
-            </section>
-
-            <!-- 4. Опции внизу -->
-            <section class="history-options" style="flex: 0 0 auto; padding: 12px; background: white; border-radius: 8px; box-shadow: 0 1px 3px rgba(0,0,0,0.1);">
-                <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px;">
-                    <label style="display: flex; align-items: center; gap: 8px;">
-                        <input type="checkbox" id="autoSaveHistory" checked> 
-                        Автосохранение истории
-                    </label>
-                    <label style="display: flex; align-items: center; gap: 8px;">
-                        Макс. действий:
-                        <input type="number" id="maxHistorySize" value="50" min="10" max="200" step="10"
-                               style="width: 70px; padding: 4px; border: 1px solid #ddd; border-radius: 4px;">
-                    </label>
-                    <button class="modal-btn" onclick="clearHistory()" 
-                            style="background: #dc3545; color: white;">
-                        Очистить историю
-                    </button>
-                </div>
-            </section>
-
-        </div>
-
-        <!-- Кнопки внизу -->
-        <div class="modal-buttons" 
-             style="padding: 12px 16px; border-top: 1px solid #ddd; display: flex; justify-content: flex-end; gap: 10px;">
-            <button class="modal-btn" onclick="closeHistoryModal()" 
-                    style="background: #6c757d; color: white;">Закрыть</button>
-            <button class="modal-btn" onclick="jumpToSelectedState()" 
-                    style="background: #28a745; color: white;">Перейти к выбранному</button>
-        </div>
-
-        <div class="modal-resize-handle"></div>
-    </div>
-</div>
-
-<!-- Модальное окно прогресса -->
-<div class="modal" id="progressModal">
-    <div class="modal-content" style="width: 400px;">
-        <div class="modal-title">
-            <span id="progressModalTitle">Выполнение операции</span>
-            <button onclick="closeProgressModal()" style="background:none;border:none;color:white;cursor:pointer;">✕</button>
-        </div>
-        <div class="modal-body">
-            <div class="modal-row">
-                <p id="progressMessage" class="progress-message">Идёт обработка...</p>
-            </div>
-            <div class="modal-row progress-container">
-                <div class="progress-bar">
-                    <div id="progressBarFill" class="progress-bar-fill"></div>
-                </div>
-                <div class="progress-text">
-                    <span id="progressPercent">0%</span>
-                </div>
-            </div>
-            <div class="modal-row" id="progressCancelRow" style="display:flex; justify-content:center;">
-                <button class="modal-btn" id="progressCancelBtn" style="background:#dc3545; color:white;">Отмена</button>
-            </div>
-        </div>
-        <div class="modal-resize-handle"></div>
-    </div>
-</div>
-
-<!-- Модальное окно управления сервером (две панели) -->
-<div class="modal" id="serverCommanderModal">
-    <div class="modal-content" style="width: 1200px; max-width: 95vw; height: 700px; max-height: 90vh; display: flex; flex-direction: column;">
-        <div class="modal-title">
-            <span>Управление файлами на сервере</span>
-            <button onclick="closeServerCommander()">✕</button>
-        </div>
-        <div class="modal-body" style="flex: 1; display: flex; flex-direction: column; overflow: hidden; padding: 8px;">
-
-            <!-- Отображение текущих путей -->
-            <div style="display: flex; gap: 8px; margin-bottom: 8px;">
-                <div style="flex: 1; display: flex; align-items: center; gap: 4px;">
-                    <span>Левая:</span>
-                    <input type="text" id="leftPath" class="modal-input" readonly style="flex: 1; background: #f5f5f5;">
-                </div>
-                <div style="flex: 1; display: flex; align-items: center; gap: 4px;">
-                    <span>Правая:</span>
-                    <input type="text" id="rightPath" class="modal-input" readonly style="flex: 1; background: #f5f5f5;">
-                </div>
-            </div>
-
-            <!-- Две панели -->
-            <div style="display: flex; gap: 8px; flex: 1; overflow: hidden;">
-                <!-- Левая панель -->
-                <div class="server-panel" id="leftPanel" style="flex: 1; display: flex; flex-direction: column; border: 1px solid #ccc; border-radius: 4px; overflow: hidden;">
-                    <div class="panel-header" style="background: #e0e0e0; padding: 4px 8px; font-weight: bold;">Левая панель</div>
-                    <div class="panel-content" style="flex: 1; overflow-y: auto; background: white; padding: 4px;">
-                        <table class="server-files-table" style="width: 100%;">
-                            <tbody id="leftPanelList">
-                                <!-- Заполняется динамически -->
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-                <!-- Правая панель -->
-                <div class="server-panel" id="rightPanel" style="flex: 1; display: flex; flex-direction: column; border: 1px solid #ccc; border-radius: 4px; overflow: hidden;">
-                    <div class="panel-header" style="background: #e0e0e0; padding: 4px 8px; font-weight: bold;">Правая панель</div>
-                    <div class="panel-content" style="flex: 1; overflow-y: auto; background: white; padding: 4px;">
-                        <table class="server-files-table" style="width: 100%;">
-                            <tbody id="rightPanelList">
-                                <!-- Заполняется динамически -->
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Панель кнопок (внизу) -->
-            <div style="margin-top: 8px; display: flex; gap: 8px; justify-content: center; flex-wrap: wrap;">
-                <button class="modal-btn" onclick="createFolderInActivePanel()">➕ Создать папку</button>
-                <button class="modal-btn" id="commanderSelectBtn" onclick="commanderSelect()">Выбрать</button>
-                <!-- <button class="modal-btn" onclick="deleteSelectedInActivePanel()">🗑 Удалить</button>
-                <button class="modal-btn" onclick="downloadSelectedInActivePanel()">⬇ Скачать</button>
-                <button class="modal-btn" onclick="moveSelectedToOtherPanel()">➡ Переместить</button> -->
-                <button class="modal-btn" onclick="refreshBothPanels()">🔄 Обновить</button>
-                <button class="modal-btn" onclick="closeServerCommander()">✖ Закрыть</button>
-            </div>
-        </div>
-        <div class="modal-resize-handle"></div>
-    </div>
-</div>
-
-
-
-<!-- Модальное окно для поиск окружности-->
-<div class="modal" id="roundSearchingModal">
-    <div class="modal-content" style="width:450px;">
-        <div class="modal-title">
-            <span>Поиск окружности</span>
-            <button onclick="closeRoundSearchingModal()">✕</button>
-        </div>
-        <div class="modal-body">
-            <div class="modal-row">
-                <label style="display:flex; align-items:center; gap:8px;">
-                    <input type="radio" name="shape" id="chooseCircle" value="circle" checked>
-                    <span>Окружность</span>
-                </label>
-        
-                <label style="display:flex; align-items:center; gap:8px;">
-                    <input type="radio" name="shape" id="chooseEllipse" value="ellipse">
-                    <span>Эллипс</span>
-                </label>
-            </div>
-        </div>
-        <div class="modal-buttons">
-            <button class="modal-btn" id="uploadButton" onclick="applyRoundSearchingFilter()">Ок</button>
-            <button class="modal-btn" onclick="closeRoundSearchingModal()" id="cancelButton">Отмена</button>
-        </div>
-        <div class="modal-resize-handle"></div>
-    </div>
-</div>
-
-<!-- Модальное окно вывода парамеров окружности-->
-<div class="modal " id="resultRoundSearchingModal">
-    <div class="modal-content" style="width: 300px;height: 150px;">
-        <div class="modal-title">
-            <span>Параметры окружности (в пикселях)</span>
-            <button onclick="closeResultRoundSearchingModal()">✕</button>
-        </div>
-        <div class="modal-body">
-            <div class="modal-row">
-                <div class="form-group">
-                    <label for="centerX">Центр (X):</label>
-                    <output id="centerX" class="output-value"></output>
-                </div>
-                
-                <div class="form-group">
-                    <label for="centerY">Центр (Y):</label>
-                    <output id="centerY" class="output-value"></output>
-                </div>
-                
-                <div class="form-group">
-                    <label for="radius">Радиус:</label>
-                    <output id="radius" class="output-value"></output>
-                </div>
-            </div>
-        </div>
-        <div class="modal-buttons">
-            <button class="modal-btn" onclick="closeResultRoundSearchingModal()">Ок</button>
-        </div>
-    </div>
-</div>
-
-<script src="src/globals/globals.js"></script>
-<script src="src/tools/tools.js"></script>
-<script src="src/fileManager/fileManager.js"></script>
-<script src="src/history/history.js"></script>
-<!-- <script src="src/color/color.js"></script> -->
-
-
-<script src="src/imageOps/imageOps.js"></script>
-<script src="src/recentFiles/recentFiles.js"></script>
-<script src="src/server/server.js"></script>
-<script src="src/ui/ui.js"></script>
-<script src="src/events/events.js"></script>
-
-<!-- <script src="src/menuStubs/menuStubs.js"></script> -->
-<script src="src/projectManager/projectManager.js"></script>
-<script src="src/main/main.js"></script>
-<script src="src/drawing/drawing.js"></script>
-<script src="src/tabs/tabs.js"></script>
-<script src="src/modals/models.js"></script>
-
-<!-- Общие функции для работы с настройками (доступны в index.html и workflow.html) -->
-<script>
-    // Получение настроек проекта из MinIO
-    function getProjectSettings(projectId) {
-        // Настройки теперь хранятся в проекте в MinIO
-        const project = getCurrentProject();
-        if (project && project.project.settings) {
-            return project.project.settings;
+    <!-- JavaScript for VS Code UI interactions -->
+    <script>
+        // Toggle Explorer Section
+        function toggleExplorerSection(header) {
+            const body = header.nextElementSibling;
+            const arrow = header.querySelector('.explorer-arrow');
+            if (body && arrow) {
+                body.classList.toggle('open');
+                arrow.classList.toggle('collapsed');
+            }
         }
-        return {};
-    }
 
-    // Сохранение настроек проекта в MinIO
-    async function saveProjectSettings(projectId, settings) {
-        const project = getCurrentProject();
-        if (project) {
-            project.project.settings = { ...project.project.settings, ...settings };
-            await saveCurrentProject();
-        }
-    }
+        // Activity Bar Item Selection
+        document.querySelectorAll('.activity-item').forEach(item => {
+            item.addEventListener('click', function() {
+                document.querySelectorAll('.activity-item').forEach(i => i.classList.remove('active'));
+                this.classList.add('active');
+            });
+        });
 
-    // Получение пользовательских настроек из MinIO
-    function getUserSettings() {
-        const project = getCurrentProject();
-        if (project && project.userSettings) {
-            return project.userSettings;
-        }
-        return {};
-    }
+        // Panel Tab Selection
+        document.querySelectorAll('.panel-tab').forEach(tab => {
+            tab.addEventListener('click', function() {
+                document.querySelectorAll('.panel-tab').forEach(t => t.classList.remove('active'));
+                this.classList.add('active');
+            });
+        });
 
-    // Сохранение пользовательских настроек в MinIO
-    async function saveUserSettings(settings) {
-        const project = getCurrentProject();
-        if (project) {
-            project.userSettings = { ...project.userSettings, ...settings };
-            await saveCurrentProject();
-        }
-    }
+        // Window Controls (demo only)
+        document.querySelectorAll('.window-control').forEach(control => {
+            control.addEventListener('click', function() {
+                if (this.classList.contains('close')) {
+                    console.log('Close window clicked');
+                } else if (this.textContent === '□') {
+                    console.log('Maximize/Restore window clicked');
+                } else {
+                    console.log('Minimize window clicked');
+                }
+            });
+        });
 
-    // Получение информации о текущем активном проекте
-    function getCurrentProjectInfo() {
-        return getCurrentProject();
-    }
+        // Menu Items (demo only)
+        document.querySelectorAll('.menu-item').forEach(item => {
+            item.addEventListener('click', function() {
+                console.log('Menu item clicked:', this.textContent);
+            });
+        });
+    </script>
 
-    // Проверка наличия активного проекта
-    function hasActiveProject() {
-        return getCurrentProject() !== null;
-    }
-</script>
+    <!-- Old interface content removed - replaced with VS Code style layout above -->
 </body>
-</html> 
+</html>
