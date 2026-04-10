@@ -1,1 +1,1 @@
-Nothing should be ignored based on the provided file changes. The only added file is `penpot-projects-strict.html`, which appears to be a source/config file (HTML document) and not a build artifact, dependency, or temporary file.
+Nothing should be ignored based on the provided file changes. The only modified file is 'penpot-projects.html', which is a source/config file and should not be added to .gitignore.

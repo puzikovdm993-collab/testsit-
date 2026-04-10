@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="ru">
 <head>
@@ -10,7 +9,642 @@
     <script src="static/js/plotly-2.27.1.min.js"></script>
 
     <link rel="icon" type="image/x-icon" href="favicon.ico">
-    <link rel="stylesheet" href="styles/index.css">
+    
+    <style>
+        /* --- CSS Variables & Reset - VS Code Style --- */
+        :root {
+            /* VS Code Dark Theme Colors */
+            --color-bg: #1e1e1e;
+            --color-surface: #252526;
+            --color-surface-hover: #2a2d2e;
+            --color-text: #cccccc;
+            --color-text-secondary: #858585;
+            --color-primary: #0e639c;
+            --color-primary-hover: #1177bb;
+            --color-danger: #f44336;
+            --color-danger-hover: #d32f2f;
+            --color-border: #3c3c3c;
+            --color-focus: #007fd4;
+            --shadow-sm: 0 1px 2px rgba(0,0,0,0.3);
+            --shadow-md: 0 4px 6px rgba(0,0,0,0.4);
+            --radius: 2px;
+            --transition: 0.15s ease;
+            --font-family: 'Consolas', 'Courier New', monospace;
+            --font-ui: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        
+        body {
+            font-family: var(--font-ui);
+            background-color: var(--color-bg);
+            color: var(--color-text);
+            line-height: 1.5;
+            transition: background-color var(--transition), color var(--transition);
+            font-size: 13px;
+        }
+
+        button {
+            font-family: inherit;
+            cursor: pointer;
+            border: none;
+            background: none;
+            color: inherit;
+        }
+
+        /* --- Tabs Container - VS Code Style --- */
+        .tabs-container {
+            background: var(--color-surface);
+            border-bottom: 1px solid var(--color-border);
+        }
+
+        .tabs-header {
+            display: flex;
+            align-items: center;
+            padding: 0;
+            gap: 0;
+            border-bottom: 1px solid var(--color-border);
+            background: var(--color-surface);
+            overflow-x: auto;
+            height: 35px;
+        }
+
+        .back-to-projects-btn {
+            padding: 0 12px;
+            height: 35px;
+            display: flex;
+            align-items: center;
+            background: transparent;
+            color: var(--color-text);
+            font-size: 12px;
+            border-right: 1px solid var(--color-border);
+            white-space: nowrap;
+            cursor: pointer;
+        }
+        .back-to-projects-btn:hover {
+            background: var(--color-surface-hover);
+        }
+
+        .tab-btn {
+            padding: 0 16px;
+            height: 35px;
+            display: flex;
+            align-items: center;
+            border: none;
+            border-right: 1px solid var(--color-border);
+            border-bottom: 2px solid transparent;
+            background: transparent;
+            color: var(--color-text-secondary);
+            font-size: 12px;
+            font-family: var(--font-ui);
+            cursor: pointer;
+            transition: all var(--transition);
+            white-space: nowrap;
+        }
+
+        .tab-btn:hover {
+            background: var(--color-surface-hover);
+            color: var(--color-text);
+        }
+
+        .tab-btn.active {
+            background: var(--color-bg);
+            color: var(--color-text);
+            border-bottom-color: var(--color-primary);
+        }
+
+        .tabs-content {
+            background: var(--color-bg);
+            flex: 1;
+            overflow: auto;
+        }
+
+        .tab-pane {
+            display: none;
+            padding: 8px 12px;
+        }
+
+        .tab-pane.active {
+            display: block;
+        }
+
+        /* --- Ribbon Groups --- */
+        .ribbon-group {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            padding: 4px 8px;
+            border-right: 1px solid var(--color-border);
+        }
+
+        .ribbon-buttons {
+            display: flex;
+            gap: 4px;
+            position: relative;
+        }
+
+        .ribbon-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 4px 8px;
+            background: transparent;
+            color: var(--color-text);
+            border: 1px solid transparent;
+            border-radius: var(--radius);
+            font-size: 12px;
+            transition: all var(--transition);
+        }
+
+        .ribbon-btn:hover {
+            background: var(--color-surface-hover);
+            border-color: var(--color-border);
+        }
+
+        .ribbon-btn-large {
+            padding: 6px 10px;
+        }
+
+        .ribbon-btn-thumb {
+            width: 24px;
+            height: 24px;
+            object-fit: contain;
+            border-radius: 2px;
+        }
+
+        .ribbon-btn-label {
+            max-width: 100px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .file-count-badge {
+            background: var(--color-primary);
+            color: white;
+            font-size: 10px;
+            padding: 1px 4px;
+            border-radius: 10px;
+            min-width: 16px;
+            text-align: center;
+        }
+
+        /* --- Open Files Dropdown --- */
+        .open-files-dropdown {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background: var(--color-surface);
+            border: 1px solid var(--color-border);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow-md);
+            z-index: 1000;
+            min-width: 280px;
+            max-height: 400px;
+            overflow-y: auto;
+            display: none;
+        }
+
+        .open-files-dropdown.show {
+            display: block;
+        }
+
+        .open-files-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 8px 12px;
+            border-bottom: 1px solid var(--color-border);
+            font-weight: 600;
+            font-size: 12px;
+        }
+
+        .close-dropdown-btn {
+            background: transparent;
+            border: none;
+            color: var(--color-text-secondary);
+            cursor: pointer;
+            padding: 2px;
+        }
+        .close-dropdown-btn:hover {
+            color: var(--color-text);
+        }
+
+        .open-files-list {
+            padding: 4px 0;
+        }
+
+        .open-file-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 6px 12px;
+            cursor: pointer;
+            transition: background var(--transition);
+        }
+
+        .open-file-item:hover {
+            background: var(--color-surface-hover);
+        }
+
+        .open-file-item.active {
+            background: var(--color-primary);
+            color: white;
+        }
+
+        .open-file-thumbnail {
+            width: 32px;
+            height: 32px;
+            background: var(--color-bg);
+            border: 1px solid var(--color-border);
+            border-radius: var(--radius);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .open-file-thumbnail-placeholder {
+            color: var(--color-text-secondary);
+            font-size: 16px;
+        }
+
+        .open-file-info {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .open-file-name {
+            font-size: 12px;
+            font-weight: 500;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .open-file-details {
+            display: flex;
+            gap: 8px;
+            font-size: 10px;
+            color: var(--color-text-secondary);
+        }
+
+        .open-file-item.active .open-file-details {
+            color: rgba(255,255,255,0.7);
+        }
+
+        .open-file-actions {
+            display: flex;
+            gap: 4px;
+        }
+
+        .close-file-btn {
+            background: transparent;
+            border: none;
+            color: var(--color-text-secondary);
+            padding: 2px;
+            cursor: pointer;
+            border-radius: 2px;
+        }
+        .close-file-btn:hover {
+            background: var(--color-danger);
+            color: white;
+        }
+
+        .open-files-footer {
+            display: flex;
+            gap: 4px;
+            padding: 8px;
+            border-top: 1px solid var(--color-border);
+        }
+
+        .footer-btn {
+            flex: 1;
+            padding: 6px 8px;
+            background: transparent;
+            border: 1px solid var(--color-border);
+            color: var(--color-text);
+            font-size: 11px;
+            border-radius: var(--radius);
+            cursor: pointer;
+            transition: all var(--transition);
+        }
+
+        .footer-btn:hover {
+            background: var(--color-surface-hover);
+            border-color: var(--color-primary);
+        }
+
+        /* --- Main Container & Toolbar - VS Code Style --- */
+        .main-container {
+            display: flex;
+            flex-direction: row;
+            height: calc(100vh - 35px - 28px); /* header - footer */
+            overflow: hidden;
+        }
+
+        /* Left Sidebar (Activity Bar + Panels) */
+        .left-sidebar {
+            width: 48px;
+            background: var(--color-surface);
+            border-right: 1px solid var(--color-border);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding-top: 8px;
+        }
+
+        .sidebar-tool-btn {
+            width: 48px;
+            height: 48px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: transparent;
+            border: none;
+            border-left: 2px solid transparent;
+            cursor: pointer;
+            transition: all var(--transition);
+            color: var(--color-text-secondary);
+            font-size: 20px;
+        }
+
+        .sidebar-tool-btn:hover {
+            color: var(--color-text);
+        }
+
+        .sidebar-tool-btn.active {
+            color: var(--color-text);
+            border-left-color: var(--color-primary);
+            background: rgba(14, 99, 156, 0.1);
+        }
+
+        /* Main Content Area */
+        .main-content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        /* Top Toolbar */
+        .toolbar-top {
+            display: flex;
+            gap: 4px;
+            padding: 4px 8px;
+            background: var(--color-surface);
+            border-bottom: 1px solid var(--color-border);
+            align-items: center;
+            min-height: 32px;
+        }
+
+        .tool-btn {
+            width: 28px;
+            height: 28px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: transparent;
+            border: 1px solid transparent;
+            border-radius: var(--radius);
+            cursor: pointer;
+            transition: all var(--transition);
+            color: var(--color-text);
+            font-size: 14px;
+        }
+
+        .tool-btn:hover {
+            background: var(--color-surface-hover);
+            border-color: var(--color-border);
+        }
+
+        .tool-btn.active {
+            background: var(--color-primary);
+            border-color: var(--color-primary);
+            color: white;
+        }
+
+        .tool-btn svg,
+        .tool-btn img {
+            width: 16px;
+            height: 16px;
+        }
+
+        /* Color Bar - Vertical Left Panel */
+        .color-bar-container {
+            width: 200px;
+            background: var(--color-surface);
+            border-right: 1px solid var(--color-border);
+            display: flex;
+            flex-direction: column;
+            padding: 8px;
+            gap: 12px;
+        }
+
+        .color-bar {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        #colorBarGradient {
+            width: 100%;
+            height: 24px;
+            background: linear-gradient(to right, black, white);
+            border: 1px solid var(--color-border);
+            border-radius: var(--radius);
+        }
+
+        .color-bar-labels {
+            display: flex;
+            justify-content: space-between;
+            font-size: 10px;
+            color: var(--color-text-secondary);
+            font-family: var(--font-family);
+        }
+
+        .color-bar-label {
+            font-size: 10px;
+            color: var(--color-text-secondary);
+            font-family: var(--font-family);
+        }
+
+        /* --- Tab Sections - VS Code Style --- */
+        .tab-section {
+            display: inline-flex;
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 6px;
+            padding: 4px 8px;
+            border-right: 1px solid var(--color-border);
+            margin-right: 8px;
+        }
+
+        .tab-section:last-child {
+            border-right: none;
+        }
+
+        .tab-section h4 {
+            font-size: 10px;
+            color: var(--color-text-secondary);
+            margin: 0;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            font-weight: 600;
+        }
+
+        .tab-buttons {
+            display: flex;
+            gap: 2px;
+            flex-wrap: wrap;
+        }
+
+        .tab-action-btn {
+            width: 28px;
+            height: 28px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: transparent;
+            border: 1px solid transparent;
+            border-radius: var(--radius);
+            cursor: pointer;
+            transition: all var(--transition);
+        }
+
+        .tab-action-btn:hover {
+            background: var(--color-surface-hover);
+            border-color: var(--color-border);
+        }
+
+        .tab-action-btn img {
+            width: 18px;
+            height: 18px;
+            opacity: 0.8;
+        }
+
+        .tab-action-btn:hover img {
+            opacity: 1;
+        }
+
+        /* --- Status Bar --- */
+        .status-bar {
+            background: var(--color-surface);
+            border-top: 1px solid var(--color-border);
+            padding: 4px 12px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 12px;
+            color: var(--color-text-secondary);
+            font-family: var(--font-mono);
+        }
+
+        .status-left,
+        .status-right {
+            display: flex;
+            gap: 16px;
+        }
+
+        .status-bar span {
+            white-space: nowrap;
+        }
+
+        /* --- Canvas Area - VS Code Style --- */
+        .canvas-area {
+            background: var(--color-bg);
+            position: relative;
+            overflow: auto;
+            display: flex;
+            flex: 1;
+        }
+
+        .canvas-wrapper {
+            width: 100%;
+            height: 100%;
+            position: relative;
+            overflow: auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        #canvasHost {
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        #imageCanvas {
+            background: #1e1e1e;
+            border: 1px solid var(--color-border);
+            image-rendering: pixelated;
+            max-width: 100%;
+            max-height: 100%;
+            display: block;
+        }
+
+        .text-input-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            display: none;
+        }
+
+        .text-input-overlay.active {
+            display: block;
+            pointer-events: auto;
+        }
+
+        .text-input-overlay textarea {
+            width: 100%;
+            height: 100%;
+            background: transparent;
+            border: 1px dashed var(--color-accent);
+            color: var(--color-text);
+            font-family: var(--font-mono);
+            font-size: 14px;
+            padding: 8px;
+            resize: none;
+            outline: none;
+        }
+
+        /* --- Scrollbars --- */
+        ::-webkit-scrollbar {
+            width: 10px;
+            height: 10px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--color-bg);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--color-border);
+            border-radius: 5px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--color-text-secondary);
+        }
+
+        /* --- Utility Classes --- */
+        .sr-only {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            border: 0;
+        }
+    </style>
+    
     <link rel="stylesheet" href="styles/modals.css">
 
 </head>
@@ -48,23 +682,25 @@
     </svg>
     
 
-    <!-- Панель вкладок (Tabs) -->
-    <div class="tabs-container">
-        <div class="tabs-header">
-            <a href="penpot-projects.html" class="back-to-projects-btn" title="Вернуться к проектам">
-                ← Назад к проектам
-            </a>
-            <button class="tab-btn active" data-tab="file">Файл</button>
-            <button class="tab-btn" data-tab="edit">Правка</button>
-            <button class="tab-btn" data-tab="view">Вид</button>
-            <button class="tab-btn" data-tab="image">Изображение</button>
-            <button class="tab-btn" data-tab="filters">Фильтры</button>
-            <button class="tab-btn" data-tab="adjustments">Регулировка</button>
-            <button class="tab-btn" data-tab="tools">Инструменты</button>
-            <button class="tab-btn" data-tab="modes">Режимы</button>
-            <button class="tab-btn" data-tab="options">Настройки</button>
-        </div>
-        <div class="tabs-content">
+    <!-- Основной интерфейс -->
+    <div style="display: flex; flex-direction: column; height: calc(100vh - 28px);">
+        <!-- Панель вкладок (Tabs) -->
+        <div class="tabs-container">
+            <div class="tabs-header">
+                <a href="penpot-projects.html" class="back-to-projects-btn" title="Вернуться к проектам">
+                    ← Назад к проектам
+                </a>
+                <button class="tab-btn active" data-tab="file">Файл</button>
+                <button class="tab-btn" data-tab="edit">Правка</button>
+                <button class="tab-btn" data-tab="view">Вид</button>
+                <button class="tab-btn" data-tab="image">Изображение</button>
+                <button class="tab-btn" data-tab="filters">Фильтры</button>
+                <button class="tab-btn" data-tab="adjustments">Регулировка</button>
+                <button class="tab-btn" data-tab="tools">Инструменты</button>
+                <button class="tab-btn" data-tab="modes">Режимы</button>
+                <button class="tab-btn" data-tab="options">Настройки</button>
+            </div>
+            <div class="tabs-content">
             <!-- Контент вкладки "Файл" -->
             <div class="tab-pane active" id="tab-file">
                 <!-- Группа открытых файлов (перемещена из верхнего ribbon) -->
@@ -384,55 +1020,51 @@
     <!-- <input type="file" id="fileInput" accept=".tpt" onchange="loadImage(event)" multiple> -->
     <input type="file" id="run" accept=".tpt"  multiple>
     
-    <!-- Основной контейнер с панелью инструментов и холстом -->
+    <!-- Основной контейнер с боковой панелью, верхней панелью и холстом -->
     <div class="main-container">
-        <!-- style="display: none;" -->
-        <div class="color-bar" id="colorBar">
-            <div class="color-bar-grey" id="colorBarGradient"></div>
-        </div> 
-        <div class="color-bar" id="color_bar_label" style="border-right: 1px solid var(--border-color);">
-            <span class="color-bar-label color-bar-label-max" id="color_bar_label_max">Max</span>
-            <span class="color-bar-label color-bar-label-median" id="color_bar_label_median">Median</span>
-            <span class="color-bar-label color-bar-label-min" id="color_bar_label_min">Min</span>
-        </div>
-
-
-
-
-
-        <div class="toolbar-left">
-            <button class="tool-btn active" data-tool="cursor" onclick="setTool('cursor')" title="Курсор">
-                <svg class="tool-icon"><use href="#mouse-pointer.svg"></use></svg>
-            </button>
-            <button class="tool-btn" data-tool="profile" onclick="setTool('profile')" title="Профиль">
-                <img src="icons/free-icon-CurvesEffect.png" alt="">
-            </button>
-            <button class="tool-btn" data-tool="lasso" onclick="setTool('lasso')" title="Лассо">
-                ⭕
-            </button>
-            <button class="tool-btn" data-tool="move" onclick="setTool('move')" title="Перемещение выделения">
-                ✂️
-            </button>
-        </div>
-        
-        <!-- Цветовая панель (Color Bar) -->
-
-
-        <!-- Область холста -->
-        <div class="canvas-area" id="canvasArea">
-            <div class="canvas-wrapper" id="canvasWrapper">
-                <!-- Контейнер для canvas элементов -->
-                <div id="canvasHost"></div>
-                <!-- Overlay для ввода текста -->
-                <div class="text-input-overlay" id="textInputOverlay">
-                    <textarea id="textInput" placeholder="Введите текст..."></textarea>
+        <!-- Левая боковая панель (Sidebar) с цветовой палитрой -->
+        <div class="color-bar-container">
+            <div class="color-bar">
+                <div id="colorBarGradient"></div>
+                <div class="color-bar-labels">
+                    <span class="color-bar-label" id="color_bar_label_min">Min</span>
+                    <span class="color-bar-label" id="color_bar_label_median">Median</span>
+                    <span class="color-bar-label" id="color_bar_label_max">Max</span>
                 </div>
             </div>
         </div>
 
-
+        <!-- Основная область контента -->
+        <div class="main-content">
+            <!-- Верхняя панель инструментов -->
+            <div class="toolbar-top">
+                <button class="tool-btn active" data-tool="cursor" onclick="setTool('cursor')" title="Курсор">
+                    <svg class="tool-icon"><use href="#mouse-pointer.svg"></use></svg>
+                </button>
+                <button class="tool-btn" data-tool="profile" onclick="setTool('profile')" title="Профиль">
+                    <img src="icons/free-icon-CurvesEffect.png" alt="">
+                </button>
+                <button class="tool-btn" data-tool="lasso" onclick="setTool('lasso')" title="Лассо">
+                    ⭕
+                </button>
+                <button class="tool-btn" data-tool="move" onclick="setTool('move')" title="Перемещение выделения">
+                    ✂️
+                </button>
+            </div>
+            
+            <!-- Область холста -->
+            <div class="canvas-area" id="canvasArea">
+                <div class="canvas-wrapper" id="canvasWrapper">
+                    <!-- Контейнер для canvas элементов -->
+                    <div id="canvasHost"></div>
+                    <!-- Overlay для ввода текста -->
+                    <div class="text-input-overlay" id="textInputOverlay">
+                        <textarea id="textInput" placeholder="Введите текст..."></textarea>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-
 
     <!-- Строка состояния -->
     <footer class="status-bar">
@@ -446,6 +1078,9 @@
             <span id="toolInfo">Инструмент: -</span>
         </div>
     </footer>
+
+</div>
+<!-- Конец основного интерфейса -->
 
 
 <!-- Модальное окно выбора способа сохранения -->
