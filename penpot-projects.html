@@ -110,6 +110,50 @@
         body.grid-density-normal   { --grid-min-width: 260px; --card-padding: 12px; --card-gap: 8px; }
         body.grid-density-large    { --grid-min-width: 320px; --card-padding: 16px; --card-gap: 12px; }
 
+        /* ----- ВИД: СПИСОК ----- */
+        body.view-mode-list .projects-grid-main {
+            display: flex;
+            flex-direction: column;
+            gap: var(--card-gap);
+        }
+        body.view-mode-list .project-card-main {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            padding: 10px var(--card-padding);
+        }
+        body.view-mode-list .drag-handle {
+            position: static;
+            cursor: grab;
+        }
+        body.view-mode-list .card-header-icon {
+            display: var(--card-icon-display);
+            margin-bottom: 0;
+            margin-top: 0;
+            font-size: 1.2rem;
+        }
+        body.view-mode-list .card-title {
+            flex: 1;
+            margin-bottom: 0;
+            padding-right: 0;
+            padding-left: 0;
+            font-size: 0.9rem;
+        }
+        body.view-mode-list .card-meta {
+            margin-top: 0;
+            gap: 20px;
+        }
+        body.view-mode-list .favorite-btn {
+            position: static;
+        }
+        body.view-mode-list .project-settings-btn {
+            position: static;
+        }
+        body.view-mode-list .drag-placeholder {
+            height: 50px;
+            margin: 0;
+        }
+
         body {
             background: var(--bg);
             font-family: var(--font);
@@ -621,6 +665,7 @@
             <button id="openCreateProjectModalBtn" class="btn-primary">+ создать</button>
             <button id="exportProjectsBtn" class="btn-icon">📤 экспорт</button>
             <button id="importProjectsBtn" class="btn-icon">📥 импорт</button>
+            <button id="toggleViewModeBtn" class="btn-icon" title="Переключить вид">☰</button>
             <div class="density-buttons">
                 <button data-density="compact" class="btn-icon density-btn" title="Компактный">▤</button>
                 <button data-density="normal" class="btn-icon density-btn active" title="Нормальный">▦</button>
@@ -1161,6 +1206,17 @@
         
         document.getElementById('exportProjectsBtn').onclick = exportAllProjects;
         document.getElementById('importProjectsBtn').onclick = importAllProjects;
+        
+        // Переключение режима просмотра (сетка/список)
+        const toggleViewModeBtn = document.getElementById('toggleViewModeBtn');
+        let isListView = false;
+        toggleViewModeBtn.onclick = () => {
+            isListView = !isListView;
+            document.body.classList.toggle('view-mode-list', isListView);
+            toggleViewModeBtn.textContent = isListView ? '▦' : '☰';
+            toggleViewModeBtn.title = isListView ? 'Сетка' : 'Список';
+        };
+        
         document.querySelectorAll('.density-btn').forEach(btn => {
             btn.addEventListener('click', () => setDensity(btn.dataset.density));
         });
