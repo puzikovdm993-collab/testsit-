@@ -192,6 +192,9 @@
         .project-card:hover {
             border-color: var(--color-primary);
             box-shadow: var(--shadow-md);
+        }
+
+        .project-card:not(.list-view):hover {
             transform: translateY(-2px);
         }
 
@@ -271,6 +274,7 @@
             font-size: 18px;
             transition: all var(--transition);
             backdrop-filter: blur(4px);
+            pointer-events: auto;
         }
 
         .actions-btn:hover {
@@ -289,16 +293,11 @@
             z-index: 10000;
             display: none;
             overflow: hidden;
+            pointer-events: auto;
         }
 
         .context-menu.show {
             display: block;
-            animation: slideDown 0.2s ease;
-        }
-
-        @keyframes slideDown {
-            from { opacity: 0; transform: translateY(-8px); }
-            to { opacity: 1; transform: translateY(0); }
         }
 
         .context-menu-item {
@@ -363,10 +362,16 @@
 
         .project-card.list-view .card-actions {
             position: static;
+            margin-left: auto;
         }
 
         .project-card.list-view .context-menu {
             position: fixed;
+        }
+
+        /* Prevent hover effects on list view items from affecting layout */
+        .project-card.list-view:hover {
+            transform: none;
         }
 
         /* --- Empty State --- */
@@ -967,6 +972,7 @@
             document.querySelectorAll('.actions-btn').forEach(btn => {
                 btn.addEventListener('click', (e) => {
                     e.stopPropagation();
+                    e.preventDefault();
                     showContextMenu(btn.dataset.id, btn);
                 });
                 
@@ -976,6 +982,11 @@
                     e.stopPropagation();
                     showContextMenu(btn.dataset.id, btn);
                 });
+                
+                // Prevent mousemove from triggering any behavior
+                btn.addEventListener('mousemove', (e) => {
+                    e.stopPropagation();
+                });
             });
 
             // Context menu items
@@ -984,6 +995,11 @@
                     e.stopPropagation();
                     handleContextMenuAction(item.dataset.action, item.dataset.id);
                     closeAllContextMenus();
+                });
+                
+                // Prevent mousemove on menu items
+                item.addEventListener('mousemove', (e) => {
+                    e.stopPropagation();
                 });
             });
 
@@ -1004,19 +1020,47 @@
                         showContextMenu(actionsBtn.dataset.id, actionsBtn);
                     }
                 });
+                
+                // Prevent mousemove on cards from affecting menu
+                card.addEventListener('mousemove', (e) => {
+                    // Only stop propagation if menu is open and we're not over the button
+                    const openMenu = document.querySelector('.context-menu.show');
+                    if (openMenu && !e.target.closest('.actions-btn') && !e.target.closest('.context-menu')) {
+                        e.stopPropagation();
+                    }
+                });
             });
 
             // Close menus on outside click
-            document.addEventListener('click', () => closeAllContextMenus());
+            document.addEventListener('click', (e) => {
+                if (!e.target.closest('.context-menu') && !e.target.closest('.actions-btn')) {
+                    closeAllContextMenus();
+                }
+            });
+            
+            // Also close on escape key
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape') {
+                    closeAllContextMenus();
+                }
+            });
         }
 
         function showContextMenu(projectId, triggerElement) {
             closeAllContextMenus();
             const menu = document.getElementById(`menu-${projectId}`);
             if (menu) {
+                // Force layout calculation to ensure stable positioning
                 const rect = triggerElement.getBoundingClientRect();
-                menu.style.top = (rect.bottom + 4) + 'px';
-                menu.style.left = (rect.right - 200) + 'px';
+                
+                // Calculate position once and apply
+                const topPosition = rect.bottom + 4;
+                const leftPosition = Math.max(0, rect.right - 200); // Ensure menu doesn't go off-screen left
+                
+                // Apply positions directly without any animation that could cause jumping
+                menu.style.top = topPosition + 'px';
+                menu.style.left = leftPosition + 'px';
+                menu.style.right = 'auto'; // Reset any right positioning
                 menu.classList.add('show');
             }
         }
