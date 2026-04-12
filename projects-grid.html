@@ -1,0 +1,1042 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Проекты | TIS Editor</title>
+    <style>
+        /* --- CSS Variables & Reset --- */
+        :root {
+            --color-bg: #1e1e1e;
+            --color-surface: #252526;
+            --color-surface-hover: #2a2d2e;
+            --color-text: #cccccc;
+            --color-text-secondary: #858585;
+            --color-primary: #0e639c;
+            --color-primary-hover: #1177bb;
+            --color-danger: #f44336;
+            --color-danger-hover: #d32f2f;
+            --color-border: #3c3c3c;
+            --color-focus: #007fd4;
+            --shadow-sm: 0 1px 2px rgba(0,0,0,0.3);
+            --shadow-md: 0 4px 6px rgba(0,0,0,0.4);
+            --shadow-lg: 0 8px 12px rgba(0,0,0,0.5);
+            --radius: 4px;
+            --radius-sm: 2px;
+            --transition: 0.2s ease;
+            --font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            --font-mono: 'Consolas', 'Courier New', monospace;
+            
+            /* Grid settings */
+            --grid-columns: 4;
+            --card-min-width: 280px;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        
+        body {
+            font-family: var(--font-family);
+            background-color: var(--color-bg);
+            color: var(--color-text);
+            line-height: 1.5;
+            transition: background-color var(--transition), color var(--transition);
+            font-size: 14px;
+            min-height: 100vh;
+        }
+
+        button {
+            font-family: inherit;
+            cursor: pointer;
+            border: none;
+            background: none;
+            color: inherit;
+        }
+
+        input, select {
+            font-family: inherit;
+            background: var(--color-surface);
+            color: var(--color-text);
+            border: 1px solid var(--color-border);
+            padding: 8px 12px;
+            border-radius: var(--radius-sm);
+            font-size: 13px;
+        }
+
+        input:focus, select:focus {
+            outline: 2px solid var(--color-focus);
+            border-color: transparent;
+        }
+
+        /* --- Header --- */
+        .page-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 16px 24px;
+            background: var(--color-surface);
+            border-bottom: 1px solid var(--color-border);
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .page-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--color-text);
+        }
+
+        .header-controls {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        /* --- View Toggle --- */
+        .view-toggle {
+            display: flex;
+            background: var(--color-bg);
+            border: 1px solid var(--color-border);
+            border-radius: var(--radius-sm);
+            overflow: hidden;
+        }
+
+        .view-toggle-btn {
+            padding: 6px 12px;
+            font-size: 14px;
+            transition: all var(--transition);
+            border: none;
+            background: transparent;
+            color: var(--color-text-secondary);
+        }
+
+        .view-toggle-btn:first-child {
+            border-right: 1px solid var(--color-border);
+        }
+
+        .view-toggle-btn.active {
+            background: var(--color-primary);
+            color: white;
+        }
+
+        .view-toggle-btn:hover:not(.active) {
+            background: var(--color-surface-hover);
+        }
+
+        /* --- Sort Dropdown --- */
+        .sort-dropdown {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .sort-label {
+            font-size: 12px;
+            color: var(--color-text-secondary);
+        }
+
+        /* --- Create Button --- */
+        .btn-primary {
+            background: var(--color-primary);
+            color: white;
+            padding: 8px 16px;
+            border-radius: var(--radius-sm);
+            font-size: 13px;
+            font-weight: 500;
+            transition: all var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .btn-primary:hover {
+            background: var(--color-primary-hover);
+        }
+
+        /* --- Main Content --- */
+        .main-content {
+            padding: 24px;
+            min-height: calc(100vh - 70px);
+        }
+
+        /* --- Projects Grid --- */
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(var(--grid-columns), 1fr);
+            gap: 20px;
+            transition: all var(--transition);
+        }
+
+        /* --- Projects List --- */
+        .projects-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        /* --- Project Card --- */
+        .project-card {
+            background: var(--color-surface);
+            border: 1px solid var(--color-border);
+            border-radius: var(--radius);
+            overflow: hidden;
+            transition: all var(--transition);
+            position: relative;
+        }
+
+        .project-card:hover {
+            border-color: var(--color-primary);
+            box-shadow: var(--shadow-md);
+            transform: translateY(-2px);
+        }
+
+        /* Card Preview */
+        .card-preview {
+            width: 100%;
+            height: 160px;
+            background: var(--color-bg);
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .card-preview img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .card-preview-placeholder {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 48px;
+            font-weight: 600;
+            color: white;
+            text-transform: uppercase;
+        }
+
+        /* Card Body */
+        .card-body {
+            padding: 12px;
+        }
+
+        /* Card Header */
+        .card-header {
+            display: flex;
+            align-items: flex-start;
+            gap: 8px;
+            margin-bottom: 8px;
+        }
+
+        .file-type-icon {
+            width: 20px;
+            height: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--color-primary);
+            border-radius: var(--radius-sm);
+            font-size: 12px;
+            color: white;
+            flex-shrink: 0;
+        }
+
+        .card-title {
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--color-text);
+            flex: 1;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        /* Card Metadata */
+        .card-metadata {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 11px;
+            color: var(--color-text-secondary);
+            margin-top: 8px;
+        }
+
+        .metadata-item {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        /* Card Actions */
+        .card-actions {
+            position: absolute;
+            top: 8px;
+            right: 8px;
+        }
+
+        .actions-btn {
+            width: 28px;
+            height: 28px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(0, 0, 0, 0.6);
+            border-radius: var(--radius-sm);
+            color: var(--color-text-secondary);
+            font-size: 16px;
+            transition: all var(--transition);
+            backdrop-filter: blur(4px);
+        }
+
+        .actions-btn:hover {
+            background: var(--color-primary);
+            color: white;
+        }
+
+        /* Context Menu */
+        .context-menu {
+            position: absolute;
+            top: 40px;
+            right: 8px;
+            background: var(--color-surface);
+            border: 1px solid var(--color-border);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow-lg);
+            min-width: 180px;
+            z-index: 100;
+            display: none;
+            overflow: hidden;
+        }
+
+        .context-menu.show {
+            display: block;
+            animation: slideDown 0.2s ease;
+        }
+
+        @keyframes slideDown {
+            from { opacity: 0; transform: translateY(-8px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .context-menu-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px 14px;
+            width: 100%;
+            background: none;
+            border: none;
+            font-size: 13px;
+            color: var(--color-text);
+            text-align: left;
+            cursor: pointer;
+            transition: all var(--transition);
+        }
+
+        .context-menu-item:hover {
+            background: var(--color-surface-hover);
+        }
+
+        .context-menu-item.danger {
+            color: var(--color-danger);
+        }
+
+        .context-menu-item.danger:hover {
+            background: rgba(244, 67, 54, 0.1);
+        }
+
+        .context-menu-divider {
+            height: 1px;
+            background: var(--color-border);
+            margin: 4px 0;
+        }
+
+        /* --- List View Styles --- */
+        .project-card.list-view {
+            display: flex;
+            align-items: center;
+            padding: 12px;
+            gap: 16px;
+        }
+
+        .project-card.list-view .card-preview {
+            width: 80px;
+            height: 60px;
+            flex-shrink: 0;
+        }
+
+        .project-card.list-view .card-body {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            padding: 0;
+        }
+
+        .project-card.list-view .card-header {
+            margin-bottom: 0;
+            flex: 1;
+        }
+
+        .project-card.list-view .card-metadata {
+            margin-top: 0;
+            min-width: 200px;
+        }
+
+        .project-card.list-view .card-actions {
+            position: static;
+        }
+
+        .project-card.list-view .context-menu {
+            right: auto;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        /* --- Empty State --- */
+        .empty-state {
+            text-align: center;
+            padding: 80px 24px;
+            color: var(--color-text-secondary);
+            grid-column: 1 / -1;
+        }
+
+        .empty-state-icon {
+            font-size: 64px;
+            margin-bottom: 16px;
+            opacity: 0.5;
+        }
+
+        .empty-state-title {
+            font-size: 18px;
+            font-weight: 500;
+            color: var(--color-text);
+            margin-bottom: 8px;
+        }
+
+        .empty-state-text {
+            font-size: 14px;
+            margin-bottom: 24px;
+        }
+
+        /* --- Skeleton Loader --- */
+        .skeleton {
+            background: linear-gradient(90deg, var(--color-surface) 25%, var(--color-surface-hover) 50%, var(--color-surface) 75%);
+            background-size: 200% 100%;
+            animation: skeleton-loading 1.5s infinite;
+            border-radius: var(--radius);
+        }
+
+        @keyframes skeleton-loading {
+            0% { background-position: 200% 0; }
+            100% { background-position: -200% 0; }
+        }
+
+        .skeleton-card {
+            background: var(--color-surface);
+            border: 1px solid var(--color-border);
+            border-radius: var(--radius);
+            overflow: hidden;
+        }
+
+        .skeleton-preview {
+            height: 160px;
+            width: 100%;
+        }
+
+        .skeleton-body {
+            padding: 12px;
+        }
+
+        .skeleton-title {
+            height: 18px;
+            width: 70%;
+            margin-bottom: 8px;
+        }
+
+        .skeleton-meta {
+            height: 12px;
+            width: 50%;
+        }
+
+        /* --- Responsive --- */
+        @media (max-width: 1440px) {
+            :root {
+                --grid-columns: 3;
+            }
+        }
+
+        @media (max-width: 1024px) {
+            :root {
+                --grid-columns: 2;
+            }
+        }
+
+        @media (max-width: 640px) {
+            :root {
+                --grid-columns: 1;
+            }
+
+            .page-header {
+                padding: 12px 16px;
+            }
+
+            .main-content {
+                padding: 16px;
+            }
+
+            .header-left {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 8px;
+            }
+
+            .header-controls {
+                width: 100%;
+                justify-content: space-between;
+            }
+
+            .sort-label {
+                display: none;
+            }
+        }
+
+        /* --- Hidden class --- */
+        .hidden {
+            display: none !important;
+        }
+    </style>
+</head>
+<body>
+    <!-- Page Header -->
+    <header class="page-header">
+        <div class="header-left">
+            <h1 class="page-title">Проекты</h1>
+            <span id="projectsCount" style="color: var(--color-text-secondary); font-size: 13px;">0</span>
+        </div>
+        
+        <div class="header-controls">
+            <!-- View Toggle -->
+            <div class="view-toggle">
+                <button class="view-toggle-btn active" data-view="grid" title="Сетка">⊞</button>
+                <button class="view-toggle-btn" data-view="list" title="Список">☰</button>
+            </div>
+            
+            <!-- Sort Dropdown -->
+            <div class="sort-dropdown">
+                <span class="sort-label">Сортировка:</span>
+                <select id="sortSelect">
+                    <option value="date-desc">По дате (новые)</option>
+                    <option value="date-asc">По дате (старые)</option>
+                    <option value="name-asc">По алфавиту (А-Я)</option>
+                    <option value="name-desc">По алфавиту (Я-А)</option>
+                </select>
+            </div>
+            
+            <!-- Create Button -->
+            <button class="btn-primary" id="createProjectBtn">
+                <span>+</span> Создать проект
+            </button>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <div id="projectsContainer" class="projects-grid">
+            <!-- Projects will be rendered here -->
+        </div>
+    </main>
+
+    <script>
+        // ==================== Projects Page Logic ====================
+        
+        let projects = [];
+        let currentView = 'grid';
+        let currentSort = 'date-desc';
+        let isLoading = false;
+        const API_BASE_URL = window.location.origin;
+
+        // DOM Elements
+        const projectsContainer = document.getElementById('projectsContainer');
+        const projectsCountEl = document.getElementById('projectsCount');
+        const sortSelect = document.getElementById('sortSelect');
+        const createProjectBtn = document.getElementById('createProjectBtn');
+        const viewToggleBtns = document.querySelectorAll('.view-toggle-btn');
+
+        // ==================== Utility Functions ====================
+        
+        function escapeHtml(text) {
+            if (!text) return '';
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+
+        function formatDate(dateString) {
+            if (!dateString) return '—';
+            const date = new Date(dateString);
+            return date.toLocaleDateString('ru-RU', {
+                day: 'numeric',
+                month: 'short',
+                year: 'numeric'
+            });
+        }
+
+        function getFirstLetter(text) {
+            if (!text) return '?';
+            return text.charAt(0).toUpperCase();
+        }
+
+        function generatePlaceholderColor(text) {
+            if (!text) return '#666666';
+            let hash = 0;
+            for (let i = 0; i < text.length; i++) {
+                hash = text.charCodeAt(i) + ((hash << 5) - hash);
+            }
+            const hue = hash % 360;
+            return `hsl(${hue}, 60%, 40%)`;
+        }
+
+        function getFileTypeIcon(type) {
+            const icons = {
+                'tis': 'T',
+                'classic': 'C',
+                'workflow': 'W',
+                'json': '{}',
+                'default': '📄'
+            };
+            return icons[type] || icons['default'];
+        }
+
+        // ==================== Data Loading ====================
+        
+        async function loadProjects() {
+            isLoading = true;
+            renderSkeleton();
+            
+            try {
+                const response = await fetch(`${API_BASE_URL}/list_projects`);
+                if (!response.ok) throw new Error('Failed to load projects');
+                
+                const data = await response.json();
+                if (data.success && Array.isArray(data.projects)) {
+                    projects = data.projects;
+                    renderProjects();
+                } else {
+                    projects = [];
+                    renderEmptyState();
+                }
+            } catch (error) {
+                console.error('Error loading projects:', error);
+                projects = [];
+                renderEmptyState();
+            } finally {
+                isLoading = false;
+            }
+        }
+
+        // ==================== Rendering ====================
+        
+        function renderSkeleton() {
+            let skeletonHTML = '';
+            for (let i = 0; i < 8; i++) {
+                skeletonHTML += `
+                    <div class="skeleton-card">
+                        <div class="skeleton skeleton-preview"></div>
+                        <div class="skeleton-body">
+                            <div class="skeleton skeleton-title"></div>
+                            <div class="skeleton skeleton-meta"></div>
+                        </div>
+                    </div>
+                `;
+            }
+            projectsContainer.innerHTML = skeletonHTML;
+        }
+
+        function renderEmptyState() {
+            projectsContainer.innerHTML = `
+                <div class="empty-state">
+                    <div class="empty-state-icon">📁</div>
+                    <h2 class="empty-state-title">У вас пока нет проектов</h2>
+                    <p class="empty-state-text">Создайте свой первый проект, чтобы начать работу</p>
+                    <button class="btn-primary" onclick="createNewProject()">
+                        <span>+</span> Создать проект
+                    </button>
+                </div>
+            `;
+            projectsCountEl.textContent = '0';
+        }
+
+        function renderProjects() {
+            const sortedProjects = sortProjects(projects, currentSort);
+            
+            if (sortedProjects.length === 0) {
+                renderEmptyState();
+                return;
+            }
+
+            projectsCountEl.textContent = sortedProjects.length.toString();
+            
+            let cardsHTML = '';
+            sortedProjects.forEach(project => {
+                cardsHTML += createProjectCard(project);
+            });
+            
+            projectsContainer.innerHTML = cardsHTML;
+            attachCardEventListeners();
+        }
+
+        function createProjectCard(project) {
+            const viewTypeClass = currentView === 'list' ? 'list-view' : '';
+            const previewContent = getPreviewContent(project);
+            const fileType = project.type || 'default';
+            const lastModified = formatDate(project.last_modified || project.createdAt);
+            const author = project.author || 'Неизвестно';
+            
+            return `
+                <div class="project-card ${viewTypeClass}" data-id="${escapeHtml(project.id)}">
+                    <div class="card-preview">
+                        ${previewContent}
+                    </div>
+                    
+                    <div class="card-actions">
+                        <button class="actions-btn" data-id="${escapeHtml(project.id)}" title="Действия">⋮</button>
+                        <div class="context-menu" id="menu-${escapeHtml(project.id)}">
+                            <button class="context-menu-item" data-action="open" data-id="${escapeHtml(project.id)}">
+                                📂 Открыть
+                            </button>
+                            <button class="context-menu-item" data-action="rename" data-id="${escapeHtml(project.id)}">
+                                ✏️ Переименовать
+                            </button>
+                            <button class="context-menu-item" data-action="duplicate" data-id="${escapeHtml(project.id)}">
+                                📑 Дублировать
+                            </button>
+                            <div class="context-menu-divider"></div>
+                            <button class="context-menu-item" data-action="export" data-id="${escapeHtml(project.id)}">
+                                📤 Экспорт
+                            </button>
+                            <button class="context-menu-item" data-action="import" data-id="${escapeHtml(project.id)}">
+                                📥 Импорт
+                            </button>
+                            <div class="context-menu-divider"></div>
+                            <button class="context-menu-item danger" data-action="delete" data-id="${escapeHtml(project.id)}">
+                                🗑 Удалить
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="card-body">
+                        <div class="card-header">
+                            <div class="file-type-icon">${getFileTypeIcon(fileType)}</div>
+                            <div class="card-title" title="${escapeHtml(project.name)}">${escapeHtml(project.name)}</div>
+                        </div>
+                        
+                        <div class="card-metadata">
+                            <span class="metadata-item" title="Дата изменения">
+                                📅 ${lastModified}
+                            </span>
+                            <span class="metadata-item" title="Автор">
+                                👤 ${escapeHtml(author)}
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        function getPreviewContent(project) {
+            if (project.thumbnail || project.preview) {
+                return `<img src="${escapeHtml(project.thumbnail || project.preview)}" alt="${escapeHtml(project.name)}" onerror="this.parentElement.innerHTML=getFallbackPreview('${escapeHtml(project.name)}')">`;
+            }
+            return getFallbackPreview(project.name);
+        }
+
+        function getFallbackPreview(projectName) {
+            const letter = getFirstLetter(projectName);
+            const color = generatePlaceholderColor(projectName);
+            return `<div class="card-preview-placeholder" style="background: ${color}">${letter}</div>`;
+        }
+
+        function attachCardEventListeners() {
+            // Actions buttons
+            document.querySelectorAll('.actions-btn').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    toggleContextMenu(btn.dataset.id);
+                });
+            });
+
+            // Context menu items
+            document.querySelectorAll('.context-menu-item').forEach(item => {
+                item.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    handleContextMenuAction(item.dataset.action, item.dataset.id);
+                    closeAllContextMenus();
+                });
+            });
+
+            // Card click (open project)
+            document.querySelectorAll('.project-card').forEach(card => {
+                card.addEventListener('click', (e) => {
+                    if (!e.target.closest('.actions-btn') && !e.target.closest('.context-menu')) {
+                        openProject(card.dataset.id);
+                    }
+                });
+            });
+
+            // Close menus on outside click
+            document.addEventListener('click', () => closeAllContextMenus());
+        }
+
+        function toggleContextMenu(projectId) {
+            closeAllContextMenus();
+            const menu = document.getElementById(`menu-${projectId}`);
+            if (menu) {
+                menu.classList.toggle('show');
+            }
+        }
+
+        function closeAllContextMenus() {
+            document.querySelectorAll('.context-menu').forEach(menu => {
+                menu.classList.remove('show');
+            });
+        }
+
+        // ==================== Sorting ====================
+        
+        function sortProjects(projectsList, sortType) {
+            const sorted = [...projectsList];
+            
+            switch (sortType) {
+                case 'date-desc':
+                    sorted.sort((a, b) => new Date(b.last_modified || b.createdAt || 0) - new Date(a.last_modified || a.createdAt || 0));
+                    break;
+                case 'date-asc':
+                    sorted.sort((a, b) => new Date(a.last_modified || a.createdAt || 0) - new Date(b.last_modified || b.createdAt || 0));
+                    break;
+                case 'name-asc':
+                    sorted.sort((a, b) => (a.name || '').localeCompare(b.name || '', 'ru'));
+                    break;
+                case 'name-desc':
+                    sorted.sort((a, b) => (b.name || '').localeCompare(a.name || '', 'ru'));
+                    break;
+            }
+            
+            return sorted;
+        }
+
+        // ==================== Actions ====================
+        
+        function openProject(projectId) {
+            console.log('Opening project:', projectId);
+            // Redirect to project editor or load project
+            window.location.href = `/editor?project=${projectId}`;
+        }
+
+        async function handleContextMenuAction(action, projectId) {
+            switch (action) {
+                case 'open':
+                    openProject(projectId);
+                    break;
+                case 'rename':
+                    await renameProject(projectId);
+                    break;
+                case 'duplicate':
+                    await duplicateProject(projectId);
+                    break;
+                case 'delete':
+                    await deleteProject(projectId);
+                    break;
+                case 'export':
+                    exportProject(projectId);
+                    break;
+                case 'import':
+                    importProject(projectId);
+                    break;
+            }
+        }
+
+        async function renameProject(projectId) {
+            const project = projects.find(p => p.id === projectId);
+            if (!project) return;
+            
+            const newName = prompt('Введите новое название проекта:', project.name);
+            if (newName && newName.trim() !== project.name) {
+                try {
+                    const response = await fetch(`${API_BASE_URL}/save_project`, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({
+                            ...project,
+                            name: newName.trim()
+                        })
+                    });
+                    const data = await response.json();
+                    if (data.success) {
+                        await loadProjects();
+                    }
+                } catch (error) {
+                    console.error('Error renaming project:', error);
+                }
+            }
+        }
+
+        async function duplicateProject(projectId) {
+            const project = projects.find(p => p.id === projectId);
+            if (!project) return;
+            
+            if (!confirm(`Создать копию проекта "${project.name}"?`)) return;
+            
+            try {
+                const duplicatedProject = {
+                    ...project,
+                    id: 'proj_tis_' + Date.now(),
+                    name: project.name + ' (копия)',
+                    createdAt: new Date().toISOString(),
+                    last_modified: new Date().toISOString()
+                };
+                
+                const response = await fetch(`${API_BASE_URL}/save_project`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(duplicatedProject)
+                });
+                const data = await response.json();
+                if (data.success) {
+                    await loadProjects();
+                }
+            } catch (error) {
+                console.error('Error duplicating project:', error);
+            }
+        }
+
+        async function deleteProject(projectId) {
+            if (!confirm('Вы уверены, что хотите удалить этот проект? Это действие нельзя отменить.')) return;
+            
+            try {
+                const response = await fetch(`${API_BASE_URL}/delete_project/${projectId}`, {
+                    method: 'DELETE'
+                });
+                const data = await response.json();
+                if (data.success) {
+                    await loadProjects();
+                }
+            } catch (error) {
+                console.error('Error deleting project:', error);
+            }
+        }
+
+        function exportProject(projectId) {
+            console.log('Exporting project:', projectId);
+            // Implement export logic
+            window.location.href = `${API_BASE_URL}/export_project/${projectId}`;
+        }
+
+        function importProject(projectId) {
+            console.log('Importing project:', projectId);
+            // Implement import logic
+            const input = document.createElement('input');
+            input.type = 'file';
+            input.accept = '.json,.tis';
+            input.onchange = async (e) => {
+                const file = e.target.files[0];
+                if (file) {
+                    // Handle file import
+                    console.log('Importing file:', file.name);
+                }
+            };
+            input.click();
+        }
+
+        async function createNewProject() {
+            const name = prompt('Введите название проекта:', 'Новый проект');
+            if (!name || !name.trim()) return;
+            
+            try {
+                const projectId = 'proj_tis_' + Date.now();
+                const now = new Date().toISOString();
+                
+                const projectData = {
+                    project: {
+                        id: projectId,
+                        name: name.trim(),
+                        type: "tis",
+                        createdAt: now,
+                        rootPath: "/workspace/projects/" + projectId,
+                        settings: {
+                            theme: "dark",
+                            fontSize: 14,
+                            autoSave: true
+                        }
+                    },
+                    history: {
+                        lastOpened: now,
+                        activeFileId: null,
+                        files: [],
+                        uiState: {
+                            sidebarVisible: true,
+                            terminalHeight: 200,
+                            panelLayout: "vertical"
+                        }
+                    }
+                };
+                
+                const response = await fetch(`${API_BASE_URL}/save_project`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(projectData)
+                });
+                const data = await response.json();
+                if (data.success) {
+                    await loadProjects();
+                    openProject(projectId);
+                }
+            } catch (error) {
+                console.error('Error creating project:', error);
+            }
+        }
+
+        // ==================== Event Listeners ====================
+        
+        // View toggle
+        viewToggleBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                viewToggleBtns.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                currentView = btn.dataset.view;
+                
+                projectsContainer.className = currentView === 'grid' ? 'projects-grid' : 'projects-list';
+                renderProjects();
+            });
+        });
+
+        // Sort change
+        sortSelect.addEventListener('change', (e) => {
+            currentSort = e.target.value;
+            renderProjects();
+        });
+
+        // Create project
+        createProjectBtn.addEventListener('click', createNewProject);
+
+        // ==================== Initialization ====================
+        
+        async function init() {
+            await loadProjects();
+        }
+
+        // Start the app
+        init();
+    </script>
+</body>
+</html>
