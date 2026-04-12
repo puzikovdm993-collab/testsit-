@@ -184,7 +184,7 @@
             background: var(--color-surface);
             border: 1px solid var(--color-border);
             border-radius: var(--radius);
-            overflow: hidden;
+            overflow: visible;
             transition: all var(--transition);
             position: relative;
         }
@@ -195,70 +195,45 @@
             transform: translateY(-2px);
         }
 
-        /* Card Preview */
-        .card-preview {
-            width: 100%;
-            height: 160px;
-            background: var(--color-bg);
-            position: relative;
-            overflow: hidden;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .card-preview img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-
-        .card-preview-placeholder {
-            width: 100%;
-            height: 100%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 48px;
-            font-weight: 600;
-            color: white;
-            text-transform: uppercase;
-        }
-
         /* Card Body */
         .card-body {
-            padding: 12px;
+            padding: 16px;
         }
 
         /* Card Header */
         .card-header {
             display: flex;
-            align-items: flex-start;
-            gap: 8px;
-            margin-bottom: 8px;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 12px;
         }
 
         .file-type-icon {
-            width: 20px;
-            height: 20px;
+            width: 32px;
+            height: 32px;
             display: flex;
             align-items: center;
             justify-content: center;
             background: var(--color-primary);
             border-radius: var(--radius-sm);
-            font-size: 12px;
+            font-size: 14px;
             color: white;
             flex-shrink: 0;
         }
 
+        .card-title-wrapper {
+            flex: 1;
+            min-width: 0;
+        }
+
         .card-title {
-            font-size: 14px;
+            font-size: 15px;
             font-weight: 500;
             color: var(--color-text);
-            flex: 1;
             overflow: hidden;
             text-overflow: ellipsis;
             white-space: nowrap;
+            display: block;
         }
 
         /* Card Metadata */
@@ -266,7 +241,7 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            font-size: 11px;
+            font-size: 12px;
             color: var(--color-text-secondary);
             margin-top: 8px;
         }
@@ -274,26 +249,26 @@
         .metadata-item {
             display: flex;
             align-items: center;
-            gap: 4px;
+            gap: 6px;
         }
 
         /* Card Actions */
         .card-actions {
             position: absolute;
-            top: 8px;
-            right: 8px;
+            top: 12px;
+            right: 12px;
         }
 
         .actions-btn {
-            width: 28px;
-            height: 28px;
+            width: 32px;
+            height: 32px;
             display: flex;
             align-items: center;
             justify-content: center;
             background: rgba(0, 0, 0, 0.6);
             border-radius: var(--radius-sm);
             color: var(--color-text-secondary);
-            font-size: 16px;
+            font-size: 18px;
             transition: all var(--transition);
             backdrop-filter: blur(4px);
         }
@@ -305,15 +280,13 @@
 
         /* Context Menu */
         .context-menu {
-            position: absolute;
-            top: 40px;
-            right: 8px;
+            position: fixed;
             background: var(--color-surface);
             border: 1px solid var(--color-border);
             border-radius: var(--radius);
             box-shadow: var(--shadow-lg);
-            min-width: 180px;
-            z-index: 100;
+            min-width: 200px;
+            z-index: 10000;
             display: none;
             overflow: hidden;
         }
@@ -365,21 +338,15 @@
         .project-card.list-view {
             display: flex;
             align-items: center;
-            padding: 12px;
+            padding: 12px 16px;
             gap: 16px;
-        }
-
-        .project-card.list-view .card-preview {
-            width: 80px;
-            height: 60px;
-            flex-shrink: 0;
         }
 
         .project-card.list-view .card-body {
             flex: 1;
             display: flex;
             align-items: center;
-            gap: 16px;
+            gap: 24px;
             padding: 0;
         }
 
@@ -390,7 +357,8 @@
 
         .project-card.list-view .card-metadata {
             margin-top: 0;
-            min-width: 200px;
+            min-width: 250px;
+            justify-content: flex-end;
         }
 
         .project-card.list-view .card-actions {
@@ -398,9 +366,7 @@
         }
 
         .project-card.list-view .context-menu {
-            right: auto;
-            left: 50%;
-            transform: translateX(-50%);
+            position: fixed;
         }
 
         /* --- Empty State --- */
@@ -449,24 +415,195 @@
             overflow: hidden;
         }
 
-        .skeleton-preview {
-            height: 160px;
-            width: 100%;
-        }
-
         .skeleton-body {
-            padding: 12px;
+            padding: 16px;
         }
 
         .skeleton-title {
-            height: 18px;
+            height: 20px;
             width: 70%;
-            margin-bottom: 8px;
+            margin-bottom: 12px;
         }
 
         .skeleton-meta {
-            height: 12px;
+            height: 14px;
             width: 50%;
+        }
+
+        /* --- Profile/Settings Section --- */
+        .profile-section {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 8px 16px;
+            background: var(--color-bg);
+            border-radius: var(--radius-sm);
+            margin-left: 12px;
+        }
+
+        .profile-avatar {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: var(--color-primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            color: white;
+            font-weight: 600;
+        }
+
+        .profile-name {
+            font-size: 13px;
+            color: var(--color-text);
+        }
+
+        .settings-btn {
+            width: 32px;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: transparent;
+            border: 1px solid var(--color-border);
+            border-radius: var(--radius-sm);
+            color: var(--color-text-secondary);
+            font-size: 16px;
+            transition: all var(--transition);
+        }
+
+        .settings-btn:hover {
+            background: var(--color-surface-hover);
+            color: var(--color-text);
+            border-color: var(--color-primary);
+        }
+
+        /* --- Project Settings Modal --- */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.6);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+        }
+
+        .modal-overlay.show {
+            display: flex;
+        }
+
+        .modal-content {
+            background: var(--color-surface);
+            border: 1px solid var(--color-border);
+            border-radius: var(--radius);
+            padding: 24px;
+            min-width: 400px;
+            max-width: 500px;
+            box-shadow: var(--shadow-lg);
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .modal-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--color-text);
+        }
+
+        .modal-close {
+            width: 28px;
+            height: 28px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: transparent;
+            border: none;
+            color: var(--color-text-secondary);
+            font-size: 20px;
+            cursor: pointer;
+            border-radius: var(--radius-sm);
+        }
+
+        .modal-close:hover {
+            background: var(--color-surface-hover);
+            color: var(--color-text);
+        }
+
+        .form-group {
+            margin-bottom: 16px;
+        }
+
+        .form-label {
+            display: block;
+            font-size: 13px;
+            color: var(--color-text-secondary);
+            margin-bottom: 8px;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 10px 12px;
+            background: var(--color-bg);
+            border: 1px solid var(--color-border);
+            border-radius: var(--radius-sm);
+            color: var(--color-text);
+            font-size: 14px;
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: var(--color-primary);
+        }
+
+        .checkbox-group {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-top: 8px;
+        }
+
+        .checkbox-group input[type="checkbox"] {
+            width: 16px;
+            height: 16px;
+            cursor: pointer;
+        }
+
+        .checkbox-group label {
+            font-size: 13px;
+            color: var(--color-text);
+            cursor: pointer;
+        }
+
+        .modal-actions {
+            display: flex;
+            justify-content: flex-end;
+            gap: 12px;
+            margin-top: 24px;
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--color-text);
+            padding: 8px 16px;
+            border: 1px solid var(--color-border);
+            border-radius: var(--radius-sm);
+            font-size: 13px;
+            transition: all var(--transition);
+        }
+
+        .btn-secondary:hover {
+            background: var(--color-surface-hover);
+            border-color: var(--color-text-secondary);
         }
 
         /* --- Responsive --- */
@@ -543,6 +680,13 @@
                 </select>
             </div>
             
+            <!-- Profile Section -->
+            <div class="profile-section">
+                <div class="profile-avatar" id="profileAvatar">U</div>
+                <span class="profile-name" id="profileName">User</span>
+                <button class="settings-btn" id="userSettingsBtn" title="Настройки профиля">⚙️</button>
+            </div>
+            
             <!-- Create Button -->
             <button class="btn-primary" id="createProjectBtn">
                 <span>+</span> Создать проект
@@ -556,6 +700,70 @@
             <!-- Projects will be rendered here -->
         </div>
     </main>
+
+    <!-- Project Settings Modal -->
+    <div class="modal-overlay" id="projectSettingsModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">Настройки проекта</h3>
+                <button class="modal-close" id="closeProjectSettingsModal">&times;</button>
+            </div>
+            <div class="form-group">
+                <label class="form-label">Название проекта</label>
+                <input type="text" class="form-input" id="projectSettingsName">
+            </div>
+            <div class="form-group">
+                <label class="form-label">Автор</label>
+                <input type="text" class="form-input" id="projectSettingsAuthor">
+            </div>
+            <div class="checkbox-group">
+                <input type="checkbox" id="projectSettingsAutoSave">
+                <label for="projectSettingsAutoSave">Автосохранение</label>
+            </div>
+            <div class="checkbox-group">
+                <input type="checkbox" id="projectSettingsPrivate">
+                <label for="projectSettingsPrivate">Приватный проект</label>
+            </div>
+            <div class="modal-actions">
+                <button class="btn-secondary" id="cancelProjectSettings">Отмена</button>
+                <button class="btn-primary" id="saveProjectSettings">Сохранить</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- User Settings Modal -->
+    <div class="modal-overlay" id="userSettingsModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">Настройки профиля</h3>
+                <button class="modal-close" id="closeUserSettingsModal">&times;</button>
+            </div>
+            <div class="form-group">
+                <label class="form-label">Имя пользователя</label>
+                <input type="text" class="form-input" id="userSettingsName">
+            </div>
+            <div class="form-group">
+                <label class="form-label">Email</label>
+                <input type="email" class="form-input" id="userSettingsEmail">
+            </div>
+            <div class="form-group">
+                <label class="form-label">Тема оформления</label>
+                <select class="form-input" id="userSettingsTheme">
+                    <option value="dark">Тёмная</option>
+                    <option value="light">Светлая</option>
+                    <option value="system">Системная</option>
+                </select>
+            </div>
+            <div class="checkbox-group">
+                <input type="checkbox" id="userSettingsNotifications">
+                <label for="userSettingsNotifications">Уведомления</label>
+            </div>
+            <div class="modal-actions">
+                <button class="btn-secondary" id="cancelUserSettings">Отмена</button>
+                <button class="btn-primary" id="saveUserSettings">Сохранить</button>
+            </div>
+        </div>
+    </div>
 
     <script>
         // ==================== Projects Page Logic ====================
@@ -652,7 +860,6 @@
             for (let i = 0; i < 8; i++) {
                 skeletonHTML += `
                     <div class="skeleton-card">
-                        <div class="skeleton skeleton-preview"></div>
                         <div class="skeleton-body">
                             <div class="skeleton skeleton-title"></div>
                             <div class="skeleton skeleton-meta"></div>
@@ -698,22 +905,20 @@
 
         function createProjectCard(project) {
             const viewTypeClass = currentView === 'list' ? 'list-view' : '';
-            const previewContent = getPreviewContent(project);
             const fileType = project.type || 'default';
             const lastModified = formatDate(project.last_modified || project.createdAt);
             const author = project.author || 'Неизвестно';
             
             return `
                 <div class="project-card ${viewTypeClass}" data-id="${escapeHtml(project.id)}">
-                    <div class="card-preview">
-                        ${previewContent}
-                    </div>
-                    
                     <div class="card-actions">
                         <button class="actions-btn" data-id="${escapeHtml(project.id)}" title="Действия">⋮</button>
                         <div class="context-menu" id="menu-${escapeHtml(project.id)}">
                             <button class="context-menu-item" data-action="open" data-id="${escapeHtml(project.id)}">
                                 📂 Открыть
+                            </button>
+                            <button class="context-menu-item" data-action="settings" data-id="${escapeHtml(project.id)}">
+                                ⚙️ Настройки
                             </button>
                             <button class="context-menu-item" data-action="rename" data-id="${escapeHtml(project.id)}">
                                 ✏️ Переименовать
@@ -738,7 +943,9 @@
                     <div class="card-body">
                         <div class="card-header">
                             <div class="file-type-icon">${getFileTypeIcon(fileType)}</div>
-                            <div class="card-title" title="${escapeHtml(project.name)}">${escapeHtml(project.name)}</div>
+                            <div class="card-title-wrapper">
+                                <div class="card-title" title="${escapeHtml(project.name)}">${escapeHtml(project.name)}</div>
+                            </div>
                         </div>
                         
                         <div class="card-metadata">
@@ -754,25 +961,20 @@
             `;
         }
 
-        function getPreviewContent(project) {
-            if (project.thumbnail || project.preview) {
-                return `<img src="${escapeHtml(project.thumbnail || project.preview)}" alt="${escapeHtml(project.name)}" onerror="this.parentElement.innerHTML=getFallbackPreview('${escapeHtml(project.name)}')">`;
-            }
-            return getFallbackPreview(project.name);
-        }
-
-        function getFallbackPreview(projectName) {
-            const letter = getFirstLetter(projectName);
-            const color = generatePlaceholderColor(projectName);
-            return `<div class="card-preview-placeholder" style="background: ${color}">${letter}</div>`;
-        }
 
         function attachCardEventListeners() {
-            // Actions buttons
+            // Actions buttons - left click
             document.querySelectorAll('.actions-btn').forEach(btn => {
                 btn.addEventListener('click', (e) => {
                     e.stopPropagation();
-                    toggleContextMenu(btn.dataset.id);
+                    showContextMenu(btn.dataset.id, btn);
+                });
+                
+                // Right click support
+                btn.addEventListener('contextmenu', (e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    showContextMenu(btn.dataset.id, btn);
                 });
             });
 
@@ -792,17 +994,30 @@
                         openProject(card.dataset.id);
                     }
                 });
+                
+                // Right click on card
+                card.addEventListener('contextmenu', (e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    const actionsBtn = card.querySelector('.actions-btn');
+                    if (actionsBtn) {
+                        showContextMenu(actionsBtn.dataset.id, actionsBtn);
+                    }
+                });
             });
 
             // Close menus on outside click
             document.addEventListener('click', () => closeAllContextMenus());
         }
 
-        function toggleContextMenu(projectId) {
+        function showContextMenu(projectId, triggerElement) {
             closeAllContextMenus();
             const menu = document.getElementById(`menu-${projectId}`);
             if (menu) {
-                menu.classList.toggle('show');
+                const rect = triggerElement.getBoundingClientRect();
+                menu.style.top = (rect.bottom + 4) + 'px';
+                menu.style.left = (rect.right - 200) + 'px';
+                menu.classList.add('show');
             }
         }
 
@@ -848,6 +1063,9 @@
                 case 'open':
                     openProject(projectId);
                     break;
+                case 'settings':
+                    openProjectSettings(projectId);
+                    break;
                 case 'rename':
                     await renameProject(projectId);
                     break;
@@ -864,6 +1082,121 @@
                     importProject(projectId);
                     break;
             }
+        }
+
+        // ==================== Project Settings ====================
+        
+        let currentEditingProjectId = null;
+
+        function openProjectSettings(projectId) {
+            const project = projects.find(p => p.id === projectId);
+            if (!project) return;
+            
+            currentEditingProjectId = projectId;
+            document.getElementById('projectSettingsName').value = project.name || '';
+            document.getElementById('projectSettingsAuthor').value = project.author || '';
+            document.getElementById('projectSettingsAutoSave').checked = project.settings?.autoSave !== false;
+            document.getElementById('projectSettingsPrivate').checked = project.settings?.private || false;
+            
+            document.getElementById('projectSettingsModal').classList.add('show');
+        }
+
+        function closeProjectSettings() {
+            document.getElementById('projectSettingsModal').classList.remove('show');
+            currentEditingProjectId = null;
+        }
+
+        async function saveProjectSettings() {
+            if (!currentEditingProjectId) return;
+            
+            const project = projects.find(p => p.id === currentEditingProjectId);
+            if (!project) return;
+            
+            const name = document.getElementById('projectSettingsName').value.trim();
+            const author = document.getElementById('projectSettingsAuthor').value.trim();
+            const autoSave = document.getElementById('projectSettingsAutoSave').checked;
+            const isPrivate = document.getElementById('projectSettingsPrivate').checked;
+            
+            if (!name) {
+                alert('Название проекта не может быть пустым');
+                return;
+            }
+            
+            project.name = name;
+            project.author = author;
+            project.settings = {
+                ...project.settings,
+                autoSave: autoSave,
+                private: isPrivate
+            };
+            
+            try {
+                const response = await fetch(`${API_BASE_URL}/save_project`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        project: project,
+                        history: project.history || {}
+                    })
+                });
+                const data = await response.json();
+                if (data.success) {
+                    await loadProjects();
+                    closeProjectSettings();
+                }
+            } catch (error) {
+                console.error('Error saving project settings:', error);
+            }
+        }
+
+        // ==================== User Settings ====================
+        
+        let userProfile = {
+            name: 'User',
+            email: '',
+            theme: 'dark',
+            notifications: true
+        };
+
+        function loadUserProfile() {
+            const saved = localStorage.getItem('userProfile');
+            if (saved) {
+                userProfile = JSON.parse(saved);
+            }
+            updateProfileDisplay();
+        }
+
+        function saveUserProfile() {
+            localStorage.setItem('userProfile', JSON.stringify(userProfile));
+            updateProfileDisplay();
+        }
+
+        function updateProfileDisplay() {
+            document.getElementById('profileName').textContent = userProfile.name;
+            document.getElementById('profileAvatar').textContent = userProfile.name.charAt(0).toUpperCase();
+        }
+
+        function openUserSettings() {
+            document.getElementById('userSettingsName').value = userProfile.name || '';
+            document.getElementById('userSettingsEmail').value = userProfile.email || '';
+            document.getElementById('userSettingsTheme').value = userProfile.theme || 'dark';
+            document.getElementById('userSettingsNotifications').checked = userProfile.notifications !== false;
+            
+            document.getElementById('userSettingsModal').classList.add('show');
+        }
+
+        function closeUserSettings() {
+            document.getElementById('userSettingsModal').classList.remove('show');
+        }
+
+        function saveUserSettings() {
+            userProfile.name = document.getElementById('userSettingsName').value.trim() || 'User';
+            userProfile.email = document.getElementById('userSettingsEmail').value.trim();
+            userProfile.theme = document.getElementById('userSettingsTheme').value;
+            userProfile.notifications = document.getElementById('userSettingsNotifications').checked;
+            
+            saveUserProfile();
+            closeUserSettings();
         }
 
         async function renameProject(projectId) {
@@ -1029,9 +1362,30 @@
         // Create project
         createProjectBtn.addEventListener('click', createNewProject);
 
+        // Project Settings Modal
+        document.getElementById('closeProjectSettingsModal').addEventListener('click', closeProjectSettings);
+        document.getElementById('cancelProjectSettings').addEventListener('click', closeProjectSettings);
+        document.getElementById('saveProjectSettings').addEventListener('click', saveProjectSettings);
+
+        // User Settings Modal
+        document.getElementById('userSettingsBtn').addEventListener('click', openUserSettings);
+        document.getElementById('closeUserSettingsModal').addEventListener('click', closeUserSettings);
+        document.getElementById('cancelUserSettings').addEventListener('click', closeUserSettings);
+        document.getElementById('saveUserSettings').addEventListener('click', saveUserSettings);
+
+        // Close modals on overlay click
+        document.querySelectorAll('.modal-overlay').forEach(overlay => {
+            overlay.addEventListener('click', (e) => {
+                if (e.target === overlay) {
+                    overlay.classList.remove('show');
+                }
+            });
+        });
+
         // ==================== Initialization ====================
         
         async function init() {
+            loadUserProfile();
             await loadProjects();
         }
 
