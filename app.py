@@ -152,8 +152,8 @@ def set_minio_client():
 
     # Получаем параметры из окружения (с дефолтами)
     endpoint = os.getenv("MINIO_ENDPOINT", "localhost:9000")
-    access_key = os.getenv("MINIO_ACCESS_KEY", "test")
-    secret_key = os.getenv("MINIO_SECRET_KEY", "test")
+    access_key = os.getenv("MINIO_ACCESS_KEY", "minioadmin")
+    secret_key = os.getenv("MINIO_SECRET_KEY", "minioadmin")
     bucket = os.getenv("MINIO_BUCKET", "wtis")
     region = os.getenv("MINIO_REGION", "us-east-1")
     secure = os.getenv("MINIO_SECURE", "False").lower() == "true"
@@ -1129,7 +1129,7 @@ def load_project(project_id):
 @handle_minio_errors
 def list_projects():
     """
-    Возвращает список всех проектов в MinIO.
+    Возвращает список всех проектов в MinIO с полными данными.
     """
     app_logger.info("Запрос списка проектов из MinIO")
     
@@ -1148,13 +1148,43 @@ def list_projects():
             if filename.endswith('.json'):
                 project_id = filename[:-5]  # Убираем .json
                 
-                projects.append({
-                    'id': project_id,
-                    'object_name': obj.object_name,
-                    'size': obj.size,
-                    'last_modified': obj.last_modified.strftime('%Y-%m-%d %H:%M:%S'),
-                    'etag': obj.etag
-                })
+                # Загружаем полные данные проекта
+                try:
+                    response = minio_client.get_object(MINIO_BUCKET, obj.object_name)
+                    json_data = response.read().decode('utf-8')
+                    project_data = json.loads(json_data)
+                    
+                    # Добавляем проект в список, используя данные из JSON
+                    if 'project' in project_data:
+                        project_info = project_data['project']
+                    else:
+                        # Если структура другая, используем корневой объект
+                        project_info = project_data
+                    
+                    # Убеждаемся, что есть все необходимые поля
+                    project_entry = {
+                        'id': project_info.get('id', project_id),
+                        'name': project_info.get('name', 'Без названия'),
+                        'category': project_info.get('category', ''),
+                        'type': project_info.get('type', 'classic'),
+                        'deadline': project_info.get('deadline', ''),
+                        'createdAt': project_info.get('createdAt', ''),
+                        'owner': project_info.get('owner', '')
+                    }
+                    projects.append(project_entry)
+                    
+                except Exception as e:
+                    app_logger.warning(f"Не удалось загрузить данные проекта {project_id}: {e}")
+                    # Добавляем хотя бы базовую информацию
+                    projects.append({
+                        'id': project_id,
+                        'name': f'Проект {project_id}',
+                        'category': '',
+                        'type': 'classic',
+                        'deadline': '',
+                        'createdAt': obj.last_modified.strftime('%Y-%m-%d'),
+                        'owner': ''
+                    })
         
         app_logger.info(f"Найдено {len(projects)} проектов в MinIO")
         
