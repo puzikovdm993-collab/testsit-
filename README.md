@@ -448,5 +448,7 @@ async function listMinioObjects() {
    - Модальные окна с настройками фильтров
    - Прогресс-бары для длительных операций
    - Панель истории с превью состояний
+https://habr.com/ru/companies/otus/articles/1008370/
 
+https://habr.com/ru/companies/studyai/articles/1022332/
    
