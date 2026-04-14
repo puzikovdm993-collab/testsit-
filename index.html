@@ -59,6 +59,7 @@
             <button class="tab-btn" data-tab="adjustments">Регулировка</button>
             <button class="tab-btn" data-tab="tools">Инструменты</button>
             <button class="tab-btn" data-tab="modes">Режимы</button>
+            <button class="tab-btn" data-tab="matrix">Матрица</button>
             <button class="tab-btn" data-tab="options">Настройки</button>
         </div>
         <div class="tabs-content">
@@ -349,6 +350,48 @@
                         <h4>Режимы</h4>
                     </div>
                 </div>
+            </div>
+
+            <!-- Контент вкладки "Матрица" -->
+            <div class="tab-pane" id="tab-matrix">
+                <div class="tab-section">
+                    <div class="tab-buttons">
+                        <button class="tab-action-btn" onclick="showMatrix3DSurface()" title="Показать 3D поверхность">
+                            <svg class="icon" width="24" height="24"><use href="#icon-shapes"></use></svg>
+                        </button>
+                        <button class="tab-action-btn" onclick="refreshMatrixPlot()" title="Обновить">
+                            <svg class="icon" width="24" height="24"><use href="#icon-rotate-right"></use></svg>
+                        </button>
+                    </div>
+                    <h4>3D визуализация матрицы</h4>
+                </div>
+                <div class="tab-section">
+                    <div style="padding: 10px;">
+                        <label for="matrixColormap">Палитра:</label>
+                        <select id="matrixColormap" onchange="refreshMatrixPlot()">
+                            <option value="Viridis">Viridis</option>
+                            <option value="Plasma">Plasma</option>
+                            <option value="Inferno">Inferno</option>
+                            <option value="Magma">Magma</option>
+                            <option value="Cividis">Cividis</option>
+                            <option value="Rainbow">Rainbow</option>
+                            <option value="Portland">Portland</option>
+                            <option value="Jet">Jet</option>
+                            <option value="Hot">Hot</option>
+                            <option value="Coolwarm">Coolwarm</option>
+                            <option value="Greys">Greys</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="tab-section">
+                    <div style="padding: 10px;">
+                        <label>
+                            <input type="checkbox" id="matrixShowContours" onchange="refreshMatrixPlot()"> Показывать контуры
+                        </label>
+                    </div>
+                </div>
+                <!-- Контейнер для Plotly графика -->
+                <div id="matrixPlotContainer" style="width: 100%; height: 500px; border: 1px solid var(--border-color); border-radius: 4px; margin-top: 10px;"></div>
             </div>
 
             <!-- Контент вкладки "Настройки" -->
@@ -1252,5 +1295,6 @@
 <script src="src/drawing/drawing.js"></script>
 <script src="src/tabs/tabs.js"></script>
 <script src="src/modals/models.js"></script>
+<script src="src/matrix/matrix.js"></script>
 </body>
 </html> 
