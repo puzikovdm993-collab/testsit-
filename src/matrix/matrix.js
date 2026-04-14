@@ -167,3 +167,66 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 });
+
+// ==========================================
+// Функции управления Plotly через отдельные кнопки
+// ==========================================
+
+let currentPlotlyMode = 'orbit'; // orbit, turntable, zoom, pan
+
+/**
+ * Включить режим зума
+ */
+function plotlyZoom() {
+    const graphDiv = document.getElementById('matrixPlotContainer');
+    if (!graphDiv) return;
+    
+    Plotly.relayout(graphDiv, {
+        'dragmode': 'zoom'
+    });
+    currentPlotlyMode = 'zoom';
+}
+
+/**
+ * Включить режим перемещения (pan)
+ */
+function plotlyPan() {
+    const graphDiv = document.getElementById('matrixPlotContainer');
+    if (!graphDiv) return;
+    
+    Plotly.relayout(graphDiv, {
+        'dragmode': 'pan'
+    });
+    currentPlotlyMode = 'pan';
+}
+
+/**
+ * Включить режим вращения (orbit для 3D)
+ */
+function plotlyRotate() {
+    const graphDiv = document.getElementById('matrixPlotContainer');
+    if (!graphDiv) return;
+    
+    Plotly.relayout(graphDiv, {
+        'dragmode': 'orbit',
+        'scene.dragmode': 'orbit'
+    });
+    currentPlotlyMode = 'orbit';
+}
+
+/**
+ * Сбросить вид к начальному состоянию
+ */
+function plotlyReset() {
+    const graphDiv = document.getElementById('matrixPlotContainer');
+    if (!graphDiv) return;
+    
+    Plotly.relayout(graphDiv, {
+        'scene.camera': {
+            eye: {x: 1.5, y: 1.5, z: 1.2}
+        },
+        'scene.xaxis.autorange': true,
+        'scene.yaxis.autorange': true,
+        'scene.zaxis.autorange': true
+    });
+}
