@@ -89,7 +89,7 @@ function showMatrix3DSurface() {
 
     const config = {
         responsive: true,
-        displayModeBar: true,
+        displayModeBar: false,
         scrollZoom: true,
         displaylogo: false
     };
