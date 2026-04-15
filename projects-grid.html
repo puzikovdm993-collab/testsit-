@@ -674,6 +674,14 @@
                 <button class="view-toggle-btn" data-view="list" title="Список">☰</button>
             </div>
             
+            <!-- Filter by Author -->
+            <div class="sort-dropdown">
+                <span class="sort-label">Автор:</span>
+                <select id="authorFilter">
+                    <option value="all">Все авторы</option>
+                </select>
+            </div>
+            
             <!-- Sort Dropdown -->
             <div class="sort-dropdown">
                 <span class="sort-label">Сортировка:</span>
@@ -776,6 +784,7 @@
         let projects = [];
         let currentView = 'grid';
         let currentSort = 'date-desc';
+        let currentAuthorFilter = 'all';
         let isLoading = false;
         const API_BASE_URL = window.location.origin;
 
@@ -783,6 +792,7 @@
         const projectsContainer = document.getElementById('projectsContainer');
         const projectsCountEl = document.getElementById('projectsCount');
         const sortSelect = document.getElementById('sortSelect');
+        const authorFilterSelect = document.getElementById('authorFilter');
         const createProjectBtn = document.getElementById('createProjectBtn');
         const viewToggleBtns = document.querySelectorAll('.view-toggle-btn');
 
@@ -844,6 +854,7 @@
                 const data = await response.json();
                 if (data.success && Array.isArray(data.projects)) {
                     projects = data.projects;
+                    updateAuthorFilter();
                     renderProjects();
                 } else {
                     projects = [];
@@ -855,6 +866,25 @@
                 renderEmptyState();
             } finally {
                 isLoading = false;
+            }
+        }
+
+        function updateAuthorFilter() {
+            const authors = [...new Set(projects.map(p => p.author || 'Неизвестно'))];
+            authors.sort((a, b) => a.localeCompare(b, 'ru'));
+            
+            const currentValue = authorFilterSelect.value;
+            authorFilterSelect.innerHTML = '<option value="all">Все авторы</option>';
+            
+            authors.forEach(author => {
+                const option = document.createElement('option');
+                option.value = author;
+                option.textContent = author;
+                authorFilterSelect.appendChild(option);
+            });
+            
+            if (authors.includes(currentValue) || currentValue === 'all') {
+                authorFilterSelect.value = currentValue;
             }
         }
 
@@ -890,7 +920,14 @@
         }
 
         function renderProjects() {
-            const sortedProjects = sortProjects(projects, currentSort);
+            let filteredProjects = projects;
+            
+            // Apply author filter
+            if (currentAuthorFilter !== 'all') {
+                filteredProjects = projects.filter(p => (p.author || 'Неизвестно') === currentAuthorFilter);
+            }
+            
+            const sortedProjects = sortProjects(filteredProjects, currentSort);
             
             if (sortedProjects.length === 0) {
                 renderEmptyState();
@@ -1187,9 +1224,12 @@
                 if (data.success) {
                     await loadProjects();
                     closeProjectSettings();
+                } else {
+                    alert('Ошибка при сохранении настроек проекта');
                 }
             } catch (error) {
                 console.error('Error saving project settings:', error);
+                alert('Ошибка при сохранении настроек проекта');
             }
         }
 
@@ -1347,6 +1387,7 @@
                     project: {
                         id: projectId,
                         name: name.trim(),
+                        author: userProfile.name || 'Неизвестно',
                         type: "tis",
                         createdAt: now,
                         rootPath: "/workspace/projects/" + projectId,
@@ -1377,6 +1418,8 @@
                 if (data.success) {
                     await loadProjects();
                     openProject(projectId);
+                } else {
+                    alert('Ошибка при создании проекта');
                 }
             } catch (error) {
                 console.error('Error creating project:', error);
@@ -1400,6 +1443,12 @@
         // Sort change
         sortSelect.addEventListener('change', (e) => {
             currentSort = e.target.value;
+            renderProjects();
+        });
+
+        // Author filter change
+        authorFilterSelect.addEventListener('change', (e) => {
+            currentAuthorFilter = e.target.value;
             renderProjects();
         });
 
