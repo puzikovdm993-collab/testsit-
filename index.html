@@ -359,6 +359,18 @@
             <div class="tab-pane" id="tab-matrix">
                 <div class="tab-section">
                     <div class="tab-buttons">
+                        <button class="tab-action-btn" onclick="plotlyZoom()" title="Зум">
+                            <svg class="icon" width="24" height="24"><use href="#icon-zoom-in"></use></svg>
+                        </button>
+                        <button class="tab-action-btn" onclick="plotlyPan()" title="Перемещение">
+                            <svg class="icon" width="24" height="24"><use href="#icon-move"></use></svg>
+                        </button>
+                        <button class="tab-action-btn" onclick="plotlyRotate()" title="Вращение">
+                            <svg class="icon" width="24" height="24"><use href="#icon-rotate-3d"></use></svg>
+                        </button>
+                        <button class="tab-action-btn" onclick="plotlyReset()" title="Сбросить вид">
+                            <svg class="icon" width="24" height="24"><use href="#icon-refresh-cw"></use></svg>
+                        </button>
                         <button class="tab-action-btn" onclick="showMatrix3DSurface()" title="Показать 3D поверхность">
                             <svg class="icon" width="24" height="24"><use href="#icon-shapes"></use></svg>
                         </button>
