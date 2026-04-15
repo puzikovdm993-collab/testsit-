@@ -91,7 +91,8 @@ function showMatrix3DSurface() {
         responsive: true,
         displayModeBar: false,
         scrollZoom: true,
-        displaylogo: false
+        displaylogo: false,
+        hovermode: false
     };
 
     // Рендерим график
