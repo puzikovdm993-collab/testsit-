@@ -1,0 +1,596 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Примеры вкладок с кнопками</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 40px 20px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        h1 {
+            text-align: center;
+            color: white;
+            margin-bottom: 40px;
+            font-size: 2.5rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        /* Вариант 1: Классические вкладки */
+        .tabs-container {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+            margin-bottom: 40px;
+            overflow: hidden;
+        }
+
+        .tabs-header {
+            display: flex;
+            background: #f8f9fa;
+            border-bottom: 2px solid #e9ecef;
+        }
+
+        .tab-button {
+            flex: 1;
+            padding: 15px 20px;
+            border: none;
+            background: transparent;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 600;
+            color: #6c757d;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .tab-button:hover {
+            background: #e9ecef;
+            color: #495057;
+        }
+
+        .tab-button.active {
+            color: #667eea;
+            background: white;
+        }
+
+        .tab-button.active::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: #667eea;
+        }
+
+        .tab-content {
+            padding: 30px;
+            display: none;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .content-title {
+            font-size: 1.5rem;
+            color: #333;
+            margin-bottom: 15px;
+        }
+
+        .content-text {
+            color: #666;
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+
+        /* Кнопки внутри вкладок */
+        .btn {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-right: 10px;
+            margin-bottom: 10px;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        .btn-success {
+            background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+            color: white;
+        }
+
+        .btn-success:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(17, 153, 142, 0.4);
+        }
+
+        .btn-danger {
+            background: linear-gradient(135deg, #eb3349 0%, #f45c43 100%);
+            color: white;
+        }
+
+        .btn-danger:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(235, 51, 73, 0.4);
+        }
+
+        .btn-info {
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            color: white;
+        }
+
+        .btn-info:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(79, 172, 254, 0.4);
+        }
+
+        .btn-warning {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+        }
+
+        .btn-warning:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(240, 147, 251, 0.4);
+        }
+
+        .btn-outline {
+            background: transparent;
+            border: 2px solid #667eea;
+            color: #667eea;
+        }
+
+        .btn-outline:hover {
+            background: #667eea;
+            color: white;
+        }
+
+        /* Вариант 2: Вкладки с иконками */
+        .tabs-with-icons .tabs-header {
+            justify-content: center;
+            gap: 10px;
+            padding: 20px;
+        }
+
+        .tab-button-icon {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+            padding: 15px 25px;
+            border-radius: 10px;
+            min-width: 100px;
+        }
+
+        .tab-icon {
+            font-size: 24px;
+        }
+
+        /* Вариант 3: Вертикальные вкладки */
+        .vertical-tabs {
+            display: flex;
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+        }
+
+        .vertical-tabs-header {
+            display: flex;
+            flex-direction: column;
+            background: #f8f9fa;
+            min-width: 200px;
+        }
+
+        .vertical-tab-button {
+            padding: 20px;
+            border: none;
+            background: transparent;
+            cursor: pointer;
+            text-align: left;
+            font-size: 15px;
+            font-weight: 600;
+            color: #6c757d;
+            transition: all 0.3s ease;
+            border-left: 4px solid transparent;
+        }
+
+        .vertical-tab-button:hover {
+            background: #e9ecef;
+        }
+
+        .vertical-tab-button.active {
+            background: white;
+            color: #667eea;
+            border-left-color: #667eea;
+        }
+
+        .vertical-tab-content {
+            flex: 1;
+            padding: 30px;
+            display: none;
+        }
+
+        .vertical-tab-content.active {
+            display: block;
+            animation: fadeIn 0.3s ease;
+        }
+
+        /* Вариант 4: Вкладки с анимированным индикатором */
+        .animated-tabs .tabs-header {
+            position: relative;
+            padding: 10px;
+        }
+
+        .animated-indicator {
+            position: absolute;
+            bottom: 10px;
+            height: 4px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 2px;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .animated-tab-button {
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Секция с примерами */
+        .example-section {
+            margin-bottom: 30px;
+        }
+
+        .example-label {
+            color: white;
+            font-size: 1.2rem;
+            margin-bottom: 15px;
+            font-weight: 600;
+        }
+
+        /* Адаптивность */
+        @media (max-width: 768px) {
+            .tabs-header {
+                flex-wrap: wrap;
+            }
+
+            .tab-button {
+                flex: 0 0 50%;
+                font-size: 14px;
+                padding: 12px 15px;
+            }
+
+            .vertical-tabs {
+                flex-direction: column;
+            }
+
+            .vertical-tabs-header {
+                flex-direction: row;
+                min-width: auto;
+                overflow-x: auto;
+            }
+
+            .vertical-tab-button {
+                border-left: none;
+                border-bottom: 4px solid transparent;
+                white-space: nowrap;
+            }
+
+            .vertical-tab-button.active {
+                border-left-color: transparent;
+                border-bottom-color: #667eea;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🎯 Примеры вкладок с кнопками</h1>
+
+        <!-- Вариант 1: Классические горизонтальные вкладки -->
+        <div class="example-section">
+            <div class="example-label">Вариант 1: Классические горизонтальные вкладки</div>
+            <div class="tabs-container">
+                <div class="tabs-header">
+                    <button class="tab-button active" onclick="openTab(event, 'tab1')">📊 Главная</button>
+                    <button class="tab-button" onclick="openTab(event, 'tab2')">⚙️ Настройки</button>
+                    <button class="tab-button" onclick="openTab(event, 'tab3')">👥 Пользователи</button>
+                    <button class="tab-button" onclick="openTab(event, 'tab4')">📈 Статистика</button>
+                </div>
+
+                <div id="tab1" class="tab-content active">
+                    <h3 class="content-title">Добро пожаловать!</h3>
+                    <p class="content-text">Это основная панель управления. Здесь вы можете видеть общую информацию о вашем проекте.</p>
+                    <button class="btn btn-primary">▶️ Запустить проект</button>
+                    <button class="btn btn-outline">📖 Документация</button>
+                    <button class="btn btn-info">ℹ️ Подробнее</button>
+                </div>
+
+                <div id="tab2" class="tab-content">
+                    <h3 class="content-title">Настройки системы</h3>
+                    <p class="content-text">Настройте параметры работы приложения согласно вашим предпочтениям.</p>
+                    <button class="btn btn-success">💾 Сохранить</button>
+                    <button class="btn btn-warning">🔄 Сбросить</button>
+                    <button class="btn btn-danger">🗑️ Удалить настройки</button>
+                </div>
+
+                <div id="tab3" class="tab-content">
+                    <h3 class="content-title">Управление пользователями</h3>
+                    <p class="content-text">Добавляйте новых пользователей, редактируйте права доступа и управляйте командой.</p>
+                    <button class="btn btn-primary">➕ Добавить пользователя</button>
+                    <button class="btn btn-info">📧 Пригласить</button>
+                    <button class="btn btn-outline">📋 Экспорт списка</button>
+                </div>
+
+                <div id="tab4" class="tab-content">
+                    <h3 class="content-title">Статистика и аналитика</h3>
+                    <p class="content-text">Просматривайте детальные отчеты и графики по активности вашего проекта.</p>
+                    <button class="btn btn-success">📊 Обновить данные</button>
+                    <button class="btn btn-info">📥 Скачать отчет</button>
+                    <button class="btn btn-outline">🔍 Фильтры</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Вариант 2: Вкладки с иконками -->
+        <div class="example-section">
+            <div class="example-label">Вариант 2: Вкладки с иконками</div>
+            <div class="tabs-container tabs-with-icons">
+                <div class="tabs-header">
+                    <button class="tab-button tab-button-icon active" onclick="openTab(event, 'icon1')">
+                        <span class="tab-icon">🏠</span>
+                        <span>Дом</span>
+                    </button>
+                    <button class="tab-button tab-button-icon" onclick="openTab(event, 'icon2')">
+                        <span class="tab-icon">🔍</span>
+                        <span>Поиск</span>
+                    </button>
+                    <button class="tab-button tab-button-icon" onclick="openTab(event, 'icon3')">
+                        <span class="tab-icon">❤️</span>
+                        <span>Избранное</span>
+                    </button>
+                    <button class="tab-button tab-button-icon" onclick="openTab(event, 'icon4')">
+                        <span class="tab-icon">👤</span>
+                        <span>Профиль</span>
+                    </button>
+                </div>
+
+                <div id="icon1" class="tab-content active">
+                    <h3 class="content-title">Главная страница</h3>
+                    <p class="content-text">Быстрый доступ к основным функциям и последним обновлениям.</p>
+                    <button class="btn btn-primary">🚀 Быстрый старт</button>
+                    <button class="btn btn-success">✨ Новые функции</button>
+                </div>
+
+                <div id="icon2" class="tab-content">
+                    <h3 class="content-title">Поиск</h3>
+                    <p class="content-text">Найдите нужную информацию с помощью нашего мощного поискового движка.</p>
+                    <button class="btn btn-info">🔍 Расширенный поиск</button>
+                    <button class="btn btn-outline">💾 Сохранить запрос</button>
+                </div>
+
+                <div id="icon3" class="tab-content">
+                    <h3 class="content-title">Избранное</h3>
+                    <p class="content-text">Ваши сохраненные элементы находятся здесь для быстрого доступа.</p>
+                    <button class="btn btn-warning">⭐ Добавить в избранное</button>
+                    <button class="btn btn-danger">🗑️ Очистить список</button>
+                </div>
+
+                <div id="icon4" class="tab-content">
+                    <h3 class="content-title">Профиль пользователя</h3>
+                    <p class="content-text">Управляйте своим профилем, настройками безопасности и уведомлениями.</p>
+                    <button class="btn btn-primary">✏️ Редактировать</button>
+                    <button class="btn btn-success">✅ Подтвердить</button>
+                    <button class="btn btn-outline">🔒 Безопасность</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Вариант 3: Вертикальные вкладки -->
+        <div class="example-section">
+            <div class="example-label">Вариант 3: Вертикальные вкладки</div>
+            <div class="vertical-tabs">
+                <div class="vertical-tabs-header">
+                    <button class="vertical-tab-button active" onclick="openVerticalTab(event, 'vtab1')">📦 Продукты</button>
+                    <button class="vertical-tab-button" onclick="openVerticalTab(event, 'vtab2')">🛒 Заказы</button>
+                    <button class="vertical-tab-button" onclick="openVerticalTab(event, 'vtab3')">💳 Оплата</button>
+                    <button class="vertical-tab-button" onclick="openVerticalTab(event, 'vtab4')">🚚 Доставка</button>
+                    <button class="vertical-tab-button" onclick="openVerticalTab(event, 'vtab5')">💬 Поддержка</button>
+                </div>
+                <div>
+                    <div id="vtab1" class="vertical-tab-content active">
+                        <h3 class="content-title">Каталог продуктов</h3>
+                        <p class="content-text">Управляйте ассортиментом товаров, добавляйте новые позиции и редактируйте существующие.</p>
+                        <button class="btn btn-primary">➕ Добавить товар</button>
+                        <button class="btn btn-info">📝 Импорт из CSV</button>
+                        <button class="btn btn-outline">🏷️ Категории</button>
+                    </div>
+
+                    <div id="vtab2" class="vertical-tab-content">
+                        <h3 class="content-title">Управление заказами</h3>
+                        <p class="content-text">Просматривайте текущие заказы, обрабатывайте новые и отслеживайте статусы.</p>
+                        <button class="btn btn-success">✅ Обработать заказ</button>
+                        <button class="btn btn-warning">⏸️ Приостановить</button>
+                        <button class="btn btn-danger">❌ Отменить</button>
+                    </div>
+
+                    <div id="vtab3" class="vertical-tab-content">
+                        <h3 class="content-title">Платежи и транзакции</h3>
+                        <p class="content-text">Контролируйте поступления, настраивайте способы оплаты и анализируйте финансовые потоки.</p>
+                        <button class="btn btn-primary">💰 Выставить счёт</button>
+                        <button class="btn btn-info">📊 Отчёт по платежам</button>
+                    </div>
+
+                    <div id="vtab4" class="vertical-tab-content">
+                        <h3 class="content-title">Служба доставки</h3>
+                        <p class="content-text">Организуйте логистику, отслеживайте отправления и управляйте курьерами.</p>
+                        <button class="btn btn-success">🚚 Назначить доставку</button>
+                        <button class="btn btn-outline">🗺️ Карта доставок</button>
+                    </div>
+
+                    <div id="vtab5" class="vertical-tab-content">
+                        <h3 class="content-title">Техническая поддержка</h3>
+                        <p class="content-text">Обрабатывайте обращения клиентов, отвечайте на вопросы и решайте проблемы.</p>
+                        <button class="btn btn-primary">📩 Новый тикет</button>
+                        <button class="btn btn-info">📞 Горячая линия</button>
+                        <button class="btn btn-warning">⚡ Срочные</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Вариант 4: Вкладки с анимированным индикатором -->
+        <div class="example-section">
+            <div class="example-label">Вариант 4: Вкладки с анимированным индикатором</div>
+            <div class="tabs-container animated-tabs">
+                <div class="tabs-header">
+                    <button class="tab-button animated-tab-button active" onclick="openAnimatedTab(event, 'anim1')">Медиа</button>
+                    <button class="tab-button animated-tab-button" onclick="openAnimatedTab(event, 'anim2')">Документы</button>
+                    <button class="tab-button animated-tab-button" onclick="openAnimatedTab(event, 'anim3')">Архив</button>
+                    <div class="animated-indicator" id="indicator"></div>
+                </div>
+
+                <div id="anim1" class="tab-content active">
+                    <h3 class="content-title">Медиа библиотека</h3>
+                    <p class="content-text">Загружайте и управляйте изображениями, видео и аудио файлами.</p>
+                    <button class="btn btn-primary">📤 Загрузить файлы</button>
+                    <button class="btn btn-info">🖼️ Галерея</button>
+                    <button class="btn btn-success">▶️ Создать плейлист</button>
+                </div>
+
+                <div id="anim2" class="tab-content">
+                    <h3 class="content-title">Документы</h3>
+                    <p class="content-text">Храните и организуйте ваши документы в удобном формате.</p>
+                    <button class="btn btn-primary">📄 Новый документ</button>
+                    <button class="btn btn-outline">📁 Создать папку</button>
+                    <button class="btn btn-warning">🔒 Защита паролем</button>
+                </div>
+
+                <div id="anim3" class="tab-content">
+                    <h3 class="content-title">Архив</h3>
+                    <p class="content-text">Доступ к архивным данным и история изменений.</p>
+                    <button class="btn btn-info">📥 Восстановить</button>
+                    <button class="btn btn-danger">🗑️ Очистить архив</button>
+                    <button class="btn btn-outline">📋 История версий</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Функция для классических вкладок
+        function openTab(evt, tabName) {
+            const tabContents = document.getElementsByClassName("tab-content");
+            for (let i = 0; i < tabContents.length; i++) {
+                tabContents[i].classList.remove("active");
+            }
+
+            const tabButtons = document.getElementsByClassName("tab-button");
+            for (let i = 0; i < tabButtons.length; i++) {
+                tabButtons[i].classList.remove("active");
+            }
+
+            document.getElementById(tabName).classList.add("active");
+            evt.currentTarget.classList.add("active");
+        }
+
+        // Функция для вертикальных вкладок
+        function openVerticalTab(evt, tabName) {
+            const tabContents = document.getElementsByClassName("vertical-tab-content");
+            for (let i = 0; i < tabContents.length; i++) {
+                tabContents[i].classList.remove("active");
+            }
+
+            const tabButtons = document.getElementsByClassName("vertical-tab-button");
+            for (let i = 0; i < tabButtons.length; i++) {
+                tabButtons[i].classList.remove("active");
+            }
+
+            document.getElementById(tabName).classList.add("active");
+            evt.currentTarget.classList.add("active");
+        }
+
+        // Функция для вкладок с анимированным индикатором
+        function openAnimatedTab(evt, tabName) {
+            const tabContents = document.getElementsByClassName("tab-content");
+            for (let i = 0; i < tabContents.length; i++) {
+                tabContents[i].classList.remove("active");
+            }
+
+            const tabButtons = document.getElementsByClassName("animated-tab-button");
+            for (let i = 0; i < tabButtons.length; i++) {
+                tabButtons[i].classList.remove("active");
+            }
+
+            document.getElementById(tabName).classList.add("active");
+            evt.currentTarget.classList.add("active");
+
+            // Обновление позиции индикатора
+            updateIndicator(evt.currentTarget);
+        }
+
+        function updateIndicator(activeButton) {
+            const indicator = document.getElementById('indicator');
+            const buttonRect = activeButton.getBoundingClientRect();
+            const headerRect = activeButton.parentElement.getBoundingClientRect();
+            
+            indicator.style.width = buttonRect.width + 'px';
+            indicator.style.left = (buttonRect.left - headerRect.left) + 'px';
+        }
+
+        // Инициализация индикатора при загрузке
+        window.addEventListener('load', () => {
+            const firstActive = document.querySelector('.animated-tab-button.active');
+            if (firstActive) {
+                updateIndicator(firstActive);
+            }
+        });
+
+        // Обновление индикатора при изменении размера окна
+        window.addEventListener('resize', () => {
+            const activeButton = document.querySelector('.animated-tab-button.active');
+            if (activeButton) {
+                updateIndicator(activeButton);
+            }
+        });
+    </script>
+</body>
+</html>

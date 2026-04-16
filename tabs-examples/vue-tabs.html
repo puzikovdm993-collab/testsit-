@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Пример работы с вкладками - Vue 3</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+
+        .tabs-container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .tabs-header {
+            display: flex;
+            border-bottom: 2px solid #e0e0e0;
+        }
+
+        .tab-button {
+            padding: 15px 25px;
+            border: none;
+            background: none;
+            cursor: pointer;
+            font-size: 16px;
+            color: #666;
+            transition: all 0.3s ease;
+            border-bottom: 3px solid transparent;
+            margin-bottom: -2px;
+        }
+
+        .tab-button:hover {
+            color: #333;
+            background-color: #f9f9f9;
+        }
+
+        .tab-button.active {
+            color: #FF9800;
+            border-bottom-color: #FF9800;
+            font-weight: bold;
+        }
+
+        .tabs-content {
+            padding: 20px;
+        }
+
+        .tab-pane {
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .tab-pane h3 {
+            margin-bottom: 15px;
+            color: #333;
+        }
+
+        .tab-pane p {
+            color: #666;
+            line-height: 1.6;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 2px 8px;
+            background-color: #f44336;
+            color: white;
+            border-radius: 12px;
+            font-size: 12px;
+            margin-left: 5px;
+        }
+    </style>
+</head>
+<body>
+    <h1 style="text-align: center; margin-bottom: 30px;">Пример работы с вкладками (Vue 3)</h1>
+    
+    <div id="app">
+        <div class="tabs-container">
+            <div class="tabs-header">
+                <button 
+                    v-for="tab in tabs" 
+                    :key="tab.id"
+                    class="tab-button"
+                    :class="{ active: activeTab === tab.id }"
+                    @click="activeTab = tab.id"
+                >
+                    {{ tab.label }}
+                    <span v-if="tab.badge" class="badge">{{ tab.badge }}</span>
+                </button>
+            </div>
+
+            <div class="tabs-content">
+                <div class="tab-pane">
+                    <h3>{{ currentTab.title }}</h3>
+                    <p>{{ currentTab.content }}</p>
+                    <p style="margin-top: 15px; padding: 10px; background: #f0f0f0; border-radius: 4px;">
+                        📊 Статистика: Вкладка <strong>{{ currentTab.label }}</strong> выбрана
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Подключаем Vue 3 -->
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+
+    <script>
+        const { createApp, computed, ref } = Vue;
+
+        createApp({
+            setup() {
+                // Активная вкладка
+                const activeTab = ref('documents');
+
+                // Данные вкладок
+                const tabs = ref([
+                    {
+                        id: 'documents',
+                        label: 'Документы',
+                        title: 'Ваши документы',
+                        content: 'Здесь вы можете управлять своими документами и файлами.',
+                        badge: null
+                    },
+                    {
+                        id: 'messages',
+                        label: 'Сообщения',
+                        title: 'Входящие сообщения',
+                        content: 'У вас есть новые сообщения от других пользователей.',
+                        badge: 5
+                    },
+                    {
+                        id: 'tasks',
+                        label: 'Задачи',
+                        title: 'Список задач',
+                        content: 'Отслеживайте выполнение ваших текущих задач.',
+                        badge: 3
+                    },
+                    {
+                        id: 'analytics',
+                        label: 'Аналитика',
+                        title: 'Статистика и аналитика',
+                        content: 'Просматривайте детальную статистику по вашему аккаунту.',
+                        badge: null
+                    }
+                ]);
+
+                // Вычисляемое свойство для получения данных активной вкладки
+                const currentTab = computed(() => {
+                    return tabs.value.find(tab => tab.id === activeTab.value);
+                });
+
+                return {
+                    activeTab,
+                    tabs,
+                    currentTab
+                };
+            }
+        }).mount('#app');
+    </script>
+</body>
+</html>
