@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Пример работы с вкладками - React</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+
+        .tabs-container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .tabs-header {
+            display: flex;
+            border-bottom: 2px solid #e0e0e0;
+        }
+
+        .tab-button {
+            padding: 15px 25px;
+            border: none;
+            background: none;
+            cursor: pointer;
+            font-size: 16px;
+            color: #666;
+            transition: all 0.3s ease;
+            border-bottom: 3px solid transparent;
+            margin-bottom: -2px;
+        }
+
+        .tab-button:hover {
+            color: #333;
+            background-color: #f9f9f9;
+        }
+
+        .tab-button.active {
+            color: #4CAF50;
+            border-bottom-color: #4CAF50;
+            font-weight: bold;
+        }
+
+        .tabs-content {
+            padding: 20px;
+        }
+
+        .tab-pane {
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .tab-pane h3 {
+            margin-bottom: 15px;
+            color: #333;
+        }
+
+        .tab-pane p {
+            color: #666;
+            line-height: 1.6;
+        }
+    </style>
+</head>
+<body>
+    <h1 style="text-align: center; margin-bottom: 30px;">Пример работы с вкладками (React)</h1>
+    
+    <div id="root"></div>
+
+    <!-- Подключаем React и Babel -->
+    <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+    <script type="text/babel">
+        const { useState } = React;
+
+        // Данные для вкладок
+        const tabsData = [
+            {
+                id: 'profile',
+                label: 'Профиль',
+                icon: '👤',
+                content: {
+                    title: 'Личный профиль',
+                    text: 'Здесь отображается информация о пользователе.'
+                }
+            },
+            {
+                id: 'settings',
+                label: 'Настройки',
+                icon: '⚙️',
+                content: {
+                    title: 'Настройки аккаунта',
+                    text: 'Управляйте настройками вашего аккаунта.'
+                }
+            },
+            {
+                id: 'notifications',
+                label: 'Уведомления',
+                icon: '🔔',
+                content: {
+                    title: 'Центр уведомлений',
+                    text: 'Просматривайте ваши уведомления и оповещения.'
+                }
+            },
+            {
+                id: 'security',
+                label: 'Безопасность',
+                icon: '🔒',
+                content: {
+                    title: 'Безопасность',
+                    text: 'Настройте параметры безопасности вашего аккаунта.'
+                }
+            }
+        ];
+
+        // Компонент вкладки
+        function Tabs() {
+            const [activeTab, setActiveTab] = useState('profile');
+
+            const handleTabClick = (tabId) => {
+                setActiveTab(tabId);
+            };
+
+            const activeTabData = tabsData.find(tab => tab.id === activeTab);
+
+            return (
+                <div className="tabs-container">
+                    <div className="tabs-header">
+                        {tabsData.map(tab => (
+                            <button
+                                key={tab.id}
+                                className={`tab-button ${activeTab === tab.id ? 'active' : ''}`}
+                                onClick={() => handleTabClick(tab.id)}
+                            >
+                                {tab.icon} {tab.label}
+                            </button>
+                        ))}
+                    </div>
+
+                    <div className="tabs-content">
+                        <div className="tab-pane">
+                            <h3>{activeTabData.content.title}</h3>
+                            <p>{activeTabData.content.text}</p>
+                            <p style={{marginTop: '15px', fontSize: '14px', color: '#999'}}>
+                                Активная вкладка: <strong>{activeTab}</strong>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            );
+        }
+
+        // Рендеринг приложения
+        const root = ReactDOM.createRoot(document.getElementById('root'));
+        root.render(<Tabs />);
+    </script>
+</body>
+</html>

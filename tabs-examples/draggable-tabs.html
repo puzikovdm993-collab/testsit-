@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Вкладки с Drag-and-Drop</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .tabs-container {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            width: 100%;
+            max-width: 700px;
+            overflow: hidden;
+        }
+
+        .tabs-header {
+            display: flex;
+            background: #f8f9fa;
+            border-bottom: 2px solid #e9ecef;
+            padding: 10px 10px 0;
+            gap: 5px;
+            overflow-x: auto;
+        }
+
+        .tab-button {
+            padding: 12px 24px;
+            background: transparent;
+            border: none;
+            cursor: grab;
+            font-size: 14px;
+            font-weight: 600;
+            color: #6c757d;
+            border-radius: 8px 8px 0 0;
+            transition: all 0.3s ease;
+            user-select: none;
+            position: relative;
+        }
+
+        .tab-button:hover {
+            background: #e9ecef;
+            color: #495057;
+        }
+
+        .tab-button.active {
+            background: white;
+            color: #667eea;
+            border-bottom: 2px solid white;
+            margin-bottom: -2px;
+        }
+
+        .tab-button.dragging {
+            opacity: 0.5;
+            cursor: grabbing;
+            background: #667eea;
+            color: white;
+        }
+
+        .tab-button.drag-over {
+            border-left: 3px solid #667eea;
+        }
+
+        .tabs-content {
+            padding: 30px;
+            min-height: 250px;
+        }
+
+        .tab-pane {
+            display: none;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .tab-pane.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .tab-pane h2 {
+            color: #333;
+            margin-bottom: 15px;
+        }
+
+        .tab-pane p {
+            color: #666;
+            line-height: 1.6;
+        }
+
+        .drag-hint {
+            background: #fff3cd;
+            border: 1px solid #ffc107;
+            border-radius: 6px;
+            padding: 12px 16px;
+            margin-bottom: 20px;
+            color: #856404;
+            font-size: 14px;
+        }
+
+        .drag-hint strong {
+            color: #664a00;
+        }
+    </style>
+</head>
+<body>
+    <div class="tabs-container">
+        <div class="tabs-header" id="tabsHeader">
+            <button class="tab-button active" draggable="true" data-tab="tab1">📊 Аналитика</button>
+            <button class="tab-button" draggable="true" data-tab="tab2">👥 Пользователи</button>
+            <button class="tab-button" draggable="true" data-tab="tab3">⚙️ Настройки</button>
+            <button class="tab-button" draggable="true" data-tab="tab4">📝 Отчеты</button>
+            <button class="tab-button" draggable="true" data-tab="tab5">🔔 Уведомления</button>
+        </div>
+        
+        <div class="tabs-content">
+            <div class="drag-hint">
+                <strong>💡 Подсказка:</strong> Перетаскивайте вкладки мышкой, чтобы изменить их порядок!
+            </div>
+
+            <div class="tab-pane active" id="tab1">
+                <h2>📊 Аналитика</h2>
+                <p>Просматривайте детальную статистику по всем показателям. Графики, диаграммы и ключевые метрики помогут вам принимать обоснованные решения.</p>
+                <br>
+                <p>Данные обновляются в реальном времени и доступны для экспорта в различных форматах.</p>
+            </div>
+
+            <div class="tab-pane" id="tab2">
+                <h2>👥 Пользователи</h2>
+                <p>Управляйте списком пользователей, назначайте роли и права доступа. Отслеживайте активность и историю действий каждого пользователя.</p>
+                <br>
+                <p>Возможность массового редактирования и импорта/экспорта данных.</p>
+            </div>
+
+            <div class="tab-pane" id="tab3">
+                <h2>⚙️ Настройки</h2>
+                <p>Настройте систему под свои потребности: измените параметры интерфейса, уведомлений, безопасности и интеграций.</p>
+                <br>
+                <p>Все изменения сохраняются автоматически и применяются мгновенно.</p>
+            </div>
+
+            <div class="tab-pane" id="tab4">
+                <h2>📝 Отчеты</h2>
+                <p>Генерируйте пользовательские отчеты по выбранным параметрам. Планируйте автоматическую отправку отчетов по расписанию.</p>
+                <br>
+                <p>Поддерживаются форматы PDF, Excel, CSV и HTML.</p>
+            </div>
+
+            <div class="tab-pane" id="tab5">
+                <h2>🔔 Уведомления</h2>
+                <p>Настройте способы получения уведомлений: email, push-уведомления, SMS. Выберите события, о которых хотите получать оповещения.</p>
+                <br>
+                <p>История всех уведомлений доступна для просмотра в любое время.</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const tabsHeader = document.getElementById('tabsHeader');
+        const tabButtons = document.querySelectorAll('.tab-button');
+        const tabPanes = document.querySelectorAll('.tab-pane');
+        
+        let draggedTab = null;
+        let dragStartIndex = null;
+
+        // Переключение вкладок
+        tabButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                tabButtons.forEach(btn => btn.classList.remove('active'));
+                tabPanes.forEach(pane => pane.classList.remove('active'));
+                
+                button.classList.add('active');
+                document.getElementById(button.dataset.tab).classList.add('active');
+            });
+
+            // Drag events
+            button.addEventListener('dragstart', handleDragStart);
+            button.addEventListener('dragend', handleDragEnd);
+            button.addEventListener('dragover', handleDragOver);
+            button.addEventListener('dragleave', handleDragLeave);
+            button.addEventListener('drop', handleDrop);
+        });
+
+        function handleDragStart(e) {
+            draggedTab = this;
+            dragStartIndex = getIndex(this);
+            this.classList.add('dragging');
+            e.dataTransfer.effectAllowed = 'move';
+            e.dataTransfer.setData('text/html', this.innerHTML);
+        }
+
+        function handleDragEnd(e) {
+            this.classList.remove('dragging');
+            tabButtons.forEach(btn => btn.classList.remove('drag-over'));
+            draggedTab = null;
+            dragStartIndex = null;
+        }
+
+        function handleDragOver(e) {
+            e.preventDefault();
+            e.dataTransfer.dropEffect = 'move';
+            if (this !== draggedTab) {
+                this.classList.add('drag-over');
+            }
+        }
+
+        function handleDragLeave(e) {
+            this.classList.remove('drag-over');
+        }
+
+        function handleDrop(e) {
+            e.preventDefault();
+            this.classList.remove('drag-over');
+            
+            if (draggedTab && this !== draggedTab) {
+                const dragEndIndex = getIndex(this);
+                swapTabs(draggedTab, this);
+                
+                // Сохраняем активный класс при перемещении
+                if (draggedTab.classList.contains('active')) {
+                    setTimeout(() => draggedTab.click(), 0);
+                }
+            }
+        }
+
+        function getIndex(tab) {
+            return Array.from(tabsHeader.children).indexOf(tab);
+        }
+
+        function swapTabs(tab1, tab2) {
+            const allTabs = Array.from(tabsHeader.children);
+            const index1 = allTabs.indexOf(tab1);
+            const index2 = allTabs.indexOf(tab2);
+            
+            if (index1 < index2) {
+                tabsHeader.insertBefore(tab1, tab2.nextSibling);
+            } else {
+                tabsHeader.insertBefore(tab1, tab2);
+            }
+        }
+
+        // Поддержка touch событий для мобильных устройств
+        let touchStartX = 0;
+        let touchCurrentX = 0;
+        let touchedTab = null;
+
+        tabButtons.forEach(button => {
+            button.addEventListener('touchstart', (e) => {
+                touchStartX = e.touches[0].clientX;
+                touchedTab = button;
+                button.style.transition = 'none';
+            }, { passive: true });
+
+            button.addEventListener('touchmove', (e) => {
+                if (!touchedTab) return;
+                touchCurrentX = e.touches[0].clientX;
+                const diff = touchCurrentX - touchStartX;
+                button.style.transform = `translateX(${diff}px)`;
+            }, { passive: true });
+
+            button.addEventListener('touchend', (e) => {
+                if (!touchedTab) return;
+                
+                const diff = touchCurrentX - touchStartX;
+                const threshold = 50;
+                
+                if (Math.abs(diff) > threshold) {
+                    const currentIndex = getIndex(touchedTab);
+                    const newIndex = diff > 0 ? currentIndex + 1 : currentIndex - 1;
+                    
+                    if (newIndex >= 0 && newIndex < tabButtons.length) {
+                        const targetTab = tabButtons[newIndex];
+                        swapTabs(touchedTab, targetTab);
+                    }
+                }
+                
+                touchedTab.style.transition = '';
+                touchedTab.style.transform = '';
+                touchedTab = null;
+                touchStartX = 0;
+                touchCurrentX = 0;
+            });
+        });
+    </script>
+</body>
+</html>

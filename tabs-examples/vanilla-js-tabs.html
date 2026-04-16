@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Пример работы с вкладками - Чистый JS</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+
+        .tabs-container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .tabs-header {
+            display: flex;
+            border-bottom: 2px solid #e0e0e0;
+        }
+
+        .tab-button {
+            padding: 15px 25px;
+            border: none;
+            background: none;
+            cursor: pointer;
+            font-size: 16px;
+            color: #666;
+            transition: all 0.3s ease;
+            border-bottom: 3px solid transparent;
+            margin-bottom: -2px;
+        }
+
+        .tab-button:hover {
+            color: #333;
+            background-color: #f9f9f9;
+        }
+
+        .tab-button.active {
+            color: #2196F3;
+            border-bottom-color: #2196F3;
+            font-weight: bold;
+        }
+
+        .tabs-content {
+            padding: 20px;
+        }
+
+        .tab-pane {
+            display: none;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .tab-pane.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .tab-pane h3 {
+            margin-bottom: 15px;
+            color: #333;
+        }
+
+        .tab-pane p {
+            color: #666;
+            line-height: 1.6;
+        }
+    </style>
+</head>
+<body>
+    <h1 style="text-align: center; margin-bottom: 30px;">Пример работы с вкладками (Чистый JavaScript)</h1>
+    
+    <div class="tabs-container">
+        <div class="tabs-header">
+            <button class="tab-button active" data-tab="tab1">Главная</button>
+            <button class="tab-button" data-tab="tab2">О нас</button>
+            <button class="tab-button" data-tab="tab3">Услуги</button>
+            <button class="tab-button" data-tab="tab4">Контакты</button>
+        </div>
+
+        <div class="tabs-content">
+            <div class="tab-pane active" id="tab1">
+                <h3>Добро пожаловать!</h3>
+                <p>Это пример реализации вкладок на чистом JavaScript без использования сторонних библиотек.</p>
+                <p>Нажмите на другие вкладки, чтобы увидеть переключение контента.</p>
+            </div>
+
+            <div class="tab-pane" id="tab2">
+                <h3>О нашей компании</h3>
+                <p>Мы занимаемся разработкой веб-приложений уже более 10 лет.</p>
+                <p>Наша команда состоит из опытных специалистов в области фронтенд и бэкенд разработки.</p>
+            </div>
+
+            <div class="tab-pane" id="tab3">
+                <h3>Наши услуги</h3>
+                <p>✓ Веб-разработка</p>
+                <p>✓ Мобильные приложения</p>
+                <p>✓ UI/UX дизайн</p>
+                <p>✓ Консультирование</p>
+            </div>
+
+            <div class="tab-pane" id="tab4">
+                <h3>Свяжитесь с нами</h3>
+                <p>Email: info@example.com</p>
+                <p>Телефон: +7 (999) 123-45-67</p>
+                <p>Адрес: г. Москва, ул. Примерная, д. 1</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Получаем все кнопки вкладок и панели контента
+        const tabButtons = document.querySelectorAll('.tab-button');
+        const tabPanes = document.querySelectorAll('.tab-pane');
+
+        // Добавляем обработчик клика на каждую кнопку
+        tabButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                // Удаляем активный класс у всех кнопок и панелей
+                tabButtons.forEach(btn => btn.classList.remove('active'));
+                tabPanes.forEach(pane => pane.classList.remove('active'));
+
+                // Добавляем активный класс нажатой кнопке
+                button.classList.add('active');
+
+                // Находим и показываем соответствующую панель контента
+                const tabId = button.getAttribute('data-tab');
+                document.getElementById(tabId).classList.add('active');
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Пример работы с вкладками - Вертикальные вкладки</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+
+        .tabs-container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            display: flex;
+            overflow: hidden;
+        }
+
+        .tabs-header {
+            display: flex;
+            flex-direction: column;
+            background: #2c3e50;
+            min-width: 200px;
+        }
+
+        .tab-button {
+            padding: 20px 25px;
+            border: none;
+            background: none;
+            cursor: pointer;
+            font-size: 16px;
+            color: #ecf0f1;
+            transition: all 0.3s ease;
+            text-align: left;
+            border-left: 4px solid transparent;
+        }
+
+        .tab-button:hover {
+            background-color: #34495e;
+        }
+
+        .tab-button.active {
+            background-color: #34495e;
+            border-left-color: #3498db;
+            font-weight: bold;
+        }
+
+        .tab-button .icon {
+            margin-right: 10px;
+            font-size: 18px;
+        }
+
+        .tabs-content {
+            flex: 1;
+            padding: 30px;
+        }
+
+        .tab-pane {
+            display: none;
+            animation: slideIn 0.3s ease;
+        }
+
+        .tab-pane.active {
+            display: block;
+        }
+
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateX(20px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+
+        .tab-pane h3 {
+            margin-bottom: 15px;
+            color: #2c3e50;
+            font-size: 24px;
+        }
+
+        .tab-pane p {
+            color: #7f8c8d;
+            line-height: 1.8;
+            margin-bottom: 15px;
+        }
+
+        .feature-list {
+            list-style: none;
+            margin-top: 20px;
+        }
+
+        .feature-list li {
+            padding: 10px 0;
+            border-bottom: 1px solid #ecf0f1;
+            color: #34495e;
+        }
+
+        .feature-list li:last-child {
+            border-bottom: none;
+        }
+
+        .feature-list li:before {
+            content: "✓";
+            color: #27ae60;
+            font-weight: bold;
+            margin-right: 10px;
+        }
+
+        /* Адаптивность для мобильных */
+        @media (max-width: 768px) {
+            .tabs-container {
+                flex-direction: column;
+            }
+
+            .tabs-header {
+                flex-direction: row;
+                min-width: auto;
+                overflow-x: auto;
+            }
+
+            .tab-button {
+                white-space: nowrap;
+                border-left: none;
+                border-bottom: 4px solid transparent;
+            }
+
+            .tab-button.active {
+                border-left: none;
+                border-bottom-color: #3498db;
+            }
+        }
+    </style>
+</head>
+<body>
+    <h1 style="text-align: center; margin-bottom: 30px;">Вертикальные вкладки</h1>
+    
+    <div class="tabs-container">
+        <div class="tabs-header">
+            <button class="tab-button active" data-tab="overview">
+                <span class="icon">📋</span>Обзор
+            </button>
+            <button class="tab-button" data-tab="features">
+                <span class="icon">⭐</span>Возможности
+            </button>
+            <button class="tab-button" data-tab="pricing">
+                <span class="icon">💰</span>Цены
+            </button>
+            <button class="tab-button" data-tab="support">
+                <span class="icon">🛠️</span>Поддержка
+            </button>
+            <button class="tab-button" data-tab="faq">
+                <span class="icon">❓</span>FAQ
+            </button>
+        </div>
+
+        <div class="tabs-content">
+            <div class="tab-pane active" id="overview">
+                <h3>Обзор продукта</h3>
+                <p>Добро пожаловать в нашу систему управления вкладками! Этот пример демонстрирует вертикальное расположение вкладок, которое особенно удобно для навигации с множеством пунктов.</p>
+                <p>Вертикальные вкладки часто используются в панелях настроек, документации и административных интерфейсах.</p>
+            </div>
+
+            <div class="tab-pane" id="features">
+                <h3>Основные возможности</h3>
+                <p>Наш продукт предоставляет широкий спектр возможностей:</p>
+                <ul class="feature-list">
+                    <li>Адаптивный дизайн для всех устройств</li>
+                    <li>Плавные анимации переключения</li>
+                    <li>Поддержка клавиатурной навигации</li>
+                    <li>Легкая кастомизация стилей</li>
+                    <li>Кроссбраузерная совместимость</li>
+                </ul>
+            </div>
+
+            <div class="tab-pane" id="pricing">
+                <h3>Тарифные планы</h3>
+                <p>Мы предлагаем гибкие тарифные планы для любых нужд:</p>
+                <ul class="feature-list">
+                    <li><strong>Бесплатный</strong> — базовый функционал</li>
+                    <li><strong>Стандарт</strong> ($9/мес) — расширенные возможности</li>
+                    <li><strong>Профессиональный</strong> ($29/мес) — полный доступ</li>
+                    <li><strong>Корпоративный</strong> (индивидуально) — персональная поддержка</li>
+                </ul>
+            </div>
+
+            <div class="tab-pane" id="support">
+                <h3>Техническая поддержка</h3>
+                <p>Наша команда поддержки готова помочь вам 24/7:</p>
+                <p>📧 Email: support@example.com</p>
+                <p>📞 Телефон: +7 (999) 000-00-00</p>
+                <p>💬 Чат: доступен на сайте</p>
+                <p>Среднее время ответа: менее 2 часов</p>
+            </div>
+
+            <div class="tab-pane" id="faq">
+                <h3>Часто задаваемые вопросы</h3>
+                <p><strong>В: Как установить систему?</strong></p>
+                <p>О: Просто скачайте файлы и подключите их к вашему проекту.</p>
+                
+                <p><strong>В: Можно ли изменить цвета?</strong></p>
+                <p>О: Да, все стили легко кастомизируются через CSS.</p>
+                
+                <p><strong>В: Есть ли мобильная версия?</strong></p>
+                <p>О: Да, интерфейс полностью адаптивен и работает на всех устройствах.</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const tabButtons = document.querySelectorAll('.tab-button');
+        const tabPanes = document.querySelectorAll('.tab-pane');
+
+        tabButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                // Удаляем активный класс у всех элементов
+                tabButtons.forEach(btn => btn.classList.remove('active'));
+                tabPanes.forEach(pane => pane.classList.remove('active'));
+
+                // Добавляем активный класс
+                button.classList.add('active');
+                const tabId = button.getAttribute('data-tab');
+                document.getElementById(tabId).classList.add('active');
+            });
+        });
+
+        // Поддержка клавиатуры (стрелки вверх/вниз)
+        tabButtons.forEach((button, index) => {
+            button.addEventListener('keydown', (e) => {
+                if (e.key === 'ArrowDown') {
+                    e.preventDefault();
+                    const nextIndex = (index + 1) % tabButtons.length;
+                    tabButtons[nextIndex].focus();
+                    tabButtons[nextIndex].click();
+                } else if (e.key === 'ArrowUp') {
+                    e.preventDefault();
+                    const prevIndex = (index - 1 + tabButtons.length) % tabButtons.length;
+                    tabButtons[prevIndex].focus();
+                    tabButtons[prevIndex].click();
+                }
+            });
+        });
+    </script>
+</body>
+</html>
