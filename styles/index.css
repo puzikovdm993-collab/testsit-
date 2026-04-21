@@ -2,7 +2,7 @@
 /*index.css*/
 /* VS Code Dark Theme Style */
 :root {
-    /* VS Code Dark+ color scheme */
+    /* VS Code Dark+ color scheme (default) */
     --vscode-bg-primary: #1e1e1e;
     --vscode-bg-secondary: #252526;
     --vscode-bg-tertiary: #333333;
@@ -48,6 +48,31 @@
     --radius-lg: 2px;
     --transition-fast: 0.1s ease;
     --transition-normal: 0.15s ease;
+}
+
+/* VS Code Light Theme */
+body.light-theme {
+    --vscode-bg-primary: #ffffff;
+    --vscode-bg-secondary: #f3f3f3;
+    --vscode-bg-tertiary: #e8e8e8;
+    --vscode-bg-hover: #e0e0e0;
+    --vscode-fg-primary: #333333;
+    --vscode-fg-secondary: #6c6c6c;
+    --vscode-fg-active: #000000;
+    --vscode-accent: #0066b8;
+    --vscode-accent-hover: #005a9e;
+    --vscode-border: #e0e0e0;
+    --vscode-scrollbar: #c1c1c1;
+    --vscode-tab-active: #ffffff;
+    --vscode-tab-inactive: #ececec;
+    --vscode-input-bg: #ffffff;
+    --vscode-selection: #add6ff;
+    --vscode-line-highlight: #f0f0f0;
+    --vscode-success: #007a00;
+    --vscode-warning: #b89500;
+    --vscode-error: #d13a3a;
+    --vscode-statusbar-bg: #0066b8;
+    --vscode-statusbar-fg: #ffffff;
 }
 
 /* Стили для панели вкладок (Tabs) */
@@ -2092,4 +2117,32 @@ button:active,
     background: var(--vscode-bg-tertiary);
     border-bottom: 1px solid var(--vscode-border);
     color: var(--vscode-fg-primary);
+}
+
+/* Theme toggle button styles */
+.theme-toggle-btn {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 12px !important;
+    min-width: 120px;
+}
+
+.theme-toggle-btn .icon {
+    width: 18px;
+    height: 18px;
+    fill: currentColor;
+}
+
+.theme-btn-text {
+    font-size: 12px;
+    font-weight: 500;
+}
+
+body.light-theme .theme-icon-light {
+    display: none !important;
+}
+
+body.light-theme .theme-icon-dark {
+    display: inline-block !important;
 }
