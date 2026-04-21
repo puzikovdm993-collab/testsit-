@@ -1,17 +1,49 @@
 
 /* CSS-переменные для гибкости тем */ 
 :root {
-    --primary: #6366f1; /* Основной цвет (синяя палитра) */
-    --primary-dark: #4f46e5; /* Тёмная версия основного цвета */
+    /* VS Code Dark+ (default) */
+    --primary: #6366f1;
+    --primary-dark: #4f46e5;
     --gray-50: #f9fafb;
     --gray-100: #f3f4f6;
     --gray-800: #1f2937;
-    --bg: #111827;
-    --text: #eee;
+    --bg: #1e1e1e;
+    --text: #cccccc;
     --sidebar-width: 280px;
     --sidebar-collapsed: 150px;
     --preview-height: 360px;
     --preview-collapsed: 50px;
+    --sidebar-bg: #252526;
+    --inspector-bg: #252526;
+    --toolbar-bg: rgba(37, 37, 38, 0.9);
+    --graph-bg: #1e1e1e;
+    --border-color: #3c3c3c;
+    --input-bg: #3c3c3c;
+    --hover-bg: #2a2d2e;
+    --selection-bg: #264f78;
+}
+
+/* VS Code Light+ theme */
+body.light-theme {
+    --primary: #0066b8;
+    --primary-dark: #005a9e;
+    --gray-50: #f3f4f6;
+    --gray-100: #e8e8e8;
+    --gray-800: #f3f3f3;
+    --bg: #ffffff;
+    --text: #333333;
+    --sidebar-width: 280px;
+    --sidebar-collapsed: 150px;
+    --preview-height: 360px;
+    --preview-collapsed: 50px;
+    --sidebar-bg: #f3f3f3;
+    --inspector-bg: #f3f3f3;
+    --toolbar-bg: rgba(243, 243, 243, 0.9);
+    --graph-bg: #ffffff;
+    --border-color: #e0e0e0;
+    --input-bg: #ffffff;
+    --hover-bg: #e0e0e0;
+    --selection-bg: #add6ff;
 }
 /* Сброс стандартных стилей */
 * {
@@ -38,10 +70,10 @@ html, body {
 .sidebar {
     /* Задаёт ширину сайдбара через CSS-переменную (--sidebar-width) */
     width: var(--sidebar-width);
-    /* Фон сайдбара — линейный градиент от переменной --gray-800 к темно-синему (#111827) */
-    background: linear-gradient(180deg, var(--gray-800) 0%, #111827 100%);
-    /* Цвет текста внутри сайдбара — белый */
-    color: white;
+    /* Фон сайдбара — используем переменную --sidebar-bg */
+    background: var(--sidebar-bg);
+    /* Цвет текста внутри сайдбара — используем переменную --text */
+    color: var(--text);
     /* Плавная анимация изменения ширины (0.4 секунды, с кубической кривой Безье для эффекта "отскока") */
     transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1);
     /* Отступы: 30px сверху/снизу, 20px слева/справа */
@@ -72,7 +104,7 @@ html, body {
     top: 30px;
     right: 5px;
     background: var(--primary);
-    color: white;
+    color: var(--text);
     border: none;
     width: 30px;
     height: 30px;
@@ -94,8 +126,8 @@ html, body {
 /* Сайдбар справа (фиксированный) */
 .inspector {
     width: var(--sidebar-width); /* Используется переменная */
-    background: linear-gradient(180deg, var(--gray-800) 0%, #111827 100%); /* Градиент */
-    color: white; /* Белый текст */
+    background: var(--inspector-bg); /* Используем переменную для фона */
+    color: var(--text); /* Цвет текста из переменной */
     transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1), transform 0.4s cubic-bezier(0.4, 0, 0.2, 1); /* Анимация ширины и т. д. */
     padding: 30px 20px; /* Отступы внутри */
     position: fixed; /* Фиксируем на экране */
@@ -117,7 +149,7 @@ html, body {
     align-items: center;
     margin-bottom: 40px;
     padding-bottom: 25px;
-    border-bottom: 1px solid rgba(255,255,255,0.1);
+    border-bottom: 1px solid var(--border-color);
 }
 
 .avatar-container {
@@ -148,7 +180,7 @@ html, body {
     width: 12px;
     height: 12px;
     background: #10b981;
-    border: 2px solid var(--gray-800);
+    border: 2px solid var(--bg);
     border-radius: 50%;
 }
 
@@ -173,10 +205,10 @@ html, body {
 #searchInput {
     width: 100%;
     padding: 12px 16px 12px 40px;
-    border: 1px solid rgba(255,255,255,0.2);
+    border: 1px solid var(--border-color);
     border-radius: 12px;
-    background: rgba(255,255,255,0.08);
-    color: white;
+    background: var(--input-bg);
+    color: var(--text);
     font-size: 14px;
     outline: none;
     transition: all 0.3s;
@@ -184,7 +216,7 @@ html, body {
 
     #searchInput:focus {
         border-color: var(--primary);
-        background: rgba(255,255,255,0.12);
+        background: var(--hover-bg);
         box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.3);
     }
 /* Иконка поиска (SVG) */
@@ -195,7 +227,7 @@ html, body {
     transform: translateY(-50%);
     width: 20px;
     height: 20px;
-    fill: rgba(255,255,255,0.5);
+    fill: var(--text-secondary);
 }
 
 .sidebar.collapsed .search-container {
@@ -218,7 +250,7 @@ html, body {
 
 /* Заголовок группы (кликабельный) */
 .node-group-header {
-    background: rgba(255,255,255,0.08);
+    background: var(--hover-bg);
     padding: 12px 16px;
     border-radius: 8px;
     font-weight: 600;
@@ -242,7 +274,7 @@ html, body {
 }
 
 .node-group-header:hover {
-    background: rgba(255,255,255,0.12);
+    background: var(--selection-bg);
 }
 
 /* Контейнер для карточек узлов */
@@ -258,21 +290,21 @@ html, body {
 
 /* Карточка узла (drag-and-drop) */
 .node-card {
-    background: rgba(255,255,255,0.05);
-    border: 1px solid rgba(255,255,255,0.1);
+    background: var(--hover-bg);
+    border: 1px solid var(--border-color);
     border-radius: 12px;
     padding: 16px;
     margin: 8px 0;
     cursor: grab;
     transition: all 0.3s;
-    color: white;
+    color: var(--text);
     display: flex;
     align-items: center;
     gap: 5px;
 }
 
     .node-card:hover {
-        background: rgba(255,255,255,0.1);
+        background: var(--selection-bg);
         border-color: var(--primary);
         transform: translateY(-2px);
     }
@@ -316,7 +348,7 @@ html, body {
 .main-content {
     flex: 1;
     position: relative;
-    background: #0f0f0f;
+    background: var(--graph-bg);
     overflow: hidden;
 }
 
@@ -324,7 +356,7 @@ html, body {
 .header {
     background: var(--bg);
     padding: 16px;
-    border-bottom: 1px solid #333;
+    border-bottom: 1px solid var(--border-color);
     text-align: center;
     color: var(--primary);
     font-weight: 600;
@@ -341,8 +373,8 @@ html, body {
     display: flex;
     gap: 8px;
     padding: 8px 16px;
-    background: rgba(0,0,0,0.6);
-    border-bottom: 1px solid #333;
+    background: var(--toolbar-bg);
+    border-bottom: 1px solid var(--border-color);
     flex-wrap: wrap;
     backdrop-filter: blur(10px);
     transition: left 0.4s cubic-bezier(0.4, 0, 0.2, 1);
@@ -354,9 +386,9 @@ html, body {
     }
 
     .toolbar button {
-        background: #333;
+        background: var(--hover-bg);
         border: none;
-        color: white;
+        color: var(--text);
         padding: 8px 14px;
         border-radius: 8px;
         cursor: pointer;
@@ -387,7 +419,7 @@ html, body {
 #graph-container {
     flex: 1;
     position: relative;
-    background: #111;
+    background: var(--graph-bg);
     overflow: hidden;
     /* background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20"><rect width="20" height="20" fill="%23111"/><rect x="10" width="10" height="20" fill="%23181"/><rect y="10" width="20" height="10" fill="%23181"/></svg>'); */
 }
@@ -408,17 +440,17 @@ html, body {
 }
 
 ::-webkit-scrollbar-track {
-    background: rgba(255, 255, 255, 0.05);
+    background: var(--hover-bg);
     border-radius: 3px;
 }
 
 ::-webkit-scrollbar-thumb {
-    background: rgba(255, 255, 255, 0.2);
+    background: var(--vscode-scrollbar);
     border-radius: 3px;
 }
 
     ::-webkit-scrollbar-thumb:hover {
-        background: rgba(255, 255, 255, 0.3);
+        background: var(--primary);
     }
 
 /* Стили для инспектора */
@@ -427,8 +459,8 @@ html, body {
     min-width: 16.25rem;
     max-width: 26.25rem;
     /* background: var(--panel); */
-    background: linear-gradient(180deg, var(--gray-800) 0%, #111827 100%); /* Градиент */
-    border-left: 1px solid var(--border);
+    background: var(--inspector-bg);
+    border-left: 1px solid var(--border-color);
     padding: 0.75rem;
     color: var(--text);
     display: flex;
@@ -448,20 +480,20 @@ html, body {
 
     #inspector h3 {
         margin: 0 0 0.375rem 0;
-        color: var(--accent);
+        color: var(--primary);
         font-size: 0.875rem;
     }
 
     #inspector .preview {
         margin-top: 16%;
-        background: #000;
+        background: var(--bg);
         border-radius: 0.375rem;
         overflow: hidden;
         display: flex;
         align-items: center;
         justify-content: center;
         height: 11.25rem;
-        border: 1px solid rgba(255,255,255,0.04);
+        border: 1px solid var(--border-color);
         top: 20px;
     }
 
@@ -480,15 +512,15 @@ html, body {
 
         #inspector .prop label {
             min-width: 5.625rem;
-            color: var(--text-dim);
+            color: var(--text-secondary);
         }
 
         #inspector .prop input[type="number"], #inspector .prop input[type="text"], #inspector .prop select {
             width: 100%;
             padding: 0.375rem;
             border-radius: 0.375rem;
-            border: 1px solid var(--border);
-            background: transparent;
+            border: 1px solid var(--border-color);
+            background: var(--input-bg);
             color: var(--text);
         }
 
@@ -501,27 +533,27 @@ html, body {
 
     #inspector .widget-label {
         font-size: 0.8125rem;
-        color: var(--text-dim);
+        color: var(--text-secondary);
         margin-bottom: 0.125rem;
     }
 
     #inspector .widget-input {
         padding: 0.375rem;
         border-radius: 0.375rem;
-        border: 1px solid var(--border);
-        background: transparent;
+        border: 1px solid var(--border-color);
+        background: var(--input-bg);
         color: var(--text);
         font-size: 0.875rem;
     }
 
     #inspector input[type="range"] {
         width: 100%;
-        accent-color: var(--accent);
+        accent-color: var(--primary);
     }
 
     #inspector input[type="checkbox"] {
         width: auto;
-        accent-color: var(--accent);
+        accent-color: var(--primary);
     }
 
 .inspector-controls {
@@ -539,6 +571,6 @@ html, body {
 #inspector .preview canvas {
     display: block;
     margin: auto;
-    border: 1px solid rgba(255,255,255,0.1);
+    border: 1px solid var(--border-color);
     border-radius: 4px;
 }

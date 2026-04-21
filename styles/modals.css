@@ -1,15 +1,28 @@
 
-/* modals.css - Clean UI / Linear style */
+/* modals.css - VS Code Style */
 
 :root {
-    --modal-bg: #ffffff;
-    --modal-border: #e4e4e7;
-    --modal-header-bg: #fafafa;
-    --modal-text: #18181b;
-    --modal-text-muted: #71717a;
+    /* Dark theme (default) - VS Code Dark+ */
+    --modal-bg: #252526;
+    --modal-border: #3c3c3c;
+    --modal-header-bg: #333333;
+    --modal-text: #cccccc;
+    --modal-text-muted: #858585;
+    --modal-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+    --modal-radius: 0;
+    --modal-overlay: rgba(0, 0, 0, 0.5);
+}
+
+/* Light theme - VS Code Light+ */
+body.light-theme {
+    --modal-bg: #f3f3f3;
+    --modal-border: #e0e0e0;
+    --modal-header-bg: #e8e8e8;
+    --modal-text: #333333;
+    --modal-text-muted: #6c6c6c;
     --modal-shadow: 0 8px 32px rgba(0, 0, 0, 0.16);
-    --modal-radius: 8px;
-    --modal-overlay: rgba(0, 0, 0, 0.4);
+    --modal-radius: 0;
+    --modal-overlay: rgba(0, 0, 0, 0.3);
 }
 
 /* Overlay for modals */
@@ -64,7 +77,7 @@
 
 /* Заголовок — область перетаскивания */
 .modal-title {
-    background: linear-gradient(135deg, var(--modal-header-bg) 0%, #f4f4f5 100%);
+    background: var(--modal-header-bg);
     color: var(--modal-text);
     padding: 0 16px;
     display: flex;
@@ -106,12 +119,12 @@
 .graph-container {
     flex: 1;
     min-height: 0;
-    background: #f8fafc;
+    background: var(--background-tertiary);
     border: 1px solid var(--modal-border);
     position: relative;
     overflow: hidden;
-    border-radius: 6px;
-    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.05);
+    border-radius: 0;
+    box-shadow: none;
 }
 
 #graphCanvas {
@@ -127,7 +140,7 @@
     justify-content: flex-end;
     gap: 10px;
     border-top: 1px solid var(--modal-border);
-    background: linear-gradient(135deg, var(--modal-header-bg) 0%, #f4f4f5 100%);
+    background: var(--modal-header-bg);
 }
 
 .modal-btn {
@@ -138,55 +151,55 @@
     border: 1px solid var(--modal-border);
     background: var(--modal-bg);
     color: var(--modal-text);
-    border-radius: 6px;
+    border-radius: 0;
     cursor: pointer;
-    transition: all 0.2s ease;
+    transition: none;
     display: inline-flex;
     align-items: center;
     justify-content: center;
     gap: 8px;
     outline: none;
-    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+    box-shadow: none;
 }
 
 .modal-btn:hover {
-    background: #f8fafc;
-    border-color: #d4d4d8;
-    transform: translateY(-1px);
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.08);
+    background: var(--vscode-bg-hover);
+    border-color: var(--modal-border);
+    transform: none;
+    box-shadow: none;
 }
 
 .modal-btn:active {
-    transform: translateY(0);
-    background: #fafafa;
-    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+    transform: none;
+    background: var(--vscode-selection);
+    box-shadow: none;
 }
 
 .modal-btn.primary {
-    background: linear-gradient(135deg, var(--modal-text) 0%, #27272a 100%);
-    border-color: var(--modal-text);
+    background: var(--vscode-accent);
+    border-color: var(--vscode-accent);
     color: #ffffff;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
+    box-shadow: none;
 }
 
 .modal-btn.primary:hover {
-    background: linear-gradient(135deg, #000 0%, #18181b 100%);
-    border-color: #000;
-    opacity: 0.95;
-    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2);
+    background: var(--vscode-accent-hover);
+    border-color: var(--vscode-accent-hover);
+    opacity: 1;
+    box-shadow: none;
 }
 
 .modal-btn.danger {
-    color: #dc2626;
-    border-color: #fecaca;
-    background: #fef2f2;
-    box-shadow: 0 1px 2px rgba(220, 38, 38, 0.1);
+    color: var(--vscode-error);
+    border-color: var(--modal-border);
+    background: transparent;
+    box-shadow: none;
 }
 
 .modal-btn.danger:hover {
-    background: #fee2e2;
-    border-color: #fecaca;
-    box-shadow: 0 2px 4px rgba(220, 38, 38, 0.15);
+    background: var(--vscode-selection);
+    border-color: var(--modal-border);
+    box-shadow: none;
 }
 
 /* Ручка изменения размера */
@@ -222,17 +235,17 @@
     font-size: 18px;
     line-height: 1;
     padding: 6px 8px;
-    border-radius: 6px;
-    transition: all 0.2s ease;
+    border-radius: 0;
+    transition: none;
     display: inline-flex;
     align-items: center;
     justify-content: center;
 }
 
 .modal-title button:hover {
-    background: #e4e4e7;
-    color: #ef4444;
-    transform: rotate(90deg);
+    background: var(--vscode-bg-hover);
+    color: var(--vscode-error);
+    transform: none;
 }
 
 /* Graph panel styles */
@@ -255,19 +268,19 @@
 /* Input fields in modals */
 .modal-input {
     width: 100%;
-    padding: 10px 12px;
+    padding: 6px 10px;
     font-size: 13px;
     border: 1px solid var(--modal-border);
-    border-radius: 6px;
-    background: var(--modal-bg);
+    border-radius: 0;
+    background: var(--vscode-input-bg);
     color: var(--modal-text);
     outline: none;
-    transition: all 0.2s ease;
+    transition: none;
 }
 
 .modal-input:focus {
-    border-color: var(--modal-text);
-    box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.08);
+    border-color: var(--vscode-accent);
+    box-shadow: none;
 }
 
 /* Modal labels */

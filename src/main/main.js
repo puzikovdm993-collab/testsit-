@@ -1,4 +1,3 @@
-
 // import { initRecentFiles } from '/src/recentFiles/recentFiles.js'; // Абсолютный путь (лучше)
 // import { handleKeyDown, handleWheel  } from '/src/events/events.js'; // Абсолютный путь (лучше)
 // import { closeOpenFilesDropdown } from '/src/fileManager/fileManager.js'; // Абсолютный путь (лучше)
@@ -31,8 +30,24 @@ function initDomElements()                     // заполняет объек�
     };
 }
 
+// Функция переключения темы
+function toggleTheme() {
+    const body = document.body;
+    const isLight = body.classList.toggle('light-theme');
+    localStorage.setItem('theme', isLight ? 'light' : 'dark');
+}
+
+// Применение сохраненной темы при загрузке
+function applySavedTheme() {
+    const savedTheme = localStorage.getItem('theme');
+    if (savedTheme === 'light') {
+        document.body.classList.add('light-theme');
+    }
+}
+
 document.addEventListener('DOMContentLoaded', function() {
-    
+
+    applySavedTheme();
     initDomElements();
     initRecentFiles();
     updateToolInfo();
@@ -50,7 +65,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }], {
             title: { text: '', font: { size: 14 } },
             xaxis: { title: 'Пиксель вдоль линии' },
-            yaxis: { 
+            yaxis: {
                 title: 'Интенсивность (R)',
                 range: [0, 255],
                 autorange: false
@@ -67,11 +82,11 @@ document.addEventListener('DOMContentLoaded', function() {
     document.addEventListener('click', function(event) {
         const dropdown = document.getElementById('openFilesDropdown');
         const button = document.getElementById('openFilesDropdownBtn');
-        
+
         if (dropdown && button && !dropdown.contains(event.target) && !button.contains(event.target)) {
             closeOpenFilesDropdown();
         }
-        
+
         // Закрытие панели фигур при клике вне её
         if (dom.shapesPanel && !event.target.closest('#shapesBtn') && !event.target.closest('#shapesPanel')) {
             dom.shapesPanel.classList.remove('active');

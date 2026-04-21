@@ -1,29 +1,78 @@
 
 /*index.css*/
-/* Общий сброс стилей */
+/* VS Code Dark Theme Style */
 :root {
-    --primary-color: #2563eb;
-    --primary-hover: #1d4ed8;
-    --primary-light: #dbeafe;
-    --secondary-color: #64748b;
-    --success-color: #10b981;
-    --warning-color: #f59e0b;
-    --danger-color: #ef4444;
-    --background-primary: #f8fafc;
-    --background-secondary: #ffffff;
-    --background-tertiary: #f1f5f9;
-    --border-color: #e2e8f0;
-    --text-primary: #1e293b;
-    --text-secondary: #64748b;
-    --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
-    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-    --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
-    --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
-    --radius-sm: 4px;
-    --radius-md: 8px;
-    --radius-lg: 12px;
-    --transition-fast: 0.15s ease;
-    --transition-normal: 0.25s ease;
+    /* VS Code Dark+ color scheme (default) */
+    --vscode-bg-primary: #1e1e1e;
+    --vscode-bg-secondary: #252526;
+    --vscode-bg-tertiary: #333333;
+    --vscode-bg-hover: #2a2d2e;
+    --vscode-fg-primary: #cccccc;
+    --vscode-fg-secondary: #858585;
+    --vscode-fg-active: #ffffff;
+    --vscode-accent: #007acc;
+    --vscode-accent-hover: #0062a3;
+    --vscode-border: #3c3c3c;
+    --vscode-scrollbar: #424242;
+    --vscode-tab-active: #1e1e1e;
+    --vscode-tab-inactive: #2d2d2d;
+    --vscode-input-bg: #3c3c3c;
+    --vscode-selection: #264f78;
+    --vscode-line-highlight: #2b2b2b;
+    --vscode-success: #4ec9b0;
+    --vscode-warning: #cca700;
+    --vscode-error: #f48771;
+    --vscode-statusbar-bg: #007acc;
+    --vscode-statusbar-fg: #ffffff;
+    
+    /* Legacy variable mappings for compatibility */
+    --primary-color: var(--vscode-accent);
+    --primary-hover: var(--vscode-accent-hover);
+    --primary-light: var(--vscode-selection);
+    --secondary-color: var(--vscode-fg-secondary);
+    --success-color: var(--vscode-success);
+    --warning-color: var(--vscode-warning);
+    --danger-color: var(--vscode-error);
+    --background-primary: var(--vscode-bg-primary);
+    --background-secondary: var(--vscode-bg-secondary);
+    --background-tertiary: var(--vscode-bg-tertiary);
+    --border-color: var(--vscode-border);
+    --text-primary: var(--vscode-fg-primary);
+    --text-secondary: var(--vscode-fg-secondary);
+    --shadow-sm: none;
+    --shadow-md: none;
+    --shadow-lg: none;
+    --shadow-xl: none;
+    --radius-sm: 2px;
+    --radius-md: 2px;
+    --radius-lg: 2px;
+    --transition-fast: 0.1s ease;
+    --transition-normal: 0.15s ease;
+}
+
+/* VS Code Light Theme */
+body.light-theme {
+    --vscode-bg-primary: #ffffff;
+    --vscode-bg-secondary: #f3f3f3;
+    --vscode-bg-tertiary: #e8e8e8;
+    --vscode-bg-hover: #e0e0e0;
+    --vscode-fg-primary: #333333;
+    --vscode-fg-secondary: #6c6c6c;
+    --vscode-fg-active: #000000;
+    --vscode-accent: #0066b8;
+    --vscode-accent-hover: #005a9e;
+    --vscode-border: #e0e0e0;
+    --vscode-scrollbar: #c1c1c1;
+    --vscode-tab-active: #ffffff;
+    --vscode-tab-inactive: #ececec;
+    --vscode-input-bg: #ffffff;
+    --vscode-selection: #add6ff;
+    --vscode-line-highlight: #f0f0f0;
+    --vscode-success: #007a00;
+    --vscode-warning: #b89500;
+    --vscode-error: #d13a3a;
+    --vscode-statusbar-bg: #0066b8;
+    --vscode-statusbar-fg: #ffffff;
 }
 
 /* Стили для панели вкладок (Tabs) */
@@ -234,172 +283,237 @@
 }
 
 body {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    background: var(--vscode-bg-primary);
+    color: var(--vscode-fg-primary);
     overflow: hidden;
     height: 100vh;
     display: flex;
     flex-direction: column;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
 }
 
-/* Стили для панели вкладок файлов */
+/* Стили для панели вкладок файлов в стиле VS Code */
 .tab-bar {
-    background: var(--background-secondary);
-    border-bottom: 1px solid var(--border-color);
+    background: var(--vscode-tab-active);
+    border-bottom: 1px solid var(--vscode-border);
     display: flex;
-    padding: 4px 8px;
-    gap: 4px;
-    height: 36px;
-    box-shadow: var(--shadow-sm);
+    padding: 0;
+    gap: 0;
+    height: 35px;
+    overflow-x: auto;
+    overflow-y: hidden;
+}
+
+.tab-bar::-webkit-scrollbar {
+    height: 3px;
+}
+
+.tab-bar::-webkit-scrollbar-track {
+    background: var(--vscode-bg-tertiary);
+}
+
+.tab-bar::-webkit-scrollbar-thumb {
+    background: var(--vscode-scrollbar);
 }
 
 .tab {
-    background: var(--background-tertiary);
-    border: 1px solid var(--border-color);
-    border-bottom: none;
-    padding: 0 12px;
+    background: var(--vscode-tab-inactive);
+    border: none;
+    border-right: 1px solid var(--vscode-border);
+    padding: 0 16px;
     cursor: pointer;
     display: flex;
     align-items: center;
     gap: 8px;
-    border-radius: var(--radius-md) var(--radius-md) 0 0;
+    border-radius: 0;
     user-select: none;
-    transition: all var(--transition-fast);
-    color: var(--text-secondary);
+    transition: background var(--transition-fast);
+    color: var(--vscode-fg-secondary);
+    font-size: 13px;
+    min-width: 120px;
+    max-width: 200px;
+    height: 35px;
 }
 
 .tab:hover {
-    background: var(--primary-light);
-    color: var(--primary-color);
+    background: var(--vscode-bg-hover);
+    color: var(--vscode-fg-primary);
 }
 
 .tab.active {
-    background: var(--background-secondary);
-    border-color: var(--border-color);
-    color: var(--text-primary);
-    box-shadow: var(--shadow-sm);
+    background: var(--vscode-tab-active);
+    border-top: 2px solid var(--vscode-accent);
+    color: var(--vscode-fg-active);
 }
 
 .tab-close {
-    width: 18px;
-    height: 18px;
+    width: 20px;
+    height: 20px;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 12px;
+    font-size: 14px;
     cursor: pointer;
-    opacity: 0.6;
-    border-radius: var(--radius-sm);
+    opacity: 0.5;
+    border-radius: 3px;
     transition: all var(--transition-fast);
+    margin-left: auto;
 }
 
 .tab-close:hover {
     opacity: 1;
-    background: var(--danger-color);
+    background: var(--vscode-error);
     color: white;
 }
 
-/* Заголовок окна в стиле Windows */
+/* Заголовок окна в стиле VS Code Title Bar */
 .window-title {
-    background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-hover) 100%);
-    color: white;
-    padding: 8px 12px;
+    background: var(--vscode-bg-secondary);
+    color: var(--vscode-fg-primary);
+    padding: 0;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    box-shadow: var(--shadow-md);
+    height: 30px;
+    border-bottom: 1px solid var(--vscode-border);
 }
 
 .window-title-left {
     display: flex;
     align-items: center;
-    gap: 8px;
+    gap: 12px;
+    padding-left: 12px;
 }
 
 .window-buttons {
     display: flex;
-    gap: 4px;
+    gap: 0;
 }
 
 .window-btn {
-    width: 30px;
-    height: 24px;
+    width: 46px;
+    height: 30px;
     border: none;
     cursor: pointer;
-    font-size: 12px;
+    font-size: 14px;
     display: flex;
     align-items: center;
     justify-content: center;
-    border-radius: var(--radius-sm);
+    border-radius: 0;
     transition: all var(--transition-fast);
+    background: transparent;
+    color: var(--vscode-fg-primary);
+}
+
+.window-btn:hover {
+    background: var(--vscode-bg-hover);
 }
 
 /* Кнопки заголовка окна */
 .btn-minimize,
 .btn-maximize {
-    background: rgba(255, 255, 255, 0.2);
-    color: white;
+    background: transparent;
+    color: var(--vscode-fg-primary);
 }
 
 .btn-minimize:hover,
 .btn-maximize:hover {
-    background: rgba(255, 255, 255, 0.3);
+    background: var(--vscode-bg-hover);
 }
 
 .btn-close {
     background: transparent;
-    color: white;
+    color: var(--vscode-fg-primary);
 }
 
 .btn-close:hover {
-    background: var(--danger-color);
+    background: var(--vscode-error);
+    color: white;
 }
 
-/* Панель меню */
+/* Панель меню в стиле VS Code */
 .menu-bar {
-    background: var(--background-secondary);
-    border-bottom: 1px solid var(--border-color);
-    padding: 4px 8px;
+    background: var(--vscode-bg-secondary);
+    border-bottom: 1px solid var(--vscode-border);
+    padding: 2px 8px;
     display: flex;
-    gap: 4px;
-    box-shadow: var(--shadow-sm);
+    gap: 0;
 }
 
 .menu-item {
-    padding: 6px 12px;
+    padding: 4px 12px;
     cursor: pointer;
-    border-radius: var(--radius-md);
+    border-radius: 0;
     user-select: none;
-    transition: all var(--transition-fast);
-    color: var(--text-primary);
+    transition: background var(--transition-fast);
+    color: var(--vscode-fg-primary);
+    font-size: 13px;
 }
 
 .menu-item:hover {
-    background: var(--primary-light);
-    color: var(--primary-color);
+    background: var(--vscode-bg-hover);
+    color: var(--vscode-fg-active);
 }
 
-/* Ribbon-панель (интерфейс в стиле Office 2007/2010) */
-.ribbon {
-    background: linear-gradient(135deg, var(--background-secondary) 0%, #f8fafc 100%);
-    border-bottom: 1px solid var(--border-color);
-    padding: 6px 12px;
-    display: flex;
-    gap: 16px;
-    box-shadow: var(--shadow-sm);
-}
-
-/* .ribbon-group {
+/* Activity Bar в стиле VS Code (левая узкая панель) */
+.activity-bar {
+    width: 48px;
+    background: var(--vscode-bg-secondary);
+    border-right: 1px solid var(--vscode-border);
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding: 4px 12px;
-    border-right: 1px solid var(--border-color);
-    border-radius: var(--radius-md);
+    padding-top: 8px;
+    gap: 8px;
+}
+
+.activity-bar-item {
+    width: 48px;
+    height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    opacity: 0.6;
     transition: all var(--transition-fast);
-} */
+    color: var(--vscode-fg-primary);
+    border-left: 2px solid transparent;
+}
+
+.activity-bar-item:hover {
+    opacity: 1;
+    background: var(--vscode-bg-hover);
+}
+
+.activity-bar-item.active {
+    opacity: 1;
+    border-left-color: var(--vscode-fg-active);
+}
+
+.activity-bar-item i {
+    font-size: 24px;
+}
+
+/* Toolbar в стиле VS Code */
+.ribbon {
+    background: var(--vscode-bg-secondary);
+    border-bottom: 1px solid var(--vscode-border);
+    padding: 4px 8px;
+    display: flex;
+    gap: 8px;
+}
+
+.ribbon-group {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    padding-right: 8px;
+    margin-right: 8px;
+    border-right: 1px solid var(--vscode-border);
+}
 
 .ribbon-group:hover {
-    background: var(--background-tertiary);
+    background: transparent;
 }
 
 .ribbon-group:last-child {
@@ -407,24 +521,23 @@ body {
 }
 
 .ribbon-group-title {
-    font-size: 10px;
-    color: var(--text-secondary);
-    margin-top: 4px;
-    font-weight: 500;
+    font-size: 9px;
+    color: var(--vscode-fg-secondary);
     text-transform: uppercase;
-    letter-spacing: 0.02em;
+    letter-spacing: 0.05em;
+    opacity: 0.7;
 }
 
 .ribbon-buttons {
     display: flex;
-    gap: 4px;
-    flex-wrap: wrap;
-    justify-content: center;
+    gap: 2px;
+    flex-wrap: nowrap;
+    align-items: center;
 }
 
 .ribbon-btn {
-    width: 32px;
-    height: 32px;
+    width: 28px;
+    height: 28px;
     border: 1px solid transparent;
     background: transparent;
     cursor: pointer;
@@ -432,47 +545,42 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
-    border-radius: var(--radius-md);
+    border-radius: var(--radius-sm);
     font-size: 14px;
     overflow: visible;
     white-space: nowrap;
     transition: all var(--transition-fast);
-    color: var(--text-primary);
+    color: var(--vscode-fg-primary);
 }
 
 /* Кнопки в ribbon для вкладок - компактные */
 .ribbon-tab-btn {
-    padding: 6px 10px;
-    font-size: 11px;
+    padding: 4px 8px;
+    font-size: 12px;
     height: auto;
     width: auto;
     gap: 4px;
 }
 
 .ribbon-tab-btn:hover {
-    background: var(--primary-light);
-    border-color: var(--primary-color);
-    transform: translateY(-1px);
-    box-shadow: var(--shadow-sm);
+    background: var(--vscode-bg-hover);
+    border-color: transparent;
 }
 
 .ribbon-btn:hover {
-    background: var(--primary-light);
-    border-color: var(--primary-color);
-    transform: translateY(-1px);
-    box-shadow: var(--shadow-sm);
+    background: var(--vscode-bg-hover);
+    border-color: transparent;
 }
 
 .ribbon-btn:hover .ribbon-icon,
 .ribbon-btn:hover .icon {
-    fill: var(--primary-color);
+    fill: var(--vscode-fg-active);
 }
 
 .ribbon-btn.active {
-    background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-hover) 100%);
+    background: var(--vscode-selection);
     color: white;
-    border-color: var(--primary-hover);
-    box-shadow: var(--shadow-md);
+    border-color: transparent;
 }
 
 .ribbon-btn.active .ribbon-icon,
@@ -481,16 +589,16 @@ body {
 }
 
 .ribbon-btn-large {
-    width: 48px;
-    height: 48px;
+    width: 40px;
+    height: 40px;
     flex-direction: column;
-    font-size: 18px;
+    font-size: 16px;
 }
 
 .ribbon-btn-label {
-    font-size: 10px;
-    margin-top: 3px;
-    color: var(--text-secondary);
+    font-size: 9px;
+    margin-top: 2px;
+    color: var(--vscode-fg-secondary);
 }
 
 /* Стили для SVG иконок */
@@ -526,82 +634,78 @@ body {
     object-fit: contain;
 }
 
-/* Основная рабочая область */
+/* Основная рабочая область в стиле VS Code */
 .main-container {
     display: flex;
     flex: 1;
     overflow: hidden;
 }
 
-/* Левая панель инструментов */
+/* Левая панель инструментов в стиле VS Code Sidebar */
 .toolbar-left {
-    width: 64px;
-    background: var(--background-secondary);
-    border-right: 1px solid var(--border-color);
-    padding: 8px;
+    width: 52px;
+    background: var(--vscode-bg-secondary);
+    border-right: 1px solid var(--vscode-border);
+    padding: 4px;
     display: flex;
     flex-direction: column;
-    gap: 4px;
-    box-shadow: var(--shadow-sm);
+    gap: 2px;
 }
 
 .tool-btn {
-    width: 48px;
-    height: 48px;
+    width: 44px;
+    height: 44px;
     border: 1px solid transparent;
     background: transparent;
     cursor: pointer;
     display: flex;
     align-items: center;
     justify-content: center;
-    border-radius: var(--radius-md);
-    font-size: 20px;
+    border-radius: var(--radius-sm);
+    font-size: 18px;
     user-select: none;
     transition: all var(--transition-fast);
-    color: var(--text-primary);
+    color: var(--vscode-fg-primary);
+    opacity: 0.7;
 }
 
 .tool-btn:hover {
-    background: var(--primary-light);
-    border-color: var(--primary-color);
-    transform: translateY(-2px);
-    box-shadow: var(--shadow-md);
+    background: var(--vscode-bg-hover);
+    opacity: 1;
 }
 
 .tool-btn.active {
-    background: var(--primary-color);
+    background: var(--vscode-selection);
     color: white;
-    border-color: var(--primary-hover);
-    box-shadow: var(--shadow-md);
+    opacity: 1;
 }
 
 .tool-separator {
     height: 1px;
-    background: var(--border-color);
-    margin: 8px 0;
+    background: var(--vscode-border);
+    margin: 4px 0;
 }
 
-/* Область холста для рисования */
+/* Область холста для рисования в стиле VS Code Editor */
 .canvas-area {
     flex: 1;
-    background: var(--background-tertiary);
+    background: var(--vscode-bg-primary);
     overflow: auto;
     position: relative;
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 20px;
+    padding: 8px;
 }
 
 .canvas-wrapper {
-    background: var(--background-secondary);
-    box-shadow: var(--shadow-xl);
-    border-radius: 0;
+    background: var(--vscode-bg-primary);
+    border: 1px solid var(--vscode-border);
     position: relative;
     display: inline-block;
     overflow: auto;
     max-width: 100%;
-    max-height: calc(100vh - 200px);
+    max-height: calc(100vh - 150px);
 }
 
 .paint-canvas {
@@ -609,130 +713,124 @@ body {
     cursor: crosshair;
 }
 
-/* Палитра цветов (нижняя часть) */
+/* Палитра цветов в стиле VS Code Status Bar */
 .color-palette {
-    background: var(--background-secondary);
-    border-top: 1px solid var(--border-color);
-    padding: 8px 12px;
+    background: var(--vscode-bg-secondary);
+    border-top: 1px solid var(--vscode-border);
+    padding: 6px 12px;
     display: flex;
     align-items: center;
-    gap: 20px;
-    box-shadow: var(--shadow-sm);
+    gap: 16px;
 }
 
 .current-colors {
     display: flex;
     align-items: center;
-    gap: 6px;
+    gap: 4px;
 }
 
 .color-preview {
     position: relative;
-    width: 36px;
-    height: 36px;
+    width: 32px;
+    height: 32px;
 }
 
 .color-primary {
     position: absolute;
     top: 0;
     left: 0;
-    width: 28px;
-    height: 28px;
-    border: 2px solid var(--border-color);
+    width: 24px;
+    height: 24px;
+    border: 2px solid var(--vscode-border);
     background: #000;
     cursor: pointer;
     z-index: 2;
-    border-radius: var(--radius-sm);
+    border-radius: 2px;
     transition: all var(--transition-fast);
-    box-shadow: var(--shadow-md);
 }
 
 .color-primary:hover {
-    transform: scale(1.1);
+    border-color: var(--vscode-fg-primary);
 }
 
 .color-secondary {
     position: absolute;
     bottom: 0;
     right: 0;
-    width: 28px;
-    height: 28px;
-    border: 2px solid var(--border-color);
+    width: 24px;
+    height: 24px;
+    border: 2px solid var(--vscode-border);
     background: #fff;
     cursor: pointer;
     z-index: 1;
-    border-radius: var(--radius-sm);
+    border-radius: 2px;
     transition: all var(--transition-fast);
-    box-shadow: var(--shadow-md);
 }
 
 .color-secondary:hover {
-    transform: scale(1.1);
+    border-color: var(--vscode-fg-primary);
 }
 
 .palette-colors {
     display: grid;
     grid-template-columns: repeat(14, 1fr);
     grid-template-rows: repeat(2, 1fr);
-    gap: 3px;
+    gap: 2px;
 }
 
 .palette-color {
-    width: 22px;
-    height: 22px;
-    border: 1px solid var(--border-color);
+    width: 20px;
+    height: 20px;
+    border: 1px solid var(--vscode-border);
     cursor: pointer;
-    border-radius: var(--radius-sm);
+    border-radius: 1px;
     transition: all var(--transition-fast);
 }
 
 .palette-color:hover {
-    border-color: var(--primary-color);
-    transform: scale(1.15);
-    box-shadow: var(--shadow-md);
+    border-color: var(--vscode-fg-active);
+    transform: scale(1.1);
 }
 
 /* Панель размеров кисти */
 .brush-sizes {
     display: flex;
     flex-direction: column;
-    gap: 6px;
+    gap: 4px;
     align-items: center;
 }
 
 .brush-size-btn {
-    border: 2px solid var(--border-color);
-    background: var(--background-secondary);
+    border: 2px solid var(--vscode-border);
+    background: var(--vscode-bg-tertiary);
     cursor: pointer;
     border-radius: 50%;
     transition: all var(--transition-fast);
 }
 
 .brush-size-btn:hover, .brush-size-btn.active {
-    border-color: var(--primary-color);
-    background: var(--primary-light);
-    transform: scale(1.1);
+    border-color: var(--vscode-accent);
+    background: var(--vscode-selection);
 }
 
-/* Строка состояния */
+/* Строка состояния в стиле VS Code Status Bar */
 .status-bar {
-    background: var(--background-secondary);
-    border-top: 1px solid var(--border-color);
-    padding: 6px 12px;
+    background: var(--vscode-statusbar-bg);
+    border-top: none;
+    padding: 4px 12px;
     display: flex;
     justify-content: space-between;
     font-size: 12px;
-    color: var(--text-secondary);
-    box-shadow: var(--shadow-sm);
+    color: var(--vscode-statusbar-fg);
 }
 
 .status-left {
     display: flex;
-    gap: 24px;
+    gap: 16px;
 }
 
 
-/* Выпадающие меню */
+/* Выпадающие меню в стиле VS Code */
 .dropdown {
     position: relative;
 }
@@ -742,14 +840,11 @@ body {
     position: absolute;
     top: 100%;
     left: 0;
-    background: var(--background-secondary);
-    border: 1px solid var(--border-color);
-    box-shadow: var(--shadow-lg);
+    background: var(--vscode-bg-secondary);
+    border: 1px solid var(--vscode-border);
     z-index: 1000;
-    min-width: 200px;
-    border-radius: var(--radius-md);
-    padding: 4px;
-    overflow: visible;
+    min-width: 180px;
+    padding: 4px 0;
 }
 
 .dropdown:hover .dropdown-content {
@@ -757,27 +852,28 @@ body {
 }
 
 .dropdown-item {
-    padding: 8px 12px;
+    padding: 6px 16px;
     cursor: pointer;
     display: flex;
     align-items: center;
     gap: 10px;
     user-select: none;
     position: relative;
-    border-radius: var(--radius-sm);
-    transition: all var(--transition-fast);
-    color: var(--text-primary);
+    border-radius: 0;
+    transition: background var(--transition-fast);
+    color: var(--vscode-fg-primary);
+    font-size: 13px;
 }
 
 .dropdown-item:hover {
-    background: var(--primary-light);
-    color: var(--primary-color);
+    background: var(--vscode-selection);
+    color: var(--vscode-fg-active);
 }
 
 .dropdown-separator {
     height: 1px;
-    background: var(--border-color);
-    margin: 6px 0;
+    background: var(--vscode-border);
+    margin: 4px 0;
 }
 
 .dropdown-item img {
@@ -796,7 +892,7 @@ body {
     margin-right: 8px;
 }
 
-/* Подменю (выпадающие меню второго уровня) */
+/* Подменю (выпадающие меню второго уровня) в стиле VS Code */
 .dropdown-submenu {
     position: relative;
     display: flex;
@@ -809,13 +905,11 @@ body {
     top: -4px;
     left: 100%;
     margin-left: 0;
-    background: var(--background-secondary);
-    border: 1px solid var(--border-color);
-    box-shadow: var(--shadow-xl);
+    background: var(--vscode-bg-secondary);
+    border: 1px solid var(--vscode-border);
     z-index: 10001;
     min-width: 180px;
-    border-radius: var(--radius-md);
-    padding: 4px;
+    padding: 4px 0;
 }
 
 .dropdown-submenu:hover .dropdown-submenu-content {
@@ -1949,3 +2043,106 @@ input, textarea, select,
     transform: rotate(180deg); /* Оставляем MIN перевернутым (если нужно) */
 }
 
+
+/* VS Code Scrollbar Styles */
+::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--vscode-bg-tertiary);
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--vscode-scrollbar);
+    border-radius: 0;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #5a5a5a;
+}
+
+/* Input fields in VS Code style */
+input[type="text"],
+input[type="number"],
+textarea,
+select {
+    background: var(--vscode-input-bg);
+    border: 1px solid var(--vscode-border);
+    color: var(--vscode-fg-primary);
+    padding: 4px 8px;
+    font-size: 13px;
+    outline: none;
+}
+
+input[type="text"]:focus,
+input[type="number"]:focus,
+textarea:focus,
+select:focus {
+    border-color: var(--vscode-accent);
+}
+
+/* Buttons in VS Code style */
+button,
+.btn {
+    background: var(--vscode-bg-tertiary);
+    border: 1px solid var(--vscode-border);
+    color: var(--vscode-fg-primary);
+    padding: 4px 12px;
+    font-size: 13px;
+    cursor: pointer;
+    transition: all var(--transition-fast);
+}
+
+button:hover,
+.btn:hover {
+    background: var(--vscode-bg-hover);
+    border-color: var(--vscode-accent);
+}
+
+button:active,
+.btn:active {
+    background: var(--vscode-selection);
+}
+
+/* Modal dialogs in VS Code style */
+.modal-content {
+    background: var(--vscode-bg-secondary);
+    border: 1px solid var(--vscode-border);
+    color: var(--vscode-fg-primary);
+}
+
+.modal-header {
+    background: var(--vscode-bg-tertiary);
+    border-bottom: 1px solid var(--vscode-border);
+    color: var(--vscode-fg-primary);
+}
+
+/* Theme toggle button styles */
+.theme-toggle-btn {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 12px !important;
+    min-width: 120px;
+}
+
+.theme-toggle-btn .icon {
+    width: 18px;
+    height: 18px;
+    fill: currentColor;
+}
+
+.theme-btn-text {
+    font-size: 12px;
+    font-weight: 500;
+}
+
+body.light-theme .theme-icon-light {
+    display: none !important;
+}
+
+body.light-theme .theme-icon-dark {
+    display: inline-block !important;
+}
