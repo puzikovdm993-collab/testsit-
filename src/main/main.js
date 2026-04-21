@@ -37,6 +37,9 @@ function toggleTheme() {
     localStorage.setItem('theme', isLight ? 'light' : 'dark');
 }
 
+// Экспортируем функцию в глобальную область видимости для доступа из HTML
+window.toggleTheme = toggleTheme;
+
 // Применение сохраненной темы при загрузке
 function applySavedTheme() {
     const savedTheme = localStorage.getItem('theme');
