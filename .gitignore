@@ -4,9 +4,6 @@
 __pycache__/
 *.o
 *.obj
-dist/
-build/
-target/
 *.class
 *.exe
 *.dll
@@ -31,8 +28,6 @@ venv/
 # Editors
 .vscode/
 .idea/
-*.swp
-*.swo
 
 # System files
 .DS_Store
@@ -43,13 +38,15 @@ coverage/
 htmlcov/
 .coverage
 
+# Build directories
+dist/
+build/
+target/
+.gradle/
+
 # Python specific
 .mypy_cache/
 .pytest_cache/
-
-# Java/Gradle
-.gradle/
-build/
 
 # Compressed files
 *.zip
