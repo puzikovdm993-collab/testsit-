@@ -225,7 +225,7 @@
         element.scrollIntoView({ behavior: 'smooth', block: 'center' });
         
         // Если элемент является контентом вкладки (tab-pane), подсвечиваем также кнопку вкладки и весь контейнер вкладок
-        if (element.classList.contains('tab-pane')) {
+        if (element.id && element.id.startsWith('tab-')) {
             const tabId = element.id; // например, 'tab-file'
             const tabName = tabId.replace('tab-', ''); // например, 'file'
             const tabBtn = document.querySelector(`.tab-btn[data-tab="${tabName}"]`);
