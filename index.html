@@ -51,15 +51,18 @@
     <!-- Панель вкладок (Tabs) -->
     <div class="tabs-container">
         <div class="tabs-header">
-            <button class="tab-btn active" data-tab="file">Файл</button>
-            <button class="tab-btn" data-tab="edit">Правка</button>
-            <button class="tab-btn" data-tab="view">Вид</button>
-            <button class="tab-btn" data-tab="image">Изображение</button>
-            <button class="tab-btn" data-tab="filters">Фильтры</button>
-            <button class="tab-btn" data-tab="adjustments">Регулировка</button>
-            <button class="tab-btn" data-tab="tools">Инструменты</button>
-            <button class="tab-btn" data-tab="modes">Режимы</button>
-            <button class="tab-btn" data-tab="options">Настройки</button>
+            <button class="tab-btn active" data-tab="file" title="Файл - управление файлами">Файл</button>
+            <button class="tab-btn" data-tab="edit" title="Правка - отмена, повтор, история">Правка</button>
+            <button class="tab-btn" data-tab="view" title="Вид - масштаб, отображение">Вид</button>
+            <button class="tab-btn" data-tab="image" title="Изображение - обрезка, поворот, отражение">Изображение</button>
+            <button class="tab-btn" data-tab="filters" title="Фильтры - применение фильтров">Фильтры</button>
+            <button class="tab-btn" data-tab="adjustments" title="Регулировка - настройка яркости, контраста">Регулировка</button>
+            <button class="tab-btn" data-tab="tools" title="Инструменты - инструменты рисования и выделения">Инструменты</button>
+            <button class="tab-btn" data-tab="modes" title="Режимы - режимы работы">Режимы</button>
+            <button class="tab-btn" data-tab="options" title="Настройки - параметры приложения">Настройки</button>
+            <button class="tab-btn help-btn" onclick="showHelpModal()" title="Помощь - описание функционала приложения">
+                <i class="fas fa-question"></i> Помощь
+            </button>
         </div>
         <div class="tabs-content">
             <!-- Контент вкладки "Файл" -->
@@ -409,16 +412,16 @@
 
 
         <div class="toolbar-left">
-            <button class="tool-btn active" data-tool="cursor" onclick="setTool('cursor')" title="Курсор">
+            <button class="tool-btn active" data-tool="cursor" onclick="setTool('cursor')" title="Курсор - выбор и перемещение по изображению">
                 <svg class="tool-icon"><use href="#mouse-pointer.svg"></use></svg>
             </button>
-            <button class="tool-btn" data-tool="profile" onclick="setTool('profile')" title="Профиль">
+            <button class="tool-btn" data-tool="profile" onclick="setTool('profile')" title="Профиль - построение графика интенсивности">
                 <img src="icons/free-icon-CurvesEffect.png" alt="">
             </button>
-            <button class="tool-btn" data-tool="lasso" onclick="setTool('lasso')" title="Лассо">
+            <button class="tool-btn" data-tool="lasso" onclick="setTool('lasso')" title="Лассо - выделение произвольной области">
                 ⭕
             </button>
-            <button class="tool-btn" data-tool="move" onclick="setTool('move')" title="Перемещение выделения">
+            <button class="tool-btn" data-tool="move" onclick="setTool('move')" title="Перемещение - перемещение выделенной области">
                 ✂️
             </button>
         </div>
@@ -1254,6 +1257,131 @@
 
 <script src="src/imageOps/imageOps.js"></script>
 <script src="src/recentFiles/recentFiles.js"></script>
+<!-- Модальное окно помощи -->
+<div class="modal" id="helpModal">
+    <div class="modal-content" style="width: 800px; max-width: 90vw; max-height: 85vh; overflow-y: auto;">
+        <div class="modal-title">
+            <span>Помощь - Описание функционала WTIS</span>
+            <button onclick="closeHelpModal()">✕</button>
+        </div>
+        <div class="modal-body" style="padding: 20px; overflow-y: auto;">
+            <div class="help-section">
+                <h3><i class="fas fa-folder"></i> Вкладка "Файл"</h3>
+                <p>Управление файлами проекта:</p>
+                <ul>
+                    <li><strong>Открыть</strong> - загрузка изображений с компьютера или сервера</li>
+                    <li><strong>Сохранить</strong> - сохранение результатов работы локально или на сервере</li>
+                    <li><strong>Открытые файлы</strong> - переключение между несколькими открытыми изображениями</li>
+                </ul>
+            </div>
+
+            <div class="help-section">
+                <h3><i class="fas fa-undo"></i> Вкладка "Правка"</h3>
+                <p>Работа с историей действий:</p>
+                <ul>
+                    <li><strong>Отменить (Ctrl+Z)</strong> - отмена последнего действия</li>
+                    <li><strong>Повторить (Ctrl+Y)</strong> - повтор ранее отменённого действия</li>
+                    <li><strong>История (Ctrl+H)</strong> - просмотр и навигация по истории изменений</li>
+                </ul>
+            </div>
+
+            <div class="help-section">
+                <h3><i class="fas fa-search"></i> Вкладка "Вид"</h3>
+                <p>Управление отображением изображения:</p>
+                <ul>
+                    <li><strong>Увеличить</strong> - приближение изображения</li>
+                    <li><strong>Уменьшить</strong> - отдаление изображения</li>
+                    <li><strong>100%</strong> - сброс масштаба к исходному размеру</li>
+                    <li><strong>По размеру окна</strong> - автоматическое масштабирование под размер экрана</li>
+                </ul>
+            </div>
+
+            <div class="help-section">
+                <h3><i class="fas fa-image"></i> Вкладка "Изображение"</h3>
+                <p>Геометрические преобразования:</p>
+                <ul>
+                    <li><strong>Обрезка</strong> - обрезка изображения по выделенной области</li>
+                    <li><strong>Поворот</strong> - поворот на 90°, 180°, 270°</li>
+                    <li><strong>Отражение</strong> - зеркальное отражение по горизонтали или вертикали</li>
+                </ul>
+            </div>
+
+            <div class="help-section">
+                <h3><i class="fas fa-magic"></i> Вкладка "Фильтры"</h3>
+                <p>Применение фильтров и обработка изображений:</p>
+                <ul>
+                    <li><strong>Выделение контуров</strong> - фильтры для обнаружения границ и контуров</li>
+                    <li><strong>Поиск объектов</strong> - поиск окружностей, осей симметрии, центров</li>
+                    <li><strong>Предварительная обработка</strong> - аппроксимация, арифметические операции, удаление дефектов</li>
+                    <li><strong>Прочее</strong> - медианный фильтр, нормализация</li>
+                </ul>
+            </div>
+
+            <div class="help-section">
+                <h3><i class="fas fa-sliders-h"></i> Вкладка "Регулировка"</h3>
+                <p>Настройка параметров изображения:</p>
+                <ul>
+                    <li><strong>Основные настройки</strong> - поворот/масштабирование, функции окна, яркость/контраст</li>
+                    <li><strong>Цветокоррекция</strong> - баланс цвета, тон/насыщенность, уровни, кривые</li>
+                </ul>
+            </div>
+
+            <div class="help-section">
+                <h3><i class="fas fa-tools"></i> Вкладка "Инструменты"</h3>
+                <p>Специализированные инструменты:</p>
+                <ul>
+                    <li><strong>Code Lab</strong> - выполнение пользовательских скриптов</li>
+                    <li><strong>СРТИ</strong> - исправление и фильтрация СРТИ</li>
+                    <li><strong>Фотохронометрия</strong> - фильтр ФХМ</li>
+                </ul>
+            </div>
+
+            <div class="help-section">
+                <h3><i class="fas fa-project-diagram"></i> Вкладка "Режимы"</h3>
+                <p>Переключение режимов работы приложения:</p>
+                <ul>
+                    <li><strong>Режимы</strong> - переход к workflow (сценариям обработки)</li>
+                </ul>
+            </div>
+
+            <div class="help-section">
+                <h3><i class="fas fa-cog"></i> Вкладка "Настройки"</h3>
+                <p>Параметры приложения:</p>
+                <ul>
+                    <li><strong>Интерфейс</strong> - отображение цветовой шкалы, выбор палитры</li>
+                    <li><strong>Тема оформления</strong> - переключение светлой/тёмной темы</li>
+                </ul>
+            </div>
+
+            <div class="help-section">
+                <h3><i class="fas fa-mouse-pointer"></i> Панель инструментов</h3>
+                <p>Инструменты для работы с изображением:</p>
+                <ul>
+                    <li><strong>Курсор</strong> - выбор и перемещение по изображению, получение информации о пикселях</li>
+                    <li><strong>Профиль</strong> - построение графика интенсивности вдоль линии</li>
+                    <li><strong>Лассо</strong> - выделение произвольной области</li>
+                    <li><strong>Перемещение</strong> - перемещение выделенной области</li>
+                </ul>
+            </div>
+
+            <div class="help-section">
+                <h3><i class="fas fa-keyboard"></i> Горячие клавиши</h3>
+                <ul>
+                    <li><strong>Ctrl+Z</strong> - Отменить действие</li>
+                    <li><strong>Ctrl+Y</strong> - Повторить действие</li>
+                    <li><strong>Ctrl+H</strong> - Открыть историю</li>
+                    <li><strong>Ctrl+S</strong> - Сохранить</li>
+                    <li><strong>Ctrl+O</strong> - Открыть файл</li>
+                </ul>
+            </div>
+        </div>
+        <div class="modal-buttons">
+            <button class="modal-btn" onclick="closeHelpModal()">Закрыть</button>
+        </div>
+        <div class="modal-resize-handle"></div>
+    </div>
+</div>
+
 <script src="src/server/server.js"></script>
 <script src="src/ui/ui.js"></script>
 <script src="src/events/events.js"></script>

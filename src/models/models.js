@@ -531,4 +531,21 @@
 
     console.log('✅ История изменений загружена (showHistoryModal глобальная)');
 
+    // ====================== МОДАЛЬНОЕ ОКНО ПОМОЩИ ======================
+    
+    // Показать окно помощи
+    window.showHelpModal = function() {
+        const modal = document.getElementById('helpModal');
+        if (!modal) return console.error('helpModal не найден');
+        modal.classList.add('active');
+    };
+
+    // Закрыть окно помощи
+    window.closeHelpModal = function() {
+        const modal = document.getElementById('helpModal');
+        if (modal) modal.classList.remove('active');
+    };
+
+    console.log('✅ Функции окна помощи добавлены');
+
 })();
