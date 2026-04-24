@@ -237,6 +237,11 @@
             if (tabsContainer) {
                 tabsContainer.classList.add('tour-highlighted');
             }
+            // Подсвечиваем .tabs-content по контуру
+            const tabsContent = element.closest('.tabs-content');
+            if (tabsContent) {
+                tabsContent.classList.add('tour-highlighted');
+            }
         }
     }
 
