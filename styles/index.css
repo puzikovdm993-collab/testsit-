@@ -148,6 +148,22 @@ body.light-theme .tabs-container {
     color: var(--primary-color);
 }
 
+/* Кнопка помощи */
+.help-btn {
+    background: var(--vscode-accent) !important;
+    color: white !important;
+    font-weight: 600;
+    margin-left: auto;
+}
+
+.help-btn:hover {
+    background: var(--vscode-accent-hover) !important;
+}
+
+.help-btn i {
+    margin-right: 6px;
+}
+
 .tabs-content {
     padding-top: 10px;
     padding-right: 10px;

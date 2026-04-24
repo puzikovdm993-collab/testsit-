@@ -300,3 +300,63 @@ body.light-theme {
 .modal-form-group:last-child {
     margin-bottom: 0;
 }
+
+/* Стили для модального окна помощи */
+.help-section {
+    margin-bottom: 24px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid var(--modal-border);
+}
+
+.help-section:last-child {
+    border-bottom: none;
+}
+
+.help-section h3 {
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--modal-text);
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.help-section h3 i {
+    color: var(--vscode-accent);
+}
+
+.help-section p {
+    font-size: 13px;
+    color: var(--modal-text-muted);
+    margin-bottom: 8px;
+    text-align: left;
+    padding: 0;
+}
+
+.help-section ul {
+    list-style: none;
+    padding-left: 0;
+    margin: 0;
+}
+
+.help-section li {
+    font-size: 13px;
+    color: var(--modal-text);
+    padding: 4px 0;
+    padding-left: 16px;
+    position: relative;
+}
+
+.help-section li::before {
+    content: "•";
+    color: var(--vscode-accent);
+    position: absolute;
+    left: 0;
+    font-weight: bold;
+}
+
+.help-section strong {
+    color: var(--vscode-fg-active);
+    font-weight: 600;
+}
