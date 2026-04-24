@@ -548,4 +548,39 @@
 
     console.log('✅ Функции окна помощи добавлены');
 
+    // ====================== МОДАЛЬНОЕ ОКНО ОБУЧЕНИЯ ======================
+    
+    // Показать окно обучения
+    window.startTutorial = function() {
+        const modal = document.getElementById('tutorialModal');
+        if (!modal) return console.error('tutorialModal не найден');
+        modal.classList.add('active');
+    };
+
+    // Закрыть окно обучения
+    window.closeTutorialModal = function() {
+        const modal = document.getElementById('tutorialModal');
+        if (modal) modal.classList.remove('active');
+    };
+
+    // Подсветка вкладки (для кнопок в обучении)
+    window.highlightTab = function(tabName) {
+        // Снимаем активный класс со всех вкладок
+        document.querySelectorAll('.tab-pane').forEach(pane => {
+            pane.classList.remove('active');
+        });
+        document.querySelectorAll('.tab-btn').forEach(btn => {
+            btn.classList.remove('active');
+        });
+        
+        // Активируем нужную вкладку
+        const targetPane = document.getElementById('tab-' + tabName);
+        const targetBtn = document.querySelector('.tab-btn[data-tab="' + tabName + '"]');
+        
+        if (targetPane) targetPane.classList.add('active');
+        if (targetBtn) targetBtn.classList.add('active');
+    };
+
+    console.log('✅ Функции окна обучения добавлены');
+
 })();

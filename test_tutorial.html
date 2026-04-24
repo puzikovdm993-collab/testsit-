@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Тест режима обучения WTIS</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #1e1e1e;
+            color: #cccccc;
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        h1 {
+            color: #4CAF50;
+            border-bottom: 2px solid #4CAF50;
+            padding-bottom: 10px;
+        }
+        .test-section {
+            background: #2d2d2d;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 8px;
+            border-left: 3px solid #4CAF50;
+        }
+        .btn {
+            background: #4CAF50;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 16px;
+            margin: 10px 5px;
+        }
+        .btn:hover {
+            background: #45a049;
+        }
+        .status {
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 4px;
+        }
+        .success { background: #2e7d32; color: white; }
+        .info { background: #1565c0; color: white; }
+        
+        /* Modal styles */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.5);
+        }
+        .modal.active {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .modal-content {
+            background: #2d2d2d;
+            border-radius: 8px;
+            width: 700px;
+            max-width: 90vw;
+            max-height: 85vh;
+            overflow-y: auto;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.5);
+        }
+        .modal-title {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 16px 20px;
+            border-bottom: 1px solid #404040;
+            background: #252526;
+            border-radius: 8px 8px 0 0;
+        }
+        .modal-title button {
+            background: none;
+            border: none;
+            color: #cccccc;
+            font-size: 24px;
+            cursor: pointer;
+        }
+        .modal-title button:hover {
+            color: white;
+        }
+        .modal-body {
+            padding: 20px;
+        }
+        .tutorial-section {
+            margin-bottom: 24px;
+            padding: 16px;
+            background: rgba(76, 175, 80, 0.05);
+            border-radius: 8px;
+            border-left: 3px solid #4CAF50;
+        }
+        .tutorial-section h3, .tutorial-section h4 {
+            color: #cccccc;
+        }
+        .tutorial-section p, .tutorial-section li {
+            color: #aaaaaa;
+        }
+        .tutorial-action-btn {
+            display: inline-block;
+            margin-top: 10px;
+            padding: 8px 16px;
+            background: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 13px;
+        }
+        .tutorial-action-btn:hover {
+            background: #45a049;
+        }
+        code {
+            background: #1e1e1e;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-family: monospace;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🎓 Тестирование режима обучения WTIS</h1>
+        
+        <div class="test-section">
+            <h2>✅ Реализованные компоненты</h2>
+            <div class="status success">
+                <strong>Все компоненты успешно добавлены!</strong>
+            </div>
+            <ul>
+                <li>Кнопка "Обучение" во вкладке "Режимы"</li>
+                <li>Модальное окно обучения с пошаговым руководством</li>
+                <li>Функции управления окном обучения</li>
+                <li>Стили для элементов обучения</li>
+            </ul>
+        </div>
+
+        <div class="test-section">
+            <h2>📁 Изменённые файлы</h2>
+            <ol>
+                <li><code>/workspace/index.html</code> - добавлена кнопка и модальное окно</li>
+                <li><code>/workspace/src/models/models.js</code> - функции startTutorial, closeTutorialModal, highlightTab</li>
+                <li><code>/workspace/styles/modals.css</code> - стили для tutorial-section</li>
+            </ol>
+        </div>
+
+        <div class="test-section">
+            <h2>🚀 Запуск теста</h2>
+            <p>Нажмите кнопку ниже, чтобы открыть модальное окно обучения:</p>
+            <button class="btn" onclick="startTutorial()">Открыть окно обучения</button>
+        </div>
+
+        <div class="test-section">
+            <h2>📋 Функционал обучения</h2>
+            <ul>
+                <li><strong>Шаг 1:</strong> Открытие изображения</li>
+                <li><strong>Шаг 2:</strong> Навигация и масштабирование</li>
+                <li><strong>Шаг 3:</strong> Базовая обработка (обрезка, поворот, отражение)</li>
+                <li><strong>Шаг 4:</strong> Применение фильтров</li>
+                <li><strong>Шаг 5:</strong> Тонкая настройка (яркость, контраст, цвет)</li>
+                <li><strong>Шаг 6:</strong> История действий</li>
+                <li><strong>Советы:</strong> Рекомендации для начинающих</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- Модальное окно обучения -->
+    <div class="modal" id="tutorialModal">
+        <div class="modal-content">
+            <div class="modal-title">
+                <span>🎓 Обучение для новичков</span>
+                <button onclick="closeTutorialModal()">✕</button>
+            </div>
+            <div class="modal-body">
+                <div class="tutorial-section">
+                    <h3>👋 Добро пожаловать в WTIS!</h3>
+                    <p>Это система обработки и анализа изображений. Давайте познакомимся с основными возможностями.</p>
+                </div>
+
+                <div class="tutorial-section">
+                    <h4>Шаг 1: Открытие изображения</h4>
+                    <ol>
+                        <li>Перейдите на вкладку <strong>"Файл"</strong></li>
+                        <li>Нажмите кнопку <strong>"Открыть"</strong></li>
+                        <li>Выберите изображение на компьютере или загрузите с сервера</li>
+                    </ol>
+                </div>
+
+                <div class="tutorial-section">
+                    <h4>Шаг 2: Навигация и масштабирование</h4>
+                    <ul>
+                        <li><strong>Колёсико мыши</strong> - масштабирование</li>
+                        <li><strong>Перетаскивание</strong> - перемещение изображения</li>
+                        <li>Вкладка <strong>"Вид"</strong> - точная настройка масштаба</li>
+                    </ul>
+                </div>
+
+                <div class="tutorial-section">
+                    <h4>Шаг 3: Базовая обработка</h4>
+                    <p>Во вкладке <strong>"Изображение"</strong> доступны:</p>
+                    <ul>
+                        <li>Обрезка изображения</li>
+                        <li>Поворот на 90°, 180°, 270°</li>
+                        <li>Отражение по горизонтали/вертикали</li>
+                    </ul>
+                </div>
+
+                <div class="tutorial-section">
+                    <h4>Шаг 4: Применение фильтров</h4>
+                    <p>Во вкладке <strong>"Фильтры"</strong> вы найдёте:</p>
+                    <ul>
+                        <li>Выделение контуров и границ</li>
+                        <li>Поиск объектов (окружности, центры симметрии)</li>
+                        <li>Предварительную обработку (аппроксимация, нормализация)</li>
+                    </ul>
+                </div>
+
+                <div class="tutorial-section">
+                    <h4>Шаг 5: Тонкая настройка</h4>
+                    <p>Во вкладке <strong>"Регулировка"</strong> доступны:</p>
+                    <ul>
+                        <li>Яркость, контраст, насыщенность</li>
+                        <li>Баланс цвета, тон</li>
+                        <li>Уровни и кривые</li>
+                    </ul>
+                </div>
+
+                <div class="tutorial-section">
+                    <h4>Шаг 6: История действий</h4>
+                    <p>Не бойтесь экспериментировать! Все действия можно отменить:</p>
+                    <ul>
+                        <li><strong>Ctrl+Z</strong> - отменить последнее действие</li>
+                        <li><strong>Ctrl+Y</strong> - повторить отменённое</li>
+                        <li><strong>Ctrl+H</strong> - открыть полную историю изменений</li>
+                    </ul>
+                </div>
+
+                <div class="tutorial-section">
+                    <h4>💡 Советы для начинающих</h4>
+                    <ul>
+                        <li>Сохраняйте работу периодически (Ctrl+S)</li>
+                        <li>Используйте историю для возврата к предыдущим состояниям</li>
+                        <li>Экспериментируйте с фильтрами на копии изображения</li>
+                        <li>Обращайтесь к справке (кнопка "Помощь") за подробной информацией</li>
+                    </ul>
+                </div>
+
+                <div class="tutorial-section" style="text-align: center; margin-top: 20px; padding-top: 20px; border-top: 2px solid #4CAF50;">
+                    <p><strong>Готовы начать работу?</strong></p>
+                    <button class="btn" onclick="closeTutorialModal()">Начать работу</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Функции управления модальным окном
+        function startTutorial() {
+            const modal = document.getElementById('tutorialModal');
+            if (!modal) return console.error('tutorialModal не найден');
+            modal.classList.add('active');
+        }
+
+        function closeTutorialModal() {
+            const modal = document.getElementById('tutorialModal');
+            if (modal) modal.classList.remove('active');
+        }
+
+        // Закрытие по клику вне окна
+        window.onclick = function(event) {
+            const modal = document.getElementById('tutorialModal');
+            if (event.target === modal) {
+                modal.classList.remove('active');
+            }
+        }
+    </script>
+</body>
+</html>

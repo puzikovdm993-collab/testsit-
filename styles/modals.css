@@ -360,3 +360,102 @@ body.light-theme {
     color: var(--vscode-fg-active);
     font-weight: 600;
 }
+
+/* Стили для окна обучения */
+.tutorial-section {
+    margin-bottom: 24px;
+    padding: 16px;
+    background: rgba(76, 175, 80, 0.05);
+    border-radius: 8px;
+    border-left: 3px solid #4CAF50;
+}
+
+.tutorial-section h3 {
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--modal-text);
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.tutorial-section h4 {
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--modal-text);
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.tutorial-section p {
+    font-size: 13px;
+    color: var(--modal-text-muted);
+    margin-bottom: 8px;
+    text-align: left;
+    padding: 0;
+}
+
+.tutorial-section ul,
+.tutorial-section ol {
+    list-style: none;
+    padding-left: 0;
+    margin: 0 0 12px 0;
+}
+
+.tutorial-section li {
+    font-size: 13px;
+    color: var(--modal-text);
+    padding: 4px 0;
+    padding-left: 16px;
+    position: relative;
+}
+
+.tutorial-section ul li::before {
+    content: "•";
+    color: #4CAF50;
+    position: absolute;
+    left: 0;
+    font-weight: bold;
+}
+
+.tutorial-section ol {
+    counter-reset: tutorial-counter;
+}
+
+.tutorial-section ol li {
+    padding-left: 24px;
+}
+
+.tutorial-section ol li::before {
+    content: counter(tutorial-counter) ".";
+    counter-increment: tutorial-counter;
+    color: #4CAF50;
+    position: absolute;
+    left: 0;
+    font-weight: bold;
+}
+
+.tutorial-section strong {
+    color: var(--vscode-fg-active);
+    font-weight: 600;
+}
+
+.tutorial-action-btn {
+    display: inline-block;
+    margin-top: 10px;
+    padding: 8px 16px;
+    background: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 13px;
+    transition: background 0.2s;
+}
+
+.tutorial-action-btn:hover {
+    background: #45a049;
+}

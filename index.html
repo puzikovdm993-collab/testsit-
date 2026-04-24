@@ -352,6 +352,14 @@
                         <h4>Режимы</h4>
                     </div>
                 </div>
+                <div class="tab-section">
+                    <div class="tab-buttons">
+                        <button class="tab-action-btn" onclick="startTutorial()" title="Обучение">
+                            <img src="icons/free-icon-learning.png" alt="Обучение" onerror="this.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 24 24%22><path fill=%22%234CAF50%22 d=%22M12 3L1 9l4 2.18v6L12 21l7-3.82v-6l2-1.09V17h2V9L12 3zm6.82 6L12 12.72 5.18 9 12 5.28 18.82 9zM17 15.99l-5 2.73-5-2.73v-3.72L12 15l5-2.73v3.72z%22/></svg>'">
+                        </button>
+                        <h4>Обучение</h4>
+                    </div>
+                </div>
             </div>
 
             <!-- Контент вкладки "Настройки" -->
@@ -1377,6 +1385,102 @@
         </div>
         <div class="modal-buttons">
             <button class="modal-btn" onclick="closeHelpModal()">Закрыть</button>
+        </div>
+        <div class="modal-resize-handle"></div>
+    </div>
+</div>
+
+<!-- Модальное окно обучения -->
+<div class="modal" id="tutorialModal">
+    <div class="modal-content" style="width: 700px; max-width: 90vw; max-height: 85vh; overflow-y: auto;">
+        <div class="modal-title">
+            <span>🎓 Обучение для новичков</span>
+            <button onclick="closeTutorialModal()">✕</button>
+        </div>
+        <div class="modal-body" style="padding: 20px; overflow-y: auto;">
+            <div class="tutorial-section">
+                <h3>👋 Добро пожаловать в WTIS!</h3>
+                <p>Это система обработки и анализа изображений. Давайте познакомимся с основными возможностями.</p>
+            </div>
+
+            <div class="tutorial-section">
+                <h4>Шаг 1: Открытие изображения</h4>
+                <ol>
+                    <li>Перейдите на вкладку <strong>"Файл"</strong></li>
+                    <li>Нажмите кнопку <strong>"Открыть"</strong></li>
+                    <li>Выберите изображение на компьютере или загрузите с сервера</li>
+                </ol>
+                <button class="tutorial-action-btn" onclick="highlightTab('file'); closeTutorialModal();">Показать вкладку "Файл"</button>
+            </div>
+
+            <div class="tutorial-section">
+                <h4>Шаг 2: Навигация и масштабирование</h4>
+                <ul>
+                    <li><strong>Колёсико мыши</strong> - масштабирование</li>
+                    <li><strong>Перетаскивание</strong> - перемещение изображения</li>
+                    <li>Вкладка <strong>"Вид"</strong> - точная настройка масштаба</li>
+                </ul>
+                <button class="tutorial-action-btn" onclick="highlightTab('view'); closeTutorialModal();">Показать вкладку "Вид"</button>
+            </div>
+
+            <div class="tutorial-section">
+                <h4>Шаг 3: Базовая обработка</h4>
+                <p>Во вкладке <strong>"Изображение"</strong> доступны:</p>
+                <ul>
+                    <li>Обрезка изображения</li>
+                    <li>Поворот на 90°, 180°, 270°</li>
+                    <li>Отражение по горизонтали/вертикали</li>
+                </ul>
+                <button class="tutorial-action-btn" onclick="highlightTab('image'); closeTutorialModal();">Показать вкладку "Изображение"</button>
+            </div>
+
+            <div class="tutorial-section">
+                <h4>Шаг 4: Применение фильтров</h4>
+                <p>Во вкладке <strong>"Фильтры"</strong> вы найдёте:</p>
+                <ul>
+                    <li>Выделение контуров и границ</li>
+                    <li>Поиск объектов (окружности, центры симметрии)</li>
+                    <li>Предварительную обработку (аппроксимация, нормализация)</li>
+                </ul>
+                <button class="tutorial-action-btn" onclick="highlightTab('filters'); closeTutorialModal();">Показать вкладку "Фильтры"</button>
+            </div>
+
+            <div class="tutorial-section">
+                <h4>Шаг 5: Тонкая настройка</h4>
+                <p>Во вкладке <strong>"Регулировка"</strong> доступны:</p>
+                <ul>
+                    <li>Яркость, контраст, насыщенность</li>
+                    <li>Баланс цвета, тон</li>
+                    <li>Уровни и кривые</li>
+                </ul>
+                <button class="tutorial-action-btn" onclick="highlightTab('adjustments'); closeTutorialModal();">Показать вкладку "Регулировка"</button>
+            </div>
+
+            <div class="tutorial-section">
+                <h4>Шаг 6: История действий</h4>
+                <p>Не бойтесь экспериментировать! Все действия можно отменить:</p>
+                <ul>
+                    <li><strong>Ctrl+Z</strong> - отменить последнее действие</li>
+                    <li><strong>Ctrl+Y</strong> - повторить отменённое</li>
+                    <li><strong>Ctrl+H</strong> - открыть полную историю изменений</li>
+                </ul>
+                <button class="tutorial-action-btn" onclick="showHistoryModal(); closeTutorialModal();">Открыть историю</button>
+            </div>
+
+            <div class="tutorial-section">
+                <h4>💡 Советы для начинающих</h4>
+                <ul>
+                    <li>Сохраняйте работу периодически (Ctrl+S)</li>
+                    <li>Используйте историю для возврата к предыдущим состояниям</li>
+                    <li>Экспериментируйте с фильтрами на копии изображения</li>
+                    <li>Обращайтесь к справке (кнопка "Помощь") за подробной информацией</li>
+                </ul>
+            </div>
+
+            <div class="tutorial-section" style="text-align: center; margin-top: 20px; padding-top: 20px; border-top: 2px solid #4CAF50;">
+                <p><strong>Готовы начать работу?</strong></p>
+                <button class="modal-btn" style="background: #4CAF50; color: white; padding: 12px 24px; font-size: 16px;" onclick="closeTutorialModal()">Начать работу</button>
+            </div>
         </div>
         <div class="modal-resize-handle"></div>
     </div>
