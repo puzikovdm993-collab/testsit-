@@ -224,13 +224,18 @@
         element.classList.add('tour-highlighted');
         element.scrollIntoView({ behavior: 'smooth', block: 'center' });
         
-        // Если элемент является контентом вкладки (tab-pane), подсвечиваем также кнопку вкладки
+        // Если элемент является контентом вкладки (tab-pane), подсвечиваем также кнопку вкладки и весь контейнер вкладок
         if (element.classList.contains('tab-pane')) {
             const tabId = element.id; // например, 'tab-file'
             const tabName = tabId.replace('tab-', ''); // например, 'file'
             const tabBtn = document.querySelector(`.tab-btn[data-tab="${tabName}"]`);
             if (tabBtn) {
                 tabBtn.classList.add('tour-highlighted');
+            }
+            // Подсвечиваем весь контейнер вкладок как единое целое
+            const tabsContainer = element.closest('.tabs-container');
+            if (tabsContainer) {
+                tabsContainer.classList.add('tour-highlighted');
             }
         }
     }
