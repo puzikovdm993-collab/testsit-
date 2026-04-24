@@ -51,15 +51,15 @@
     <!-- Панель вкладок (Tabs) -->
     <div class="tabs-container">
         <div class="tabs-header">
-            <button class="tab-btn active" data-tab="file" title="Файл - управление файлами">Файл</button>
-            <button class="tab-btn" data-tab="edit" title="Правка - отмена, повтор, история">Правка</button>
-            <button class="tab-btn" data-tab="view" title="Вид - масштаб, отображение">Вид</button>
-            <button class="tab-btn" data-tab="image" title="Изображение - обрезка, поворот, отражение">Изображение</button>
-            <button class="tab-btn" data-tab="filters" title="Фильтры - применение фильтров">Фильтры</button>
-            <button class="tab-btn" data-tab="adjustments" title="Регулировка - настройка яркости, контраста">Регулировка</button>
-            <button class="tab-btn" data-tab="tools" title="Инструменты - инструменты рисования и выделения">Инструменты</button>
-            <button class="tab-btn" data-tab="modes" title="Режимы - режимы работы">Режимы</button>
-            <button class="tab-btn" data-tab="options" title="Настройки - параметры приложения">Настройки</button>
+            <button class="tab-btn active" data-tab="file" id="tab-file" title="Файл - управление файлами">Файл</button>
+            <button class="tab-btn" data-tab="edit" id="tab-edit" title="Правка - отмена, повтор, история">Правка</button>
+            <button class="tab-btn" data-tab="view" id="tab-view" title="Вид - масштаб, отображение">Вид</button>
+            <button class="tab-btn" data-tab="image" id="tab-image" title="Изображение - обрезка, поворот, отражение">Изображение</button>
+            <button class="tab-btn" data-tab="filters" id="tab-filters" title="Фильтры - применение фильтров">Фильтры</button>
+            <button class="tab-btn" data-tab="adjustments" id="tab-adjustments" title="Регулировка - настройка яркости, контраста">Регулировка</button>
+            <button class="tab-btn" data-tab="tools" id="tab-tools" title="Инструменты - инструменты рисования и выделения">Инструменты</button>
+            <button class="tab-btn" data-tab="modes" id="tab-modes" title="Режимы - режимы работы">Режимы</button>
+            <button class="tab-btn" data-tab="options" id="tab-options" title="Настройки - параметры приложения">Настройки</button>
             <button class="tab-btn help-btn" onclick="showHelpModal()" title="Помощь - описание функционала приложения">
                 <i class="fas fa-question"></i> Помощь
             </button>
@@ -411,7 +411,7 @@
 
 
 
-        <div class="toolbar-left">
+        <div class="toolbar-left" id="toolbar-cursor">
             <button class="tool-btn active" data-tool="cursor" onclick="setTool('cursor')" title="Курсор - выбор и перемещение по изображению">
                 <svg class="tool-icon"><use href="#mouse-pointer.svg"></use></svg>
             </button>
@@ -1377,6 +1377,9 @@
         </div>
         <div class="modal-buttons">
             <button class="modal-btn" onclick="closeHelpModal()">Закрыть</button>
+            <button class="modal-btn primary" onclick="productTour.resetTour(); closeHelpModal(); setTimeout(() => productTour.start(), 300);" title="Запустить интерактивный тур по интерфейсу">
+                <i class="fas fa-play-circle"></i> Запустить онбординг
+            </button>
         </div>
         <div class="modal-resize-handle"></div>
     </div>
@@ -1391,5 +1394,6 @@
 <script src="src/drawing/drawing.js"></script>
 <script src="src/tabs/tabs.js"></script>
 <script src="src/modals/models.js"></script>
+<script src="src/ui/productTour.js"></script>
 </body>
 </html> 
