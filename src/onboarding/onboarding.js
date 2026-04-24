@@ -223,6 +223,16 @@
 
         element.classList.add('tour-highlighted');
         element.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        
+        // Если элемент является контентом вкладки (tab-pane), подсвечиваем также кнопку вкладки
+        if (element.classList.contains('tab-pane')) {
+            const tabId = element.id; // например, 'tab-file'
+            const tabName = tabId.replace('tab-', ''); // например, 'file'
+            const tabBtn = document.querySelector(`.tab-btn[data-tab="${tabName}"]`);
+            if (tabBtn) {
+                tabBtn.classList.add('tour-highlighted');
+            }
+        }
     }
 
     // Показ текущего шага
@@ -314,7 +324,7 @@
             tourTooltip = null;
         }
 
-        // Удаляем подсветку
+        // Удаляем подсветку со всех элементов
         document.querySelectorAll('.tour-highlighted').forEach(el => {
             el.classList.remove('tour-highlighted');
         });
