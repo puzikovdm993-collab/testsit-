@@ -392,9 +392,17 @@
         const helpModal = document.getElementById('helpModal');
         if (!helpModal) return;
 
+        // Находим заголовок модального окна
+        const modalTitle = helpModal.querySelector('.modal-title');
+        if (!modalTitle) return;
+
+        // Проверяем, не добавлена ли уже кнопка
+        let existingBtn = helpModal.querySelector('.tour-start-btn');
+        if (existingBtn) return;
+
         const tourBtn = document.createElement('button');
         tourBtn.className = 'tour-start-btn';
-        tourBtn.innerHTML = '🎯 Пройти тур заново';
+        tourBtn.innerHTML = '<i class="fas fa-route"></i> Пройти тур заново';
         tourBtn.onclick = () => {
             closeProductTour();
             const helpModalEl = document.getElementById('helpModal');
@@ -402,8 +410,11 @@
             setTimeout(startProductTour, 300);
         };
 
-        const modalTitle = helpModal.querySelector('.modal-title');
-        if (modalTitle) {
+        // Добавляем кнопку после текста заголовка
+        const titleSpan = modalTitle.querySelector('span');
+        if (titleSpan) {
+            titleSpan.after(tourBtn);
+        } else {
             modalTitle.appendChild(tourBtn);
         }
     }

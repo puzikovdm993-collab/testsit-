@@ -1,4 +1,4 @@
-/* Onboarding / Product Tour Styles */
+/* Onboarding / Product Tour Styles - в стиле VS Code */
 
 /* Overlay для затемнения фона */
 .tour-overlay {
@@ -7,7 +7,7 @@
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.7);
+    background-color: rgba(0, 0, 0, 0.6);
     z-index: 9998;
     pointer-events: none;
     opacity: 0;
@@ -24,38 +24,35 @@
 .tour-highlighted {
     position: relative;
     z-index: 9999 !important;
-    box-shadow: 0 0 0 4px rgba(66, 153, 225, 0.8),
-                0 0 20px rgba(66, 153, 225, 0.4);
-    border-radius: 4px;
-    transition: box-shadow 0.3s ease;
+    box-shadow: 0 0 0 3px var(--vscode-accent),
+                0 0 15px rgba(0, 122, 204, 0.4);
+    border-radius: 2px;
+    transition: box-shadow 0.2s ease;
+}
+
+/* Темная тема - подсветка */
+body:not(.light-theme) .tour-highlighted {
+    box-shadow: 0 0 0 3px var(--vscode-accent),
+                0 0 15px rgba(0, 122, 204, 0.5);
 }
 
 /* Tooltip с информацией о шаге */
 .tour-tooltip {
     position: fixed;
     z-index: 10000;
-    background: var(--bg-color, #ffffff);
-    border-radius: 8px;
-    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
-    max-width: 380px;
-    min-width: 300px;
+    background: var(--vscode-bg-secondary);
+    border: 1px solid var(--vscode-border);
+    border-radius: 2px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+    max-width: 360px;
+    min-width: 280px;
     padding: 0;
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+    font-family: inherit;
+    font-size: 13px;
     opacity: 0;
     transform: translateY(-10px);
     animation: tourTooltipAppear 0.3s ease forwards;
-    border: 1px solid rgba(0, 0, 0, 0.1);
-}
-
-.light-theme .tour-tooltip {
-    background: #ffffff;
-    border-color: #e0e0e0;
-}
-
-body:not(.light-theme) .tour-tooltip {
-    background: #2d2d2d;
-    border-color: #444;
-    color: #e0e0e0;
+    color: var(--vscode-fg-primary);
 }
 
 @keyframes tourTooltipAppear {
@@ -70,62 +67,46 @@ body:not(.light-theme) .tour-tooltip {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 16px 20px;
-    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    border-radius: 8px 8px 0 0;
-}
-
-.light-theme .tour-tooltip-header {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    color: white;
-}
-
-body:not(.light-theme) .tour-tooltip-header {
-    background: linear-gradient(135deg, #5a67d8 0%, #6b46c1 100%);
-    color: white;
+    padding: 12px 16px;
+    border-bottom: 1px solid var(--vscode-border);
+    background: var(--vscode-bg-tertiary);
+    border-radius: 2px 2px 0 0;
 }
 
 .tour-tooltip-title {
     margin: 0;
-    font-size: 18px;
+    font-size: 14px;
     font-weight: 600;
+    color: var(--vscode-fg-active);
 }
 
 .tour-tooltip-close {
     background: transparent;
     border: none;
-    color: inherit;
-    font-size: 28px;
+    color: var(--vscode-fg-secondary);
+    font-size: 24px;
     cursor: pointer;
     padding: 0;
-    width: 30px;
-    height: 30px;
+    width: 28px;
+    height: 28px;
     display: flex;
     align-items: center;
     justify-content: center;
-    border-radius: 50%;
-    transition: background 0.2s;
+    border-radius: 2px;
+    transition: all var(--transition-fast);
 }
 
 .tour-tooltip-close:hover {
-    background: rgba(255, 255, 255, 0.2);
+    background: var(--vscode-error);
+    color: white;
 }
 
 /* Контент tooltip */
 .tour-tooltip-content {
-    padding: 20px;
-    font-size: 14px;
-    line-height: 1.6;
-    color: inherit;
-}
-
-.light-theme .tour-tooltip-content {
-    color: #333;
-}
-
-body:not(.light-theme) .tour-tooltip-content {
-    color: #ccc;
+    padding: 16px;
+    font-size: 13px;
+    line-height: 1.5;
+    color: var(--vscode-fg-primary);
 }
 
 /* Подвал tooltip с кнопками */
@@ -133,75 +114,46 @@ body:not(.light-theme) .tour-tooltip-content {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 16px 20px;
-    border-top: 1px solid rgba(0, 0, 0, 0.1);
-    background: rgba(0, 0, 0, 0.03);
-    border-radius: 0 0 8px 8px;
-}
-
-.light-theme .tour-tooltip-footer {
-    background: #f8f9fa;
-}
-
-body:not(.light-theme) .tour-tooltip-footer {
-    background: #363636;
-    border-color: #444;
+    padding: 12px 16px;
+    border-top: 1px solid var(--vscode-border);
+    background: var(--vscode-bg-tertiary);
+    border-radius: 0 0 2px 2px;
 }
 
 /* Индикатор прогресса */
 .tour-progress {
-    font-size: 13px;
-    color: #666;
+    font-size: 12px;
+    color: var(--vscode-fg-secondary);
     font-weight: 500;
-}
-
-.light-theme .tour-progress {
-    color: #666;
-}
-
-body:not(.light-theme) .tour-progress {
-    color: #aaa;
 }
 
 .tour-step-current {
     font-weight: 700;
-    color: #667eea;
+    color: var(--vscode-accent);
 }
 
 /* Кнопки навигации */
 .tour-buttons {
     display: flex;
-    gap: 8px;
+    gap: 6px;
 }
 
 .tour-btn {
-    padding: 10px 16px;
-    border: none;
-    border-radius: 6px;
-    font-size: 13px;
+    padding: 6px 12px;
+    border: 1px solid var(--vscode-border);
+    border-radius: 2px;
+    font-size: 12px;
     font-weight: 500;
     cursor: pointer;
-    transition: all 0.2s ease;
+    transition: all var(--transition-fast);
     font-family: inherit;
+    background: var(--vscode-bg-secondary);
+    color: var(--vscode-fg-primary);
 }
 
-.tour-btn-prev {
-    background: #e0e0e0;
-    color: #333;
-}
-
-.light-theme .tour-btn-prev {
-    background: #e0e0e0;
-    color: #333;
-}
-
-body:not(.light-theme) .tour-btn-prev {
-    background: #4a4a4a;
-    color: #ccc;
-}
-
-.tour-btn-prev:hover:not(:disabled) {
-    background: #d0d0d0;
+.tour-btn:hover:not(:disabled) {
+    background: var(--vscode-bg-hover);
+    border-color: var(--vscode-accent);
 }
 
 .tour-btn-prev:disabled {
@@ -211,24 +163,25 @@ body:not(.light-theme) .tour-btn-prev {
 
 .tour-btn-next,
 .tour-btn-finish {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    background: var(--vscode-accent);
     color: white;
-    box-shadow: 0 2px 8px rgba(102, 126, 234, 0.3);
+    border-color: var(--vscode-accent);
 }
 
 .tour-btn-next:hover,
 .tour-btn-finish:hover {
-    transform: translateY(-1px);
-    box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+    background: var(--vscode-accent-hover);
+    border-color: var(--vscode-accent-hover);
 }
 
 .tour-btn-finish {
-    background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
-    box-shadow: 0 2px 8px rgba(17, 153, 142, 0.3);
+    background: var(--vscode-success);
+    border-color: var(--vscode-success);
 }
 
 .tour-btn-finish:hover {
-    box-shadow: 0 4px 12px rgba(17, 153, 142, 0.4);
+    background: #4ec9b0;
+    border-color: #4ec9b0;
 }
 
 /* Toast уведомления */
@@ -237,13 +190,13 @@ body:not(.light-theme) .tour-btn-prev {
     bottom: 30px;
     left: 50%;
     transform: translateX(-50%) translateY(0);
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    color: white;
-    padding: 14px 28px;
-    border-radius: 50px;
-    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
+    background: var(--vscode-statusbar-bg);
+    color: var(--vscode-statusbar-fg);
+    padding: 10px 20px;
+    border-radius: 2px;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
     z-index: 10001;
-    font-size: 14px;
+    font-size: 13px;
     font-weight: 500;
     opacity: 1;
     transition: all 0.3s ease;
@@ -259,69 +212,60 @@ body:not(.light-theme) .tour-btn-prev {
     position: fixed;
     top: 80px;
     right: 20px;
-    background: var(--bg-color, #ffffff);
-    border: 1px solid rgba(0, 0, 0, 0.1);
-    border-radius: 12px;
-    padding: 20px;
-    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+    background: var(--vscode-bg-secondary);
+    border: 1px solid var(--vscode-border);
+    border-radius: 2px;
+    padding: 16px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
     z-index: 9997;
-    max-width: 320px;
+    max-width: 300px;
     opacity: 1;
     transform: translateX(0);
     transition: all 0.3s ease;
-}
-
-.light-theme .tour-welcome {
-    background: #ffffff;
-}
-
-body:not(.light-theme) .tour-welcome {
-    background: #2d2d2d;
-    border-color: #444;
-    color: #e0e0e0;
+    color: var(--vscode-fg-primary);
 }
 
 .tour-welcome p {
-    margin: 0 0 12px 0;
-    font-size: 14px;
-    line-height: 1.5;
+    margin: 0 0 10px 0;
+    font-size: 13px;
+    line-height: 1.4;
 }
 
 .tour-welcome p:first-child {
-    font-size: 16px;
+    font-size: 14px;
     font-weight: 600;
-    margin-bottom: 8px;
+    margin-bottom: 6px;
+    color: var(--vscode-fg-active);
 }
 
 .tour-welcome-buttons {
     display: flex;
-    gap: 8px;
-    margin-top: 16px;
+    gap: 6px;
+    margin-top: 12px;
 }
 
 .tour-btn-primary {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    background: var(--vscode-accent);
     color: white;
+    border: 1px solid var(--vscode-accent);
     flex: 1;
+}
+
+.tour-btn-primary:hover {
+    background: var(--vscode-accent-hover);
+    border-color: var(--vscode-accent-hover);
 }
 
 .tour-btn-secondary {
     background: transparent;
-    border: 1px solid #ccc;
-    color: inherit;
+    border: 1px solid var(--vscode-border);
+    color: var(--vscode-fg-primary);
     flex: 1;
 }
 
-.light-theme .tour-btn-secondary {
-    border-color: #ccc;
-}
-
-body:not(.light-theme) .tour-btn-secondary {
-    border-color: #666;
-}
-
 .tour-btn-secondary:hover {
-    background: rgba(0, 0, 0, 0.05);
+    background: var(--vscode-bg-hover);
+    border-color: var(--vscode-fg-secondary);
 }
 
 .tour-welcome-hide {
@@ -331,44 +275,44 @@ body:not(.light-theme) .tour-btn-secondary {
 
 /* Кнопка запуска тура в модальном окне помощи */
 .tour-start-btn {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    background: var(--vscode-accent);
     color: white;
-    border: none;
-    padding: 8px 16px;
-    border-radius: 6px;
-    font-size: 13px;
+    border: 1px solid var(--vscode-accent);
+    padding: 6px 12px;
+    border-radius: 2px;
+    font-size: 12px;
     font-weight: 500;
     cursor: pointer;
     margin-left: 12px;
-    transition: all 0.2s ease;
-    box-shadow: 0 2px 8px rgba(102, 126, 234, 0.3);
+    transition: all var(--transition-fast);
+    font-family: inherit;
 }
 
 .tour-start-btn:hover {
-    transform: translateY(-1px);
-    box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+    background: var(--vscode-accent-hover);
+    border-color: var(--vscode-accent-hover);
 }
 
 /* Адаптивность для мобильных устройств */
 @media (max-width: 768px) {
     .tour-tooltip {
-        min-width: 280px;
+        min-width: 260px;
         max-width: 90vw;
     }
 
     .tour-tooltip-header {
-        padding: 12px 16px;
+        padding: 10px 12px;
     }
 
     .tour-tooltip-content {
-        padding: 16px;
-        font-size: 13px;
+        padding: 12px;
+        font-size: 12px;
     }
 
     .tour-tooltip-footer {
-        padding: 12px 16px;
+        padding: 10px 12px;
         flex-direction: column;
-        gap: 12px;
+        gap: 10px;
     }
 
     .tour-buttons {
@@ -378,8 +322,8 @@ body:not(.light-theme) .tour-btn-secondary {
 
     .tour-btn {
         flex: 1;
-        padding: 8px 12px;
-        font-size: 12px;
+        padding: 6px 10px;
+        font-size: 11px;
     }
 
     .tour-welcome {
@@ -391,23 +335,17 @@ body:not(.light-theme) .tour-btn-secondary {
     }
 }
 
-/* Темная тема - дополнительные стили */
-body:not(.light-theme) .tour-highlighted {
-    box-shadow: 0 0 0 4px rgba(102, 126, 234, 0.8),
-                0 0 20px rgba(102, 126, 234, 0.5);
-}
-
 /* Плавные переходы */
 .tour-btn,
 .tour-tooltip-close,
 .tour-start-btn {
-    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    transition: all 0.15s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 /* Фокус для доступности */
 .tour-btn:focus,
 .tour-tooltip-close:focus,
 .tour-start-btn:focus {
-    outline: 2px solid #667eea;
+    outline: 2px solid var(--vscode-accent);
     outline-offset: 2px;
 }
