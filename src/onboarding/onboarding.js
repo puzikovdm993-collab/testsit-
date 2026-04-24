@@ -221,7 +221,6 @@
             el.classList.remove('tour-highlighted');
         });
 
-        element.classList.add('tour-highlighted');
         element.scrollIntoView({ behavior: 'smooth', block: 'center' });
         
         // Если элемент является контентом вкладки (tab-pane), подсвечиваем также кнопку вкладки и весь контейнер вкладок
@@ -242,6 +241,9 @@
             if (tabsContent) {
                 tabsContent.classList.add('tour-highlighted');
             }
+        } else {
+            // Для элементов, не являющихся вкладками, подсвечиваем сам элемент
+            element.classList.add('tour-highlighted');
         }
     }
 
