@@ -1,0 +1,545 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WTIS - Гибридный интерфейс (Панель свойств + Модульность)</title>
+    <style>
+        :root {
+            --bg-primary: #1e1e1e;
+            --bg-secondary: #252526;
+            --bg-tertiary: #333333;
+            --accent: #007acc;
+            --text-primary: #ffffff;
+            --text-secondary: #cccccc;
+            --border: #454545;
+            --success: #4caf50;
+            --warning: #ff9800;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        /* Верхняя панель */
+        .top-bar {
+            background-color: var(--bg-secondary);
+            padding: 8px 16px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .logo {
+            font-weight: bold;
+            font-size: 18px;
+            color: var(--accent);
+        }
+
+        .menu-items {
+            display: flex;
+            gap: 16px;
+        }
+
+        .menu-item {
+            padding: 4px 8px;
+            cursor: pointer;
+            border-radius: 4px;
+            transition: background 0.2s;
+        }
+
+        .menu-item:hover {
+            background-color: var(--bg-tertiary);
+        }
+
+        /* Основная рабочая область */
+        .workspace {
+            display: flex;
+            flex: 1;
+            overflow: hidden;
+        }
+
+        /* Левая панель - Инструменты */
+        .tools-panel {
+            width: 60px;
+            background-color: var(--bg-secondary);
+            border-right: 1px solid var(--border);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 8px 0;
+            gap: 8px;
+        }
+
+        .tool-btn {
+            width: 40px;
+            height: 40px;
+            border-radius: 6px;
+            border: none;
+            background-color: transparent;
+            color: var(--text-secondary);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            transition: all 0.2s;
+        }
+
+        .tool-btn:hover {
+            background-color: var(--bg-tertiary);
+            color: var(--text-primary);
+        }
+
+        .tool-btn.active {
+            background-color: var(--accent);
+            color: white;
+        }
+
+        /* Центральная область */
+        .center-area {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            background-color: #1a1a1a;
+            position: relative;
+        }
+
+        .tabs {
+            display: flex;
+            background-color: var(--bg-secondary);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .tab {
+            padding: 8px 16px;
+            cursor: pointer;
+            border-right: 1px solid var(--border);
+            background-color: var(--bg-secondary);
+            color: var(--text-secondary);
+            transition: all 0.2s;
+        }
+
+        .tab:hover {
+            background-color: var(--bg-tertiary);
+        }
+
+        .tab.active {
+            background-color: #1a1a1a;
+            color: var(--text-primary);
+            border-bottom: 2px solid var(--accent);
+        }
+
+        .canvas-container {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            overflow: auto;
+        }
+
+        .image-canvas {
+            background-color: #2a2a2a;
+            border: 2px dashed var(--border);
+            border-radius: 8px;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-secondary);
+            font-size: 14px;
+        }
+
+        /* Правая панель - Свойства (Контекстная) */
+        .properties-panel {
+            width: 280px;
+            background-color: var(--bg-secondary);
+            border-left: 1px solid var(--border);
+            display: flex;
+            flex-direction: column;
+            overflow-y: auto;
+        }
+
+        .panel-header {
+            padding: 12px 16px;
+            border-bottom: 1px solid var(--border);
+            font-weight: 600;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .panel-content {
+            padding: 16px;
+            flex: 1;
+        }
+
+        .property-group {
+            margin-bottom: 20px;
+        }
+
+        .property-group-title {
+            font-size: 12px;
+            text-transform: uppercase;
+            color: var(--text-secondary);
+            margin-bottom: 12px;
+            letter-spacing: 0.5px;
+        }
+
+        .property-item {
+            margin-bottom: 12px;
+        }
+
+        .property-label {
+            font-size: 13px;
+            margin-bottom: 6px;
+            color: var(--text-secondary);
+        }
+
+        .property-input {
+            width: 100%;
+            padding: 6px 8px;
+            background-color: var(--bg-tertiary);
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            color: var(--text-primary);
+            font-size: 13px;
+        }
+
+        .property-input:focus {
+            outline: none;
+            border-color: var(--accent);
+        }
+
+        .property-slider {
+            width: 100%;
+            margin-top: 4px;
+        }
+
+        .btn-primary {
+            width: 100%;
+            padding: 8px;
+            background-color: var(--accent);
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 13px;
+            margin-top: 8px;
+            transition: background 0.2s;
+        }
+
+        .btn-primary:hover {
+            background-color: #0066b0;
+        }
+
+        /* Нижняя панель - Статус и история */
+        .bottom-bar {
+            background-color: var(--bg-secondary);
+            border-top: 1px solid var(--border);
+            padding: 6px 16px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 12px;
+            color: var(--text-secondary);
+        }
+
+        .status-indicator {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .status-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background-color: var(--success);
+        }
+
+        /* Модульные окна (Drag & Drop симуляция) */
+        .floating-panel {
+            position: absolute;
+            background-color: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+            min-width: 200px;
+            z-index: 100;
+            display: none;
+        }
+
+        .floating-panel-header {
+            padding: 8px 12px;
+            border-bottom: 1px solid var(--border);
+            cursor: move;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .floating-panel-content {
+            padding: 12px;
+        }
+
+        .close-btn {
+            cursor: pointer;
+            color: var(--text-secondary);
+        }
+
+        .close-btn:hover {
+            color: var(--text-primary);
+        }
+
+        /* Адаптивность панелей */
+        .panel-toggle {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 20px;
+            height: 60px;
+            background-color: var(--bg-tertiary);
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-secondary);
+            z-index: 50;
+        }
+
+        .toggle-left {
+            left: 60px;
+        }
+
+        .toggle-right {
+            right: 280px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Верхняя панель -->
+    <div class="top-bar">
+        <div class="logo">WTIS</div>
+        <div class="menu-items">
+            <div class="menu-item">Файл</div>
+            <div class="menu-item">Правка</div>
+            <div class="menu-item">Вид</div>
+            <div class="menu-item">Инструменты</div>
+            <div class="menu-item">Помощь</div>
+        </div>
+        <div style="display: flex; gap: 8px;">
+            <button class="btn-primary" style="width: auto; padding: 4px 12px;">Сохранить</button>
+            <button class="btn-primary" style="width: auto; padding: 4px 12px; background-color: var(--bg-tertiary);">Экспорт</button>
+        </div>
+    </div>
+
+    <!-- Рабочая область -->
+    <div class="workspace">
+        <!-- Левая панель инструментов -->
+        <div class="tools-panel">
+            <button class="tool-btn active" title="Выделение">⬚</button>
+            <button class="tool-btn" title="Лассо">✎</button>
+            <button class="tool-btn" title="Фильтры">◉</button>
+            <button class="tool-btn" title="Цвет">🎨</button>
+            <button class="tool-btn" title="3D Вид">∿</button>
+            <button class="tool-btn" title="Измерения">📏</button>
+        </div>
+
+        <!-- Центральная область -->
+        <div class="center-area">
+            <div class="tabs">
+                <div class="tab active">Снимок_001.raw</div>
+                <div class="tab">Снимок_002.raw</div>
+                <div class="tab" style="color: var(--accent);">+ Новый</div>
+            </div>
+            
+            <div class="canvas-container">
+                <div class="image-canvas">
+                    <div style="text-align: center;">
+                        <div style="font-size: 48px; margin-bottom: 16px;">📷</div>
+                        <div>Перетащите изображение сюда</div>
+                        <div style="margin-top: 8px; font-size: 12px;">или используйте Файл → Открыть</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Плавающее окно (пример модульности) -->
+            <div class="floating-panel" id="histogramPanel" style="top: 100px; left: 300px;">
+                <div class="floating-panel-header">
+                    <span>Гистограмма</span>
+                    <span class="close-btn" onclick="togglePanel('histogramPanel')">✕</span>
+                </div>
+                <div class="floating-panel-content">
+                    <div style="height: 150px; background: linear-gradient(90deg, #333 0%, #007acc 50%, #333 100%); border-radius: 4px;"></div>
+                    <div style="margin-top: 8px; font-size: 12px; color: var(--text-secondary);">Распределение интенсивности</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Правая панель свойств -->
+        <div class="properties-panel">
+            <div class="panel-header">
+                <span>Свойства</span>
+                <span style="font-size: 12px; color: var(--text-secondary);">Выделение</span>
+            </div>
+            
+            <div class="panel-content">
+                <div class="property-group">
+                    <div class="property-group-title">Параметры выделения</div>
+                    
+                    <div class="property-item">
+                        <div class="property-label">Режим</div>
+                        <select class="property-input">
+                            <option>Прямоугольник</option>
+                            <option>Эллипс</option>
+                            <option>Лассо</option>
+                        </select>
+                    </div>
+                    
+                    <div class="property-item">
+                        <div class="property-label">Толщина границы</div>
+                        <input type="range" class="property-slider" min="1" max="10" value="2">
+                        <div style="text-align: right; font-size: 11px; color: var(--text-secondary);">2 px</div>
+                    </div>
+                    
+                    <div class="property-item">
+                        <div class="property-label">Цвет</div>
+                        <input type="color" class="property-input" value="#007acc" style="height: 32px;">
+                    </div>
+                </div>
+
+                <div class="property-group">
+                    <div class="property-group-title">Статистика</div>
+                    
+                    <div class="property-item">
+                        <div class="property-label">Площадь</div>
+                        <div class="property-input" style="background: transparent; border: none; padding: 0;">0 px²</div>
+                    </div>
+                    
+                    <div class="property-item">
+                        <div class="property-label">Средняя интенсивность</div>
+                        <div class="property-input" style="background: transparent; border: none; padding: 0;">0</div>
+                    </div>
+                    
+                    <div class="property-item">
+                        <div class="property-label">Мин/Макс</div>
+                        <div class="property-input" style="background: transparent; border: none; padding: 0;">0 / 0</div>
+                    </div>
+                </div>
+
+                <div class="property-group">
+                    <div class="property-group-title">Действия</div>
+                    <button class="btn-primary" onclick="togglePanel('histogramPanel')">Показать гистограмму</button>
+                    <button class="btn-primary" style="background-color: var(--bg-tertiary);">Копировать область</button>
+                    <button class="btn-primary" style="background-color: var(--bg-tertiary);">Экспорт ROI</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Нижняя панель статуса -->
+    <div class="bottom-bar">
+        <div class="status-indicator">
+            <div class="status-dot"></div>
+            <span>Готов к работе</span>
+        </div>
+        <div>Размер: 0 × 0 | Зум: 100% | Координаты: (0, 0)</div>
+        <div>История: 0 шагов</div>
+    </div>
+
+    <script>
+        // Переключение активного инструмента
+        document.querySelectorAll('.tool-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                document.querySelectorAll('.tool-btn').forEach(b => b.classList.remove('active'));
+                this.classList.add('active');
+                
+                // Обновление заголовка панели свойств
+                const toolNames = {
+                    '⬚': 'Выделение',
+                    '✎': 'Лассо',
+                    '◉': 'Фильтры',
+                    '🎨': 'Цветокоррекция',
+                    '∿': '3D Просмотр',
+                    '📏': 'Измерения'
+                };
+                document.querySelector('.panel-header span:nth-child(2)').textContent = toolNames[this.textContent];
+            });
+        });
+
+        // Переключение вкладок
+        document.querySelectorAll('.tab').forEach(tab => {
+            tab.addEventListener('click', function() {
+                if (this.textContent === '+ Новый') {
+                    alert('Создание нового снимка...');
+                    return;
+                }
+                document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+                this.classList.add('active');
+            });
+        });
+
+        // Управление плавающими панелями
+        function togglePanel(panelId) {
+            const panel = document.getElementById(panelId);
+            if (panel.style.display === 'none' || panel.style.display === '') {
+                panel.style.display = 'block';
+            } else {
+                panel.style.display = 'none';
+            }
+        }
+
+        // Простая имитация Drag & Drop для плавающих панелей
+        let draggedPanel = null;
+        let offsetX, offsetY;
+
+        document.querySelectorAll('.floating-panel-header').forEach(header => {
+            header.addEventListener('mousedown', function(e) {
+                draggedPanel = this.parentElement;
+                offsetX = e.clientX - draggedPanel.getBoundingClientRect().left;
+                offsetY = e.clientY - draggedPanel.getBoundingClientRect().top;
+                draggedPanel.style.zIndex = 1000;
+            });
+        });
+
+        document.addEventListener('mousemove', function(e) {
+            if (draggedPanel) {
+                draggedPanel.style.left = (e.clientX - offsetX) + 'px';
+                draggedPanel.style.top = (e.clientY - offsetY) + 'px';
+            }
+        });
+
+        document.addEventListener('mouseup', function() {
+            if (draggedPanel) {
+                draggedPanel.style.zIndex = 100;
+                draggedPanel = null;
+            }
+        });
+
+        // Интерактивность слайдеров
+        document.querySelectorAll('.property-slider').forEach(slider => {
+            slider.addEventListener('input', function() {
+                this.nextElementSibling.textContent = this.value + ' px';
+            });
+        });
+    </script>
+</body>
+</html>
