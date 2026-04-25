@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UI Demo 2: Minimalist (Figma-style)</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { 
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            height: 100vh; 
+            background: #f5f5f5; 
+            color: #333;
+            overflow: hidden;
+        }
+        
+        .app-container {
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+        }
+        
+        /* Top Bar - Minimal */
+        .top-bar {
+            height: 48px;
+            background: #fff;
+            border-bottom: 1px solid #e0e0e0;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 20px;
+        }
+        
+        .logo {
+            font-weight: 600;
+            font-size: 16px;
+            color: #000;
+        }
+        
+        .top-actions {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .action-btn {
+            padding: 6px 12px;
+            background: transparent;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 13px;
+            transition: all 0.2s;
+        }
+        
+        .action-btn:hover { 
+            background: #f0f0f0; 
+            border-color: #ccc;
+        }
+        
+        .action-btn.primary {
+            background: #000;
+            color: #fff;
+            border-color: #000;
+        }
+        
+        .action-btn.primary:hover {
+            background: #333;
+        }
+        
+        /* Main Workspace */
+        .workspace {
+            flex: 1;
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: #f5f5f5;
+        }
+        
+        .canvas-wrapper {
+            position: relative;
+            width: 700px;
+            height: 500px;
+            background: #fff;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        
+        .image-placeholder {
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 18px;
+            color: #666;
+        }
+        
+        /* Floating Toolbar - appears on selection */
+        .floating-toolbar {
+            position: absolute;
+            top: 80px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #fff;
+            padding: 8px 12px;
+            border-radius: 8px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+            display: flex;
+            gap: 8px;
+            opacity: 0;
+            animation: fadeIn 0.3s ease forwards;
+            animation-delay: 0.5s;
+        }
+        
+        @keyframes fadeIn {
+            to { opacity: 1; }
+        }
+        
+        .float-btn {
+            width: 36px;
+            height: 36px;
+            border: none;
+            background: transparent;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s;
+        }
+        
+        .float-btn:hover { 
+            background: #f0f0f0; 
+        }
+        
+        .float-btn.active {
+            background: #e0e0e0;
+        }
+        
+        .divider {
+            width: 1px;
+            background: #ddd;
+            margin: 0 4px;
+        }
+        
+        /* Right Sidebar - Collapsible */
+        .sidebar-right {
+            position: absolute;
+            right: 20px;
+            top: 80px;
+            width: 240px;
+            background: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+            padding: 20px;
+        }
+        
+        .sidebar-section {
+            margin-bottom: 24px;
+        }
+        
+        .sidebar-title {
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+            color: #999;
+            margin-bottom: 12px;
+            letter-spacing: 0.5px;
+        }
+        
+        .property-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin: 10px 0;
+        }
+        
+        .property-label {
+            font-size: 13px;
+            color: #555;
+        }
+        
+        .property-value {
+            font-size: 13px;
+            font-weight: 500;
+            color: #000;
+        }
+        
+        .mini-slider {
+            width: 100px;
+            height: 4px;
+            background: #e0e0e0;
+            border-radius: 2px;
+            outline: none;
+            -webkit-appearance: none;
+        }
+        
+        .mini-slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 14px;
+            height: 14px;
+            background: #000;
+            border-radius: 50%;
+            cursor: pointer;
+        }
+        
+        /* Bottom Info Bar */
+        .bottom-bar {
+            height: 32px;
+            background: #fff;
+            border-top: 1px solid #e0e0e0;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 20px;
+            font-size: 12px;
+            color: #888;
+        }
+        
+        .zoom-control {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .zoom-btn {
+            width: 24px;
+            height: 24px;
+            border: none;
+            background: transparent;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+        
+        .zoom-btn:hover { background: #f0f0f0; }
+    </style>
+</head>
+<body>
+    <div class="app-container">
+        <!-- Top Bar -->
+        <div class="top-bar">
+            <div class="logo">WTIS</div>
+            <div class="top-actions">
+                <button class="action-btn">Share</button>
+                <button class="action-btn">Export</button>
+                <button class="action-btn primary">Save</button>
+            </div>
+        </div>
+        
+        <!-- Main Workspace -->
+        <div class="workspace">
+            <div class="canvas-wrapper">
+                <div class="image-placeholder">
+                    Image Canvas Area
+                </div>
+            </div>
+            
+            <!-- Floating Toolbar -->
+            <div class="floating-toolbar">
+                <button class="float-btn" title="Move">✥</button>
+                <button class="float-btn active" title="Select">⬚</button>
+                <button class="float-btn" title="Lasso">∿</button>
+                <div class="divider"></div>
+                <button class="float-btn" title="Brightness">☀</button>
+                <button class="float-btn" title="Contrast">◐</button>
+                <button class="float-btn" title="Filter">🎨</button>
+                <div class="divider"></div>
+                <button class="float-btn" title="3D View">🧊</button>
+            </div>
+            
+            <!-- Right Sidebar -->
+            <div class="sidebar-right">
+                <div class="sidebar-section">
+                    <div class="sidebar-title">Image Properties</div>
+                    <div class="property-row">
+                        <span class="property-label">Width</span>
+                        <span class="property-value">1024 px</span>
+                    </div>
+                    <div class="property-row">
+                        <span class="property-label">Height</span>
+                        <span class="property-value">768 px</span>
+                    </div>
+                    <div class="property-row">
+                        <span class="property-label">Format</span>
+                        <span class="property-value">RAW</span>
+                    </div>
+                </div>
+                
+                <div class="sidebar-section">
+                    <div class="sidebar-title">Adjustments</div>
+                    <div class="property-row">
+                        <span class="property-label">Exposure</span>
+                        <input type="range" class="mini-slider" min="0" max="100" value="50">
+                    </div>
+                    <div class="property-row">
+                        <span class="property-label">Contrast</span>
+                        <input type="range" class="mini-slider" min="0" max="100" value="65">
+                    </div>
+                    <div class="property-row">
+                        <span class="property-label">Sharpness</span>
+                        <input type="range" class="mini-slider" min="0" max="100" value="30">
+                    </div>
+                </div>
+                
+                <div class="sidebar-section">
+                    <div class="sidebar-title">Color Map</div>
+                    <div style="display: flex; gap: 8px;">
+                        <div style="width: 40px; height: 40px; border-radius: 6px; background: linear-gradient(135deg, #667eea, #764ba2); cursor: pointer; border: 2px solid #000;"></div>
+                        <div style="width: 40px; height: 40px; border-radius: 6px; background: linear-gradient(135deg, #f093fb, #f5576c); cursor: pointer;"></div>
+                        <div style="width: 40px; height: 40px; border-radius: 6px; background: linear-gradient(135deg, #4facfe, #00f2fe); cursor: pointer;"></div>
+                        <div style="width: 40px; height: 40px; border-radius: 6px; background: linear-gradient(135deg, #43e97b, #38f9d7); cursor: pointer;"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Bottom Bar -->
+        <div class="bottom-bar">
+            <div>Ready</div>
+            <div class="zoom-control">
+                <button class="zoom-btn">−</button>
+                <span>100%</span>
+                <button class="zoom-btn">+</button>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

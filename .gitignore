@@ -1,3 +1,1 @@
-(index.html is a source file, so no need to add anything to .gitignore)
-
-(empty)
+Nothing needs to be added to .gitignore for this change list. The only file added is a demo HTML file (`ui-demos/demo5-hybrid.html`), which is a source/config file and should not be ignored. There are no build artifacts, dependencies, or temporary files in the changes.
