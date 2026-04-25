@@ -1,0 +1,599 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UI Demo 4: Data Science Dashboard (Jupyter/Streamlit style)</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { 
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+            height: 100vh; 
+            background: #f8f9fa; 
+            color: #333;
+            overflow-y: auto;
+        }
+        
+        .app-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        /* Header */
+        .header {
+            margin-bottom: 30px;
+        }
+        
+        .header h1 {
+            font-size: 28px;
+            font-weight: 600;
+            color: #1a1a1a;
+            margin-bottom: 8px;
+        }
+        
+        .header p {
+            color: #666;
+            font-size: 14px;
+        }
+        
+        /* Notebook Cells */
+        .cell {
+            background: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+            margin-bottom: 20px;
+            overflow: hidden;
+        }
+        
+        .cell-header {
+            display: flex;
+            align-items: center;
+            padding: 10px 15px;
+            background: #f8f9fa;
+            border-bottom: 1px solid #e9ecef;
+            gap: 10px;
+        }
+        
+        .cell-number {
+            font-family: monospace;
+            font-size: 12px;
+            color: #666;
+            background: #e9ecef;
+            padding: 2px 8px;
+            border-radius: 4px;
+        }
+        
+        .cell-type {
+            font-size: 11px;
+            text-transform: uppercase;
+            color: #888;
+            letter-spacing: 0.5px;
+        }
+        
+        .cell-actions {
+            margin-left: auto;
+            display: flex;
+            gap: 8px;
+        }
+        
+        .cell-btn {
+            width: 28px;
+            height: 28px;
+            border: none;
+            background: transparent;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+            color: #666;
+        }
+        
+        .cell-btn:hover { background: #e9ecef; }
+        
+        .cell-body {
+            padding: 20px;
+        }
+        
+        /* Code Cell */
+        .code-input {
+            background: #f8f9fa;
+            border: 1px solid #e9ecef;
+            border-radius: 6px;
+            padding: 15px;
+            font-family: 'Monaco', 'Consolas', monospace;
+            font-size: 13px;
+            line-height: 1.6;
+            color: #333;
+            margin-bottom: 15px;
+            overflow-x: auto;
+        }
+        
+        .code-keyword { color: #d73a49; }
+        .code-string { color: #032f62; }
+        .code-function { color: #6f42c1; }
+        .code-comment { color: #6a737d; font-style: italic; }
+        
+        .run-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 8px 16px;
+            background: #28a745;
+            color: #fff;
+            border: none;
+            border-radius: 6px;
+            font-size: 13px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        .run-btn:hover { background: #218838; }
+        
+        /* Output Cell */
+        .output-area {
+            margin-top: 15px;
+            padding: 15px;
+            background: #fafbfc;
+            border-radius: 6px;
+            border: 1px solid #e9ecef;
+        }
+        
+        .output-label {
+            font-size: 11px;
+            color: #666;
+            margin-bottom: 10px;
+            font-family: monospace;
+        }
+        
+        /* Image Display */
+        .image-output {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+        
+        .image-card {
+            background: #fff;
+            border: 1px solid #e9ecef;
+            border-radius: 6px;
+            padding: 10px;
+        }
+        
+        .image-placeholder {
+            width: 300px;
+            height: 200px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            font-size: 14px;
+        }
+        
+        .image-info {
+            margin-top: 10px;
+            font-size: 12px;
+            color: #666;
+        }
+        
+        /* Metrics Grid */
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 15px;
+            margin: 20px 0;
+        }
+        
+        .metric-card {
+            background: #fff;
+            border: 1px solid #e9ecef;
+            border-radius: 8px;
+            padding: 20px;
+            text-align: center;
+        }
+        
+        .metric-value {
+            font-size: 28px;
+            font-weight: 700;
+            color: #1a1a1a;
+            margin-bottom: 5px;
+        }
+        
+        .metric-label {
+            font-size: 12px;
+            color: #666;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        /* Widgets */
+        .widget-section {
+            margin: 20px 0;
+        }
+        
+        .widget-label {
+            font-size: 13px;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 10px;
+        }
+        
+        .slider-widget {
+            width: 100%;
+            height: 6px;
+            background: #e9ecef;
+            border-radius: 3px;
+            outline: none;
+            -webkit-appearance: none;
+        }
+        
+        .slider-widget::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 18px;
+            height: 18px;
+            background: #007bff;
+            border-radius: 50%;
+            cursor: pointer;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+        }
+        
+        .slider-values {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 8px;
+            font-size: 12px;
+            color: #666;
+        }
+        
+        .dropdown-widget {
+            width: 100%;
+            padding: 10px 15px;
+            border: 1px solid #e9ecef;
+            border-radius: 6px;
+            font-size: 13px;
+            background: #fff;
+            cursor: pointer;
+        }
+        
+        /* Table */
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 13px;
+        }
+        
+        .data-table th,
+        .data-table td {
+            padding: 10px 15px;
+            text-align: left;
+            border-bottom: 1px solid #e9ecef;
+        }
+        
+        .data-table th {
+            background: #f8f9fa;
+            font-weight: 600;
+            color: #333;
+        }
+        
+        .data-table tr:hover {
+            background: #f8f9fa;
+        }
+        
+        /* Chart Placeholder */
+        .chart-container {
+            width: 100%;
+            height: 250px;
+            background: #fff;
+            border: 1px solid #e9ecef;
+            border-radius: 6px;
+            padding: 20px;
+            position: relative;
+        }
+        
+        .chart-bars {
+            display: flex;
+            align-items: flex-end;
+            justify-content: space-around;
+            height: 200px;
+            padding: 0 20px;
+        }
+        
+        .chart-bar {
+            width: 40px;
+            background: linear-gradient(to top, #667eea, #764ba2);
+            border-radius: 4px 4px 0 0;
+            position: relative;
+        }
+        
+        .chart-bar::after {
+            content: attr(data-value);
+            position: absolute;
+            top: -20px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 11px;
+            color: #666;
+        }
+        
+        .chart-labels {
+            display: flex;
+            justify-content: space-around;
+            margin-top: 10px;
+            font-size: 11px;
+            color: #666;
+        }
+        
+        /* Markdown Cell */
+        .markdown-content {
+            line-height: 1.7;
+            color: #333;
+        }
+        
+        .markdown-content h3 {
+            font-size: 18px;
+            margin-bottom: 10px;
+            color: #1a1a1a;
+        }
+        
+        .markdown-content p {
+            margin-bottom: 10px;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+    <div class="app-container">
+        <!-- Header -->
+        <div class="header">
+            <h1>🔬 WTIS Analysis Notebook</h1>
+            <p>Interactive image processing and analysis workflow</p>
+        </div>
+        
+        <!-- Metrics Overview -->
+        <div class="metrics-grid">
+            <div class="metric-card">
+                <div class="metric-value">1024×768</div>
+                <div class="metric-label">Image Size</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-value">16-bit</div>
+                <div class="metric-label">Bit Depth</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-value">24ms</div>
+                <div class="metric-label">Processing Time</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-value">98.5%</div>
+                <div class="metric-label">Quality Score</div>
+            </div>
+        </div>
+        
+        <!-- Cell 1: Markdown -->
+        <div class="cell">
+            <div class="cell-header">
+                <span class="cell-number">[1]</span>
+                <span class="cell-type">Markdown</span>
+                <div class="cell-actions">
+                    <button class="cell-btn" title="Edit">✏️</button>
+                    <button class="cell-btn" title="Delete">🗑️</button>
+                </div>
+            </div>
+            <div class="cell-body">
+                <div class="markdown-content">
+                    <h3>📊 Tomographic Image Analysis</h3>
+                    <p>This notebook demonstrates the processing pipeline for X-ray tomography data. We'll apply filters, adjust contrast, and visualize the results using various colormaps.</p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Cell 2: Code - Load Image -->
+        <div class="cell">
+            <div class="cell-header">
+                <span class="cell-number">[2]</span>
+                <span class="cell-type">Code</span>
+                <div class="cell-actions">
+                    <button class="run-btn">▶ Run</button>
+                    <button class="cell-btn" title="Edit">✏️</button>
+                    <button class="cell-btn" title="Delete">🗑️</button>
+                </div>
+            </div>
+            <div class="cell-body">
+                <div class="code-input">
+<span class="code-keyword">import</span> wtis
+<span class="code-keyword">from</span> wtis <span class="code-keyword">import</span> filters, visualization
+
+<span class="code-comment"># Load raw tomography data</span>
+image = wtis.<span class="code-function">load_image</span>(<span class="code-string">"sample_001.raw"</span>, dtype=<span class="code-string">"uint16"</span>)
+<span class="code-function">print</span>(<span class="code-string">f"Loaded image: {image.shape}, dtype={image.dtype}"</span>)</div>
+                
+                <div class="output-area">
+                    <div class="output-label">Out[2]:</div>
+                    <div style="font-family: monospace; font-size: 13px; color: #032f62;">
+                        Loaded image: (1024, 768), dtype=uint16
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Cell 3: Code - Apply Filter -->
+        <div class="cell">
+            <div class="cell-header">
+                <span class="cell-number">[3]</span>
+                <span class="cell-type">Code</span>
+                <div class="cell-actions">
+                    <button class="run-btn">▶ Run</button>
+                    <button class="cell-btn" title="Edit">✏️</button>
+                    <button class="cell-btn" title="Delete">🗑️</button>
+                </div>
+            </div>
+            <div class="cell-body">
+                <div class="code-input">
+<span class="code-comment"># Apply median filter for noise reduction</span>
+filtered = filters.<span class="code-function">median</span>(image, kernel_size=<span class="code-string">"3x3"</span>, iterations=<span class="code-number">2</span>)
+
+<span class="code-comment"># Apply Sobel edge detection</span>
+edges = filters.<span class="code-function">sobel</span>(filtered)
+
+<span class="code-function">display</span>(filtered, edges)</div>
+                
+                <div class="output-area">
+                    <div class="output-label">Out[3]:</div>
+                    <div class="image-output">
+                        <div class="image-card">
+                            <div class="image-placeholder">Filtered Image</div>
+                            <div class="image-info">Median Filter Applied<br>σ = 1.2</div>
+                        </div>
+                        <div class="image-card">
+                            <div class="image-placeholder" style="background: linear-gradient(135deg, #f093fb, #f5576c);">Edge Detection</div>
+                            <div class="image-info">Sobel Operator<br>Threshold = 0.3</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Cell 4: Interactive Widget -->
+        <div class="cell">
+            <div class="cell-header">
+                <span class="cell-number">[4]</span>
+                <span class="cell-type">Code</span>
+                <div class="cell-actions">
+                    <button class="run-btn">▶ Run</button>
+                    <button class="cell-btn" title="Edit">✏️</button>
+                    <button class="cell-btn" title="Delete">🗑️</button>
+                </div>
+            </div>
+            <div class="cell-body">
+                <div class="widget-section">
+                    <div class="widget-label">🎨 Colormap Selection</div>
+                    <select class="dropdown-widget">
+                        <option>Viridis</option>
+                        <option>Plasma</option>
+                        <option>Inferno</option>
+                        <option>Magma</option>
+                        <option>Grayscale</option>
+                        <option>Jet</option>
+                    </select>
+                </div>
+                
+                <div class="widget-section">
+                    <div class="widget-label">☀ Brightness Adjustment</div>
+                    <input type="range" class="slider-widget" min="0" max="200" value="100">
+                    <div class="slider-values">
+                        <span>0%</span>
+                        <span>100%</span>
+                        <span>200%</span>
+                    </div>
+                </div>
+                
+                <div class="widget-section">
+                    <div class="widget-label">◐ Contrast Enhancement</div>
+                    <input type="range" class="slider-widget" min="0" max="200" value="120">
+                    <div class="slider-values">
+                        <span>0%</span>
+                        <span>120%</span>
+                        <span>200%</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Cell 5: Visualization -->
+        <div class="cell">
+            <div class="cell-header">
+                <span class="cell-number">[5]</span>
+                <span class="cell-type">Code</span>
+                <div class="cell-actions">
+                    <button class="run-btn">▶ Run</button>
+                    <button class="cell-btn" title="Edit">✏️</button>
+                    <button class="cell-btn" title="Delete">🗑️</button>
+                </div>
+            </div>
+            <div class="cell-body">
+                <div class="code-input">
+<span class="code-comment"># Generate histogram and statistics</span>
+hist = visualization.<span class="code-function">histogram</span>(filtered)
+stats = wtis.<span class="code-function">compute_statistics</span>(filtered)
+visualization.<span class="code-function">plot_metrics</span>(stats)</div>
+                
+                <div class="output-area">
+                    <div class="output-label">Out[5]:</div>
+                    
+                    <div class="chart-container">
+                        <div class="chart-bars">
+                            <div class="chart-bar" style="height: 60%;" data-value="60"></div>
+                            <div class="chart-bar" style="height: 85%;" data-value="85"></div>
+                            <div class="chart-bar" style="height: 45%;" data-value="45"></div>
+                            <div class="chart-bar" style="height: 95%;" data-value="95"></div>
+                            <div class="chart-bar" style="height: 70%;" data-value="70"></div>
+                            <div class="chart-bar" style="height: 80%;" data-value="80"></div>
+                        </div>
+                        <div class="chart-labels">
+                            <span>Mean</span>
+                            <span>Median</span>
+                            <span>Std Dev</span>
+                            <span>Min</span>
+                            <span>Max</span>
+                            <span>SNR</span>
+                        </div>
+                    </div>
+                    
+                    <table class="data-table" style="margin-top: 20px;">
+                        <thead>
+                            <tr>
+                                <th>Metric</th>
+                                <th>Value</th>
+                                <th>Unit</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Mean Intensity</td>
+                                <td>12,847</td>
+                                <td>gray levels</td>
+                            </tr>
+                            <tr>
+                                <td>Standard Deviation</td>
+                                <td>3,421</td>
+                                <td>gray levels</td>
+                            </tr>
+                            <tr>
+                                <td>Signal-to-Noise Ratio</td>
+                                <td>80.2</td>
+                                <td>dB</td>
+                            </tr>
+                            <tr>
+                                <td>Dynamic Range</td>
+                                <td>65,535</td>
+                                <td>levels</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Cell 6: Export -->
+        <div class="cell">
+            <div class="cell-header">
+                <span class="cell-number">[6]</span>
+                <span class="cell-type">Code</span>
+                <div class="cell-actions">
+                    <button class="run-btn">▶ Run</button>
+                    <button class="cell-btn" title="Edit">✏️</button>
+                    <button class="cell-btn" title="Delete">🗑️</button>
+                </div>
+            </div>
+            <div class="cell-body">
+                <div class="code-input">
+<span class="code-comment"># Export processed data</span>
+wtis.<span class="code-function">save_image</span>(filtered, <span class="code-string">"processed_001.tiff"</span>)
+wtis.<span class="code-function">export_report</span>(stats, <span class="code-string">"analysis_report.pdf"</span>)
+<span class="code-function">print</span>(<span class="code-string">"✓ Export complete!"</span>)</div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

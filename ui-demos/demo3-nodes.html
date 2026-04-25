@@ -1,0 +1,508 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UI Demo 3: Node-based Workflow (Blender/Nuke style)</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { 
+            font-family: 'Consolas', 'Monaco', monospace;
+            height: 100vh; 
+            background: #1a1a1a; 
+            color: #ddd;
+            overflow: hidden;
+        }
+        
+        .app-container {
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+        }
+        
+        /* Top Bar */
+        .top-bar {
+            height: 40px;
+            background: #2a2a2a;
+            border-bottom: 1px solid #3a3a3a;
+            display: flex;
+            align-items: center;
+            padding: 0 15px;
+            gap: 20px;
+        }
+        
+        .logo {
+            font-weight: 700;
+            font-size: 14px;
+            color: #fff;
+        }
+        
+        .menu-item {
+            font-size: 12px;
+            cursor: pointer;
+            padding: 5px 10px;
+            border-radius: 3px;
+        }
+        
+        .menu-item:hover { background: #3a3a3a; }
+        
+        .workflow-title {
+            margin-left: auto;
+            font-size: 12px;
+            color: #888;
+        }
+        
+        /* Main Area */
+        .main-area {
+            flex: 1;
+            display: flex;
+            position: relative;
+        }
+        
+        /* Node Graph Canvas */
+        .node-graph {
+            flex: 1;
+            background: #1a1a1a;
+            background-image: 
+                radial-gradient(circle at 1px 1px, #333 1px, transparent 0);
+            background-size: 20px 20px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        /* Nodes */
+        .node {
+            position: absolute;
+            width: 180px;
+            background: #2a2a2a;
+            border: 1px solid #444;
+            border-radius: 6px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+        }
+        
+        .node-header {
+            padding: 8px 12px;
+            background: #333;
+            border-radius: 6px 6px 0 0;
+            font-size: 12px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .node-icon {
+            width: 16px;
+            height: 16px;
+            border-radius: 3px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 10px;
+        }
+        
+        .node-input { background: #4CAF50; }
+        .node-filter { background: #2196F3; }
+        .node-transform { background: #FF9800; }
+        .node-output { background: #E91E63; }
+        
+        .node-body {
+            padding: 12px;
+        }
+        
+        .node-parameter {
+            margin: 8px 0;
+        }
+        
+        .node-param-label {
+            font-size: 10px;
+            color: #888;
+            margin-bottom: 4px;
+        }
+        
+        .node-param-value {
+            font-size: 11px;
+            background: #1a1a1a;
+            padding: 4px 8px;
+            border-radius: 3px;
+            border: 1px solid #333;
+        }
+        
+        /* Connection Points */
+        .socket {
+            position: absolute;
+            width: 12px;
+            height: 12px;
+            background: #555;
+            border: 2px solid #777;
+            border-radius: 50%;
+            cursor: pointer;
+        }
+        
+        .socket:hover { background: #777; }
+        .socket.input { left: -6px; top: 50%; transform: translateY(-50%); }
+        .socket.output { right: -6px; top: 50%; transform: translateY(-50%); }
+        .socket.active { background: #4CAF50; border-color: #4CAF50; }
+        
+        /* Connection Lines */
+        .connection-line {
+            position: absolute;
+            height: 2px;
+            background: #666;
+            transform-origin: left center;
+            pointer-events: none;
+        }
+        
+        /* Left Panel - Node Library */
+        .node-library {
+            width: 200px;
+            background: #222;
+            border-right: 1px solid #333;
+            padding: 15px;
+            overflow-y: auto;
+        }
+        
+        .library-title {
+            font-size: 11px;
+            text-transform: uppercase;
+            color: #888;
+            margin-bottom: 15px;
+            letter-spacing: 1px;
+        }
+        
+        .node-category {
+            margin-bottom: 20px;
+        }
+        
+        .category-title {
+            font-size: 11px;
+            color: #aaa;
+            margin-bottom: 8px;
+            font-weight: 600;
+        }
+        
+        .library-node {
+            padding: 8px 12px;
+            background: #2a2a2a;
+            border: 1px solid #3a3a3a;
+            border-radius: 4px;
+            margin: 5px 0;
+            font-size: 11px;
+            cursor: grab;
+            transition: all 0.2s;
+        }
+        
+        .library-node:hover {
+            background: #333;
+            border-color: #555;
+        }
+        
+        /* Right Panel - Properties */
+        .properties-panel {
+            width: 250px;
+            background: #222;
+            border-left: 1px solid #333;
+            padding: 15px;
+            overflow-y: auto;
+        }
+        
+        .prop-section {
+            margin-bottom: 20px;
+        }
+        
+        .prop-title {
+            font-size: 11px;
+            text-transform: uppercase;
+            color: #888;
+            margin-bottom: 12px;
+            border-bottom: 1px solid #333;
+            padding-bottom: 8px;
+        }
+        
+        .prop-row {
+            margin: 10px 0;
+        }
+        
+        .prop-label {
+            font-size: 11px;
+            color: #aaa;
+            margin-bottom: 5px;
+        }
+        
+        .prop-input {
+            width: 100%;
+            background: #1a1a1a;
+            border: 1px solid #333;
+            border-radius: 3px;
+            padding: 6px 8px;
+            color: #ddd;
+            font-size: 11px;
+            font-family: inherit;
+        }
+        
+        .prop-slider {
+            width: 100%;
+            height: 4px;
+            background: #333;
+            border-radius: 2px;
+            outline: none;
+            -webkit-appearance: none;
+        }
+        
+        .prop-slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 12px;
+            height: 12px;
+            background: #4CAF50;
+            border-radius: 50%;
+            cursor: pointer;
+        }
+        
+        /* Bottom Preview */
+        .preview-panel {
+            height: 200px;
+            background: #222;
+            border-top: 1px solid #333;
+            display: flex;
+        }
+        
+        .preview-window {
+            flex: 1;
+            padding: 10px;
+            border-right: 1px solid #333;
+        }
+        
+        .preview-title {
+            font-size: 11px;
+            color: #888;
+            margin-bottom: 8px;
+        }
+        
+        .preview-canvas {
+            width: 100%;
+            height: 150px;
+            background: linear-gradient(135deg, #1e3c72, #2a5298);
+            border-radius: 4px;
+        }
+        
+        .histogram {
+            width: 100%;
+            height: 150px;
+            background: #1a1a1a;
+            border-radius: 4px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .histogram-bar {
+            position: absolute;
+            bottom: 0;
+            width: 3px;
+            background: rgba(100, 150, 255, 0.6);
+        }
+    </style>
+</head>
+<body>
+    <div class="app-container">
+        <!-- Top Bar -->
+        <div class="top-bar">
+            <div class="logo">WTIS Node Editor</div>
+            <div class="menu-item">File</div>
+            <div class="menu-item">Edit</div>
+            <div class="menu-item">Nodes</div>
+            <div class="menu-item">View</div>
+            <div class="workflow-title">workflow_v1.wtis</div>
+        </div>
+        
+        <!-- Main Area -->
+        <div class="main-area">
+            <!-- Node Library -->
+            <div class="node-library">
+                <div class="library-title">Node Library</div>
+                
+                <div class="node-category">
+                    <div class="category-title">INPUT</div>
+                    <div class="library-node">📁 Image Loader</div>
+                    <div class="library-node">📹 Video Stream</div>
+                    <div class="library-node">📊 Raw Data</div>
+                </div>
+                
+                <div class="node-category">
+                    <div class="category-title">FILTERS</div>
+                    <div class="library-node">🔍 Median Filter</div>
+                    <div class="library-node">📐 Sobel Edge</div>
+                    <div class="library-node">📈 Gaussian</div>
+                    <div class="library-node">🔊 Denoise</div>
+                </div>
+                
+                <div class="node-category">
+                    <div class="category-title">TRANSFORM</div>
+                    <div class="library-node">🎨 Color Map</div>
+                    <div class="library-node">✂️ Crop</div>
+                    <div class="library-node">🔄 Rotate</div>
+                    <div class="library-node">📏 Normalize</div>
+                </div>
+                
+                <div class="node-category">
+                    <div class="category-title">OUTPUT</div>
+                    <div class="library-node">💾 Save File</div>
+                    <div class="library-node">🖼️ Display</div>
+                    <div class="library-node">🧊 3D Render</div>
+                </div>
+            </div>
+            
+            <!-- Node Graph -->
+            <div class="node-graph">
+                <!-- Input Node -->
+                <div class="node" style="left: 50px; top: 80px;">
+                    <div class="socket input"></div>
+                    <div class="node-header">
+                        <div class="node-icon node-input">📁</div>
+                        <span>Image Loader</span>
+                    </div>
+                    <div class="node-body">
+                        <div class="node-parameter">
+                            <div class="node-param-label">File Path</div>
+                            <div class="node-param-value">sample_001.raw</div>
+                        </div>
+                    </div>
+                    <div class="socket output active"></div>
+                </div>
+                
+                <!-- Connection Line 1 -->
+                <svg style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none;">
+                    <path d="M 230 140 C 260 140, 260 200, 290 200" stroke="#666" stroke-width="2" fill="none"/>
+                </svg>
+                
+                <!-- Filter Node -->
+                <div class="node" style="left: 290px; top: 180px;">
+                    <div class="socket input active"></div>
+                    <div class="node-header">
+                        <div class="node-icon node-filter">🔍</div>
+                        <span>Median Filter</span>
+                    </div>
+                    <div class="node-body">
+                        <div class="node-parameter">
+                            <div class="node-param-label">Kernel Size</div>
+                            <div class="node-param-value">3x3</div>
+                        </div>
+                        <div class="node-parameter">
+                            <div class="node-param-label">Iterations</div>
+                            <div class="node-param-value">2</div>
+                        </div>
+                    </div>
+                    <div class="socket output active"></div>
+                </div>
+                
+                <!-- Connection Line 2 -->
+                <svg style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none;">
+                    <path d="M 470 240 C 500 240, 500 150, 530 150" stroke="#666" stroke-width="2" fill="none"/>
+                </svg>
+                
+                <!-- Transform Node -->
+                <div class="node" style="left: 530px; top: 130px;">
+                    <div class="socket input active"></div>
+                    <div class="node-header">
+                        <div class="node-icon node-transform">🎨</div>
+                        <span>Color Map</span>
+                    </div>
+                    <div class="node-body">
+                        <div class="node-parameter">
+                            <div class="node-param-label">Colormap</div>
+                            <div class="node-param-value">Viridis</div>
+                        </div>
+                    </div>
+                    <div class="socket output active"></div>
+                </div>
+                
+                <!-- Connection Line 3 -->
+                <svg style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none;">
+                    <path d="M 710 190 C 740 190, 740 200, 770 200" stroke="#666" stroke-width="2" fill="none"/>
+                </svg>
+                
+                <!-- Output Node -->
+                <div class="node" style="left: 770px; top: 180px;">
+                    <div class="socket input active"></div>
+                    <div class="node-header">
+                        <div class="node-icon node-output">🖼️</div>
+                        <span>Display</span>
+                    </div>
+                    <div class="node-body">
+                        <div class="node-parameter">
+                            <div class="node-param-label">Resolution</div>
+                            <div class="node-param-value">1024x768</div>
+                        </div>
+                    </div>
+                    <div class="socket output"></div>
+                </div>
+            </div>
+            
+            <!-- Properties Panel -->
+            <div class="properties-panel">
+                <div class="prop-section">
+                    <div class="prop-title">Selected Node</div>
+                    <div class="prop-row">
+                        <div class="prop-label">Node Type</div>
+                        <input type="text" class="prop-input" value="Median Filter" readonly>
+                    </div>
+                    <div class="prop-row">
+                        <div class="prop-label">Kernel Size</div>
+                        <input type="range" class="prop-slider" min="1" max="15" value="3">
+                        <div style="font-size: 10px; color: #666; margin-top: 4px;">3x3</div>
+                    </div>
+                    <div class="prop-row">
+                        <div class="prop-label">Iterations</div>
+                        <input type="number" class="prop-input" value="2" min="1" max="10">
+                    </div>
+                    <div class="prop-row">
+                        <div class="prop-label">Edge Mode</div>
+                        <select class="prop-input">
+                            <option>Reflect</option>
+                            <option>Constant</option>
+                            <option>Wrap</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div class="prop-section">
+                    <div class="prop-title">Statistics</div>
+                    <div class="prop-row">
+                        <div class="prop-label">Processing Time</div>
+                        <div style="font-size: 11px; color: #4CAF50;">24 ms</div>
+                    </div>
+                    <div class="prop-row">
+                        <div class="prop-label">Memory Usage</div>
+                        <div style="font-size: 11px; color: #ddd;">128 MB</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Bottom Preview -->
+        <div class="preview-panel">
+            <div class="preview-window">
+                <div class="preview-title">Node Output Preview</div>
+                <div class="preview-canvas"></div>
+            </div>
+            <div class="preview-window" style="border-right: none;">
+                <div class="preview-title">Histogram</div>
+                <div class="histogram" id="histogram">
+                    <!-- Histogram bars will be generated by JS -->
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // Generate histogram bars
+        const histogram = document.getElementById('histogram');
+        for (let i = 0; i < 50; i++) {
+            const bar = document.createElement('div');
+            bar.className = 'histogram-bar';
+            bar.style.left = (i * 2) + '%';
+            bar.style.height = (Math.random() * 80 + 10) + '%';
+            histogram.appendChild(bar);
+        }
+    </script>
+</body>
+</html>
