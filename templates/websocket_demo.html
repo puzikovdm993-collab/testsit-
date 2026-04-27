@@ -1,0 +1,514 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WebSocket Demo - Flask-SocketIO</title>
+    <script src="https://cdn.socket.io/4.5.4/socket.io.min.js"></script>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        h1 {
+            color: white;
+            text-align: center;
+            margin-bottom: 30px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        
+        .status-panel {
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        
+        .status-indicator {
+            display: inline-block;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            margin-right: 10px;
+        }
+        
+        .status-connected {
+            background: #4CAF50;
+            box-shadow: 0 0 10px #4CAF50;
+        }
+        
+        .status-disconnected {
+            background: #f44336;
+        }
+        
+        .main-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+        
+        @media (max-width: 768px) {
+            .main-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        .panel {
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        
+        .panel h2 {
+            color: #333;
+            margin-bottom: 15px;
+            border-bottom: 2px solid #667eea;
+            padding-bottom: 10px;
+        }
+        
+        .messages-container {
+            height: 300px;
+            overflow-y: auto;
+            border: 1px solid #e0e0e0;
+            border-radius: 5px;
+            padding: 10px;
+            margin-bottom: 15px;
+            background: #f9f9f9;
+        }
+        
+        .message {
+            padding: 10px;
+            margin-bottom: 10px;
+            border-radius: 5px;
+            background: white;
+            border-left: 4px solid #667eea;
+        }
+        
+        .message.system {
+            background: #fff3cd;
+            border-left-color: #ffc107;
+        }
+        
+        .message.private {
+            background: #d4edda;
+            border-left-color: #28a745;
+        }
+        
+        .message.error {
+            background: #f8d7da;
+            border-left-color: #dc3545;
+        }
+        
+        .message-header {
+            font-size: 12px;
+            color: #666;
+            margin-bottom: 5px;
+        }
+        
+        .message-body {
+            color: #333;
+            word-wrap: break-word;
+        }
+        
+        .input-group {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+        
+        input[type="text"], input[type="number"] {
+            flex: 1;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 14px;
+        }
+        
+        button {
+            padding: 10px 20px;
+            background: #667eea;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: background 0.3s;
+        }
+        
+        button:hover {
+            background: #5568d3;
+        }
+        
+        button:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+        }
+        
+        .room-controls {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+        
+        .log-entry {
+            font-family: 'Courier New', monospace;
+            font-size: 12px;
+            padding: 5px;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .log-entry:last-child {
+            border-bottom: none;
+        }
+        
+        .username-input {
+            margin-bottom: 15px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🚀 WebSocket Demo с Flask-SocketIO</h1>
+        
+        <!-- Панель статуса -->
+        <div class="status-panel">
+            <span id="statusIndicator" class="status-indicator status-disconnected"></span>
+            <span id="statusText">Отключено</span>
+            <span id="clientId" style="margin-left: 20px; color: #666;"></span>
+        </div>
+        
+        <div class="main-grid">
+            <!-- Левая панель: Чат -->
+            <div class="panel">
+                <h2>💬 Общий чат</h2>
+                
+                <div class="username-input">
+                    <input type="text" id="usernameInput" placeholder="Введите ваше имя" value="Пользователь">
+                </div>
+                
+                <div class="messages-container" id="chatMessages">
+                    <!-- Сообщения будут появляться здесь -->
+                </div>
+                
+                <div class="input-group">
+                    <input type="text" id="messageInput" placeholder="Введите сообщение...">
+                    <button onclick="sendMessage()">Отправить</button>
+                </div>
+            </div>
+            
+            <!-- Правая панель: Комнаты -->
+            <div class="panel">
+                <h2>🏠 Комнаты</h2>
+                
+                <div class="room-controls">
+                    <input type="text" id="roomInput" placeholder="Название комнаты">
+                    <button onclick="joinRoom()">Войти</button>
+                    <button onclick="leaveRoom()">Выйти</button>
+                </div>
+                
+                <div class="messages-container" id="roomMessages">
+                    <!-- Сообщения комнат будут появляться здесь -->
+                </div>
+                
+                <div class="input-group">
+                    <input type="text" id="roomMessageInput" placeholder="Сообщение в комнату...">
+                    <button onclick="sendRoomMessage()">Отправить</button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Панель приватных сообщений -->
+        <div class="panel" style="margin-top: 20px;">
+            <h2>📩 Приватное сообщение</h2>
+            <div class="input-group">
+                <input type="text" id="privateClientId" placeholder="ID получателя">
+                <input type="text" id="privateMessageInput" placeholder="Текст сообщения" style="flex: 2;">
+                <button onclick="sendPrivateMessage()">Отправить</button>
+            </div>
+        </div>
+        
+        <!-- Панель логов -->
+        <div class="panel" style="margin-top: 20px;">
+            <h2>📋 Логи событий</h2>
+            <div class="messages-container" id="eventLogs" style="height: 200px;">
+                <!-- Логи будут появляться здесь -->
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Инициализация Socket.IO клиента
+        const socket = io('http://localhost:5000', {
+            transports: ['websocket', 'polling'],
+            reconnection: true,
+            reconnectionAttempts: 5,
+            reconnectionDelay: 1000
+        });
+
+        let currentRoom = null;
+
+        // ==================== ОБРАБОТЧИКИ СОБЫТИЙ WEBSOCKET ====================
+
+        // Подключение к серверу
+        socket.on('connect', () => {
+            updateStatus(true);
+            document.getElementById('clientId').textContent = `ID: ${socket.id}`;
+            addLog(`✅ Подключено к серверу. Ваш ID: ${socket.id}`);
+            addSystemMessage(`Вы подключены к чату!`);
+        });
+
+        // Отключение от сервера
+        socket.on('disconnect', () => {
+            updateStatus(false);
+            addLog(`❌ Отключено от сервера`);
+            addSystemMessage(`Вы отключены от чата`);
+        });
+
+        // Ответ от сервера
+        socket.on('server_response', (data) => {
+            addLog(`📨 Получен ответ: ${JSON.stringify(data)}`);
+        });
+
+        // Новое сообщение в общем чате
+        socket.on('new_message', (data) => {
+            addChatMessage(data.username, data.message, data.type);
+            addLog(`💬 Сообщение в чат от ${data.username}`);
+        });
+
+        // Уведомление о пользователе (вход/выход)
+        socket.on('broadcast', (data) => {
+            if (data.type === 'user_joined') {
+                addSystemMessage('👤 Новый пользователь присоединился');
+            } else if (data.type === 'user_left') {
+                addSystemMessage('👤 Пользователь покинул чат');
+            }
+        });
+
+        // Присоединение к комнате
+        socket.on('room_joined', (data) => {
+            currentRoom = data.room;
+            addLog(`🏠 Вы вошли в комнату: ${data.room}`);
+            addRoomMessage('Система', `Вы присоединились к комнате ${data.room}`, 'system');
+        });
+
+        // Выход из комнаты
+        socket.on('room_notification', (data) => {
+            if (data.type === 'user_joined_room') {
+                addRoomMessage('Система', `${data.username} вошел в комнату`, 'system');
+            } else if (data.type === 'user_left_room') {
+                addRoomMessage('Система', `${data.username} вышел из комнаты`, 'system');
+            }
+        });
+
+        // Сообщение в комнате
+        socket.on('new_room_message', (data) => {
+            addRoomMessage(data.username, data.message, 'room_chat');
+            addLog(`🏠 Сообщение в комнату ${data.room} от ${data.username}`);
+        });
+
+        // Приватное сообщение получено
+        socket.on('private_message_received', (data) => {
+            addChatMessage(`[Приватно от ${data.from}]`, data.message, 'private');
+            addLog(`📩 Приватное сообщение от ${data.from}`);
+        });
+
+        // Приватное сообщение отправлено
+        socket.on('private_message_sent', (data) => {
+            addLog(`✅ Приватное сообщение отправлено ${data.to}`);
+        });
+
+        // Ошибка
+        socket.on('error', (data) => {
+            addLog(`❌ Ошибка: ${data.message}`);
+            addChatMessage('Ошибка', data.message, 'error');
+        });
+
+        // Pong (ответ на ping)
+        socket.on('pong', (data) => {
+            addLog(`🏓 Pong получен: ${data.timestamp}`);
+        });
+
+        // ==================== ФУНКЦИИ ИНТЕРФЕЙСА ====================
+
+        function updateStatus(connected) {
+            const indicator = document.getElementById('statusIndicator');
+            const text = document.getElementById('statusText');
+            
+            if (connected) {
+                indicator.className = 'status-indicator status-connected';
+                text.textContent = 'Подключено';
+            } else {
+                indicator.className = 'status-indicator status-disconnected';
+                text.textContent = 'Отключено';
+            }
+        }
+
+        function sendMessage() {
+            const messageInput = document.getElementById('messageInput');
+            const usernameInput = document.getElementById('usernameInput');
+            const message = messageInput.value.trim();
+            
+            if (message) {
+                socket.emit('client_message', {
+                    message: message,
+                    username: usernameInput.value.trim() || 'Аноним'
+                });
+                messageInput.value = '';
+            }
+        }
+
+        function sendRoomMessage() {
+            const roomMessageInput = document.getElementById('roomMessageInput');
+            const usernameInput = document.getElementById('usernameInput');
+            const message = roomMessageInput.value.trim();
+            
+            if (message && currentRoom) {
+                socket.emit('room_message', {
+                    room: currentRoom,
+                    message: message,
+                    username: usernameInput.value.trim() || 'Аноним'
+                });
+                roomMessageInput.value = '';
+            } else if (!currentRoom) {
+                alert('Сначала войдите в комнату!');
+            }
+        }
+
+        function joinRoom() {
+            const roomInput = document.getElementById('roomInput');
+            const usernameInput = document.getElementById('usernameInput');
+            const room = roomInput.value.trim();
+            
+            if (room) {
+                socket.emit('join_room_event', {
+                    room: room,
+                    username: usernameInput.value.trim() || 'Аноним'
+                });
+            }
+        }
+
+        function leaveRoom() {
+            if (currentRoom) {
+                const usernameInput = document.getElementById('usernameInput');
+                socket.emit('leave_room_event', {
+                    room: currentRoom,
+                    username: usernameInput.value.trim() || 'Аноним'
+                });
+                currentRoom = null;
+            }
+        }
+
+        function sendPrivateMessage() {
+            const privateClientId = document.getElementById('privateClientId');
+            const privateMessageInput = document.getElementById('privateMessageInput');
+            const to = privateClientId.value.trim();
+            const message = privateMessageInput.value.trim();
+            
+            if (to && message) {
+                socket.emit('private_message', {
+                    to: to,
+                    message: message
+                });
+                privateMessageInput.value = '';
+            } else {
+                alert('Заполните ID получателя и текст сообщения');
+            }
+        }
+
+        function addChatMessage(username, message, type = 'chat') {
+            const container = document.getElementById('chatMessages');
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `message ${type}`;
+            
+            const time = new Date().toLocaleTimeString();
+            messageDiv.innerHTML = `
+                <div class="message-header">${username} • ${time}</div>
+                <div class="message-body">${escapeHtml(message)}</div>
+            `;
+            
+            container.appendChild(messageDiv);
+            container.scrollTop = container.scrollHeight;
+        }
+
+        function addRoomMessage(username, message, type = 'room_chat') {
+            const container = document.getElementById('roomMessages');
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `message ${type}`;
+            
+            const time = new Date().toLocaleTimeString();
+            messageDiv.innerHTML = `
+                <div class="message-header">${username} • ${time}</div>
+                <div class="message-body">${escapeHtml(message)}</div>
+            `;
+            
+            container.appendChild(messageDiv);
+            container.scrollTop = container.scrollHeight;
+        }
+
+        function addSystemMessage(message) {
+            addChatMessage('Система', message, 'system');
+        }
+
+        function addLog(message) {
+            const container = document.getElementById('eventLogs');
+            const logDiv = document.createElement('div');
+            logDiv.className = 'log-entry';
+            
+            const time = new Date().toLocaleTimeString();
+            logDiv.textContent = `[${time}] ${message}`;
+            
+            container.appendChild(logDiv);
+            container.scrollTop = container.scrollHeight;
+        }
+
+        function escapeHtml(text) {
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+
+        // Обработка нажатия Enter в полях ввода
+        document.getElementById('messageInput').addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') sendMessage();
+        });
+
+        document.getElementById('roomMessageInput').addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') sendRoomMessage();
+        });
+
+        document.getElementById('privateMessageInput').addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') sendPrivateMessage();
+        });
+
+        document.getElementById('roomInput').addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') joinRoom();
+        });
+
+        // Отправка ping для проверки соединения каждые 30 секунд
+        setInterval(() => {
+            if (socket.connected) {
+                socket.emit('ping');
+            }
+        }, 30000);
+
+        // Начальное сообщение в логах
+        addLog('🚀 Приложение запущено. Ожидание подключения...');
+    </script>
+</body>
+</html>
